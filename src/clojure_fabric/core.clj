@@ -3,6 +3,17 @@
   (:use [clojure.algo.generic.functor :only (fmap)])
   (:require [clojure.string :as str])
   (:import clojure.lang.Reflector
+           ;; FIXME: remove - this should be fined in user space
+           [org.hyperledger.fabric.sdk HFClient]
+           java.lang.reflect.Method
+           java.lang.reflect.Modifier
+           java.lang.reflect.Parameter
+           java.nio.ByteBuffer
+           java.io.File
+           java.util.Date
+           ;;org.joda.time.DateTime
+           org.joda.time.base.AbstractInstant
+           ;;java.lang.reflect.ParameterizedType
 )
   #_
   (:import clojure.lang.Reflector
@@ -18,24 +29,306 @@
             BasicSessionCredentials
             DefaultAWSCredentialsProviderChain]
            com.amazonaws.auth.profile.ProfileCredentialsProvider
-           [com.amazonaws.regions
-            Region
-            Regions]
+
            com.amazonaws.client.builder.AwsSyncClientBuilder
            com.amazonaws.client.builder.AwsClientBuilder$EndpointConfiguration
-           org.joda.time.DateTime
-           org.joda.time.base.AbstractInstant
-           java.io.File
+           
+           
+           
            java.lang.reflect.InvocationTargetException
-           java.lang.reflect.ParameterizedType
-           java.lang.reflect.Method
-           java.lang.reflect.Modifier
+           
+           
+           
            java.math.BigDecimal
            java.math.BigInteger
-           java.nio.ByteBuffer
+           
            java.text.ParsePosition
            java.text.SimpleDateFormat
-           java.util.Date))
+           ))
+
+(defn- keyword-converter
+  "Given something that tokenizes a string into parts, turn it into
+  a :kebab-case-keyword."
+  [separator-regex]
+  (fn [s]
+    (->> (str/split s separator-regex)
+         (map str/lower-case)
+         (interpose \-)
+         str/join
+         keyword)))
+
+(def ^:private camel->keyword
+  "from Emerick, Grande, Carper 2012 p.70"
+  (keyword-converter #"(?<=[a-z])(?=[A-Z])"))
+
+(defn- client-methods
+  "Returns a map with keys of idiomatic Clojure hyphenated keywords
+  corresponding to the public Java method names of the class argument, vals are
+  vectors of java.lang.reflect.Methods."
+  [client]
+  (->> (.getDeclaredMethods ^Class client)
+       (remove (fn [method]
+                 (let [mods (.getModifiers ^Method method)]
+                   (or (.isSynthetic ^Method method)
+                       (Modifier/isPrivate mods)
+                       (Modifier/isProtected mods)
+                       (Modifier/isStatic mods)))))
+       (group-by #(camel->keyword (.getName ^Method %)))))
+
+(defn- clojure-case
+  "Similar to \"kabob case\" but the returned string is suitable for
+  reading a single symbol with `read-string`."
+  [string]
+  (-> string
+      ;; Replace the space between a non-upper-case letter and an
+      ;; upper-case letter with a dash.
+      (str/replace #"(?<=[^A-Z])(?=[A-Z])" "-")
+      ;; Remove anything that a Clojure reader would not accept in a
+      ;; symbol.
+      (str/replace #"[\\'\"\[\]\(\){}\s]" "")
+      (str/lower-case)))
+
+(defn- type-clojure-name
+  "Given a `java.lang.Class` return it's name in kabob case"
+  [^Class type]
+  (let [type-name (last (.. type getName (split "\\.")))
+        type-name (if-let [;; Check for a type name like "[C" etc. 
+                           [_ name] (re-matches #"\[([A-Z]+)$" type-name)]
+                    name
+                    type-name)]
+    (clojure-case type-name)))
+
+(defn- parameter-clojure-name
+  "Given a `java.lang.reflect.Parameter` return it's name in kabob
+  case."
+  [^Parameter parameter]
+  (if (. parameter isNamePresent)
+    (clojure-case (. parameter getName))
+    ;; The name will be synthesized so instead we'll derive
+    ;; it from it's type.
+    (type-clojure-name (. parameter getType))))
+
+(def ^{:arglists '([method])
+       :private true}
+  parameter-names
+  "Given a `java.lang.reflect.Method` return a list of it's parameter
+  names."
+  ;; The regular expression here will only match against version
+  ;; numbers that are 1.7.X and below.
+  (if (re-matches #"[^2-9]\.[1-7]\..+" (System/getProperty "java.version")) 
+    ;; Java 1.7 and below.
+    (fn [^Method method]
+      (map type-clojure-name (. method getParameterTypes)))
+    ;; Java 1.8 and above.
+    (fn [^Method method]
+      (map parameter-clojure-name (. method getParameters)))))
+
+(defn- method-arglist
+  "Derives a Clojure `:arglist` vector from a
+  `java.lang.reflect.Method`."
+  [method]
+  (let [names (parameter-names method)
+        ;; This will help determine when parameter names should be
+        ;; suffixed with an index i.e. `parameter-1`. Suffixing is
+        ;; necessary when parameter names are synthesized from their
+        ;; type names and the likelihood duplicates is high.
+        name-frequency (frequencies names)]
+    (loop [names names
+           ;; This map keeps track of the index of names when they
+           ;; appear more than once.
+           name-index {}
+           arglist []]
+      (if (empty? names)
+        arglist
+        (let [[name & names*] names]
+          (if (= (name-frequency name) 1)
+            (let [arg-symbol (symbol name)
+                  arglist* (conj arglist arg-symbol)]
+              (recur names*
+                     name-index
+                     arglist*))
+            ;; The parameter name appears more than once so we need to
+            ;; attach an index to it and update our name-index for the
+            ;; next parameter with the same name.
+            (let [index (get name-index name 1)
+                  name-index* (assoc name-index name (inc index))
+                  arg-symbol (symbol (str name "-" index))
+                  arglist* (conj arglist arg-symbol)]
+              (recur names*
+                     name-index*
+                     arglist*))))))))
+
+(defn- args-from
+  ;; FIXME: Not true
+  "Function arguments take an optional first parameter map
+  of AWS credentials. Addtional parameters are either a map,
+  or seq of keys and values."
+  [arg-seq]
+  (let [args (first arg-seq)]
+    (cond
+      (or (and (or (map? args)
+                   (map? (first args)))
+               (or (contains? (first args) :access-key)
+                   (contains? (first args) :endpoint)
+                   (contains? (first args) :profile)
+                   (contains? (first args) :client-config)))
+          ;;(instance? AWSCredentialsProvider (first args))
+          ;;(instance? AWSCredentials (first args))
+          )
+      {:args (if (-> args rest first map?)
+                 (if (-> args rest first empty?)
+                     {}
+                     (mapcat identity (-> args rest args-from :args)))
+                 (rest args))
+       :credential (if (map? (first args))
+                       (dissoc (first args) :client-config)
+                       (first args))
+       :client-config (:client-config (first args))}
+      (map? (first args))
+      {:args (let [m (mapcat identity (first args))]
+               (if (seq m) m {}))}
+      :default {:args args})))
+
+(defn- types-match-args
+  [args ^Method method]
+  (let [types (.getParameterTypes method)]
+    (if (and (= (count types) (count args))
+             (every? identity (map instance? types args)))
+      method)))
+
+(defprotocol FileKind
+  (to-file [this]))
+
+(extend-protocol FileKind
+  File
+  (to-file [this] this)
+  String
+  (to-file [this] (File. this)))
+
+(defprotocol DateKind
+  (to-date [this]))
+
+(extend-protocol DateKind
+  Date
+  (to-date [this] this)
+  AbstractInstant
+  (to-date [this] (.toDate this))
+  Long
+  (to-date [this] (java.util.Date. this))
+  ;; Amazonica code has default -
+  ;; (.. (SimpleDateFormat. @date-format)
+  ;;            (parse (str date) (ParsePosition. 0)))
+  )
+
+; assoc java Class to Clojure cast functions
+(defonce ^:private coercions
+  (->> [:String :Integer :Long :Double :Float]
+       (reduce
+        (fn [m e]
+          (let [arr (str "[Ljava.lang." (name e) ";")
+                clazz (Class/forName arr)]
+            (assoc m clazz into-array))) {})
+       (merge {String     str
+               Integer    int
+               Long       long
+               Boolean    boolean
+               Double     double
+               Float      float
+               BigDecimal bigdec
+               BigInteger bigint
+               Date       to-date
+               File       to-file
+               ByteBuffer #(-> % str .getBytes ByteBuffer/wrap)
+               "int"      int
+               "long"     long
+               "double"   double
+               "float"    float
+               "boolean"  boolean})
+       atom))
+
+(defn- coercible? [type]
+  (and (contains? @coercions type)
+       (not (re-find #"java\.lang" (str type)))))
+
+(defn- choose-from [possible]
+  (if (= 1 (count possible))
+      (first possible)
+      (first
+        (sort-by
+          (fn [^Method method]
+            (let [types (.getParameterTypes method)]
+              (cond
+                (some coercible? types) 1
+                (some #(= java.lang.Enum (.getSuperclass ^Class %)) types) 2
+                :else 3)))
+          possible))))
+
+(defn possible-methods
+  [methods args]
+  (filter
+    (fn [^Method method]
+      (let [types (.getParameterTypes method)
+            num   (count types)]
+        (if (or
+              (and (empty? args) (= 0 num))
+              (use-aws-request-bean? method args)
+              (and
+                (= num (count args))
+                (not (keyword? (first args)))
+                (not (aws-package? (first types)))))
+          method
+          false)))
+    methods))
+
+(defn- best-method
+  "Finds the appropriate method to invoke in cases where
+  the Amazon*Client has overloaded methods by arity or type."
+  [methods & arg]
+  (let [args (:args (args-from arg))]
+    (or (some (partial types-match-args args) methods)
+        (choose-from (possible-methods methods args)))))
+
+(defn intern-function
+  "Interns into ns, the symbol mapped to a Clojure function
+   derived from the java.lang.reflect.Method(s). Overloaded
+   methods will yield a variadic Clojure function."
+  [client ns fname methods]
+  (intern ns (with-meta (symbol (name fname))
+               {:amazonica/client client
+                :amazonica/methods methods
+                :arglists (sort (map method-arglist methods))})
+          (fn [& args]
+            (if-let [method (best-method methods args)]
+              (if-not args
+                ((fn-call client method))
+                ((fn-call client method args)))
+              (throw (IllegalArgumentException.
+                      (format "Could not determine best method to invoke for %s using arguments %s"
+                              (name fname) args)))))))
+
+(def ^:private camel->keyword2
+  "Like [[camel->keyword]], but smarter about acronyms and concepts like iSCSI
+  and OpenID which should be treated as a single concept."
+  (comp
+   (keyword-converter #"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")
+   #(str/replace % #"(?i)iscsi" "ISCSI")
+   #(str/replace % #"(?i)openid" "OPENID")))
+
+(defn set-client
+  "Intern into the specified namespace all public methods
+   from the Amazon*Client class as Clojure functions."
+  [client ns]
+  (intern ns 'client-class client)
+  (doseq [[fname methods] (client-methods client)
+          :let [the-var (intern-function client ns fname methods)
+                fname2 (-> methods first .getName camel->keyword2)]]
+    (when (not= fname fname2)
+      (let [the-var2 (intern-function client ns fname2 methods)]
+        (alter-meta! the-var assoc :amazonica/deprecated-in-favor-of the-var2)))))
+
+
+
+
 
 
 
@@ -261,28 +554,11 @@
 
 (swap! client-config assoc :amazon-client-fn (memoize amazon-client*))
 
-(defn- keyword-converter
-  "Given something that tokenizes a string into parts, turn it into
-  a :kebab-case-keyword."
-  [separator-regex]
-  (fn [s]
-    (->> (str/split s separator-regex)
-         (map str/lower-case)
-         (interpose \-)
-         str/join
-         keyword)))
 
-(def ^:private camel->keyword
-  "from Emerick, Grande, Carper 2012 p.70"
-  (keyword-converter #"(?<=[a-z])(?=[A-Z])"))
 
-(def ^:private camel->keyword2
-  "Like [[camel->keyword]], but smarter about acronyms and concepts like iSCSI
-  and OpenID which should be treated as a single concept."
-  (comp
-   (keyword-converter #"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")
-   #(str/replace % #"(?i)iscsi" "ISCSI")
-   #(str/replace % #"(?i)openid" "OPENID")))
+
+
+
 
 (defn- keyword->camel
   [kw]
@@ -298,21 +574,9 @@
        (re-find #"com\.amazonaws\.services")
        some?))
 
-(defn to-date
-  [date]
-  (cond
-    (instance? java.util.Date date) date
-    (instance? AbstractInstant date) (.toDate date)
-    (integer? date) (java.util.Date. date)
-    true (.. (SimpleDateFormat. @date-format)
-           (parse (str date) (ParsePosition. 0)))))
 
-(defn to-file
-  [file]
-  (if (instance? File file)
-    file
-    (if (string? file)
-      (File. file))))
+
+
 
 (defn to-enum
   "Case-insensitive resolution of Enum types by String."
@@ -327,33 +591,6 @@
         (.getDeclaredMethod "values" (make-array Class 0))
         (.invoke type (make-array Object 0)))))
 
-; assoc java Class to Clojure cast functions
-(defonce ^:private coercions
-  (->> [:String :Integer :Long :Double :Float]
-       (reduce
-         (fn [m e]
-           (let [arr (str "[Ljava.lang." (name e) ";")
-                 clazz (Class/forName arr)]
-             (assoc m clazz into-array))) {})
-       (merge {
-         String     str
-         Integer    int
-         Long       long
-         Boolean    boolean
-         Double     double
-         Float      float
-         BigDecimal bigdec
-         BigInteger bigint
-         Date       to-date
-         File       to-file
-         Region     #(Region/getRegion (Regions/fromName %))
-         ByteBuffer #(-> % str .getBytes ByteBuffer/wrap)
-         "int"      int
-         "long"     long
-         "double"   double
-         "float"    float
-         "boolean"  boolean})
-       atom))
 
 (defn register-coercions
   "Accepts key/value pairs of class/function, which defines
@@ -771,34 +1008,7 @@
                          (last args)])))))))
 
 
-(defn- args-from
-  "Function arguments take an optional first parameter map
-  of AWS credentials. Addtional parameters are either a map,
-  or seq of keys and values."
-  [arg-seq]
-  (let [args (first arg-seq)]
-    (cond
-      (or (and (or (map? args)
-                   (map? (first args)))
-               (or (contains? (first args) :access-key)
-                   (contains? (first args) :endpoint)
-                   (contains? (first args) :profile)
-                   (contains? (first args) :client-config)))
-          (instance? AWSCredentialsProvider (first args))
-          (instance? AWSCredentials (first args)))
-      {:args (if (-> args rest first map?)
-                 (if (-> args rest first empty?)
-                     {}
-                     (mapcat identity (-> args rest args-from :args)))
-                 (rest args))
-       :credential (if (map? (first args))
-                       (dissoc (first args) :client-config)
-                       (first args))
-       :client-config (:client-config (first args))}
-      (map? (first args))
-      {:args (let [m (mapcat identity (first args))]
-               (if (seq m) m {}))}
-      :default {:args args})))
+
 
 (defn transfer-manager*
   [credential client-config crypto]
@@ -858,187 +1068,27 @@
           (catch InvocationTargetException ite
             (throw (.getTargetException ite))))))))
 
-(defn- types-match-args
-  [args method]
-  (let [types (.getParameterTypes method)]
-    (if (and (= (count types) (count args))
-             (every? identity (map instance? types args)))
-        method)))
 
-(defn- coercible? [type]
-  (and (contains? @coercions type)
-       (not (re-find #"java\.lang" (str type)))))
 
-(defn- choose-from [possible]
-  (if (= 1 (count possible))
-      (first possible)
-      (first
-        (sort-by
-          (fn [method]
-            (let [types (.getParameterTypes method)]
-              (cond
-                (some coercible? types) 1
-                (some #(= java.lang.Enum (.getSuperclass %)) types) 2
-                :else 3)))
-          possible))))
 
-(defn possible-methods
-  [methods args]
-  (filter
-    (fn [method]
-      (let [types (.getParameterTypes method)
-            num   (count types)]
-        (if (or
-              (and (empty? args) (= 0 num))
-              (use-aws-request-bean? method args)
-              (and
-                (= num (count args))
-                (not (keyword? (first args)))
-                (not (aws-package? (first types)))))
-          method
-          false)))
-    methods))
 
-(defn- best-method
-  "Finds the appropriate method to invoke in cases where
-  the Amazon*Client has overloaded methods by arity or type."
-  [methods & arg]
-  (let [args (:args (args-from arg))]
-    (or (some (partial types-match-args args) methods)
-        (choose-from (possible-methods methods args)))))
 
-(defn- clojure-case
-  "Similar to \"kabob case\" but the returned string is suitable for
-  reading a single symbol with `read-string`."
-  [string]
-  (-> string
-      ;; Replace the space between a non-upper-case letter and an
-      ;; upper-case letter with a dash.
-      (str/replace #"(?<=[^A-Z])(?=[A-Z])" "-")
-      ;; Remove anything that a Clojure reader would not accept in a
-      ;; symbol.
-      (str/replace #"[\\'\"\[\]\(\){}\s]" "")
-      (str/lower-case)))
 
-(defn- type-clojure-name
-  "Given a `java.lang.Class` return it's name in kabob case"
-  [type]
-  (let [type-name (last (.. type getName (split "\\.")))
-        type-name (if-let [;; Check for a type name like "[C" etc. 
-                           [_ name] (re-matches #"\[([A-Z]+)$" type-name)]
-                    name
-                    type-name)]
-    (clojure-case type-name)))
 
-(defn- parameter-clojure-name
-  "Given a `java.lang.reflect.Parameter` return it's name in kabob
-  case."
-  [parameter]
-  (if (. parameter isNamePresent)
-    (clojure-case (. parameter getName))
-    ;; The name will be synthesized so instead we'll derive
-    ;; it from it's type.
-    (type-clojure-name (. parameter getType))))
 
-(def ^{:arglists '([method])
-       :private true}
-  parameter-names
-  "Given a `java.lang.reflect.Method` return a list of it's parameter
-  names."
-  ;; The regular expression here will only match against version
-  ;; numbers that are 1.7.X and below.
-  (if (re-matches #"[^2-9]\.[1-7]\..+" (System/getProperty "java.version")) 
-    ;; Java 1.7 and below.
-    (fn [method]
-      (map type-clojure-name (. method getParameterTypes)))
-    ;; Java 1.8 and above.
-    (fn [method]
-      (map parameter-clojure-name (. method getParameters)))))
 
-(defn- method-arglist
-  "Derives a Clojure `:arglist` vector from a
-  `java.lang.reflect.Method`."
-  [method]
-  (let [names (parameter-names method)
-        ;; This will help determine when parameter names should be
-        ;; suffixed with an index i.e. `parameter-1`. Suffixing is
-        ;; necessary when parameter names are synthesized from their
-        ;; type names and the likelihood duplicates is high.
-        name-frequency (frequencies names)]
-    (loop [names names
-           ;; This map keeps track of the index of names when they
-           ;; appear more than once.
-           name-index {}
-           arglist []]
-      (if (empty? names)
-        arglist
-        (let [[name & names*] names]
-          (if (= (name-frequency name) 1)
-            (let [arg-symbol (symbol name)
-                  arglist* (conj arglist arg-symbol)]
-              (recur names*
-                     name-index
-                     arglist*))
-            ;; The parameter name appears more than once so we need to
-            ;; attach an index to it and update our name-index for the
-            ;; next parameter with the same name.
-            (let [index (get name-index name 1)
-                  name-index* (assoc name-index name (inc index))
-                  arg-symbol (symbol (str name "-" index))
-                  arglist* (conj arglist arg-symbol)]
-              (recur names*
-                     name-index*
-                     arglist*))))))))
 
-(defn intern-function
-  "Interns into ns, the symbol mapped to a Clojure function
-   derived from the java.lang.reflect.Method(s). Overloaded
-   methods will yield a variadic Clojure function."
-  [client ns fname methods]
-  (intern ns (with-meta (symbol (name fname))
-               {:amazonica/client client
-                :amazonica/methods methods
-                :arglists (sort (map method-arglist methods))})
-    (fn [& args]
-      (if-let [method (best-method methods args)]
-        (if-not args
-          ((fn-call client method))
-          ((fn-call client method args)))
-        (throw (IllegalArgumentException.
-                 (format "Could not determine best method to invoke for %s using arguments %s"
-                         (name fname) args)))))))
 
-(defn- client-methods
-  "Returns a map with keys of idiomatic Clojure hyphenated keywords
-  corresponding to the public Java method names of the class argument, vals are
-  vectors of java.lang.reflect.Methods."
-  [client]
-  (->> (.getDeclaredMethods client)
-       (remove (fn [method]
-                 (let [mods (.getModifiers method)]
-                   (or (.isSynthetic method)
-                       (Modifier/isPrivate mods)
-                       (Modifier/isProtected mods)
-                       (Modifier/isStatic mods)))))
-       (group-by #(camel->keyword (.getName %)))))
 
-(defn- show-functions [ns]
-  (intern ns (symbol "show-functions")
-    (fn []
-      (->> (ns-publics ns)
-           sort
-           (map (comp println first))))))
 
-(defn set-client
-  "Intern into the specified namespace all public methods
-   from the Amazon*Client class as Clojure functions."
-  [client ns]
-  (show-functions ns)
-  (intern ns 'client-class client)
-  (doseq [[fname methods] (client-methods client)
-          :let [the-var (intern-function client ns fname methods)
-                fname2 (-> methods first .getName camel->keyword2)]]
-    (when (not= fname fname2)
-      (let [the-var2 (intern-function client ns fname2 methods)]
-        (alter-meta! the-var assoc :amazonica/deprecated-in-favor-of the-var2)))))
+
+
+
+
+
+
+
+
+
+
 
