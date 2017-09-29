@@ -3,9 +3,6 @@
   (:use [clojure.algo.generic.functor :only (fmap)])
   (:require [clojure.string :as str])
   (:import clojure.lang.Reflector
-
-           java.io.PrintWriter
-           java.io.StringWriter
 )
   #_
   (:import clojure.lang.Reflector
@@ -40,40 +37,6 @@
            java.text.SimpleDateFormat
            java.util.Date))
 
-;;;
-;;; Analysis from Reverse Engineering
-;;; ===================
-;;; * All exceptions are inherited from
-;;;     org.hyperledger.fabric.sdk.exception.BaseException
-;;;     and
-;;;     org.hyperledger.fabric_ca.sdk.exception.BaseException
-;;;
-
-(defn stack->string
-  "Converts a Java stacktrace to String representation."
-  [^Exception ex]
-  (let [sw (StringWriter.)
-        pw (PrintWriter. sw)
-        _  (.printStackTrace ex pw)]
-    (.toString sw)))
-
-(defn ex->map
-  "Converts a Fablic Exception to a Clojure map with keys:
-  :error-type
-  :message
-  :stack-trace"
-  [e]
-  {:error-type   (.getName (.getClass ^Exception e))
-   :message      (.getMessage ^Exception e)
-   :stack-trace  (stack->string e)})
-
-(comment
-  (def peer-error (org.hyperledger.fabric.sdk.exception.PeerException. "Test peer error!"))
-  (try (throw peer-error)
-       (catch org.hyperledger.fabric.sdk.exception.BaseException e
-         (ex->map e)))
-  
-  )
 
 
 
