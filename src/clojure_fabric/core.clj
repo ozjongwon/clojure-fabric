@@ -1,7 +1,14 @@
 (ns clojure-fabric.core
   "Clojure wrapper for Hyperledger Java SDK functions"
-  (:require [clojure-fabric.crypto-suite :as crypto]
-            [clojure-fabric.hf-client :as client])
+  (:require [clojure-fabric.block :as block]
+            [clojure-fabric.chaincode :as chaincode]
+            [clojure-fabric.channel :as channel]
+            [clojure-fabric.crypto-suite :as crypto]
+            [clojure-fabric.hf-client :as client]
+            [clojure-fabric.request :as request]
+            [clojure-fabric.response :as response]
+            [clojure-fabric.user :as user])
+  #_
   (:import [org.hyperledger.fabric.sdk User Enrollment]))
 
 ;; ;;;
@@ -93,7 +100,9 @@
 ;;;;;;;;;;; Ex
 (comment
 
-  (defonce user-info {:name "test1" :roles nil :account nil :affiliation nil :certificate nil :private-key nil})
+  (defonce user-info {:name "test1" :roles nil :account nil :affiliation nil
+                      :certificate nil :private-key nil
+                      :channel-name "mychannel"})
 
   ;; 1. Client setup
   (defonce cli (client/create-new-instance))
@@ -102,6 +111,8 @@
   ;; 2. User context
   (defonce enrollment
     (reify Enrollment
+      ;; FIXME: enrollment!
+      ;; How to iniitiate key and cert?
       (getKey [this]
         (:private-key user-info))
       (getCert [this]
@@ -127,7 +138,8 @@
   
   ;; 2. Channel setup
   
-  (defonce chan (client/new-channel cli "mychannel"))  
+  (defonce chan (client/new-channel cli "mychannel"))
+  (cha)
 
   )
 
