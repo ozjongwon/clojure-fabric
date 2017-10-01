@@ -1,6 +1,8 @@
 (ns clojure-fabric.core
   "Clojure wrapper for Hyperledger Java SDK functions"
-  (:require [clojure-fabric.block :as block]
+  (:require [buddy.core.certificates :as certs]
+            [buddy.core.keys :as keys]
+            [clojure-fabric.block :as block]
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.channel :as channel]
             [clojure-fabric.crypto-suite :as crypto]
@@ -8,7 +10,6 @@
             [clojure-fabric.request :as request]
             [clojure-fabric.response :as response]
             [clojure-fabric.user :as user])
-  #_
   (:import [org.hyperledger.fabric.sdk User Enrollment]))
 
 ;; ;;;
@@ -99,9 +100,11 @@
 
 ;;;;;;;;;;; Ex
 (comment
-
+  ;; sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/clojure-fabric.key -out /tmp/clojure-fabric.crt
+  ;; mv <result-files> resource/creds/
   (defonce user-info {:name "test1" :roles nil :account nil :affiliation nil
-                      :certificate nil :private-key nil
+                      :certificate (slurp "resources/creds/clojure-fabric.crt")
+                      :private-key (keys/private-key "resources/creds/clojure-fabric.key")
                       :channel-name "mychannel"})
 
   ;; 1. Client setup
@@ -139,7 +142,7 @@
   ;; 2. Channel setup
   
   (defonce chan (client/new-channel cli "mychannel"))
-  (cha)
+  (chan/)
 
   )
 
