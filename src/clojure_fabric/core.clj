@@ -139,10 +139,10 @@
   (client/set-user-context cli user)
 
   
-  ;; 2. Channel setup
-  
+  ;; 2. Channel
   (defonce chan (client/new-channel cli "mychannel"))
-  (chan/)
-
+  (channel/add-orderer chan (client/new-orderer cli "orderer0" "grpc://localhost:7050"))
+  (channel/add-peer chan (client/new-peer cli "peer0" "grpc://localhost:7051"))
+  (channel/initialize chan)
   )
 
