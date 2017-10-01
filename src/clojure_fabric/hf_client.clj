@@ -226,7 +226,3 @@
   ^org.hyperledger.fabric.sdk.Peer
   peer0]
  (. hf-client queryInstalledChaincodes peer0))
-
-;;;;;;;;;;; Ex
-(defonce hf-client (create-new-instance))
-
