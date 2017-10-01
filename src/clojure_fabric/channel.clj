@@ -185,7 +185,7 @@
    ^java.util.Collection
    collection0
    generic-arg1]
-  (clojure.core/cond
+  (cond
    (instance? java.util.Collection generic-arg1)
    (.
     channel

@@ -100,49 +100,63 @@
 
 ;;;;;;;;;;; Ex
 (comment
-  ;; sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/clojure-fabric.key -out /tmp/clojure-fabric.crt
-  ;; mv <result-files> resource/creds/
-  (defonce user-info {:name "test1" :roles nil :account nil :affiliation nil
-                      :certificate (slurp "resources/creds/clojure-fabric.crt")
-                      :private-key (keys/private-key "resources/creds/clojure-fabric.key")
-                      :channel-name "mychannel"})
+  ;; sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resource/creds/clojure-fabric.key -out resource/creds/clojure-fabric.crt
+  ;; mv <result-files>
+
+  ;; Copy from fabcar example
+  (defonce options
+    {:channel-id "mychannel" :chaincode-id "fabcar" :network-url "grpc://localhost:7051"
+     :peer-admin
+     {:name "PeerAdmin"
+      :mspid "Org1MSP" :roles nil :affiliation "" 
+      :enrollment-secret "" 
+      :enrollment {:signing-identity "cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec" 
+                   :identity {:certificate "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n"}}}})
 
   ;; 1. Client setup
   (defonce cli (client/create-new-instance))
   (client/set-crypto-suite cli (crypto/get-crypto-suite))
-
+ 
   ;; 2. User context
-  (defonce enrollment
+  (defonce peer-admin-enrollment
     (reify Enrollment
       ;; FIXME: enrollment!
       ;; How to iniitiate key and cert?
       (getKey [this]
-        (:private-key user-info))
+        (-> (slurp (str "resources/creds/"
+                     (->  options
+                          (get-in [:peer-admin :enrollment :signing-identity])
+                          (str "-priv"))))
+            (keys/str->private-key)))
       (getCert [this]
-        (:certificate user-info))))
-  (defonce user
+        (get-in options [:peer-admin :enrollment :identity :certificate]))))
+  
+  (defonce peer-admin
     (reify User
       (getName [this]
-        (:name user-info))
+        (get-in options [:peer-admin :name]))
       ;; Set<String>
       (getRoles [this]
-        (:roles user-info))
+        (get-in options [:peer-admin :roles]))
       (getAccount [this]
-        (:account user-info))
+        nil)
       (getAffiliation [this]
-        (:affiliation user-info))
+        (get-in options [:peer-admin :affiliation]))
       (getEnrollment [this]
-        enrollment)
+        peer-admin-enrollment)
       (getMspId [this]
-        "Org1MSP")))
+        (get-in options [:peer-admin :mspid]))))
   
-  (client/set-user-context cli user)
+  (client/set-user-context cli peer-admin)
 
   
   ;; 2. Channel
-  (defonce chan (client/new-channel cli "mychannel"))
+  (defonce chan (client/new-channel cli (:channel-id options)))
   (channel/add-orderer chan (client/new-orderer cli "orderer0" "grpc://localhost:7050"))
   (channel/add-peer chan (client/new-peer cli "peer0" "grpc://localhost:7051"))
   (channel/initialize chan)
+  
+
+
   )
 
