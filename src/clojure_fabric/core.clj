@@ -6,7 +6,7 @@
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.channel :as channel]
             [clojure-fabric.crypto-suite :as crypto]
-            [clojure-fabric.hf-client :as client]
+            [clojure-fabric.client :as client]
             [clojure-fabric.request :as request]
             [clojure-fabric.response :as response]
             [clojure-fabric.user :as user])

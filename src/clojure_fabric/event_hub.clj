@@ -70,3 +70,4 @@
  get-connected-time
  [^org.hyperledger.fabric.sdk.EventHub event-hub]
  (. event-hub getConnectedTime))
+

@@ -26,7 +26,7 @@
  (cond
   (instance? java.util.ArrayList generic-arg1)
   (. transaction-request setArgBytes ^java.util.ArrayList generic-arg1)
-  (instance? Object generic-arg1)
+  :else
   (. transaction-request setArgBytes  generic-arg1)))
 
 ;;;  setArgs
@@ -38,7 +38,7 @@
  (cond
   (instance? java.util.ArrayList generic-arg1)
   (. transaction-request setArgs ^java.util.ArrayList generic-arg1)
-  (instance? Object generic-arg1)
+  :else
   (. transaction-request setArgs  generic-arg1)))
 
 ;;;  isSubmitted

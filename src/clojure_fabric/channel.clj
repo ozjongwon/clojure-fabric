@@ -1,5 +1,5 @@
 (ns clojure-fabric.channel
-  (:import [org.hyperledger.fabric.sdk Channel]))
+  (:import [org.hyperledger.fabric.sdk Channel ChannelConfiguration]))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.Channel
@@ -199,7 +199,9 @@
     sendTransaction
     collection0
     ^org.hyperledger.fabric.sdk.User
-    generic-arg1)))
+    generic-arg1)
+   :else
+   (. channel sendTransaction collection0 generic-arg1)))
  ([^org.hyperledger.fabric.sdk.Channel
    channel
    ^java.util.Collection
@@ -386,7 +388,7 @@
     org.hyperledger.fabric.sdk.ChannelConfiguration
     ^java.io.File
     generic-arg1)
-   (instance? Object generic-arg1)
+   :else
    (.
     channel-configuration
     org.hyperledger.fabric.sdk.ChannelConfiguration

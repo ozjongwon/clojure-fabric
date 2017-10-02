@@ -114,7 +114,7 @@
    ^org.hyperledger.fabric.sdk.ChaincodeResponse$Status
    generic-arg1
    string3)
-  (instance? Object generic-arg1)
+  :else
   (.
    chaincode-response
    org.hyperledger.fabric.sdk.ChaincodeResponse
@@ -191,3 +191,4 @@
   ^java.io.File
   file0]
  (. chaincode-endorsement-policy fromYamlFile file0))
+
