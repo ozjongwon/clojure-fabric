@@ -154,9 +154,6 @@
 ;;;;;;;;;;; Ex
 #_
 (comment
-  ;; sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resource/creds/clojure-fabric.key -out resource/creds/clojure-fabric.crt
-  ;; mv <result-files>
-
   ;; Copy from fabcar example
   (defonce options
     {:channel-id "mychannel" :chaincode-id "fabcar" :network-url "grpc://localhost:7051"
