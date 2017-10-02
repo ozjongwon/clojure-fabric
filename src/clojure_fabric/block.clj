@@ -1,5 +1,5 @@
 (ns clojure-fabric.block
-  (:import [org.hyperledger.fabric.sdk BlockInfo BlockEvent BlockChainInfo]))
+  (:import [org.hyperledger.fabric.sdk BlockInfo BlockEvent BlockchainInfo]))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.BlockInfo

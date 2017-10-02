@@ -1,6 +1,8 @@
 (ns clojure-fabric.core
   "Clojure wrapper for Hyperledger Java SDK functions"
-  (:require [buddy.core.certificates :as certs]
+  (:require [clojure.algo.generic.functor :as algo]
+            [clojure.string :as str]
+            [buddy.core.certificates :as certs]
             [buddy.core.keys :as keys]
             [clojure-fabric.block :as block]
             [clojure-fabric.chaincode :as chaincode]
@@ -11,6 +13,57 @@
             [clojure-fabric.response :as response]
             [clojure-fabric.user :as user])
   (:import [org.hyperledger.fabric.sdk User Enrollment]))
+
+(defn- fabric-package?
+  [clazz]
+  (->> (.getName clazz)
+       (re-find #"org\.hyperledger\.fabric\.sdk")
+       some?))
+
+(defprotocol IMarshall
+  "Defines the contract for converting Java types to Clojure
+  data. All return values from FABRIC service calls are
+  marshalled. As such, the FABRIC service-specific namespaces
+  will frequently need to implement this protocol in order
+  to provide convenient data representations. See also the
+  register-coercions function for coercing Clojure data to
+  Java types."
+  (marshall [obj]))
+
+(extend-protocol IMarshall
+  nil
+  (marshall [obj] nil)
+
+  java.util.Map
+  (marshall [obj]
+    (if-not (empty? obj)
+      (apply assoc {}
+             (interleave
+              (algo/fmap #(if (string? %) (keyword %) %)
+                         (apply vector (keys obj)))
+              (algo/fmap marshall
+                         (apply vector (vals obj)))))))
+
+  java.util.Collection
+  (marshall [obj]
+    (if (instance? clojure.lang.IPersistentSet obj)
+      obj
+      (algo/fmap marshall (apply vector obj))))
+
+  ;; java.util.Date
+  ;; (marshall [obj] (DateTime. (.getTime obj)))
+
+                                        ; `false` boolean objects (i.e. (Boolean. false)) come out of e.g.
+                                        ; .doesBucketExist, which wreak havoc on Clojure truthiness
+  Boolean
+  (marshall [obj] (when-not (nil? obj) (.booleanValue obj)))
+
+  ;; Object
+  ;; (marshall [obj]
+  ;;   (if (fabric-package? (class obj))
+  ;;     (get-fields obj)
+  ;;     obj))
+  )
 
 ;; ;;;
 ;; ;;; From Amazonica
