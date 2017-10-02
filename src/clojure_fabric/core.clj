@@ -16,11 +16,13 @@
   (:import [org.hyperledger.fabric.sdk User Enrollment]
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey]))
 
+(defrecord Client [client channel])
+
 (defonce client-lru-cache
   ;; FIXME: magic number
   (atom (cache/lru-cache-factory {} :threshold 64)))
 
-(defn really-make-client [priv-key cert & [{:keys [name roles account affiliation msp-id]}]]
+(defn really-make-client [msp-id name priv-key cert & [{:keys [roles account affiliation]}]]
   (let [new-client (client/create-new-instance)]
     (client/set-crypto-suite new-client (crypto/get-crypto-suite))
     (client/set-user-context new-client 
@@ -40,25 +42,27 @@
 (defn make-key+cert-hash [priv-key cert]
   (hash (str (.toString ^BCECPrivateKey priv-key) cert)))
 
-(defn make-client [priv-key cert & opts]
-  (let [cache-key (make-key+cert-hash priv-key cert)
-        lru-cache (swap! client-lru-cache cache/hit cache-key)]
-    (if-let [existing-client (cache/lookup lru-cache cache-key)]
-      existing-client
-      (let [new-client (really-make-client priv-key cert opts)]
-        (swap! client-lru-cache cache/miss cache-key new-client)
-        new-client))))
-
 (defn evict-client-from-cache [client]
-  (let [enrollment (.getEnrollment ^User (client/get-user-context))
+  (let [enrollment (.getEnrollment ^User (client/get-user-context client))
         cache-key (make-key+cert-hash (.getKey ^Enrollment enrollment)
                                       (.getCert ^Enrollment enrollment))]
     (swap! client-lru-cache cache/evict cache-key)))
 
+(defn make-client [msp-id name priv-key cert & opts]
+  (let [cache-key (make-key+cert-hash priv-key cert)
+        lru-cache (swap! client-lru-cache cache/hit cache-key)]
+    (if-let [existing-client (cache/lookup lru-cache cache-key)]
+      existing-client
+      (let [new-client (really-make-client msp-id name priv-key cert opts)]
+        (swap! client-lru-cache cache/miss cache-key new-client)
+        new-client))))
+
 
 ;;;;;;;;;;; Ex
 #_
-(make-client (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
+(make-client "Org1Msp"
+             "PeerAdmin"
+             (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
                  (keys/str->private-key))
              "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n")
 #_
