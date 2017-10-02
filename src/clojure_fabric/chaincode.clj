@@ -34,3 +34,41 @@
  get-name
  [^org.hyperledger.fabric.sdk.ChaincodeID chaincode-id]
  (. chaincode-id getName))
+
+;;;---------------------------------------------------
+;;;org.hyperledger.fabric.sdk.ChaincodeID$Builder
+;;;
+
+;;;  build
+(defn
+ build
+ [^org.hyperledger.fabric.sdk.ChaincodeID$Builder
+  chaincode-id$-builder]
+ (. chaincode-id$-builder build))
+
+;;;  setPath
+(defn
+ set-path
+ [^org.hyperledger.fabric.sdk.ChaincodeID$Builder
+  chaincode-id$-builder
+  ^java.lang.String
+  string0]
+ (. chaincode-id$-builder setPath string0))
+
+;;;  setVersion
+(defn
+ set-version
+ [^org.hyperledger.fabric.sdk.ChaincodeID$Builder
+  chaincode-id$-builder
+  ^java.lang.String
+  string0]
+ (. chaincode-id$-builder setVersion string0))
+
+;;;  setName
+(defn
+ set-name
+ [^org.hyperledger.fabric.sdk.ChaincodeID$Builder
+  chaincode-id$-builder
+  ^java.lang.String
+  string0]
+ (. chaincode-id$-builder setName string0))

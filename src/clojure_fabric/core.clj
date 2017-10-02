@@ -99,6 +99,7 @@
 
 
 ;;;;;;;;;;; Ex
+#_
 (comment
   ;; sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resource/creds/clojure-fabric.key -out resource/creds/clojure-fabric.crt
   ;; mv <result-files>
@@ -155,8 +156,16 @@
   (channel/add-orderer chan (client/new-orderer cli "orderer0" "grpc://localhost:7050"))
   (channel/add-peer chan (client/new-peer cli "peer0" "grpc://localhost:7051"))
   (channel/initialize chan)
-  
 
+  ;; 3. Request
+  (defonce req (client/new-transaction-proposal-request cli))
+
+  (defonce chaincode-id (-> (chaincode/new-builder)
+                            (chaincode/set-name "fabcar")
+                            (chaincode/set-version "1.0")
+                            (chaincode/set-path "resources/")
+                            (chaincode/build)))
+  (request/set-c)
 
   )
 
