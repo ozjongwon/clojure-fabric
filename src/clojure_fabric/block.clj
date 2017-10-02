@@ -1,6 +1,7 @@
 (ns clojure-fabric.block
   (:import [org.hyperledger.fabric.sdk BlockInfo]
            [org.hyperledger.fabric.sdk BlockEvent]
+           #_
            [org.hyperledger.fabric.sdk BlockChainInfo]))
 
 ;;;---------------------------------------------------
@@ -90,30 +91,30 @@
  (. block-event getEventHub))
 
 
-;;;---------------------------------------------------
-;;;org.hyperledger.fabric.sdk.BlockchainInfo
-;;;
+;; ;;;---------------------------------------------------
+;; ;;;org.hyperledger.fabric.sdk.BlockchainInfo
+;; ;;;
 
-;;;  getPreviousBlockHash
-(defn
- get-previous-block-hash
- [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
- (. blockchain-info getPreviousBlockHash))
+;; ;;;  getPreviousBlockHash
+;; (defn
+;;  get-previous-block-hash
+;;  [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
+;;  (. blockchain-info getPreviousBlockHash))
 
-;;;  getBlockchainInfo
-(defn
- get-blockchain-info
- [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
- (. blockchain-info getBlockchainInfo))
+;; ;;;  getBlockchainInfo
+;; (defn
+;;  get-blockchain-info
+;;  [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
+;;  (. blockchain-info getBlockchainInfo))
 
-;;;  getCurrentBlockHash
-(defn
- get-current-block-hash
- [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
- (. blockchain-info getCurrentBlockHash))
+;; ;;;  getCurrentBlockHash
+;; (defn
+;;  get-current-block-hash
+;;  [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
+;;  (. blockchain-info getCurrentBlockHash))
 
-;;;  getHeight
-(defn
- get-height
- [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
- (. blockchain-info getHeight))
+;; ;;;  getHeight
+;; (defn
+;;  get-height
+;;  [^org.hyperledger.fabric.sdk.BlockchainInfo blockchain-info]
+;;  (. blockchain-info getHeight))

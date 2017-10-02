@@ -165,7 +165,15 @@
                             (chaincode/set-version "1.0")
                             (chaincode/set-path "resources/")
                             (chaincode/build)))
-  (request/set-c)
+  (request/set-chaincode-id req chaincode-id)
+  (request/set-fcn req "some_function")
+  ;; timeout
+  (request/set-proposal-wait-time req 10000)
+  ;; FIXME: marshall
+  (request/set-args req ["some args"])
 
+  (defonce resp (channel/send-transaction-proposal chan req))
+  (defonce future1 (channel/send-transaction chan resp (client/get-user-context cli)))
+  (.get future1)
   )
 
