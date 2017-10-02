@@ -20,11 +20,7 @@
   ;; FIXME: magic number
   (atom (cache/lru-cache-factory {} :threshold 64)))
 
-(defn really-make-client [priv-key cert & [{:keys [name roles account affiliation msp-id]
-                                            :or {name "PeerAdmin" roles #{}
-                                                 account nil
-                                                 affiliation "affiliation"
-                                                 msp-id "Org1MSP"} }]]
+(defn really-make-client [priv-key cert & [{:keys [name roles account affiliation msp-id]}]]
   (let [new-client (client/create-new-instance)]
     (client/set-crypto-suite new-client (crypto/get-crypto-suite))
     (client/set-user-context new-client 
