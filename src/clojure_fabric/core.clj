@@ -11,147 +11,60 @@
             [clojure-fabric.client :as client]
             [clojure-fabric.request :as request]
             [clojure-fabric.response :as response]
-            [clojure-fabric.user :as user])
-  (:import [org.hyperledger.fabric.sdk User Enrollment]))
+            [clojure-fabric.user :as user]
+            [clojure.core.cache :as cache])
+  (:import [org.hyperledger.fabric.sdk User Enrollment]
+           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey]))
 
-(defn- fabric-package?
-  [clazz]
-  (->> (.getName clazz)
-       (re-find #"org\.hyperledger\.fabric\.sdk")
-       some?))
+(defonce client-lru-cache
+  ;; FIXME: magic number
+  (atom (cache/lru-cache-factory {} :threshold 64)))
 
-(defprotocol IMarshall
-  "Defines the contract for converting Java types to Clojure
-  data. All return values from FABRIC service calls are
-  marshalled. As such, the FABRIC service-specific namespaces
-  will frequently need to implement this protocol in order
-  to provide convenient data representations. See also the
-  register-coercions function for coercing Clojure data to
-  Java types."
-  (marshall [obj]))
+(defn really-make-client [priv-key cert & [{:keys [name roles account affiliation msp-id]
+                                            :or {name "PeerAdmin" roles #{}
+                                                 account nil
+                                                 affiliation "affiliation"
+                                                 msp-id "Org1MSP"} }]]
+  (let [new-client (client/create-new-instance)]
+    (client/set-crypto-suite new-client (crypto/get-crypto-suite))
+    (client/set-user-context new-client 
+                             (reify User
+                               (getName [this] name)
+                               ;; Set<String>
+                               (getRoles [this] roles)
+                               (getAccount [this] account)
+                               (getAffiliation [this] affiliation)
+                               (getEnrollment [this]
+                                 (reify Enrollment
+                                   (getKey [this] priv-key)
+                                   (getCert [this] cert)))
+                               (getMspId [this] msp-id)))
+    new-client))
 
-(extend-protocol IMarshall
-  nil
-  (marshall [obj] nil)
+(defn make-key+cert-hash [priv-key cert]
+  (hash (str (.toString ^BCECPrivateKey priv-key) cert)))
 
-  java.util.Map
-  (marshall [obj]
-    (if-not (empty? obj)
-      (apply assoc {}
-             (interleave
-              (algo/fmap #(if (string? %) (keyword %) %)
-                         (apply vector (keys obj)))
-              (algo/fmap marshall
-                         (apply vector (vals obj)))))))
+(defn make-client [priv-key cert & opts]
+  (let [cache-key (make-key+cert-hash priv-key cert)
+        lru-cache (swap! client-lru-cache cache/hit cache-key)]
+    (if-let [existing-client (cache/lookup lru-cache cache-key)]
+      existing-client
+      (let [new-client (really-make-client priv-key cert opts)]
+        (swap! client-lru-cache cache/miss cache-key new-client)
+        new-client))))
 
-  java.util.Collection
-  (marshall [obj]
-    (if (instance? clojure.lang.IPersistentSet obj)
-      obj
-      (algo/fmap marshall (apply vector obj))))
-
-  ;; java.util.Date
-  ;; (marshall [obj] (DateTime. (.getTime obj)))
-
-                                        ; `false` boolean objects (i.e. (Boolean. false)) come out of e.g.
-                                        ; .doesBucketExist, which wreak havoc on Clojure truthiness
-  Boolean
-  (marshall [obj] (when-not (nil? obj) (.booleanValue obj)))
-
-  ;; Object
-  ;; (marshall [obj]
-  ;;   (if (fabric-package? (class obj))
-  ;;     (get-fields obj)
-  ;;     obj))
-  )
-
-;; ;;;
-;; ;;; From Amazonica
-;; ;;;
-;; (defn- unmarshall
-;;   "Transform Clojure data to the required Java objects."
-;;   [types col]
-;;   (let [type (last (or (:actual types)
-;;                        (:generic types)))
-;;         pp   (partial populate types :actual)]
-;;     (try
-;;       (if (aws-package? type)
-;;         (if (map? col)
-;;           (if (contains? types :actual)
-;;             (if (< (:depth types) 3)
-;;               (apply assoc {}
-;;                      (interleave (fmap kw->str (apply vector (keys col)))
-;;                                  (fmap pp (apply vector (vals col)))))
-;;               (apply assoc {}
-;;                      (interleave (fmap kw->str (apply vector (keys col)))
-;;                                  [(fmap #(populate {:generic [type]}
-;;                                                    :generic
-;;                                                    %)
-;;                                         (first (apply vector (vals col))))])))
-;;             (populate types :generic col))
-;;           (if (and (contains? types :actual)
-;;                    (= (:depth types) 3))
-;;             (fmap #(fmap pp %) col)
-;;             (fmap pp col)))
-;;         (if (and (contains? types :actual)
-;;                  (aws-package? type))
-;;           (fmap pp col)
-;;           (fmap #(coerce-value % type) col)))
-;;       (catch Throwable e
-;;         (throw (RuntimeException. (str
-;;                                    "Failed to create an instance of "
-;;                                    (.getName type)
-;;                                    " from " col
-;;                                    " due to " e
-;;                                    ". Make sure the data matches an existing constructor and setters.")))))))
-
-;; (defprotocol IMarshall
-;;   "Defines the contract for converting Java types to Clojure
-;;   data. All return values from AWS service calls are
-;;   marshalled. As such, the AWS service-specific namespaces
-;;   will frequently need to implement this protocol in order
-;;   to provide convenient data representations. See also the
-;;   register-coercions function for coercing Clojure data to
-;;   Java types."
-;;   (marshall [obj]))
-
-;; (extend-protocol IMarshall
-;;   nil
-;;   (marshall [obj] nil)
-
-;;   java.util.Map
-;;   (marshall [obj]
-;;     (if-not (empty? obj)
-;;       (apply assoc {}
-;;         (interleave
-;;           (fmap #(if (string? %) (keyword %) %)
-;;                 (apply vector (keys obj)))
-;;           (fmap marshall
-;;                 (apply vector (vals obj)))))))
-
-;;   java.util.Collection
-;;   (marshall [obj]
-;;     (if (instance? clojure.lang.IPersistentSet obj)
-;;       obj
-;;       (fmap marshall (apply vector obj))))
-
-;;   java.util.Date
-;;   (marshall [obj] (DateTime. (.getTime obj)))
-
-;;   ; `false` boolean objects (i.e. (Boolean. false)) come out of e.g.
-;;   ; .doesBucketExist, which wreak havoc on Clojure truthiness
-;;   Boolean
-;;   (marshall [obj] (when-not (nil? obj) (.booleanValue obj)))
-
-;;   Object
-;;   (marshall [obj]
-;;     (if (aws-package? (class obj))
-;;         (get-fields obj)
-;;         obj)))
-
+(defn evict-client-from-cache [client]
+  (let [enrollment (.getEnrollment ^User (client/get-user-context))
+        cache-key (make-key+cert-hash (.getKey ^Enrollment enrollment)
+                                      (.getCert ^Enrollment enrollment))]
+    (swap! client-lru-cache cache/evict cache-key)))
 
 
 ;;;;;;;;;;; Ex
+#_
+(make-client (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
+                 (keys/str->private-key))
+             "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n")
 #_
 (comment
   ;; Copy from fabcar example
