@@ -4,6 +4,7 @@
             [clojure.string :as str]
             [buddy.core.certificates :as certs]
             [buddy.core.keys :as keys]
+            [promissum.core :as promis]
             [clojure-fabric.block :as block]
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.channel :as channel]
@@ -82,6 +83,11 @@
 
 ;;;
 ;;; Orderer and Peer
+;;;     Peers
+;;;             Endorser
+;;;             Commiter
+;;;             (Submitter)
+
 ;;;
 ;; Channel ends are: Peers(Endorsers,...), Orderers
 (defrecord OrdererOpts [name grpc-url properties]
@@ -196,17 +202,17 @@
   ;; (.get future1)
   )
 
-;;;
-;;; Peers
-;;;     Endorser
-;;;     Commiter
-;;;     (Submitter)
-
+(defn get-order-transaction-result [callback p]
+  (promis/deliver p)
+  (promis/future p)
+  (promis/then p callback))
 
 ;;;;;;;;;;; Ex
 #_
 (comment
   ;; Copy from fabcar example
+  (defn test-callback [v]
+    (println "***" v))
   (defonce cli
     (get-or-make-client "Org1MSP"
                         "PeerAdmin"
@@ -224,7 +230,9 @@
        (propose-transaction cli
                             "mychannel"
                             (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"}))
-       (order-transaction cli "mychannel"))
+       (order-transaction cli "mychannel")
+       (get-order-transaction-result test-callback))
+  
   )
 
 

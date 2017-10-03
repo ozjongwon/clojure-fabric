@@ -8,4 +8,5 @@
                  [org.clojure/algo.generic "0.1.2"]
                  [org.hyperledger.fabric-sdk-java/fabric-sdk-java "1.0.1"]
                  [buddy/buddy-core "1.4.0"]
+                 [funcool/promissum "0.3.3"]
                  [joda-time "2.9.9"]])
