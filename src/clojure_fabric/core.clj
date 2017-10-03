@@ -16,8 +16,6 @@
   (:import [org.hyperledger.fabric.sdk User Enrollment]
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey]))
 
-(defrecord Client [client channel])
-
 (defonce client-lru-cache
   ;; FIXME: magic number
   (atom (cache/lru-cache-factory {} :threshold 64)))
@@ -39,23 +37,37 @@
                                (getMspId [this] msp-id)))
     new-client))
 
-(defn make-key+cert-hash [priv-key cert]
+(defn priv-key+cert->hash [priv-key cert]
   (hash (str (.toString ^BCECPrivateKey priv-key) cert)))
 
 (defn evict-client-from-cache [client]
   (let [enrollment (.getEnrollment ^User (client/get-user-context client))
-        cache-key (make-key+cert-hash (.getKey ^Enrollment enrollment)
+        cache-key (priv-key+cert->hash (.getKey ^Enrollment enrollment)
                                       (.getCert ^Enrollment enrollment))]
     (swap! client-lru-cache cache/evict cache-key)))
 
-(defn make-client [msp-id name priv-key cert & opts]
-  (let [cache-key (make-key+cert-hash priv-key cert)
+(defn get-or-make-client [msp-id name priv-key cert & opts]
+  (let [cache-key (priv-key+cert->hash priv-key cert)
         lru-cache (swap! client-lru-cache cache/hit cache-key)]
     (if-let [existing-client (cache/lookup lru-cache cache-key)]
       existing-client
       (let [new-client (really-make-client msp-id name priv-key cert opts)]
         (swap! client-lru-cache cache/miss cache-key new-client)
         new-client))))
+
+(defn get-or-make-channel [client channel-id]
+  (or (client/get-channel client channel-id) (client/new-channel client channel-id)))
+
+#_
+(defn add-orderer
+  ([client channel-id orderer-opts-map]
+   ))
+
+;;;
+;;; Peers
+;;;     Endorser
+;;;     Commiter
+;;;     (Submitter)
 
 
 ;;;;;;;;;;; Ex
