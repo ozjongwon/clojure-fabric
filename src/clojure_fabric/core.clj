@@ -11,7 +11,6 @@
             [clojure-fabric.client :as client]
             [clojure-fabric.request :as request]
             [clojure-fabric.response :as response]
-            [clojure-fabric.user :as user]
             [clojure.core.cache :as cache])
   (:import [org.hyperledger.fabric.sdk User Enrollment]
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey]))
@@ -20,7 +19,7 @@
   ;; FIXME: magic number
   (atom (cache/lru-cache-factory {} :threshold 64)))
 
-(defn really-make-client [msp-id name priv-key cert & [{:keys [roles account affiliation]}]]
+(defn make-client [msp-id name priv-key cert & [{:keys [roles account affiliation]}]]
   (let [new-client (client/create-new-instance)]
     (client/set-crypto-suite new-client (crypto/get-crypto-suite))
     (client/set-user-context new-client 
@@ -37,7 +36,7 @@
                                (getMspId [this] msp-id)))
     new-client))
 
-(defn priv-key+cert->hash [priv-key cert]
+(defn- priv-key+cert->hash [priv-key cert]
   (hash (str (.toString ^BCECPrivateKey priv-key) cert)))
 
 (defn evict-client-from-cache [client]
@@ -51,18 +50,24 @@
         lru-cache (swap! client-lru-cache cache/hit cache-key)]
     (if-let [existing-client (cache/lookup lru-cache cache-key)]
       existing-client
-      (let [new-client (really-make-client msp-id name priv-key cert opts)]
+      (let [new-client (make-client msp-id name priv-key cert opts)]
         (swap! client-lru-cache cache/miss cache-key new-client)
         new-client))))
 
 (defn get-or-make-channel [client channel-id]
   (or (client/get-channel client channel-id) (client/new-channel client channel-id)))
 
-#_
-(defn add-orderer
-  ([client channel-id orderer-opts-map]
-   ))
-
+;; (defn add-orderer
+;;   ([client channel-id orderer-opts-map]
+;;    ;; Add an orderer if there is no orderer
+;;    (add-orderer channel-id orderer-opts-map false))
+;;   ([client channel-id orderer-opts-map force?]
+;;    (let [channel (get-or-make-channel client channel-id)]
+;;      (if-let [existing-orderers (and (not force?) (client/get))])
+         
+;;      )
+;;    )
+;;   )
 ;;;
 ;;; Peers
 ;;;     Endorser
