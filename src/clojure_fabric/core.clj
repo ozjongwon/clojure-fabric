@@ -15,17 +15,29 @@
   (:import [org.hyperledger.fabric.sdk User Enrollment Peer Orderer]
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey]))
 
-(defprotocol Marshall
-  (marshall [obj]))
 
-;;; FIXME: call marshal from generated code when return type matches
-(extend-protocol Marshall
-  java.util.Collection
-  (marshall [obj]
-    (if (instance? clojure.lang.IPersistentSet obj)
-      obj
-      (seq obj))))
+;; (defprotocol Marshall
+;;   (marshall [obj]))
 
+;; ;;; FIXME: call marshal from generated code when return type matches
+;; (extend-protocol Marshall
+;;   java.util.Collection
+;;   (marshall [obj]
+;;     (if (instance? clojure.lang.IPersistentSet obj)
+;;       obj
+;;       (seq obj))))
+
+(defn- general-lru-cache-read [k lru-cache miss-hit-fn & fn-args]
+    (let [cache-hit (swap! lru-cache cache/hit k)]
+      (if-let [found (cache/lookup cache-hit k)]
+        found
+        (let [new-entry (apply miss-hit-fn fn-args)]
+        (swap! lru-cache cache/miss k new-entry)
+        new-entry))))
+
+;;;
+;;; Client internals
+;;;
 (defonce client-lru-cache
   ;; FIXME: magic number
   (atom (cache/lru-cache-factory {} :threshold 64)))
@@ -56,54 +68,88 @@
                                       (.getCert ^Enrollment enrollment))]
     (swap! client-lru-cache cache/evict cache-key)))
 
+;;;
+;;; Channel
+;;;
 (defrecord ClientOpts [roles account affiliation])
 
 (defn get-or-make-channel [client channel-id]
   (or (client/get-channel client channel-id) (client/new-channel client channel-id)))
 
-(defprotocol ChannelEndOpts
+(defprotocol IChannelEndOpts
   (new-channel-end [channel-end client])
   (get-channel-ends [channel-end client]))
 
+;;;
+;;; Orderer and Peer
+;;;
 ;; Channel ends are: Peers(Endorsers,...), Orderers
 (defrecord OrdererOpts [name grpc-url properties]
-  ChannelEndOpts
+  IChannelEndOpts
     (new-channel-end [{:keys [name grpc-url properties]} client]
     (client/new-orderer client name grpc-url properties))
   (get-channel-ends [this channel]
     (channel/get-orderers channel)))
 
 (defrecord PeerOpts [name grpc-url properties]
-  ChannelEndOpts
+  IChannelEndOpts
   (new-channel-end [{:keys [name grpc-url properties]} client]
-    (client/new-orderer client name grpc-url properties))
+    (client/new-peer client name grpc-url properties))
   (get-channel-ends [this channel]
     (channel/get-peers channel)))
 
-(defprotocol ChannelEnd
+(defprotocol IChannelEnd
   (add-channel-end-to-channel [channel-end channel]))
   
-(extend-protocol ChannelEnd
+(extend-protocol IChannelEnd
   Orderer
   (add-channel-end-to-channel [this channel]
     (channel/add-orderer channel this)))
 
-(extend-protocol ChannelEnd
+(extend-protocol IChannelEnd
   Peer
   (add-channel-end-to-channel [this channel]
     (channel/add-peer channel this)))
 
 ;;;
+;;; Chaincode
+;;;
+;;; Chaincode - a set of functions
+(defonce chaincode-lru-cache
+  ;; FIXME: magic number
+  (atom (cache/lru-cache-factory {} :threshold 64)))
+
+(defrecord ChaincodeOpts [name version path])
+(defn make-ChaincodeOpts [{:keys [name version path]}]
+  (->ChaincodeOpts (when name (str/trim name))
+                   (when version (str/trim version))
+                   (when path (str/trim path))))
+
+(defn- chaincode->hash [{:keys [name version path]}]
+  (hash (str name " " version " " path)))
+
+(defn make-chaincode [{:keys [name version path]}]
+  (-> (chaincode/new-builder)
+      (chaincode/set-name name)
+      (chaincode/set-version version)
+      (chaincode/set-path path)
+      (chaincode/build)))
+
+(defn get-or-make-chaincode [chaincode]
+  (general-lru-cache-read (chaincode->hash chaincode)
+                          chaincode-lru-cache
+                          make-chaincode
+                          chaincode))
+
+(defn evict-chaincode-from-cache [])
+
+;;;
 ;;; High level interface
 ;;;
 (defn get-or-make-client [msp-id name priv-key cert opts]
-  (let [cache-key (priv-key+cert->hash priv-key cert)
-        lru-cache (swap! client-lru-cache cache/hit cache-key)]
-    (if-let [existing-client (cache/lookup lru-cache cache-key)]
-      existing-client
-      (let [new-client (make-client msp-id name priv-key cert opts)]
-        (swap! client-lru-cache cache/miss cache-key new-client)
-        new-client))))
+  (general-lru-cache-read (priv-key+cert->hash priv-key cert)
+                          client-lru-cache
+                          make-client msp-id name priv-key cert opts))
 
 (defn add-channel-end
   ([client channel-id channel-end-opts]
@@ -116,13 +162,38 @@
                (empty? (get-channel-ends channel-end-opts (get-or-make-channel client channel-id))))
        (add-channel-end-to-channel (new-channel-end channel-end-opts client) channel)))))
 
+(defrecord TransactionOpts [fcn args ;; chaincode-language chaincode-endorsement-policy
+                            proposal-wait-time])
 
-(defn propose-transaction [client channel-id]
-  (let [channel (get-or-make-channel client channel-id)
-        req (client/new-transaction-proposal-request client)]
-    (when-not (channel/is-initialized channel)
-      (channel/initialize channel))
-    )
+(defn propose-transaction
+  ([client channel-id chaincode-opts transaction-opts]
+   (propose-transaction client channel-id chaincode-opts transaction-opts nil))
+  ([client channel-id chaincode-opts {:keys [fcn args proposal-wait-time]} peers]
+   (let [channel (get-or-make-channel client channel-id)
+         req (client/new-transaction-proposal-request client)]
+     (when-not (channel/is-initialized channel)
+       (channel/initialize channel))
+     (request/set-chaincode-id req (get-or-make-chaincode chaincode-opts))
+     ;; Transaction options
+     ;; FIXME: what about chaincode-language, chaincode-endorsement-policy ?
+     (when fcn
+       (request/set-fcn req fcn))
+     (when args
+       (request/set-args req args))
+     (when proposal-wait-time
+       (request/set-proposal-wait-time req proposal-wait-time))
+     ;; Send Tx proposal to peers
+     (apply channel/send-transaction-proposal channel req peers))))
+
+(defn order-transaction
+  ([client channel-id proposal-responses]
+   (order-transaction client channel-id proposal-responses nil))
+  ([client channel-id proposal-responses orderers]
+   ;; Send Tx to orderers
+   (apply channel/send-transaction (get-or-make-channel client channel-id) proposal-responses orderers))
+  ;; (defonce resp (channel/send-transaction-proposal chan req))
+  ;; (defonce future1 (channel/send-transaction chan resp (client/get-user-context cli)))
+  ;; (.get future1)
   )
 
 ;;;
@@ -136,7 +207,7 @@
 #_
 (comment
   (defonce cli
-   (get-or-make-client "Org1Msp"
+   (get-or-make-client "Org1MSP"
                 "PeerAdmin"
                 (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
                     (keys/str->private-key))
@@ -145,7 +216,13 @@
   
   (add-channel-end cli "mychannel" (map->OrdererOpts {:name "orderer0" :grpc-url "grpc://localhost:7050"}))
   (add-channel-end cli "mychannel" (map->PeerOpts {:name "peer0" :grpc-url "grpc://localhost:7051"}))
-
+  (defonce proresp (propose-transaction cli
+                                        "mychannel"
+                                        (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"})
+                                        (map->TransactionOpts {:fcn "createCar"
+                                                               ;; FIXME: marshall/unmarshall
+                                                               :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
+                                                               :proposal-wait-time 10000})))
   )
 #_
 (comment
@@ -211,11 +288,11 @@
                             (chaincode/set-path "resources/")
                             (chaincode/build)))
   (request/set-chaincode-id req chaincode-id)
-  (request/set-fcn req "some_function")
+  (request/set-fcn req "createCar")
   ;; timeout
   (request/set-proposal-wait-time req 10000)
   ;; FIXME: marshall
-  (request/set-args req ["some args"])
+  (request/set-args req (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"]))
 
   (defonce resp (channel/send-transaction-proposal chan req))
   (defonce future1 (channel/send-transaction chan resp (client/get-user-context cli)))
