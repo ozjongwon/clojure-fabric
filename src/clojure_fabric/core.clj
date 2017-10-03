@@ -58,15 +58,6 @@
 
 (defrecord ClientOpts [roles account affiliation])
 
-(defn get-or-make-client [msp-id name priv-key cert opts]
-  (let [cache-key (priv-key+cert->hash priv-key cert)
-        lru-cache (swap! client-lru-cache cache/hit cache-key)]
-    (if-let [existing-client (cache/lookup lru-cache cache-key)]
-      existing-client
-      (let [new-client (make-client msp-id name priv-key cert opts)]
-        (swap! client-lru-cache cache/miss cache-key new-client)
-        new-client))))
-
 (defn get-or-make-channel [client channel-id]
   (or (client/get-channel client channel-id) (client/new-channel client channel-id)))
 
@@ -102,6 +93,18 @@
   (add-channel-end-to-channel [this channel]
     (channel/add-peer channel this)))
 
+;;;
+;;; High level interface
+;;;
+(defn get-or-make-client [msp-id name priv-key cert opts]
+  (let [cache-key (priv-key+cert->hash priv-key cert)
+        lru-cache (swap! client-lru-cache cache/hit cache-key)]
+    (if-let [existing-client (cache/lookup lru-cache cache-key)]
+      existing-client
+      (let [new-client (make-client msp-id name priv-key cert opts)]
+        (swap! client-lru-cache cache/miss cache-key new-client)
+        new-client))))
+
 (defn add-channel-end
   ([client channel-id channel-end-opts]
    ;; Add a {orderer peer} if there is no {orderer peer}
@@ -113,6 +116,14 @@
                (empty? (get-channel-ends channel-end-opts (get-or-make-channel client channel-id))))
        (add-channel-end-to-channel (new-channel-end channel-end-opts client) channel)))))
 
+
+(defn propose-transaction [client channel-id]
+  (let [channel (get-or-make-channel client channel-id)
+        req (client/new-transaction-proposal-request client)]
+    (when-not (channel/is-initialized channel)
+      (channel/initialize channel))
+    )
+  )
 
 ;;;
 ;;; Peers

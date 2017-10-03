@@ -5,7 +5,7 @@ Clojure-fabric is a Clojure wrapper of Hyperledger Fabric SDK.
 ## Status
 
    * Low level wrapper functions are all done by generating Clojure code from Java SDK.
-   * It is just enough to interact and learn Hyperledger to develop applications.
+   * It is just enough to interact with Hyperledger backend and learn Hyperledger workflow.
    * No frills and not Clojure friendly yet.
    * Some high level functions are written(and this will be the main focus for a while).
    
