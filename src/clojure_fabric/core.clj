@@ -216,13 +216,14 @@
   
   (add-channel-end cli "mychannel" (map->OrdererOpts {:name "orderer0" :grpc-url "grpc://localhost:7050"}))
   (add-channel-end cli "mychannel" (map->PeerOpts {:name "peer0" :grpc-url "grpc://localhost:7051"}))
-  (defonce proresp (propose-transaction cli
-                                        "mychannel"
-                                        (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"})
-                                        (map->TransactionOpts {:fcn "createCar"
-                                                               ;; FIXME: marshall/unmarshall
-                                                               :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
-                                                               :proposal-wait-time 10000})))
+  (->> (map->TransactionOpts {:fcn "createCar"
+                              ;; FIXME: marshall/unmarshall
+                              :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
+                              :proposal-wait-time 10000})
+       (propose-transaction cli
+                            "mychannel"
+                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"}))
+       (order-transaction cli "mychannel"))
   )
 #_
 (comment
