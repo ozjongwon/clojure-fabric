@@ -196,23 +196,19 @@
    (order-transaction client channel-id proposal-responses nil))
   ([client channel-id proposal-responses orderers]
    ;; Send Tx to orderers
-   (apply channel/send-transaction (get-or-make-channel client channel-id) proposal-responses orderers))
-  ;; (defonce resp (channel/send-transaction-proposal chan req))
-  ;; (defonce future1 (channel/send-transaction chan resp (client/get-user-context cli)))
-  ;; (.get future1)
-  )
+   (apply channel/send-transaction (get-or-make-channel client channel-id) proposal-responses orderers)))
 
-(defn get-order-transaction-result [callback p]
-  (promis/deliver p)
-  (promis/future p)
-  (promis/then p callback))
+(defn get-order-transaction-result [f then-fn catch-fn]
+  (-> f
+      (promis/then then-fn)
+      (promis/catch catch-fn)))
 
 ;;;;;;;;;;; Ex
 #_
 (comment
   ;; Copy from fabcar example
-  (defn test-callback [v]
-    (println "***" v))
+
+  ;; 1. Make a client
   (defonce cli
     (get-or-make-client "Org1MSP"
                         "PeerAdmin"
@@ -220,18 +216,23 @@
                             (keys/str->private-key))
                         "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n"
                         {}))
-  
+  ;; 2. Add (channel), orderer, and peer
   (add-channel-end cli "mychannel" (map->OrdererOpts {:name "orderer0" :grpc-url "grpc://localhost:7050"}))
   (add-channel-end cli "mychannel" (map->PeerOpts {:name "peer0" :grpc-url "grpc://localhost:7051"}))
-  (->> (map->TransactionOpts {:fcn "createCar"
-                              ;; FIXME: marshall/unmarshall
-                              :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
-                              :proposal-wait-time 10000})
-       (propose-transaction cli
-                            "mychannel"
-                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"}))
-       (order-transaction cli "mychannel")
-       (get-order-transaction-result test-callback))
+
+  ;; 3. Tx
+  (let [tx-future (->> (map->TransactionOpts {:fcn "createCar"
+                                              ;; FIXME: marshall/unmarshall
+                                              :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
+                                              :proposal-wait-time 10000})
+                       ;; 3-1. Proposal
+                       (propose-transaction cli
+                                            "mychannel"
+                                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"}))
+                       ;; 3-2 Order
+                       (order-transaction cli "mychannel"))]
+    ;; 4. Get Tx result 
+    (get-order-transaction-result tx-future #(println "OK" %) #(println "ERROR" %)))
   
   )
 
