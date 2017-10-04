@@ -4,13 +4,18 @@ Clojure-fabric is a Clojure wrapper of [Hyperledger Fabric SDK Java](https://git
 
 ## Status
 
-Generating Clojure files from Java SDK has flaws
-and it is not worth to pursue with limited time and efforts I can make.
-
-The problem is: Clojure does not support OOP well, and I have to construct missing parts by myself.
+### Initial idea - failed
+Generating Clojure files from Java SDK. Class inheritance has to be implemented manually in Clojure world.
+And it is not worth to pursue with limited time and efforts I can make.
 I realized the problem while I play with 'fabcar' example.
 
-I'm going to try an alternative method, dynamically constructing things at runtime using reflection.
+### Alternative idea - failed
+I tried an alternative method, dynamically constructing things at runtime using reflection.
+After spending a couple of hours, I found the alternative way won't work either.
+Java implementation does not provide consistent constructors and marshalling/unmarshalling has to be done manually.
+
+### Next step
+Back to the first option and add some workaround code or write a pure native SDK.
 
 ## License
 Copyright &copy; 2017 Jong-won Choi. 
