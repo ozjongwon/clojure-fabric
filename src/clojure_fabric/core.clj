@@ -217,9 +217,15 @@
                         "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n"
                         {}))
   ;; 2. Add (channel), orderer, and peer
-  (add-channel-end cli "mychannel" (map->OrdererOpts {:name "orderer0" :grpc-url "grpc://localhost:7050"}))
-  (add-channel-end cli "mychannel" (map->PeerOpts {:name "peer0" :grpc-url "grpc://localhost:7051"}))
+  (add-channel-end cli "mychannel" (map->OrdererOpts {:name "orderer" :grpc-url "grpc://localhost:7050"}))
+  (add-channel-end cli "mychannel" (map->PeerOpts {:name "peer" :grpc-url "grpc://localhost:7051"}))
 
+  ;; FIXME: need a way to get a peer ...
+  (client/query-installed-chaincodes cli (first (get-channel-ends (map->PeerOpts {:grpc-url "grpc://localhost:7051"})
+                                                                  (get-or-make-channel cli "mychannel"))))
+
+  (channel/query-by-chaincode cli (request/query-by))
+  
   ;; 3. Tx
   (let [tx-future (->> (map->TransactionOpts {:fcn "createCar"
                                               ;; FIXME: marshall/unmarshall
@@ -228,7 +234,7 @@
                        ;; 3-1. Proposal
                        (propose-transaction cli
                                             "mychannel"
-                                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "resources/"}))
+                                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "github.com/fabcar"}))
                        ;; 3-2 Order
                        (order-transaction cli "mychannel"))]
     ;; 4. Get Tx result 
