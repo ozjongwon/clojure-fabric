@@ -1,6 +1,6 @@
 # Clojure-fabric, Hyperledger Fabric SDK for Clojure using Java SDK
 
-Clojure-fabric is a Clojure wrapper of Hyperledger Fabric SDK.
+Clojure-fabric is a Clojure wrapper of [Hyperledger Fabric SDK Java](https://github.com/hyperledger/fabric-sdk-java).
 
 ## Status
 
