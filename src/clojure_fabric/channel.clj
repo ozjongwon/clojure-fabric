@@ -1,5 +1,5 @@
 (ns clojure-fabric.channel
-  (:import [org.hyperledger.fabric.sdk Channel ChannelConfiguration]))
+  (:import org.hyperledger.fabric.sdk.Channel))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.Channel
@@ -366,47 +366,33 @@
  ([^org.hyperledger.fabric.sdk.Channel channel]
   (. channel queryBlockchainInfo)))
 
+
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.sdk.ChannelConfiguration
+;;;org.hyperledger.fabric.sdk.Channel$1Pair
 ;;;
 
-;;;  org.hyperledger.fabric.sdk.ChannelConfiguration
-(defn
- channel-configuration
- ([^org.hyperledger.fabric.sdk.ChannelConfiguration
-   channel-configuration]
-  (.
-   channel-configuration
-   org.hyperledger.fabric.sdk.ChannelConfiguration))
- ([^org.hyperledger.fabric.sdk.ChannelConfiguration
-   channel-configuration
-   generic-arg1]
-  (cond
-   (instance? java.io.File generic-arg1)
-   (.
-    channel-configuration
-    org.hyperledger.fabric.sdk.ChannelConfiguration
-    ^java.io.File
-    generic-arg1)
-   :else
-   (.
-    channel-configuration
-    org.hyperledger.fabric.sdk.ChannelConfiguration
-    
-    generic-arg1))))
 
-;;;  setChannelConfiguration
-(defn
- set-channel-configuration
- [^org.hyperledger.fabric.sdk.ChannelConfiguration
-  channel-configuration
-  
-  bytes0]
- (. channel-configuration setChannelConfiguration bytes0))
+;;;---------------------------------------------------
+;;;org.hyperledger.fabric.sdk.Channel$BL
+;;;
 
-;;;  getChannelConfigurationAsBytes
+;;;  getHandle
 (defn
- get-channel-configuration-as-bytes
- [^org.hyperledger.fabric.sdk.ChannelConfiguration
-  channel-configuration]
- (. channel-configuration getChannelConfigurationAsBytes))
+ get-handle
+ [^org.hyperledger.fabric.sdk.Channel$BL channel$-bl]
+ (. channel$-bl getHandle))
+
+
+;;;---------------------------------------------------
+;;;org.hyperledger.fabric.sdk.Channel$ChannelEventQue
+;;;
+
+
+;;;---------------------------------------------------
+;;;org.hyperledger.fabric.sdk.Channel$MSP
+;;;
+
+
+;;;---------------------------------------------------
+;;;org.hyperledger.fabric.sdk.Channel$TL
+;;;

@@ -1,6 +1,5 @@
 (ns clojure-fabric.crypto-suite
-  (:refer-clojure :exclude [hash])
-  (:import [org.hyperledger.fabric.sdk.security CryptoSuite]))
+  (:import org.hyperledger.fabric.sdk.security.CryptoSuite))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.security.CryptoSuite
@@ -85,6 +84,7 @@
   
   bytes1]
  (. crypto-suite sign private-key0 bytes1))
+
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.security.CryptoSuite$Factory

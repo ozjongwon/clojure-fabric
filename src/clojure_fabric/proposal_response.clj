@@ -1,5 +1,5 @@
-(ns clojure-fabric.response
-  (:import [org.hyperledger.fabric.sdk ProposalResponse]))
+(ns clojure-fabric.proposal-response
+  (:import org.hyperledger.fabric.sdk.ProposalResponse))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.ProposalResponse

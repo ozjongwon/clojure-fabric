@@ -1,5 +1,5 @@
-(ns clojure-fabric.request
-  (:import [org.hyperledger.fabric.sdk TransactionRequest TransactionProposalRequest]))
+(ns clojure-fabric.transaction-request
+  (:import org.hyperledger.fabric.sdk.TransactionRequest))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.TransactionRequest
@@ -200,22 +200,28 @@
  [^org.hyperledger.fabric.sdk.TransactionRequest transaction-request]
  (. transaction-request getChaincodeEndorsementPolicy))
 
+
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.sdk.TransactionProposalRequest
+;;;org.hyperledger.fabric.sdk.TransactionRequest$Type
 ;;;
 
-;;;  setTransientMap
+;;;  GO_LANG
 (defn
- set-transient-map
- [^org.hyperledger.fabric.sdk.TransactionProposalRequest
-  transaction-proposal-request
-  ^java.util.Map
-  map0]
- (. transaction-proposal-request setTransientMap map0))
+ go_-lang
+ []
+ (org.hyperledger.fabric.sdk.TransactionRequest$Type/GO_LANG))
 
-;;;  newInstance
+;;;  values
 (defn
- new-instance
- [^org.hyperledger.fabric.sdk.User user0]
- (org.hyperledger.fabric.sdk.TransactionProposalRequest/newInstance
-  user0))
+ values
+ []
+ (org.hyperledger.fabric.sdk.TransactionRequest$Type/values))
+
+;;;  valueOf
+(defn
+ value-of
+ [^java.lang.String string0]
+ (org.hyperledger.fabric.sdk.TransactionRequest$Type/valueOf string0))
+
+;;;  JAVA
+(defn java [] (org.hyperledger.fabric.sdk.TransactionRequest$Type/JAVA))

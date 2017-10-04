@@ -1,5 +1,5 @@
-(ns clojure-fabric.client
-  (:import [org.hyperledger.fabric.sdk HFClient]))
+(ns clojure-fabric.hf-client
+  (:import org.hyperledger.fabric.sdk.HFClient))
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.sdk.HFClient
