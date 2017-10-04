@@ -13,6 +13,8 @@
             [clojure-fabric.chaincode-id :as chaincode-id]
             [clojure-fabric.transaction-request :as transaction-request]
             [clojure-fabric.query-by-chaincode-request :as query-by-chaincode-request]
+            [clojure-fabric.proposal-response :as proposal-response]
+            ;; [clojure-fabric.chaincode-response :as chaincode-response]
             ;; [clojure-fabric.base-exception :as base-exception]
             ;; [clojure-fabric.instantiate-proposal-request :as instantiate-proposal-request]
             ;; [clojure-fabric.blockchain-info :as blockchain-info]
@@ -45,12 +47,10 @@
             ;; [clojure-fabric.chaincode-input-deserializer :as chaincode-input-deserializer]
             ;; [clojure-fabric.proposal-exception :as proposal-exception]
             ;; [clojure-fabric.chaincode-invocation-spec-deserializer :as chaincode-invocation-spec-deserializer]
-            ;; [clojure-fabric.proposal-response :as proposal-response]
             ;; [clojure-fabric.chaincode-language :as chaincode-language]
             ;; [clojure-fabric.proposal-response-payload-deserializer :as proposal-response-payload-deserializer]
             ;; [clojure-fabric.chaincode-proposal-payload-deserializer :as chaincode-proposal-payload-deserializer]
             ;; [clojure-fabric.proto-utils :as proto-utils]
-            ;; [clojure-fabric.chaincode-response :as chaincode-response]
             ;; [clojure-fabric.query-exception :as query-exception]
             ;; [clojure-fabric.channel-configuration :as channel-configuration]
             ;; [clojure-fabric.query-installed-chaincodes-builder :as query-installed-chaincodes-builder]
@@ -257,25 +257,38 @@
 (defrecord TransactionOpts [fcn args ;; chaincode-language chaincode-endorsement-policy
                             proposal-wait-time])
 
-(defn propose-transaction
-  ([client channel-id chaincode-opts transaction-opts]
-   (propose-transaction client channel-id chaincode-opts transaction-opts nil))
-  ([client channel-id chaincode-opts {:keys [fcn args proposal-wait-time]} peers]
-   (let [channel (get-or-make-channel client channel-id)
-         req (hf-client/new-transaction-proposal-request client)]
-     (when-not (channel/is-initialized channel)
-       (channel/initialize channel))
-     (transaction-request/set-chaincode-id req (get-or-make-chaincode chaincode-opts))
-     ;; Transaction options
-     ;; FIXME: what about chaincode-language, chaincode-endorsement-policy ?
-     (when fcn
-       (transaction-request/set-fcn req fcn))
-     (when args
-       (transaction-request/set-args req args))
-     (when proposal-wait-time
-       (transaction-request/set-proposal-wait-time req proposal-wait-time))
-     ;; Send Tx proposal to peers
-     (apply channel/send-transaction-proposal channel req peers))))
+#_
+(defn make-proposal-tx-request
+  [client channel-id chaincode-opts {:keys [fcn args proposal-wait-time]}]
+  (let [channel (get-or-make-channel client channel-id)
+        req (hf-client/new-transaction-proposal-request client)]
+    (when-not (channel/is-initialized channel)
+      (channel/initialize channel))
+    (transaction-request/set-chaincode-id req (get-or-make-chaincode chaincode-opts))
+    ;; Transaction options
+    ;; FIXME: what about chaincode-language, chaincode-endorsement-policy ?
+    (when fcn
+      (transaction-request/set-fcn req fcn))
+    (when args
+      (transaction-request/set-args req args))
+    (when proposal-wait-time
+      (transaction-request/set-proposal-wait-time req proposal-wait-time))
+    req))
+
+(defn prepare-chaincode-proposal-tx-req
+  [channel proposal-tx-req chaincode-opts {:keys [fcn args proposal-wait-time]}]
+  (when-not (channel/is-initialized channel)
+    (channel/initialize channel))
+  (transaction-request/set-chaincode-id proposal-tx-req (get-or-make-chaincode chaincode-opts))
+  ;; Transaction options
+  ;; FIXME: what about chaincode-language, chaincode-endorsement-policy ?
+  (when fcn
+    (transaction-request/set-fcn proposal-tx-req fcn))
+  (when args
+    (transaction-request/set-args proposal-tx-req args))
+  (when proposal-wait-time
+    (transaction-request/set-proposal-wait-time proposal-tx-req proposal-wait-time))
+  proposal-tx-req)
 
 (defn order-transaction
   ([client channel-id proposal-responses]
@@ -313,10 +326,22 @@
   ;; FIXME: init for query-by-chaincode
   (channel/initialize (get-or-make-channel cli "mychannel"))
 
-  (let [proposal-req (hf-client/new-query-proposal-request)]
-    (transaction-request/set-args req (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"]))
-    (query-by-chaincode-request/set))
+  (let [proposal-req (hf-client/new-query-proposal-request cli)
+        channel (get-or-make-channel cli "mychannel")]
+    (->> (map->TransactionOpts {:fcn "queryAllCars"
+                                :args nil
+                                :proposal-wait-time 10000})
+         ;; 3-1. Proposal
+         (prepare-chaincode-proposal-tx-req channel
+                                            proposal-req
+                                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "github.com/fabcar"}))
+         ;; Send Tx proposal to peers
+         (channel/query-by-chaincode channel)
+         ;; 3-2 Order
+         (order-transaction cli "mychannel")))
+  
   (channel/query-by-chaincode (get-or-make-channel cli "mychannel")
+                              (prepare-chaincode-proposal-tx-req cli "mychannel" )
                               (query-by-chaincode-request/new-instance (hf-client/get-user-context cli)))
   
   
@@ -326,9 +351,12 @@
                                               :args (java.util.ArrayList. ["CAR10" "Chevy" "Volt" "Red" "Nick"])
                                               :proposal-wait-time 10000})
                        ;; 3-1. Proposal
-                       (propose-transaction cli
-                                            "mychannel"
-                                            (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "github.com/fabcar"}))
+                       (prepare-chaincode-proposal-tx-req cli
+                                                "mychannel"
+                                                (make-ChaincodeOpts {:name "fabcar" :version "1.0" :path "github.com/fabcar"}))
+                       
+                       ;; Send Tx proposal to peers
+                       (apply channel/send-transaction-proposal channel req)
                        ;; 3-2 Order
                        (order-transaction cli "mychannel"))]
     ;; 4. Get Tx result 
