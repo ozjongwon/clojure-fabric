@@ -1,13 +1,16 @@
 (ns clojure-fabric.crypto-suite
   (:import [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
-           [org.bouncycastle.jce.spec ECNamedCurveParameterSpec]
+           [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECParameterSpec ECNamedCurveSpec]
            [org.bouncycastle.jce.provider BouncyCastleProvider]
-           [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA]
-           [java.security KeyPairGenerator SecureRandom]))
+           [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
+            BCECPrivateKey BCECPublicKey]
+           [java.security KeyPairGenerator SecureRandom Security])
+  (:refer-clojure :exclude [hash]))
 
-(defonce ecdsa-parameter-specs {:secp256r1 (ECNamedCurveTable/getParameterSpec "secp256r1")
-                                :secp384r1 (ECNamedCurveTable/getParameterSpec "secp384r1")})
+;; Add provider!
+(Security/addProvider (BouncyCastleProvider.))
+
 ;;;generate_key
 (defn generate-key
   "Generate a key based on the options. The utput can be a private key or a public key in an
@@ -24,7 +27,35 @@
         param-specs (-> ephemeral name ECNamedCurveTable/getParameterSpec)]
     (.initialize generator param-specs (SecureRandom.))
     (.generateKeyPair generator)))
+;; (generate-key :ECDSA :secp256r1)
 
+
+(defprotocol IKey
+  (algorithm [this])
+  (curve-spec [this])
+  (curve-params [this]))
+
+(defn- %curve-params [params]
+  ;; (.multiply g (biginteger 100000000000000000000))
+  ;; 
+  (zipmap [:curve :g :h :n]
+          ((juxt #(.getCurve ^ECParameterSpec %) #(.getG ^ECParameterSpec %) #(.getH ^ECParameterSpec %)
+                 #(.getN ^ECParameterSpec %))
+           params)))
+
+(extend-type BCECPrivateKey
+  IKey
+  (algorithm [this] (-> this .getAlgorithm keyword))
+  (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
+  (curve-params [this] (-> this .getParameters %curve-params)))
+
+(extend-type BCECPublicKey
+  IKey
+  (algorithm [this] (-> this .getAlgorithm keyword))
+  (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
+  (curve-params [this] (-> this .getParameters %curve-params)))
+
+;;; http://www.bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories
 ;;;deriveKey
 (defn derive-key
   "Derives a key from k using opts.
@@ -33,11 +64,20 @@
         opts (Object)
   Returns
         (Key) derived key"
-  [k {:keys [algorithm ephemeral] :as opt}]
+  [k {:keys [ephemeral] :as opt}]
+  ;; From JS SDK doc
   ;; Derives the new private key from the source public key using the parameters passed in the opts.
   ;; This operation is needed for deriving private keys corresponding to the Transaction
   ;; Certificates.
+
+  ;; From Go SDK
+  ;;
+  ;;1. 
   )
+
+
+
+
 
 ;;; importKey
 (defn import-key
