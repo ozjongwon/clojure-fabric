@@ -30,10 +30,11 @@
 ;; (generate-key :ECDSA :secp256r1)
 
 
-(defprotocol IKey
+(defprotocol IBCECKey
   (algorithm [this])
   (curve-spec [this])
-  (curve-params [this]))
+  (curve-params [this])
+  (%derive-key [this]))
 
 (defn- %curve-params [params]
   ;; (.multiply g (biginteger 100000000000000000000))
@@ -42,18 +43,22 @@
           ((juxt #(.getCurve ^ECParameterSpec %) #(.getG ^ECParameterSpec %) #(.getH ^ECParameterSpec %)
                  #(.getN ^ECParameterSpec %))
            params)))
-
+;;;
+;;; To avoid reflection at run time, duplicate code :(
+;;;
 (extend-type BCECPrivateKey
-  IKey
+  IBCECKey
   (algorithm [this] (-> this .getAlgorithm keyword))
   (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
-  (curve-params [this] (-> this .getParameters %curve-params)))
+  (curve-params [this] (-> this .getParameters %curve-params))
+  (%derive-key [this opts]))
 
 (extend-type BCECPublicKey
-  IKey
+  IBCECKey
   (algorithm [this] (-> this .getAlgorithm keyword))
   (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
-  (curve-params [this] (-> this .getParameters %curve-params)))
+  (curve-params [this] (-> this .getParameters %curve-params))
+  (%derive-key [this opts]))
 
 ;;; http://www.bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories
 ;;;deriveKey
@@ -64,20 +69,12 @@
         opts (Object)
   Returns
         (Key) derived key"
-  [k {:keys [ephemeral] :as opt}]
+  [k opts]
   ;; From JS SDK doc
   ;; Derives the new private key from the source public key using the parameters passed in the opts.
   ;; This operation is needed for deriving private keys corresponding to the Transaction
   ;; Certificates.
-
-  ;; From Go SDK
-  ;;
-  ;;1. 
-  )
-
-
-
-
+  (%derive-key k opts))
 
 ;;; importKey
 (defn import-key
