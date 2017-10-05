@@ -4,6 +4,9 @@ This is my own reference implementation of [Fabric SDK Design Spec](https://docs
 ## Status
 This is no longer a Java SDK wrapper, I decided to implement from scratch.
 
+### Status Update
+Basic modules done, some Crypto stuff.
+
 ### Initial idea - failed
 Generating Clojure files from Java SDK. Class inheritance has to be implemented manually in Clojure world.
 And it is not worth to pursue with limited time and efforts I can make.
