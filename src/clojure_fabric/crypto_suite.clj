@@ -1,12 +1,16 @@
 (ns clojure-fabric.crypto-suite
+  (:require [clojure.data.codec.base64 :as b64])
   (:import [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
            [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECParameterSpec ECNamedCurveSpec]
            [org.bouncycastle.jce.provider BouncyCastleProvider]
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
-           [java.security KeyPairGenerator SecureRandom Security])
+           [java.security KeyPairGenerator KeyFactory SecureRandom Security])
   (:refer-clojure :exclude [hash]))
+;;;
+;;; http://www.bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories
+;;;
 
 ;; Add provider!
 (Security/addProvider (BouncyCastleProvider.))
@@ -20,21 +24,22 @@
         “ephemeral”.
   Returns
         Result (Key): The key object"
-  [algorithm ephemeral]
+  [algorithm {:keys [curve ephemeral]}]
   (let [generator (-> algorithm
                       name
                       (KeyPairGenerator/getInstance BouncyCastleProvider/PROVIDER_NAME))
-        param-specs (-> ephemeral name ECNamedCurveTable/getParameterSpec)]
+        param-specs (-> curve name ECNamedCurveTable/getParameterSpec)]
     (.initialize generator param-specs (SecureRandom.))
     (.generateKeyPair generator)))
-;; (generate-key :ECDSA :secp256r1)
-
+;;;
+;;; Ex - (generate-key :ECDSA :secp256r1)
+;;; 
 
 (defprotocol IBCECKey
   (algorithm [this])
   (curve-spec [this])
   (curve-params [this])
-  (%derive-key [this]))
+  (%derive-key [this opts]))
 
 (defn- %curve-params [params]
   ;; (.multiply g (biginteger 100000000000000000000))
@@ -43,6 +48,19 @@
           ((juxt #(.getCurve ^ECParameterSpec %) #(.getG ^ECParameterSpec %) #(.getH ^ECParameterSpec %)
                  #(.getN ^ECParameterSpec %))
            params)))
+
+(defn derive-bcec-key [curve-params]
+  ;; {:curve
+  ;;  #object[org.bouncycastle.math.ec.custom.sec.SecP256R1Curve 0x5fbf2061 "org.bouncycastle.math.ec.custom.sec.SecP256R1Curve@d4e69b7f"],
+  ;;  :g
+  ;;  #object[org.bouncycastle.math.ec.custom.sec.SecP256R1Point 0x642eb9c "(6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296,4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5,1)"],
+  ;;  :h 1,
+  ;;  :n
+  ;;  115792089210356248762697446949407573529996955224135760342422259061068512044369}
+  ;;
+  :TBD
+  )
+
 ;;;
 ;;; To avoid reflection at run time, duplicate code :(
 ;;;
@@ -51,16 +69,18 @@
   (algorithm [this] (-> this .getAlgorithm keyword))
   (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
   (curve-params [this] (-> this .getParameters %curve-params))
-  (%derive-key [this opts]))
+  (%derive-key [this opts]
+    (derive-bcec-key (curve-params this))))
 
 (extend-type BCECPublicKey
   IBCECKey
   (algorithm [this] (-> this .getAlgorithm keyword))
   (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
   (curve-params [this] (-> this .getParameters %curve-params))
-  (%derive-key [this opts]))
+  (%derive-key [this opts]
+    (derive-bcec-key (curve-params this))))
 
-;;; http://www.bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories
+
 ;;;deriveKey
 (defn derive-key
   "Derives a key from k using opts.
@@ -74,6 +94,16 @@
   ;; Derives the new private key from the source public key using the parameters passed in the opts.
   ;; This operation is needed for deriving private keys corresponding to the Transaction
   ;; Certificates.
+  ;;
+  ;; Implementation Note:
+  ;;    Only Go SDK implements this function(and hard to understand Go code!).
+  ;;    Wait until ithere are test cases to check correctness
+  ;;
+  ;; (def kp (generate-key :ECDSA :secp256r1))
+  ;; (def pri (.getPrivate kp))
+  ;; (def pub (.getPublic kp))
+  ;; (derive-key pri {})
+  ;; 
   (%derive-key k opts))
 
 ;;; importKey
@@ -84,8 +114,16 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  []
-  )
+  [k-str {:keys [algorithm curve ephemeral]}]
+  ;; (def b64-str (-> pub .getEncoded b64/encode String.))
+  ;;  {algorithm :ECDSA :curve :secp256r1}
+  (let [decoded-bytes (b64/decode (.getBytes ^String k-str))
+        key-factory (-> algorithm
+                        name
+                        (KeyFactory/getInstance BouncyCastleProvider/PROVIDER_NAME))
+        param-specs (-> curve name ECNamedCurveTable/getParameterSpec)
+        point (.decodePoint (.getCurve param-specs) decoded-bytes)]
+    (.generatePublic key-factory )))
 
 ;;;getKey
 (defn get-key
