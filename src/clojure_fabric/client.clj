@@ -18,7 +18,7 @@
 
 (defonce ^:private clients (atom {}))
 
-(def ^:dynamic ^:private *client* nil)
+(def ^:dynamic *client* nil)
 (defmacro with-client-binding
   [client & body]
   `(binding [*client* ~client]

@@ -14,12 +14,12 @@
 
 (ns clojure-fabric.user)
 
-(def ^:dynamic ^:private *user* nil)
+(def ^:dynamic *user* nil)
 
 (defrecord User [name roles certificate])
 
-(defn %make-user [{:keys [name roles certificate]}]
-  (map->User {:name (atom name) :roles (atom roles) :certificate (atom certificate)}))
+(defn %make-user [m]
+  (map->User m))
 
 ;;; get_name
 (defn get-name
@@ -56,34 +56,13 @@
    (:certificate user)))
 
 ;;; set_name
-(defn set-name
-  "Set the user’s name/id. 
-  Params: 
-  name (string[]): The user name / id."
-  ([name]
-   (set-name *user* name))
-  ([user name]
-   (swap! (:name user) name)))
+;;; Immutable
 
 ;;; set_roles
-(defn set-roles
- "Set the user’s roles. See above for legitimate values.
-  Params: 
-        Roles (string[]): The list of roles for the user"
-  ([roles]
-   (set-roles *user* roles))
-  ([user roles]
-   (swap! (:roles user) roles)))
+;;; Immutable
 
 ;;; set_enrollment_certificate
-(defn set-enrollment-certificate
-  "Set the user’s Enrollment Certificate.
-  Params: 
-        Certificate : The certificate in PEM format signed by the trusted CA"
-  ([certificate]
-    (set-enrollment-certificate *user* certificate))
- ([user certificate]
-  (swap! (:certificate user) certificate)))
+;;; Immutable
 
 
 ;;; generate_tcerts
