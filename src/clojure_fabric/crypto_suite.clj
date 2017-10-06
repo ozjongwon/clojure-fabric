@@ -6,10 +6,11 @@
            [org.bouncycastle.jce.provider BouncyCastleProvider]
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
+           [org.bouncycastle.util.encoders Hex]
            [java.util Arrays]
            [javax.crypto.spec SecretKeySpec]
            [javax.crypto SecretKeyFactory]
-           [java.security KeyFactory KeyPairGenerator SecureRandom Security]
+           [java.security KeyFactory KeyPairGenerator SecureRandom Security MessageDigest]
            [java.security.spec ECPoint ECParameterSpec ECPublicKeySpec ECPrivateKeySpec])
   (:refer-clojure :exclude [hash]))
 
@@ -124,14 +125,16 @@
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
   [#^bytes k-byte-array {:keys [algorithm curve ephemeral type]}]
+  ;; FIXME: What is the type of input k-byte-array? Base64 encoded string or decoded bytes?
+  ;;    (current implementation assumes decoded bytes)
   (let [curve-name (name curve)
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
         curve (.getCurve parameter-spec)
         curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
-        key-size (count k-byte-array)
-        middle (int (/ key-size 2))]
+        key-size (count k-byte-array)]
     (if (= curve-size key-size)
-      (let [kf (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
+      (let [middle (int (/ key-size 2))
+            kf (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
             spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
                                              (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
                                    (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
@@ -139,12 +142,11 @@
         (case type
           :public (.generatePublic kf spec)
           :private (.generatePublic kf spec)))
-      (throw (Exception. (format "Key size(%d) does not match with the given curve(%d)" key-size curve-size))))))
+      (throw (Exception. (format "Key size(%d) does not match with the chosen curve(%d)" key-size curve-size))))))
 ;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
 ;; (def x (Arrays/copyOfRange *1 1 65))
 ;; (import-key x {:algorithm :ECDSA :curve :secp256r1 :type :public})
                                          
-
 
 ;;;getKey
 (defn get-key
@@ -154,7 +156,9 @@
   Returns
         (Key) An instance of the Key class corresponding to the ski"
   [ski]
-  
+  ;; Implementation Note:
+  ;;    This is a data store operation. Not supported yet
+  :TBD
   )
 
 ;;;hash
@@ -162,11 +166,16 @@
   "Hashes messages msg using options opts.
   Params
         msg (byte[])
-        opts (Object) an object that encapsulates property “algorithm” with values for hashing algorithms such as “SHA2” or “SHA3”
+        opts (Object) an object that encapsulates property “algorithm” with values for
+        hashing algorithms such as “SHA2” or “SHA3”
   Returns
         (Key) An instance of the Key class corresponding to the ski"
-  [msg opts]
-  )
+  [msg {:keys [algorithm]}]
+  (let [md (MessageDigest/getInstance (name algorithm))]
+    (Hex/toHexString (.digest md (if (string? msg)
+                                   (.getBytes ^String msg)
+                                   msg)))))
+;;(hash test-msg {:algorithm :sha384})
 
 
 ;;;encrypt
@@ -291,5 +300,16 @@
 "f5B7ECxK0kdmXPXIEBiizYACIQD2x39Q4oVwO5uL6m3AVNI98C2LZWa0g2iea8wk"
 "BAHpeA=="
 "-----END CERTIFICATE-----"))
+
+  (= (hash test-msg {:algorithm :sha256}) hash-msg-sha256)
+  (= (hash test-long-msg {:algorithm :sha256}) hash-long-msg-sha256)
+  (= (hash test-msg {:algorithm :sha384}) hash-msg-sha384)
+  (= (hash test-long-msg {:algorithm :sha384}) hash-long-msg-sha384)
+
+  (= (hash test-msg {:algorithm :sha3-256}) hash-msg-sha3-256)
+  (= (hash test-long-msg {:algorithm :sha3-256}) hash-long-msg-sha3-256)
+  (= (hash test-msg {:algorithm :sha3-384}) hash-msg-sha3-384)
+  (= (hash test-long-msg {:algorithm :sha3-384}) hash-long-msg-sha3-384)
+  
   )
 
