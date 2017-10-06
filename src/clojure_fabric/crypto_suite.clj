@@ -123,7 +123,7 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  [#^bytes k-byte-array {:keys [algorithm curve ephemeral]}]
+  [#^bytes k-byte-array {:keys [algorithm curve ephemeral type]}]
   (let [curve-name (name curve)
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
         curve (.getCurve parameter-spec)
@@ -131,13 +131,19 @@
         key-size (count k-byte-array)
         middle (int (/ key-size 2))]
     (if (= curve-size key-size)
-      (.generatePublic (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
-                       (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
-                                                   (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
-                                         (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
-                                                            (.getH parameter-spec) (.getSeed parameter-spec))))
+      (let [kf (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
+            spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
+                                             (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
+                                   (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
+                                                      (.getH parameter-spec) (.getSeed parameter-spec)))]
+        (case type
+          :public (.generatePublic kf spec)
+          :private (.generatePublic kf spec)))
       (throw (Exception. (format "Key size(%d) does not match with the given curve(%d)" key-size curve-size))))))
-
+;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
+;; (def x (Arrays/copyOfRange *1 1 65))
+;; (import-key x {:algorithm :ECDSA :curve :secp256r1 :type :public})
+                                         
 
 
 ;;;getKey
