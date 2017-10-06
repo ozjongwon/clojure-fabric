@@ -6,6 +6,7 @@
            [org.bouncycastle.jce.provider BouncyCastleProvider]
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
+           [java.util Arrays]
            [javax.crypto.spec SecretKeySpec]
            [javax.crypto SecretKeyFactory]
            [java.security KeyFactory KeyPairGenerator SecureRandom Security]
@@ -122,16 +123,21 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  [k-byte-array {:keys [algorithm curve ephemeral]}]
-  (let [offset 1 ;; Assume input is 1 + 64 bytes
-        curve-name (name curve)
-        kf (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
-        point (ECPoint. (java.math.BigInteger. 1 #^bytes (java.util.Arrays/copyOfRange #^bytes k-byte-array offset (+ offset 32)))
-                        (java.math.BigInteger. 1 #^bytes (java.util.Arrays/copyOfRange #^bytes k-byte-array (+ offset 32) (count k-byte-array))))
+  [#^bytes k-byte-array {:keys [algorithm curve ephemeral]}]
+  (let [curve-name (name curve)
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
-        spec (ECNamedCurveSpec. curve-name (.getCurve parameter-spec) (.getG parameter-spec) (.getN parameter-spec)
-                                (.getH parameter-spec) (.getSeed parameter-spec))]
-    (.generatePublic kf (ECPublicKeySpec. point spec))))
+        curve (.getCurve parameter-spec)
+        curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
+        key-size (count k-byte-array)
+        middle (int (/ key-size 2))]
+    (if (= curve-size key-size)
+      (.generatePublic (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
+                       (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
+                                                   (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
+                                         (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
+                                                            (.getH parameter-spec) (.getSeed parameter-spec))))
+      (throw (Exception. (format "Key size(%d) does not match with the given curve(%d)" key-size curve-size))))))
+
 
 
 ;;;getKey
@@ -144,7 +150,6 @@
   [ski]
   
   )
-
 
 ;;;hash
 (defn hash
