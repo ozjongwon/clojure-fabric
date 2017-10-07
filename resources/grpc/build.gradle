@@ -1,0 +1,60 @@
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+// IMPORTANT: You probably want the non-SNAPSHOT version of gRPC. Make sure you
+// are looking at a tagged version of the example and not "master"!
+
+// Feel free to delete the comment at the next line. It is just for safely
+// updating the version in our release process.
+// https://jira.hyperledger.org/browse/FAB-6295
+
+dependencies {
+  compile 'com.google.protobuf:protobuf-java:3.4.0'
+  compile "io.grpc:grpc-netty:1.6.1"
+  compile "io.grpc:grpc-protobuf:1.6.1"
+  compile "io.grpc:grpc-stub:1.6.1"
+}
+
+// FIXME 
+sourceSets {
+  main {
+    proto {
+      srcDir 'protos'
+//      srcDir 'proto'      
+    }
+  }
+}
+
+protobuf {
+  generatedFilesBaseDir = "$projectDir/generated"
+
+  protoc {
+    artifact = 'com.google.protobuf:protoc:3.4.0'
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:1.6.1"
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {
+        option 'enable_deprecated=false'
+      }
+    }
+  }
+}
