@@ -9,4 +9,15 @@
                  [medley "1.0.0"]
                  ;;[buddy/buddy-core "1.4.0"]
                  [org.bouncycastle/bcprov-jdk15on "1.58"]
-                 [joda-time "2.9.9"]])
+                 [joda-time "2.9.9"]
+
+                 [io.grpc/grpc-core "1.6.1" ]
+                 [io.grpc/grpc-netty "1.6.1" :exclusions [io.grpc/grpc-core io.netty/netty-codec-http2]]
+                 [io.grpc/grpc-protobuf "1.6.1"]
+                 [io.grpc/grpc-stub "1.6.1"]
+                 [io.netty/netty-codec-http2 "4.1.11.Final"]
+                 ]
+  :main ^:skip-aot grpc-clj.core
+  :aot [grpc-clj.server]
+  :target-path "target/%s"
+  :java-source-paths ["build/generated/source/proto/main"])
