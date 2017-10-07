@@ -7,10 +7,12 @@
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
            [org.bouncycastle.util.encoders Hex]
+           [java.io FileInputStream]
            [java.util Arrays]
+           [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
-           [javax.crypto SecretKeyFactory]
-           [java.security KeyFactory KeyPairGenerator SecureRandom Security MessageDigest]
+           [java.security Key KeyStore KeyFactory KeyPairGenerator SecureRandom
+            Security MessageDigest Signature]
            [java.security.spec ECPoint ECParameterSpec ECPublicKeySpec ECPrivateKeySpec])
   (:refer-clojure :exclude [hash]))
 
@@ -21,6 +23,14 @@
 
 ;; Add provider!
 (Security/addProvider (BouncyCastleProvider.))
+
+;; (defonce key-store (atom nil))
+
+;; TBD
+;; (defn init-key-store [file password {:keys [type] :or {type "PKCS12"}}]
+;;   (let [ks (KeyStore/getInstance type)]
+;;     (.load ks (FileInputStream. ^String file) (.toCharArray ^String password))
+;;     (reset! key-store ks)))
 
 ;;;generate_key
 (defn generate-key
@@ -124,13 +134,16 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  [#^bytes k-byte-array {:keys [algorithm curve ephemeral type]}]
-  ;; FIXME: What is the type of input k-byte-array? Base64 encoded string or decoded bytes?
-  ;;    (current implementation assumes decoded bytes)
+  [k {:keys [algorithm curve ephemeral type]}]
   (let [curve-name (name curve)
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
         curve (.getCurve parameter-spec)
         curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
+        #^bytes k-byte-array (if (string? k)
+                       ;; assume base64
+                       (b64/decode (.getBytes ^String k))
+                       ;; otherwise bytes
+                       k)
         key-size (count k-byte-array)]
     (if (= curve-size key-size)
       (let [middle (int (/ key-size 2))
@@ -172,11 +185,27 @@
         (Key) An instance of the Key class corresponding to the ski"
   [msg {:keys [algorithm]}]
   (let [md (MessageDigest/getInstance (name algorithm))]
-    (Hex/toHexString (.digest md (if (string? msg)
-                                   (.getBytes ^String msg)
-                                   msg)))))
+    (->> (if (string? msg)
+           (.getBytes ^String msg)
+           msg)
+         (.digest md)
+         (Hex/toHexString))))
 ;;(hash test-msg {:algorithm :sha384})
 
+(defonce cipher-mode-map {:encrypt Cipher/ENCRYPT_MODE
+                          :decrypt Cipher/DECRYPT_MODE})
+
+(defn %encrypt-or-decrypt
+  ;; https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html
+  [k text {:keys [algorithm cipher-mode]}]
+  (let [tname (name algorithm)
+        tk (SecretKeySpec. k tname)
+        cipher (doto (Cipher/getInstance tname)
+                 (.init ^java.lang.Integer (cipher-mode-map cipher-mode) tk))]
+    (.doFinal cipher
+              (if (string? text)
+                (.getBytes ^String text)
+                text))))
 
 ;;;encrypt
 (defn encrypt
@@ -187,8 +216,8 @@
         opts (Object)
   Returns
         (byte[]) Cipher text"
-  [key prain-text opts]
-  )
+  [k plain-text {:keys [algorithm] :as opts}]
+  (%encrypt-or-decrypt k plain-text (assoc opts :cipher-mode :encrypt)))
 
 ;;; decrypt
 (defn decrypt
@@ -199,8 +228,8 @@
         opts (Object)
   Returns
         (byte[]) Plain text"
-  [key cipher-text opts])
-
+  [k cipher-text {:keys [algorithm] :as opts}]
+  (%encrypt-or-decrypt k cipher-text (assoc opts :cipher-mode :decrypt)))
 
 ;;;sign
 (defn sign
@@ -211,9 +240,11 @@
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  [key digest opts])
-
-
+  [priv-key ^bytes digest {:keys [algorithm]}]
+  (doto (Signature/getInstance (name algorithm))
+    (.initSign priv-key)
+    (.update digest)
+    (.sign)))
 
 ;;; verify
 (defn verify
@@ -224,7 +255,11 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [key signature digest])
+  [pub-key signature ^bytes digest {:keys [algorithm]}]
+  (doto (Signature/getInstance (name algorithm))
+    (.initVerify pub-key) ;; pub-key type is unknown :(
+    (.update digest)
+    (.verify signature)))
 
 #_
 (comment
