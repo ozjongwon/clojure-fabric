@@ -11,3 +11,5 @@ pom.xml.asc
 .hg/
 resources/grpc/.gradle/
 resources/grpc/protos/.gradle/
+resources/grpc/build/
+resources/grpc/generated/
