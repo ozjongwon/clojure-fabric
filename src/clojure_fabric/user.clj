@@ -14,7 +14,7 @@
 
 (ns clojure-fabric.user)
 
-(def ^:dynamic *user* nil)
+(defonce ^:dynamic *user* nil)
 
 (defrecord User [name roles certificate])
 

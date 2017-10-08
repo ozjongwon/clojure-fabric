@@ -18,7 +18,8 @@
 
 (defonce ^:private clients (atom {}))
 
-(def ^:dynamic *client* nil)
+(defonce ^:dynamic *client* nil)
+
 (defmacro with-client-binding
   [client & body]
   `(binding [*client* ~client]
@@ -51,7 +52,7 @@
        (swap! channels assoc name (-> opts (assoc :name name) (map->Channel)))))))
 
 ;; Alias
-(def new-channel! new-chain!)
+(defonce new-channel! new-chain!)
 
 ;;; get_chain
 (defn get-chain
@@ -79,7 +80,7 @@
        (throw (Exception. "A chain does not exist under that name"))))))
 
 ;; Alias
-(def get-channel get-chain)
+(defonce get-channel get-chain)
 
 ;;; query_chain-info
 (defn query-chain-info
@@ -102,7 +103,7 @@
        (%query-chain-info chain peers)
        (throw (Exception. "The target Peer(s) does not know anything about the chain"))))))
 
-(def query-channel-info query-chain-info)
+(defonce query-channel-info query-chain-info)
 
 ;;;
 ;;;

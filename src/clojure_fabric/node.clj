@@ -14,7 +14,7 @@
 (ns clojure-fabric.node
   (:require [clojure-fabric.user :as user]))
 
-(def ^:dynamic *node* nil)
+(defonce ^:dynamic *node* nil)
 
 (defrecord Peer [name url user])
 (defrecord Orderer [name url user])

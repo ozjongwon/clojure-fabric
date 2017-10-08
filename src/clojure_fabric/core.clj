@@ -42,14 +42,14 @@
 ;;;
 ;;; Dynamic variables
 ;;; 
-(def ^:dynamic ^:private *hf-client* nil)
-(def ^:dynamic ^:private *channel* nil)
-(def ^:dynamic ^:private *peers* nil)
-(def ^:dynamic ^:private *orderers* nil)
-(def ^:dynamic ^:private *proposal-request* nil)
-(def ^:dynamic ^:private *proposal-response* nil)
-(def ^:dynamic ^:private *order-request* nil)
-(def ^:dynamic ^:private *order-response* nil)
+(defonce ^:dynamic ^:private *hf-client* nil)
+(defonce ^:dynamic ^:private *channel* nil)
+(defonce ^:dynamic ^:private *peers* nil)
+(defonce ^:dynamic ^:private *orderers* nil)
+(defonce ^:dynamic ^:private *proposal-request* nil)
+(defonce ^:dynamic ^:private *proposal-response* nil)
+(defonce ^:dynamic ^:private *order-request* nil)
+(defonce ^:dynamic ^:private *order-response* nil)
 
 ;;;
 ;;;
@@ -128,11 +128,11 @@
 ;;;
 (defonce ^:private client-config (atom {}))
 
-(def ^:dynamic ^:private *credentials* nil)
+(defonce ^:dynamic ^:private *credentials* nil)
 
-(def ^:dynamic ^:private *client-config* nil)
+(defonce ^:dynamic ^:private *client-config* nil)
 
-(def ^:dynamic ^:private *client-class* nil)
+(defonce ^:dynamic ^:private *client-class* nil)
 
 
 

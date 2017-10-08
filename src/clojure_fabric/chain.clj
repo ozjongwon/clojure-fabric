@@ -11,7 +11,7 @@
             [clojure-fabric.utils :as utils]
             [medley.core :as medley]))
 
-(def ^:dynamic *chain* nil)
+(defonce ^:dynamic *chain* nil)
 
 (defrecord Chain [peers orderers])
 
