@@ -20,4 +20,5 @@
   :main ^:skip-aot grpc-clj.core
   :aot [grpc-clj.server]
   :target-path "target/%s"
-  :java-source-paths ["build/generated/source/proto/main"])
+  :java-source-paths ["resources/fabric-protos/generated/main/grpc"
+                      "resources/fabric-protos/generated/main/java"])
