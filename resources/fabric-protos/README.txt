@@ -8,4 +8,10 @@ jc@kepler:~/Work/fabric$ git config core.sparsecheckout true
 jc@kepler:~/Work/fabric$ echo "protos/*" >> .git/info/sparse-checkout
 jc@kepler:~/Work/fabric$ git pull --depth=2 origin master
 
-2. Replace deprecated ValueOf call to forNumber in generated Java files
+2. build.gradle file
+https://github.com/grpc/grpc-java
+Search for protobuf:protoc and use correct versions for protoc and protoc-gen-grpc-java
+
+3. lein compile
+
+

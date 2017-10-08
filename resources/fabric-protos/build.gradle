@@ -43,20 +43,37 @@ protobuf {
   generatedFilesBaseDir = "$projectDir/generated"
 
   protoc {
-    artifact = 'com.google.protobuf:protoc:3.4.0'
+    artifact = 'com.google.protobuf:protoc:3.3.0'
   }
   plugins {
     grpc {
       artifact = "io.grpc:protoc-gen-grpc-java:1.6.1"
     }
   }
+  // generateProtoTasks {
+  //   all()*.plugins {
+  //     grpc {
+  //       option 'enable_deprecated=false'
+  //     }
+  //   }
+  // }
+
   generateProtoTasks {
-    all()*.plugins {
-      grpc {
-        option 'enable_deprecated=false'
-      }
-    }
-  }
+            all().each { task ->
+                task.doLast {
+                    ant.replaceregexp(
+                        match:'@java.lang.Deprecated|@deprecated',
+                        replace:'',
+                        flags:'g',
+                        byline:true
+                    ) {
+                        fileset(
+                            dir: "${protobuf.generatedFilesBaseDir}/main/java")
+                    }
+                }
+            }
+        }
+
   allprojects {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"

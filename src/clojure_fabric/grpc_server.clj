@@ -3,6 +3,7 @@
   (:gen-class
    :name clojure-fabric.grpc-server.RouteGuideServer
    :extends io.grpc.examples.routeguide.RouteGuideGrpc$RouteGuideImplBase)
+  #_
   (:import [io.grpc.stub StreamObserver])
   #_
   (:use [grpc-clj.util]))
