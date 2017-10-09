@@ -7,13 +7,14 @@
 ;; to join that channel. 
 
 (ns clojure-fabric.chain
-  (:require ;;[clojure-fabric.node :as node]
+  (:require [clojure-fabric.node :as peer]
+            [clojure-fabric.node :as orderer]
             [clojure-fabric.utils :as utils]
             [medley.core :as medley]))
 
 (defonce ^:dynamic *chain* nil)
 
-(defrecord Chain [peers orderers])
+(defrecord Chain [name peers orderers event-hubs listner-peer])
 
 (defn %make-chain [{:keys [peers orderers]}]
   (map->Chain {:peers (atom `[~@peers]) :orderers (atom `[~@orderers])}))
@@ -68,7 +69,11 @@
 
 ;;; add_orderer
 (defn add-orderer
-  "Add orderer endpoint to a chain object, this is a local-only operation. A chain instance may choose to use a single orderer node, which will broadcast requests to the rest of the orderer network. Or if the application does not trust the orderer nodes, it can choose to use more than one by adding them to the chain instance. And all APIs concerning the orderer will broadcast to all orderers simultaneously.
+  "Add orderer endpoint to a chain object, this is a local-only operation. A chain instance may
+  choose to use a single orderer node, which will broadcast requests to the rest of the orderer
+  network. Or if the application does not trust the orderer nodes, it can choose to use more than
+  one by adding them to the chain instance. And all APIs concerning the orderer will broadcast
+  to all orderers simultaneously.
 
   Params
         orderer (Orderer): an instance of the Orderer class"
@@ -262,15 +267,14 @@
   
   Note that under the cover there are two different kinds of communications with the fabric backend
   that trigger different events to be emitted back to the application’s handlers:
-  the grpc client with the orderer service uses a “regular” stateless HTTP connection
-  in a request/response fashion with the “broadcast” call. The method implementation should emit
-  “transaction submitted” when a successful acknowledgement is received in the response,
-  or “error” when an error is received
-  The method implementation should also maintain a persistent connection with the Chain’s event
-  source Peer as part of the internal event hub mechanism in order to support the fabric events
-  “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause the method to emit “complete”
-  or “error” events to the application.
-
+  - the grpc client with the orderer service uses a “regular” stateless HTTP connection
+        in a request/response fashion with the “broadcast” call. The method implementation should
+        emit “transaction submitted” when a successful acknowledgement is received in the response,
+        or “error” when an error is received
+  - The method implementation should also maintain a persistent connection with the Chain’s event
+        source Peer as part of the internal event hub mechanism in order to support the fabric events
+        “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause the method to emit “complete”
+        or “error” events to the application.
   Params
         transaction (Transaction): The transaction object constructed above
   Returns

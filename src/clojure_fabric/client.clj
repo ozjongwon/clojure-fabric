@@ -109,7 +109,7 @@
 ;;;
 (defonce ^:private client-state-store (atom {}))
 ;;; set_state_store
-(defn set-state-store
+(defn set-state-store!
   "The SDK should have a built-in key value store implementation (suggest a file-based
   implementation to allow easy setup during development). But production systems would want
   a store backed by database for more robust storage and clustering, so that multiple
@@ -123,7 +123,7 @@
   Returns:
         None"
   ([store]
-   (set-state-store *client* store))
+   (set-state-store! *client* store))
   ([client store]
    (swap! client-state-store assoc client (atom {}))))
 
@@ -141,17 +141,14 @@ Returns:
    (get @client-state-store client)))
 
 ;;; set_crypto_suite
-(defn set-crypto-suite
-  "Sets an instance of the CryptoSuite interface implementation. A crypto suite encapsulates
-  algorithms for digital signatures and encryption with asymmetric key pairs, message encryption
-  with a symmetric key, and secure hashing and MAC.
+;;   "Sets an instance of the CryptoSuite interface implementation. A crypto suite encapsulates
+;;   algorithms for digital signatures and encryption with asymmetric key pairs, message encryption
+;;   with a symmetric key, and secure hashing and MAC.
 
-Params:
-  Suite (object): an instance of a crypto suite implementation"
-  ([suite]
-   (set-crypto-suite *client* suite))
-  ([suite]
-   ))
+;; Params:
+;;   Suite (object): an instance of a crypto suite implementation"
+;;   
+;; Immutable
 
 ;;; get_crypto_suite 
 (defn get-crypto-suite
@@ -171,25 +168,18 @@ Params:
   (swap! clients assoc k new-client))
 
 ;;; set_user_context
-(defn set-user-context
-  "Sets an instance of the User class as the security context of this client instance.
-  This user's credentials (ECert) will be used to conduct transactions and queries with
-  the blockchain network. Upon setting the user context, the SDK saves the object in a persistence
-  cache if the \"state store\" has been set on the Client instance. If no state store has been set,
-  this cache will not be established and the application is responsible for setting the user
-  context again when the application crashed and is recovered.
-  Params:
-        user (User): an instance of the User class encapsulating the authenticated user’s
-        signing materials (private key and enrollment certificate)"
-  ;; Implementation Note
-  ;;    Client record has user-context slot
-  ([user]
-   (set-user-context *client* user))
-  ([client user]
-   ;; TBD
-   ;; Review after implementing User
-   #_
-   (%update-client! (client->key client) (assoc client (:user-context user)))))
+;; "Sets an instance of the User class as the security context of this client instance.
+;;   This user's credentials (ECert) will be used to conduct transactions and queries with
+;;   the blockchain network. Upon setting the user context, the SDK saves the object in a persistence
+;;   cache if the \"state store\" has been set on the Client instance. If no state store has been set,
+;;   this cache will not be established and the application is responsible for setting the user
+;;   context again when the application crashed and is recovered.
+;;   Params:
+;;         user (User): an instance of the User class encapsulating the authenticated user’s
+;;         signing materials (private key and enrollment certificate)"
+;;
+;; Immutable
+
 
 ;;; get_user_context
 (defn get-user-context
