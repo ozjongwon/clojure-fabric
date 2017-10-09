@@ -11,15 +11,14 @@
 ;; It should be noted that Peer event streams function at the Peer level and not at the chain
 ;; and chaincode levels.
 
-(ns clojure-fabric.peer
-  (:require [clojure-fabric.user :as user]))
+(ns clojure-fabric.peer)
 
 (defonce ^:dynamic *peer* nil)
 
 ;; an endorser, committer and/or submitter
 ;; endorser is a committer
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url user certificate])
+(defrecord Peer [name url certificate])
 
 (defn make-peer [m]
   (map->Peer m))
@@ -119,18 +118,13 @@
 ;; Immutable in this implementation
 
 ;;get_roles
-(defn get-roles
-  "Get the user’s roles the Peer participates in. It’s an array of possible values in “client”,
-  and “auditor”. The member service defines two more roles reserved for peer membership: 
-  “peer” and “validator”, which are not exposed to the applications.
-  Returns (str[]): 
-        The roles for this user"
-  ([]
-   (if *peer*
-     (get-roles *peer*)
-     (user/get-roles user/*user*)))
-  ([peer]
-   (-> peer :user :roles)))
+;; "Get the user’s roles the Peer participates in. It’s an array of possible values in “client”,
+;; and “auditor”. The member service defines two more roles reserved for peer membership: 
+;; “peer” and “validator”, which are not exposed to the applications.
+;; Returns (str[]): 
+;;       The roles for this user"
+;;
+;; User's method
 
 
 ;; set_roles
