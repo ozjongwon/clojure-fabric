@@ -11,19 +11,18 @@
 ;; It should be noted that Peer event streams function at the Peer level and not at the chain
 ;; and chaincode levels.
 
-(ns clojure-fabric.node
+(ns clojure-fabric.peer
   (:require [clojure-fabric.user :as user]))
 
-(defonce ^:dynamic *node* nil)
+(defonce ^:dynamic *peer* nil)
 
-(defrecord Peer [name url user])
-(defrecord Orderer [name url user])
+;; an endorser, committer and/or submitter
+;; endorser is a committer
+;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
+(defrecord Peer [name url user certificate])
 
-(defn %make-peer [m]
+(defn make-peer [m]
   (map->Peer m))
-
-(defn %make-orderer [m]
-  (map->Orderer m))
 
 ;;connectEventSource
 (defn connect-event-source
@@ -40,13 +39,13 @@
   Result:
         Promise/Future: this gives the app a handle to attach “success” and “error” listeners"
   ([]
-   (connect-event-source *node*))
-  ([node]
+   (connect-event-source *peer*))
+  ([peer]
    ;; TBD register to eventhub
    ))
 
 ;;is_event_listened
-(defn is-event-listened 
+(defn event-listened?
   "A network call that discovers if at least one listener has been connected to the target Peer
   for a given event. This helps application instance to decide whether it needs to connect
   to the event source in a crash recovery or multiple instance deployment.
@@ -59,14 +58,10 @@
         (boolean): whether the said event has been listened on by some application instance
         on that chain"
   ([event-name]
-   (is-event-listened *node* event-name))
-  ([arg1 arg2]
-   (if (or (instance? Peer arg1) (instance? Orderer arg1))
-     ;; (node event-name)
-     (is-event-listened arg1 arg2 nil)
-     ;; (event-name chain)
-     (is-event-listened *node* arg1 arg2)))
-  ([node event-name chain]
+   (event-listened? *peer* event-name))
+  ([peer event-name]
+   (is-event-listened peer event-name nil))
+  ([peer event-name chain]
    ;; TBD
    ))
 
@@ -90,8 +85,8 @@
         [event-listener-ref] a reference to the event listener, some language uses an ID
         (javascript), others uses object reference (Java)"
   ([event-type event-type-data event-call-back]
-   (add-listener *node* event-type event-type-data event-call-back))
-  ([node event-type event-type-data event-call-back]
+   (add-listener *peer* event-type event-type-data event-call-back))
+  ([peer event-type event-type-data event-call-back]
    ;; TBD
    ))
 
@@ -104,8 +99,8 @@
   Returns:
         statusFlag: Success / Failure"
   ([event-listener-ref]
-   (remove-listener *node* event-listener-ref))
-  ([node event-listener-ref]
+   (remove-listener *peer* event-listener-ref))
+  ([peer event-listener-ref]
    ;; TBD
    ))
 
@@ -116,9 +111,9 @@
   Returns (str): 
         The name of the Peer"
   ([]
-   (get-name *node*))
-  ([node]
-   (:name node)))
+   (get-name *peer*))
+  ([peer]
+   (:name peer)))
 
 ;; set_name
 ;; Immutable in this implementation
@@ -131,11 +126,11 @@
   Returns (str[]): 
         The roles for this user"
   ([]
-   (if *node*
-     (get-roles *node*)
+   (if *peer*
+     (get-roles *peer*)
      (user/get-roles user/*user*)))
-  ([node]
-   (-> node :user :roles)))
+  ([peer]
+   (-> peer :user :roles)))
 
 
 ;; set_roles
@@ -148,11 +143,9 @@
   Returns:
         Certificate in PEM format signed by the trusted CA"
   ([]
-   (if *node*
-     (get-enrollment-certificate *node*)
-     (user/get-enrollment-certificate user/*user*)))
-  ([node]
-   (-> node :user :certificate)))
+   (get-enrollment-certificate *peer*))
+  ([peer]
+   (-> peer :certificate)))
 
 ;;; set_enrollment_certificate
 ;;; Immutable
