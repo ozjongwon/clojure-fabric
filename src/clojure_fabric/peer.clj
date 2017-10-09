@@ -60,7 +60,7 @@
   ([event-name]
    (event-listened? *peer* event-name))
   ([peer event-name]
-   (is-event-listened peer event-name nil))
+   (event-listened? peer event-name nil))
   ([peer event-name chain]
    ;; TBD
    ))
