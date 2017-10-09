@@ -16,7 +16,8 @@
 
 (defonce ^:dynamic *user* nil)
 
-(defrecord User [name roles certificate])
+(defrecord Enrollment [private-key certificate])
+(defrecord User [name roles enrollment])
 
 (defn %make-user [m]
   (map->User m))
@@ -53,7 +54,7 @@
   ([]
    (get-enrollment-certificate *user*))
   ([user]
-   (:certificate user)))
+   (get-in user [:enrollment :certificate])))
 
 ;;; set_name
 ;;; Immutable
