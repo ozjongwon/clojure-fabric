@@ -13,12 +13,33 @@
 ;; Each Client instance can maintain several chains representing channels and the associated
 ;; sub-ledgers.
 
+;;;
+;;; Note: chain == channel
+;;;
+
 (ns clojure-fabric.client
-  (:require [clojure-fabric.user :as user]))
+  (:require [clojure-fabric.user :as user]
+            [clojure-fabric.channel :as channel])
+  (:import clojure_fabric.channel.Channel))
 
 (defonce ^:private clients (atom {}))
 
 (defonce ^:dynamic *client* nil)
+
+(defonce system-channel-name "")
+
+(defmacro via-peer-channel [[channel peer] & body]
+  ~@body)
+
+(defmacro via-system-channel-of-peer [[channel peer] & body]
+  `(via-peer-channel [~channel ~peer]
+                     )
+
+  (let [channel# (or ~channel channel/*channel*)]
+    (assert (instance? Channel channel#) (str "Channel is not valid! - " channel#))
+    ;; FIXME: add peer checking
+    (binding [channel/*channel* (assoc channel# :name system-channel-name)]
+      ~@body)))
 
 (defmacro with-client-binding
   [client & body]
@@ -27,21 +48,35 @@
 
 (defrecord Client [channels crypto-suite user-context])
 
-(defrecord Channel [name peers orderers])
-
 ;;; new_chain
-(defn new-chain!
-  "Initializes a chain instance with the given name. This is really representing the \"Channel\"
-  (as explained above), and this call returns an empty object. To initialize the channel, a list of
-  participating endorsers and orderer peers must be configured first on the returned object.
-  Params:
-        name (str): The name of the chain, recommend using namespaces to avoid collision
-  Returns:
-        (Chain instance): The uninitialized chain instance."
+;;;
+;; "Initializes a chain instance with the given name. This is really representing the \"Channel\"
+;;   (as explained above), and this call returns an empty object. To initialize the channel, a list of
+;;   participating endorsers and orderer peers must be configured first on the returned object.
+;;   Params:
+;;         name (str): The name of the chain, recommend using namespaces to avoid collision
+;;   Returns:
+;;         (Chain instance): The uninitialized chain instance."
+(defn add-channel!
+  ([channel]
+   (add-channel! *client* channel))
+  ([client channel]
+   (let [found (get @(:channels client) name)]
+     (if (= found channel)
+       ;; Implementation Note
+       ;;       The spec doesn't say anything about existing channel.
+       ;;       Return if there is an existing channel with the name.
+       found
+       ;; replace or add
+       (swap! (:channels client) assoc name channel)))))
+
+#_
+(defn new-channel!
+  
   ([name]
-   (new-chain! *client* name))
+   (new-channel! *client* name))
   ([client name]
-   (new-chain! *client* name {}))
+   (new-channel! *client* name {}))
   ([client name opts]
    (let [channels (:channels client)]
      (if-let [found (get @channels name)]
@@ -51,11 +86,9 @@
        found
        (swap! channels assoc name (-> opts (assoc :name name) (map->Channel)))))))
 
-;; Alias
-(defonce new-channel! new-chain!)
-
 ;;; get_chain
-(defn get-chain
+#_
+(defn get-channel
   "Get a chain instance from the state storage. This allows existing chain instances to be saved
   for retrieval later and to be shared among instances of the application. Note that it's the 
   application/SDK’s responsibility to record the chain information. If an application is not able to
@@ -68,7 +101,7 @@
   Error:  The state store has not been set
         A chain does not exist under that name"
   ([name]
-   (get-chain *client* name))
+   (get-channel *client* name))
   ([client name]
    (if (nil? client)
      (throw (Exception. "The state store has not been set"))
@@ -77,13 +110,10 @@
        ;; Implementation Note
        ;;       The spec says that Returns is chain Instance or None
        ;;       How it can be None and also throw an exception?
-       (throw (Exception. "A chain does not exist under that name"))))))
-
-;; Alias
-(defonce get-channel get-chain)
+       (throw (Exception. "A channel does not exist under that name"))))))
 
 ;;; query_chain-info
-(defn query-chain-info
+(defn query-channel-info
   "This is a network call to the designated Peer(s) to discover the chain information.
   The target Peer(s) must be part of the chain in question to be able to return the requested
   information.
@@ -96,19 +126,20 @@
         The target Peer(s) does not know anything about the chain"
 
   ([name peers]
-   (query-chain-info *client* name peers))
+   (query-channel-info *client* name peers))
   ([client name peers]
-   (let [chain (get-chain name)]
-     (if (= (get-peers chain) peers)
-       (%query-chain-info chain peers)
-       (throw (Exception. "The target Peer(s) does not know anything about the chain"))))))
-
-(defonce query-channel-info query-chain-info)
+   (let [channel (get-channel name)]
+     (if (= (channel/get-peers channel) peers)
+       ;;(%query-channel-info channel peers)
+       :FIXME
+       (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 ;;;
 ;;;
+#_
 (defonce ^:private client-state-store (atom {}))
 ;;; set_state_store
+#_
 (defn set-state-store!
   "The SDK should have a built-in key value store implementation (suggest a file-based
   implementation to allow easy setup during development). But production systems would want
@@ -182,6 +213,7 @@ Returns:
 
 
 ;;; get_user_context
+#_
 (defn get-user-context
  "As explained above, the client instance can have an optional state store. The SDK saves enrolled
   users in the storage which can be accessed by authorized users of the application 
@@ -199,6 +231,21 @@ Returns:
   ([client name]
    ;; TBD
    ))
+
+
+;;;
+;;; Not in spec, but in some SDKs
+;;; 
+(defn query-installed-chaincodes
+  ([peer]
+   (query-installed-chaincodes channel/*channel* peer))
+  ([channel peer]
+   (via-system-channel-of-peer [channel peer]
+     ;; FIXME: Check channel has this peer
+     (-> peer
+         :user
+         (get-transaction-context (user-context client))))))
+
 ;;;;;;;;;;;
 #_
 (comment
@@ -206,7 +253,7 @@ Returns:
    (get @clients k))
 
  (binding [*client* (find-client 10)]
-   (get-chain "bar"))
+   (get-channel "bar"))
 
  (defn make-client! [k]
    (swap! clients assoc k (map->Client {:channels (atom {})})))
