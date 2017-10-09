@@ -6,33 +6,39 @@
 ;; a CONFIGURATION transaction to the orderers to create the specified channel and asks the peers
 ;; to join that channel. 
 
-(ns clojure-fabric.chain
+;;;
+;;; Note: chain == channel
+;;;
+
+(ns clojure-fabric.channel
   (:require [clojure-fabric.peer :as peer]
             [clojure-fabric.orderer :as orderer]
             [clojure-fabric.utils :as utils]
             [medley.core :as medley]))
 
-(defonce ^:dynamic *chain* nil)
+(defonce ^:dynamic *channel* nil)
 
-(defrecord Chain [name peers orderers event-hubs listener-peer])
-(defn make-chain [name {:keys [peers orderers event-hubs listener-peer]}]
-  (map->Chain {:peers (atom `[~@peers]) :orderers (atom `[~@orderers])
-               :listener-peer (atom ~listener-peer)}))
+(defrecord Channel [name client peers orderers event-hubs listener-peer])
+(defn make-channel [name client {:keys [peers orderers event-hubs listener-peer]}]
+  (assert (and name client) "Channel requires name and client to create.")
+  (map->Channel {:name name :client client
+                 :peers (atom `[~@peers]) :orderers (atom `[~@orderers])
+                 :listener-peer (atom ~listener-peer)}))
 
 ;;;
 ;;; Functions
 ;;;
 
-(defn- add-chain-end
-  [chain {:keys [name url] :as chain-end} chain-ends-key]
-  (when-not (medley/find-first #(and (= (:name %) name) (= (:url %) url)) @(chain-ends-key chain))
-    (swap! (chain-ends-key chain) conj chain-end)))
+(defn- add-channel-end
+  [channel {:keys [name url] :as channel-end} channel-ends-key]
+  (when-not (medley/find-first #(and (= (:name %) name) (= (:url %) url)) @(channel-ends-key channel))
+    (swap! (channel-ends-key channel) conj channel-end)))
 
-(defn- remove-chain-end
-  [chain {:keys [name url] :as chain-end} chain-ends-key]
-  (let [chain-ends @(chain-ends-key chain)]
-    (when-let [idx (first (utils/indices #(and (= (:name %) name) (= (:url %) url)) chain-ends))]
-      (reset! (chain-ends-key chain) (utils/removev-index chain-ends idx)))))
+(defn- remove-channel-end
+  [channel {:keys [name url] :as channel-end} channel-ends-key]
+  (let [channel-ends @(channel-ends-key channel)]
+    (when-let [idx (first (utils/indices #(and (= (:name %) name) (= (:url %) url)) channel-ends))]
+      (reset! (channel-ends-key channel) (utils/removev-index channel-ends idx)))))
 
 ;;; add_peer
 (defn add-peer
@@ -41,9 +47,9 @@
         peer (Peer): an instance of the Peer class that has been initialized with URL,
         TLC certificate, and enrollment certificate"
   ([peer]
-   (add-peer *chain* peer))
-  ([chain peer]
-   (add-chain-end chain peer :peers)))
+   (add-peer *channel* peer))
+  ([channel peer]
+   (add-channel-end channel peer :peers)))
 
 ;;; remove_peer
 (defn remove-peer
@@ -51,9 +57,9 @@
   Params
         peer (Peer): an instance of the Peer class"
   ([peer]
-   (remove-peer *chain* peer))
-  ([chain peer]
-   (remove-chain-end chain peer :peers)))
+   (remove-peer *channel* peer))
+  ([channel peer]
+   (remove-channel-end channel peer :peers)))
 
 ;;; get_peers
 
@@ -64,9 +70,9 @@
   Returns
         (Peer list): The peer list on the chain"
   ([]
-   (get-peers *chain*))
-  ([chain]
-   @(:peers chain)))
+   (get-peers *channel*))
+  ([channel]
+   @(:peers channel)))
 
 ;;;
 ;;;
@@ -82,9 +88,9 @@
   Params
         orderer (Orderer): an instance of the Orderer class"
   ([orderer]
-   (add-orderer *chain* orderer))
-  ([chain orderer]
-   (add-chain-end chain orderer :orderers)))
+   (add-orderer *channel* orderer))
+  ([channel orderer]
+   (add-channel-end channel orderer :orderers)))
 
 ;;; remove_orderer
 (defn remove-orderer
@@ -92,9 +98,9 @@
   Params
         orderer (Orderer): an instance of the Orderer class"
   ([orderer]
-   (remove-orderer *chain* orderer))
-  ([chain orderer]
-   (remove-chain-end chain orderer :orderers)))
+   (remove-orderer *channel* orderer))
+  ([channel orderer]
+   (remove-channel-end channel orderer :orderers)))
 
 ;;; get_orderers
 (defn get-orderers
@@ -104,12 +110,12 @@
   Returns
         (Orderer list): The orderer list on the chain"
   ([]
-   (get-orderers *chain*))
-  ([chain]
-   @(:orderers chain)))
+   (get-orderers *channel*))
+  ([channel]
+   @(:orderers channel)))
 
 ;;; initialize_chain
-(defn initialize-chain
+(defn initialize-channel
   "Calls the orderer(s) to start building the new chain, which is a combination of opening
   new message stream and connecting the list of participating peers. This is a long-running process.
   Only one of the application instances needs to call this method. Once the chain is successfully
@@ -120,13 +126,13 @@
   Returns
         (bool): whether the chain initialization process was successful"
   ([]
-   (initialize-chain *chain*))
-  ([chain]
+   (initialize-channel *channel*))
+  ([channel]
    ;; TBD
    ))
 
 ;;; update_chain
-(defn update-chain
+(defn update-channel
   "Calls the orderer(s) to update an existing chain. This allows the addition and deletion of Peer
   nodes to an existing chain, as well as the update of Peer certificate information upon
   certificate renewals.
@@ -135,8 +141,8 @@
   Returns
         (bool): whether the chain update process was successful"
   ([]
-   (update-chain *chain*))
-  ([chain]
+   (update-channel *channel*))
+  ([channel]
    ;;TBD
    ))
 
@@ -150,8 +156,8 @@
   Returns
         (bool): is ready-only (true) or not "
   ([]
-   (is-readonly *chain*))
-  ([chain]
+   (is-readonly *channel*))
+  ([channel]
    ;; TBD
    ))
 
@@ -163,8 +169,8 @@
   Returns 
         (ChainInfo) with height, currently the only useful info"
   ([]
-   (query-info *chain*))
-  ([chain]
+   (query-info *channel*))
+  ([channel]
    ;; TBD
    ))
 
@@ -176,8 +182,8 @@
   Returns 
         Object containing the block"
   ([block-number]
-   (query-block *chain* block-number))
-  ([chain block-number]
+   (query-block *channel* block-number))
+  ([channel block-number]
    ;; TBD
    ))
 
@@ -189,8 +195,8 @@
   Returns 
         TransactionInfo containing the transaction"
   ([transaction-id]
-   (query-transaction *chain* transaction-id))
-  ([chain transaction-id]
+   (query-transaction *channel* transaction-id))
+  ([channel transaction-id]
    ;; TBD
    ))
 
@@ -208,8 +214,8 @@
   Returns
         (Proposal): The created Proposal instance or None."
   ([chaincod-path chaincode-name fcn args sign]
-   (create-deploy-proposal *chain* chaincod-path chaincode-name fcn args sign))
-  ([chain chaincod-path chaincode-name fcn args sign]
+   (create-deploy-proposal *channel* chaincod-path chaincode-name fcn args sign))
+  ([channel chaincod-path chaincode-name fcn args sign]
    ;;; TBD
    ))
 
@@ -226,8 +232,8 @@
   Returns
         (Transaction_Proposal instance): The created Transaction_Proposal instance or None."
   ([chaincode-name fcn args sign]
-   (create-transaction-proposal *chain* chaincode-name fcn args sign))
-  ([chain chaincode-name fcn args sign]
+   (create-transaction-proposal *channel* chaincode-name fcn args sign))
+  ([channel chaincode-name fcn args sign]
    ;;; TBD
    ))
 
@@ -242,9 +248,12 @@
   Returns
         (Transaction_Proposal_Response response): The response to send proposal request."
   ([transaction-proposal retry]
-   (send-transaction-proposal *chain* transaction-proposal retry))
-  ([chain transaction-proposal retry]
-   ;;; TBD
+   (send-transaction-proposal *channel* transaction-proposal retry))
+  ([channel transaction-proposal retry]
+   ;; 1. ensure the channel is initialized
+   ;; 2. set chaincode id and options
+   ;; 3. query-by-chaincode
+   
    ))
 
 
@@ -256,8 +265,8 @@
   Returns
         (Transaction instance): The created transaction object instance."
   ([proposal-responses]
-   (create-transaction *chain* proposal-responses))
-  ([chain proposal-responses]
+   (create-transaction *channel* proposal-responses))
+  ([channel proposal-responses]
    ;;; TBD
    ))
 
@@ -284,10 +293,12 @@
   Returns
         result (EventEmitter): an handle to allow the application to attach event handlers on “submitted”, “complete”, and “error”."
   ([transaction]
-   (send-transaction *chain* transaction))
-  ([chain transaction]
+   (send-transaction *channel* transaction))
+  ([channel transaction]
    ;;; TBD
    ))
+
+;;; 
 
 ;;;;;;;;;
 
