@@ -17,7 +17,7 @@
 (defonce ^:dynamic *user* nil)
 
 (defrecord Enrollment [private-key certificate])
-(defrecord User [name roles enrollment])
+(defrecord User [name roles enrollment %roles])
 
 (defn %make-user [m]
   (map->User m))
