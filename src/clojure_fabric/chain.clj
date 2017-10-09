@@ -7,17 +7,21 @@
 ;; to join that channel. 
 
 (ns clojure-fabric.chain
-  (:require [clojure-fabric.node :as peer]
-            [clojure-fabric.node :as orderer]
+  (:require [clojure-fabric.peer :as peer]
+            [clojure-fabric.orderer :as orderer]
             [clojure-fabric.utils :as utils]
             [medley.core :as medley]))
 
 (defonce ^:dynamic *chain* nil)
 
-(defrecord Chain [name peers orderers event-hubs listner-peer])
+(defrecord Chain [name peers orderers event-hubs listener-peer])
+(defn make-chain [name {:keys [peers orderers event-hubs listener-peer]}]
+  (map->Chain {:peers (atom `[~@peers]) :orderers (atom `[~@orderers])
+               :listener-peer (atom ~listener-peer)}))
 
-(defn %make-chain [{:keys [peers orderers]}]
-  (map->Chain {:peers (atom `[~@peers]) :orderers (atom `[~@orderers])}))
+;;;
+;;; Functions
+;;;
 
 (defn- add-chain-end
   [chain {:keys [name url] :as chain-end} chain-ends-key]
@@ -284,7 +288,6 @@
   ([chain transaction]
    ;;; TBD
    ))
-
 
 ;;;;;;;;;
 
