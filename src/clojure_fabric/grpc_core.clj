@@ -9,12 +9,17 @@
 ;;      the fabric events “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause
 ;;      the method to emit “complete” or “error” events to the application
 (ns clojure-fabric.grpc-core
-  (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID
-            Chaincode$ChaincodeSpec Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type
-            Chaincode$ChaincodeInvocationSpec
-            ProposalPackage$ChaincodeHeaderExtension]
-           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType]
+  (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
+            Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
+            ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
+            ProposalPackage$Proposal]
+           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
+            Common$Header Common$SignatureHeader]
            [com.google.protobuf ByteString Timestamp]))
+
+;;;
+;;; Low level functions
+;;;
 
 (defn make-chaincode-id
   ([name]
@@ -108,3 +113,36 @@
                        epoch
                        (make-chaincode-header-extention chaincode-id)))
 
+(defonce java-empty-map (java.util.Collections/emptyMap))
+
+(defn make-chaincode-proposal-payload
+  ([chaincode-invocation-spec]
+   (make-chaincode-proposal-payload chaincode-invocation-spec java-empty-map))
+  ([^Chaincode$ChaincodeInvocationSpec chaincode-invocation-spec transient-map]
+   (-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
+       (.setInput (.toByteString chaincode-invocation-spec))
+       (.putAllTransientMap transient-map)
+       (.build))))
+
+(defn make-signature-header
+  [creator nonce]
+  (-> (Common$SignatureHeader/newBuilder)
+      (.setCreator creator)
+      (.setNonce nonce)
+      (.build)))
+
+(defn make-header
+  [^Common$ChannelHeader channel-header signature-header]
+  (-> (Common$Header/newBuilder)
+      (.setChannelHeader (.toByteString channel-header))
+      (.setSignatureHeader channel-header)
+      (.build)))
+
+(defn make-proposal
+  ([header payload]
+   (make-proposal header payload ByteString/EMPTY))
+  ([header payload extension]
+   (-> (ProposalPackage$Proposal/newBuilder)
+       (.setHeader (.toByteString ^Common$Header header))
+       (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload payload))
+       (.setExtension extension))))
