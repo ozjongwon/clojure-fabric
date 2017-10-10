@@ -46,48 +46,48 @@
 (defonce qscc-chaincode-header-extension
   (grpc/make-chaincode-header-extention query-system-chaincode))
 
-;;; System chaincode map
-(defrecord SystemChaincodeParts [chaincode-id header-extension proposal-payload])
-(defonce system-chaincode-parts
+;;;
+(defrecord SystemChaincodeRequestParts [chaincode-id header-extension proposal-payload])
+(defonce system-chaincode-request-parts
   {:query-installed-chaincodes
-   (map->SystemChaincodeParts
+   (map->SystemChaincodeRequestParts
     {:chaincode-id lifecycle-system-chaincode
      :header-extension lscc-chaincode-header-extension
      :proposal-payload (grpc/make-proposal-payload lifecycle-system-chaincode
                                                    "queryinstalledchaincodes"
                                                    [])})
    :query-info
-   (map->SystemChaincodeParts
+   (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetChainInfo")})
    
    :query-block-by-hash
-   (map->SystemChaincodeParts
+   (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByHash")})
 
    :query-block
-   (map->SystemChaincodeParts
+   (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByNumber")})
 
    :query-transaction
-   (map->SystemChaincodeParts
+   (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetTransactionByID")})})
 
-(defn get-system-chaincode-parts
+(defn get-system-chaincode-request-parts
   [k & {:keys [args]}]
   (let [{:keys [chaincode-id header-extension proposal-payload] :as parts}
-        (system-chaincode-parts k)]
+        (system-chaincode-request-parts k)]
     (if (fn? proposal-payload)
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
