@@ -19,6 +19,7 @@
 
 (ns clojure-fabric.client
   (:require [clojure-fabric.user :as user]
+            [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.channel :as channel]
             [clojure-fabric.chaincode :as chaincode])
   (:import clojure_fabric.channel.Channel))
@@ -33,14 +34,11 @@
   ~@body)
 
 (defmacro with-system-channel-of-peer [[channel peer] & body]
-  `(via-peer-channel [~channel ~peer]
-                     )
-
-  (let [channel# (or ~channel channel/*channel*)]
-    (assert (instance? Channel channel#) (str "Channel is not valid! - " channel#))
-    ;; FIXME: add peer checking
-    (binding [channel/*channel* (assoc channel# :name system-channel-name)]
-      ~@body)))
+  `(let [channel# (or ~channel channel/*channel*)]
+     (assert (instance? Channel channel#) (str "Channel is not valid! - " channel#))
+     ;; FIXME: add peer checking
+     (binding [channel/*channel* (assoc channel# :name system-channel-name)]
+       ~@body)))
 
 (defmacro with-client-binding
   [client & body]
@@ -48,6 +46,18 @@
      ~@body))
 
 (defrecord Client [channels crypto-suite user-context])
+
+(defn make-client
+  [{:keys [msp-id name private-key cert roles %roles] :as user-opts}
+   {:keys [security-provider key-algorithm curve-name hash-algorithm] :as crypto-suite-opts}
+   channel-defs]
+  (let [user (user/make-user user-opts)
+        crypto-suite (crypto-suite/make-crypto-suite crypto-suite-opts)
+        client (->Client (atom {}) crypto-suite)]
+    client))
+
+(defn find-channel [client name]
+  (get @(:channels client) name))
 
 ;;; new_chain
 ;;;
@@ -129,6 +139,7 @@
   ([name peers]
    (query-channel-info *client* name peers))
   ([client name peers]
+   #_
    (let [channel (get-channel name)]
      (if (= (channel/get-peers channel) peers)
        ;;(%query-channel-info channel peers)
@@ -170,6 +181,7 @@ Returns:
   ([]
    (get-state-store *client*))
   ([client]
+   #_
    (get @client-state-store client)))
 
 ;;; set_crypto_suite
