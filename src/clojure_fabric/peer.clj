@@ -33,7 +33,7 @@
 ;; an endorser, committer and/or submitter
 ;; endorser is a committer
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url certificate])
+(defrecord Peer [name url])
 
 (defn make-peer [m]
   (map->Peer m))
@@ -146,15 +146,9 @@
 ;; Immutable
 
 ;;;get_enrollment_certificate
-(defn get-enrollment-certificate
-  "Returns the underlying ECert representing this user’s identity.
-  Params: none
-  Returns:
-        Certificate in PEM format signed by the trusted CA"
-  ([]
-   (get-enrollment-certificate *peer*))
-  ([peer]
-   (-> peer :certificate)))
+;;;
+;;; Implementation Note
+;;;     User has this information, not peer
 
 ;;; set_enrollment_certificate
 ;;; Immutable

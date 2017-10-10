@@ -21,7 +21,7 @@
 
 (defonce ^:dynamic *orderer* nil)
 
-(defrecord Orderer [name url user certificate])
+(defrecord Orderer [name url])
 
 (defn make-orderer [m]
   (map->Orderer m))
