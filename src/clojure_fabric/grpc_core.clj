@@ -62,7 +62,8 @@
 (defn make-chaincode-invocation-spec
   ([^Chaincode$ChaincodeSpec chaincode-spec]
    (-> (Chaincode$ChaincodeInvocationSpec/newBuilder)
-       (.setChaincodeSpec chaincode-spec)))
+       (.setChaincodeSpec chaincode-spec)
+       (.build)))
   ;; FIXME: setIdGenerationAlg
   #_
   ([^Chaincode$ChaincodeSpec chaincode-spec id-generation-alg]
@@ -145,4 +146,15 @@
    (-> (ProposalPackage$Proposal/newBuilder)
        (.setHeader (.toByteString ^Common$Header header))
        (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload payload))
-       (.setExtension extension))))
+       (.setExtension extension)
+       (.build))))
+
+;;;
+;;; User level functions
+;;;
+(defn make-proposal-payload [chaincode-id fcn args]
+  (assert (vector? args))
+  (->> (make-chaincode-input (mapv #(ByteString/copyFromUtf8 (str %)) `[~fcn ~@args]))
+       (make-chaincode-spec chaincode-id)
+       (make-chaincode-invocation-spec)
+       (make-chaincode-proposal-payload)))
