@@ -24,6 +24,19 @@
 ;; Add provider!
 (Security/addProvider (BouncyCastleProvider.))
 
+;;;
+;;; Interface
+;;;
+(defrecord CryptoSuite [security-provider key-algorithm curve-name hash-algorithm])
+(defn make-crypto-suite
+  [& {:keys [security-provider key-algorithm curve-name hash-algorithm]
+      :or {security-provider BouncyCastleProvider/PROVIDER_NAME
+           key-algorithm :ECDSA
+           curve-name :secp256r1
+           hash-algorithm :sha3-384}}]
+  (->CryptoSuite security-provider key-algorithm curve-name hash-algorithm))
+
+
 ;; (defonce key-store (atom nil))
 
 ;; TBD
@@ -41,10 +54,10 @@
         “ephemeral”.
   Returns
         Result (Key): The key object"
-  [{:keys [algorithm curve ephemeral]}]
+  [{:keys [algorithm curve ephemeral ^String security-provider]}]
   (let [generator (-> algorithm
                       name
-                      (KeyPairGenerator/getInstance BouncyCastleProvider/PROVIDER_NAME))
+                      (KeyPairGenerator/getInstance security-provider))
         param-specs (-> curve name ECNamedCurveTable/getParameterSpec)]
     (.initialize generator param-specs (SecureRandom.))
     (.generateKeyPair generator)))
@@ -134,7 +147,7 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  [k {:keys [algorithm curve ephemeral type]}]
+  [k {:keys [algorithm curve ephemeral type ^String security-provider]}]
   (let [curve-name (name curve)
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
         curve (.getCurve parameter-spec)
@@ -147,7 +160,7 @@
         key-size (count k-byte-array)]
     (if (= curve-size key-size)
       (let [middle (int (/ key-size 2))
-            kf (KeyFactory/getInstance (name algorithm) BouncyCastleProvider/PROVIDER_NAME)
+            kf (KeyFactory/getInstance (name algorithm) security-provider)
             spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
                                              (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
                                    (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
@@ -257,7 +270,7 @@
         (bool): verification successful or not"
   [pub-key signature ^bytes digest {:keys [algorithm]}]
   (doto (Signature/getInstance (name algorithm))
-    (.initVerify pub-key) ;; pub-key type is unknown :(
+    (.initVerify pub-key) ;; Reflection warning! - pub-key type is unknown :(
     (.update digest)
     (.verify signature)))
 
