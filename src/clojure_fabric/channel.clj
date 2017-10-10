@@ -235,6 +235,7 @@
   ([chaincode-name fcn args sign]
    (create-transaction-proposal *channel* chaincode-name fcn args sign))
   ([channel chaincode-name fcn args sign]
+   #_
    (with-client-of-channel [client channel]
      
      (let [{:keys [user-context cryptosuite]} client]
