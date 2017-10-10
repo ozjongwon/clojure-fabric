@@ -19,7 +19,8 @@
 
 (ns clojure-fabric.client
   (:require [clojure-fabric.user :as user]
-            [clojure-fabric.channel :as channel])
+            [clojure-fabric.channel :as channel]
+            [clojure-fabric.chaincode :as chaincode])
   (:import clojure_fabric.channel.Channel))
 
 (defonce ^:private clients (atom {}))

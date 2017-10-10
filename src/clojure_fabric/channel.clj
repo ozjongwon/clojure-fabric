@@ -13,6 +13,7 @@
 (ns clojure-fabric.channel
   (:require [clojure-fabric.peer :as peer]
             [clojure-fabric.orderer :as orderer]
+            [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.utils :as utils]
             [medley.core :as medley]))
 
@@ -171,7 +172,7 @@
   ([]
    (query-info *channel*))
   ([channel]
-   ;; TBD
+   
    ))
 
 ;;;query_block
