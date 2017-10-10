@@ -234,7 +234,10 @@
   ([chaincode-name fcn args sign]
    (create-transaction-proposal *channel* chaincode-name fcn args sign))
   ([channel chaincode-name fcn args sign]
-   ;;; TBD
+   (with-client-of-channel [client channel]
+     
+     (let [{:keys [user-context cryptosuite]} client]
+       (get-transaction-context channel user-context cryptosuite)))
    ))
 
 
@@ -297,7 +300,6 @@
   ([channel transaction]
    ;;; TBD
    ))
-
 ;;; 
 
 ;;;;;;;;;

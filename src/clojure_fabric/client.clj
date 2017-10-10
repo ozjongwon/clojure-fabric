@@ -31,7 +31,7 @@
 (defmacro via-peer-channel [[channel peer] & body]
   ~@body)
 
-(defmacro via-system-channel-of-peer [[channel peer] & body]
+(defmacro with-system-channel-of-peer [[channel peer] & body]
   `(via-peer-channel [~channel ~peer]
                      )
 
@@ -240,11 +240,12 @@ Returns:
   ([peer]
    (query-installed-chaincodes channel/*channel* peer))
   ([channel peer]
-   (via-system-channel-of-peer [channel peer]
+   (with-system-channel-of-peer [channel peer]
      ;; FIXME: Check channel has this peer
-     (-> peer
-         :user
-         (get-transaction-context (user-context client))))))
+     (channel/create-transaction-proposal channel)
+     ;; !!!!!!!!!!!!!!!!!
+
+     )))
 
 ;;;;;;;;;;;
 #_
