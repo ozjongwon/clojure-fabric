@@ -56,6 +56,14 @@
      :proposal-payload (grpc/make-proposal-payload lifecycle-system-chaincode
                                                    "queryinstalledchaincodes"
                                                    [])})
+
+   :query-channel-info
+   (map->SystemChaincodeRequestParts
+    {:chaincode-id configuration-system-chaincode
+     :header-extension cscc-chaincode-header-extension
+     :proposal-payload (grpc/make-proposal-payload configuration-system-chaincode
+                                                   "GetChannels"
+                                                   [])})
    :query-info
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
@@ -91,5 +99,4 @@
     (if (fn? proposal-payload)
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
-
 
