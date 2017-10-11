@@ -30,7 +30,7 @@
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
             Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
-            ProposalPackage$Proposal]
+            ProposalPackage$Proposal ProposalPackage$SignedProposal]
            [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
             Common$Header Common$SignatureHeader]
            [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
@@ -210,3 +210,13 @@
        (make-chaincode-invocation-spec)
        (make-chaincode-proposal-payload)))
 
+(defn make-signed-proposal
+  [^ProposalPackage$Proposal proposal user-context crypto-suite]
+  (-> (ProposalPackage$SignedProposal/newBuilder)
+      (.setProposalBytes (.toByteString proposal))
+      (.setSignature (-> (.toByteArray proposal)
+                         #^bytes (crypto-suite/sign
+                                  (:private-key user-context)
+                                  {:algorithm (:key-algorithm crypto-suite)})
+                         (ByteString/copyFrom)))
+      (.build)))
