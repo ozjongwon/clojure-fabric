@@ -36,6 +36,26 @@
            [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
            [com.google.protobuf ByteString Timestamp]))
 
+
+(defonce ^:dynamic *grpc-configuration*
+  ;; From Java SDK
+  {:proposal-wait-time 20000
+   :channel-configu-wait-time 15000
+   :orderer-retry-wait-time 200
+   :orderer-wait-time 3000
+   ;;   :eventhub-connection-wait-time 1000
+   :genesisblock-wait-time 5000
+   })
+
+(defmacro with-overriding-grpc-configuration
+  [[& new-config-key-vals] & body]
+  `(binding [*grpc-configuration* (assoc *grpc-configuration* ~@new-config-key-vals)]
+     ~@body))
+
+(defn grpc-config-value
+  [k]
+  (*grpc-configuration* k))
+
 (defn make-chaincode-id
   ([name]
    (make-chaincode-id name {}))
@@ -212,9 +232,3 @@
                                   {:algorithm (:key-algorithm crypto-suite)})
                          (ByteString/copyFrom)))
       (.build)))
-
-(defn send-proposal-to-peers
-  [proposal peers]
-  ;; - timeout value. I.e. how long to wait?
-  ;; - tx-id, channel-id, 
-  )
