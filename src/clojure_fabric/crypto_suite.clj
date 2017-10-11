@@ -20,8 +20,10 @@
            [org.bouncycastle.jce.provider BouncyCastleProvider]
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
+           [org.bouncycastle.util.io.pem PemObject PemReader]
+
            [org.bouncycastle.util.encoders Hex]
-           [java.io FileInputStream]
+           [java.io FileInputStream StringReader]
            [java.util Arrays]
            [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
@@ -46,6 +48,13 @@
   (let [rbytes (byte-array numbytes)]
     (.nextBytes (SecureRandom.) rbytes)
     rbytes))
+
+(defn cert-string->bytes
+  [cert]
+  (-> (StringReader. cert)
+      (PemReader.)
+      (.readPemObject)
+      (.getContent)))
 
 ;;;
 ;;; Interface

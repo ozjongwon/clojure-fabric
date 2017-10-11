@@ -146,7 +146,6 @@
         signature-header (grpc/make-signature-header identity-byte-string
                                                      nonce-byte-string)
         header (grpc/make-header chain-header signature-header)]
-    ;; proposalPayload.toByteString()
     (grpc/make-proposal header proposal-payload)))
 
 ;;; query_chain-info
