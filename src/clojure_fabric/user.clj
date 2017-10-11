@@ -65,6 +65,8 @@
    (:roles user)))
 
 ;;; get_enrollment_certificate
+;;;
+;;; FIXME: just use :certificate and remove this function?
 (defn get-enrollment-certificate
   "Returns the underlying ECert representing this user’s identity.
   Params: none

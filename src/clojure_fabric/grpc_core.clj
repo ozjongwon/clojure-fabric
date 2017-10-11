@@ -24,12 +24,15 @@
 ;;      the fabric events “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause
 ;;      the method to emit “complete” or “error” events to the application
 (ns clojure-fabric.grpc-core
+  (:require [clojure-fabric.user :as user]
+            [clojure-fabric.crypto-suite :as crypto-suite])
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
             Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
             ProposalPackage$Proposal]
            [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
             Common$Header Common$SignatureHeader]
+           [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
            [com.google.protobuf ByteString Timestamp]))
 
 ;;;
@@ -102,23 +105,49 @@
   (let [now (System/currentTimeMillis)]
     (-> (Timestamp/newBuilder)
         (.setSeconds (quot now 1000))
-        (.setNanos (-> now (rem 1000) (* 10000000)))
+        (.setNanos (-> now (rem 1000) (* 1000000)))
         (.build))))
 
 (defn make-channel-header
   ([type version channel-id tx-id epoch]
    (make-channel-header type version channel-id tx-id epoch ByteString/EMPTY))
-  ([type version channel-id tx-id epoch extension]
+  ([^Common$HeaderType type version channel-id tx-id epoch extension]
    (let [now (System/currentTimeMillis)]
     (-> (Common$ChannelHeader/newBuilder)
-        (.setType type)
+        (.setType (.getNumber type))
         (.setVersion version)
         (.setTimestamp ^Timestamp (make-current-grpc-timestamp))
         (.setChannelId ^Chaincode$ChaincodeID channel-id)
         (.setTxId tx-id)
         (.setEpoch epoch)
-        (.setExtension extension)
+        (.setExtension (.toByteString ^ProposalPackage$ChaincodeHeaderExtension extension))
         (.build)))))
+
+(defn make-serialized-identity [user]   ; i.e. user-context
+  (-> (Identities$SerializedIdentity/newBuilder)
+      (.setIdBytes (ByteString/copyFromUtf8 (user/get-enrollment-certificate user)))
+      (.setMspid (:msp-id user))
+      (.build)))
+
+(defn make-identity-byte-string [user]
+  (.toByteString ^Identities$SerializedIdentity (make-serialized-identity user)))
+
+(defonce nonce-size 24)
+(defn make-nonce-byte-string
+  []
+  (ByteString/copyFrom #^bytes (crypto-suite/random-bytes nonce-size)))
+
+(defn identity-nonce->tx-id
+  [^ByteString identity ^ByteString nonce {algorithm :hash-algorithm}]
+  (-> (.concat nonce identity)
+      (.toByteArray)
+      (crypto-suite/hash {:algorithm algorithm})))
+
+
+(defonce default-epoch 0)
+(defn get-epoch [& _]
+  ;; FIXME: currently always default-epoch, 0
+  default-epoch)
 
 (defn make-chaincode-header
   [^Chaincode$ChaincodeID chaincode-id channel-id tx-id epoch]
@@ -148,10 +177,10 @@
       (.build)))
 
 (defn make-header
-  [^Common$ChannelHeader channel-header signature-header]
+  [^Common$ChannelHeader channel-header ^Common$SignatureHeader signature-header]
   (-> (Common$Header/newBuilder)
       (.setChannelHeader (.toByteString channel-header))
-      (.setSignatureHeader channel-header)
+      (.setSignatureHeader (.toByteString signature-header))
       (.build)))
 
 (defn make-proposal
