@@ -1,0 +1,9 @@
+* gRPC stub mapping between Java and Clojure
+(See https://grpc.io/docs/reference/java/generated-code.html)
+
+There are three types of stubs: asynchronous, blocking, and future.
+- Async uses StreamObserver
+- Blocking only supports server-streaming, no client/bidirectional-streaming
+- Future does not support streaming
+
+Supporting Async and Blocking seem good enough.
