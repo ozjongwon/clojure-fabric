@@ -46,17 +46,8 @@
 
 (defonce ^:dynamic *client* nil)
 
-(defonce system-channel-name "")
-
 (defmacro via-peer-channel [[channel peer] & body]
   ~@body)
-
-(defmacro with-system-channel-of-peer [[channel peer] & body]
-  `(let [channel# (or ~channel channel/*channel*)]
-     (assert (instance? Channel channel#) (str "Channel is not valid! - " channel#))
-     ;; FIXME: add peer checking
-     (binding [channel/*channel* (assoc channel# :name system-channel-name)]
-       ~@body)))
 
 (defmacro with-client-binding
   [client & body]
@@ -145,13 +136,12 @@
   ([name peers]
    (query-channel-info *client* name peers))
   ([client name peers]
-   (let [channel (get-channel client name)
-         unknown-peers (clojure.set/difference (set peers) (channel/get-peers channel))]
+   (let [{:keys [channel-peers crypto-suite user-context]} (get-channel client name)
+         unknown-peers (clojure.set/difference (set peers) channel-peers)]
      (if (empty? unknown-peers)
        (chaincode/make-chaincode-proposal :query-channel-info
-                                          name
-                                          (:crypto-suite channel)
-                                          (:user-context channel))
+                                          crypto-suite
+                                          user-context)
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 ;;;
@@ -260,13 +250,12 @@ Returns:
 (defn query-installed-chaincodes
   ([peer]
    (query-installed-chaincodes channel/*channel* peer))
-  ([channel peer]
-   (with-system-channel-of-peer [channel peer]
-     ;; FIXME: Check channel has this peer
-     (channel/create-transaction-proposal channel)
-     ;; !!!!!!!!!!!!!!!!!
-
-     )))
+  ([{:keys [peers crypto-suite user-context]} peer]
+   (if (contains? peers peer)
+     (chaincode/make-chaincode-proposal :query-installed-chaincodes
+                                        crypto-suite
+                                        user-context)
+     (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;;;;;;;;;;
 #_

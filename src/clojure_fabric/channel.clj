@@ -30,7 +30,8 @@
             [clojure-fabric.orderer :as orderer]
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.utils :as utils]
-            [medley.core :as medley]))
+            [medley.core :as medley])
+  (:import [org.bouncycastle.util.encoders Hex]))
 
 (defonce ^:dynamic *channel* nil)
 
@@ -187,9 +188,8 @@
         (ChainInfo) with height, currently the only useful info"
   ([]
    (query-info *channel*))
-  ([channel]
-   
-   ))
+  ([{:keys [name crypto-suite user-context]}]
+   (chaincode/make-chaincode-proposal :query-info crypto-suite user-context :args [name])))
 
 ;;;query_block
 (defn query-block
@@ -200,9 +200,23 @@
         Object containing the block"
   ([block-number]
    (query-block *channel* block-number))
-  ([channel block-number]
-   ;; TBD
-   ))
+  ([{:keys [name crypto-suite user-context]} block-number]
+   (chaincode/make-chaincode-proposal :query-block crypto-suite user-context
+                                      :args [name block-number])))
+
+(defn query-block-by-hash
+  "Queries the ledger for Block by block hash
+  Params
+        blockHash (hash)
+  Returns 
+        Object containing the block"
+  ([block-hash]
+   (query-block *channel* block-hash))
+  ([{:keys [name crypto-suite user-context]} block-hash]
+   (chaincode/make-chaincode-proposal :query-block-by-hash crypto-suite user-context
+                                      :args [name (if (utils/bytes? block-hash)
+                                                    block-hash
+                                                    (Hex/decode ^String block-hash))])))
 
 ;;; query_transaction
 (defn query-transaction
@@ -213,9 +227,9 @@
         TransactionInfo containing the transaction"
   ([transaction-id]
    (query-transaction *channel* transaction-id))
-  ([channel transaction-id]
-   ;; TBD
-   ))
+  ([{:keys [name crypto-suite user-context]} transaction-id]
+   (chaincode/make-chaincode-proposal :query-transaction crypto-suite user-context
+                                      :args [name transaction-id])))
 
 ;;;create_deploy_proposal
 (defn create-deploy-proposal

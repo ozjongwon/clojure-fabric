@@ -22,3 +22,7 @@
   (if (= idx 0)
     (subvec v 1)
     (into (subvec v 0 idx) (subvec v (inc idx)))))
+
+(defonce bytes-type (type (byte-array 8)))
+(defn bytes? [x]
+  (instance? bytes-type x))

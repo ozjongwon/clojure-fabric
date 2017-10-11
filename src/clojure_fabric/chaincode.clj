@@ -115,11 +115,13 @@
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
 
+(defonce system-channel-name "")
+
 ;;;
 ;;; User level functions
 ;;;
 (defn make-chaincode-proposal
-  [chaincode-key channel-name crypto-suite user-context & {:keys [args]}]
+  [chaincode-key crypto-suite user-context & {:keys [args]}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
 
@@ -129,8 +131,8 @@
      (grpc/make-header
       (grpc/make-chaincode-header
        chaincode-id
-       channel-name
+       system-channel-name
        (grpc/identity-nonce->tx-id identity-byte-string nonce-byte-string crypto-suite)
-       (grpc/get-epoch channel-name))
+       (grpc/get-epoch system-channel-name))
       (grpc/make-signature-header identity-byte-string nonce-byte-string))
      proposal-payload)))

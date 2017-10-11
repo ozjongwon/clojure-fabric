@@ -25,7 +25,8 @@
 ;;      the method to emit “complete” or “error” events to the application
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.user :as user]
-            [clojure-fabric.crypto-suite :as crypto-suite])
+            [clojure-fabric.crypto-suite :as crypto-suite]
+            [clojure-fabric.utils :as utils])
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
             Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
@@ -199,7 +200,12 @@
 
 (defn make-proposal-payload [chaincode-id fcn args]
   (assert (vector? args))
-  (->> (make-chaincode-input (mapv #(ByteString/copyFromUtf8 (str %)) `[~fcn ~@args]))
+  ;; FIXME: From Java comment
+  ;; 
+  (->> (make-chaincode-input (mapv #(if (utils/bytes? %)
+                                      (ByteString/copyFrom #^bytes %)
+                                      (ByteString/copyFromUtf8 (str %)))
+                                   `[~fcn ~@args]))
        (make-chaincode-spec chaincode-id)
        (make-chaincode-invocation-spec)
        (make-chaincode-proposal-payload)))
