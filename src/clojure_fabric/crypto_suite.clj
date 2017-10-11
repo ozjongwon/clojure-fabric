@@ -28,7 +28,7 @@
            [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
            [java.security Key KeyStore KeyFactory KeyPairGenerator SecureRandom
-            Security MessageDigest Signature]
+            Security MessageDigest Signature PublicKey]
            [java.security.spec ECPoint ECParameterSpec ECPublicKeySpec ECPrivateKeySpec])
   (:refer-clojure :exclude [hash]))
 
@@ -59,6 +59,8 @@
 ;;;
 ;;; Interface
 ;;;
+;;; 'opts' is CryptoSuite
+;;; 
 (defrecord CryptoSuite [security-provider key-algorithm curve-name hash-algorithm])
 (defn make-crypto-suite
   [{:keys [security-provider key-algorithm curve-name hash-algorithm]
@@ -199,7 +201,7 @@
                                                       (.getH parameter-spec) (.getSeed parameter-spec)))]
         (case type
           :public (.generatePublic kf spec)
-          :private (.generatePublic kf spec)))
+          :private (.generatePrivate kf spec)))
       (throw (Exception. (format "Key size(%d) does not match with the chosen curve(%d)" key-size curve-size))))))
 ;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
 ;; (def x (Arrays/copyOfRange *1 1 65))
@@ -286,10 +288,10 @@
   Returns
         Result(Object):Signature object"
   [^bytes digest priv-key {:keys [algorithm]}]
-  (let [signature (Signature/getInstance (name algorithm))]
-    (.initSign signature priv-key)
-    (.update signature digest)
-    (.sign signature)))
+  (let [signer (Signature/getInstance (name algorithm))]
+    (.initSign signer priv-key)
+    (.update signer digest)
+    (.sign signer)))
 
 ;;; verify
 (defn verify
@@ -300,11 +302,12 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [pub-key signature ^bytes digest {:keys [algorithm]}]
-  (let [signature (Signature/getInstance (name algorithm))]
-    (.initVerify signature pub-key) ;; Reflection warning! - pub-key type is unknown :(
-    (.update signature digest)
-    (.verify signature)))
+  [pub-key-byte signature ^bytes digest {:keys [algorithm curve type security-provider] :as opts}]
+  (let [^PublicKey pub-key (import-key pub-key-byte opts)
+        signer (Signature/getInstance (name algorithm))]
+    (.initVerify signer pub-key)
+    (.update signer digest)
+    (.verify signer signature)))
 
 #_
 (comment
