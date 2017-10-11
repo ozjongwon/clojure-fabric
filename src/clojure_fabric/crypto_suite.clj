@@ -39,6 +39,15 @@
 (Security/addProvider (BouncyCastleProvider.))
 
 ;;;
+;;; Utility functions
+;;; 
+(defn random-bytes
+  [numbytes]
+  (let [rbytes (byte-array numbytes)]
+    (.nextBytes (SecureRandom.) rbytes)
+    rbytes))
+
+;;;
 ;;; Interface
 ;;;
 (defrecord CryptoSuite [security-provider key-algorithm curve-name hash-algorithm])
