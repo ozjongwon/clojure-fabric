@@ -34,12 +34,13 @@
 
 (defonce ^:dynamic *channel* nil)
 
-(defrecord Channel [name client peers orderers event-hubs listener-peer])
-(defn make-channel [name client {:keys [peers orderers event-hubs listener-peer]}]
-  (assert (and name client) "Channel requires name and client to create.")
-  (map->Channel {:name name :client client
-                 :peers (atom `[~@peers]) :orderers (atom `[~@orderers])
-                 :listener-peer (atom ~listener-peer)}))
+;; FIXME: immutable!
+;; Implementation Note:
+;;      crypto-suite and user-context are copies of client's
+;;      All data are immutable.
+(defrecord Channel [name crypto-suite user-context peers orderers])
+(defn make-channel [& {:keys [name crypto-suite user-context peers orderers] :as args}]
+  (map->Channel args))
 
 ;;;
 ;;; Functions
@@ -250,11 +251,9 @@
   ([chaincode-name fcn args sign]
    (create-transaction-proposal *channel* chaincode-name fcn args sign))
   ([channel chaincode-name fcn args sign]
-   #_
-   (with-client-of-channel [client channel]
-     
-     (let [{:keys [user-context cryptosuite]} client]
-       (get-transaction-context channel user-context cryptosuite)))
+   (let [{:keys [user-context crypto-suite]} channel]
+     #_
+     (get-transaction-context channel user-context crypto-suite))
    ))
 
 

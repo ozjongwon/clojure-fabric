@@ -36,6 +36,8 @@
   (:require [clojure-fabric.user :as user]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.channel :as channel]
+            [clojure-fabric.orderer :as orderer]
+            [clojure-fabric.peer :as peer]
             [clojure-fabric.chaincode :as chaincode])
   (:import clojure_fabric.channel.Channel))
 
@@ -62,17 +64,31 @@
 
 (defrecord Client [channels crypto-suite user-context])
 
-(defn make-client
-  [{:keys [msp-id name private-key cert roles %roles] :as user-opts}
-   {:keys [security-provider key-algorithm curve-name hash-algorithm] :as crypto-suite-opts}
-   channel-defs]
-  (let [user (user/make-user user-opts)
-        crypto-suite (crypto-suite/make-crypto-suite crypto-suite-opts)
-        client (->Client (atom {}) crypto-suite)]
-    client))
+(defn channel-defs->channels
+  ;; Ex:
+  ;;{"mychannel"
+  ;;      {:orderers [{:name "orderer" :url "grpc://localhost:7050"}]
+  ;;       :peers [{:name "peer" :url "grpc://localhost:7051"}]}}
+  [user-context crypto-suite defs]
+  (letfn [(make-node [k m]
+            (case k
+              :orderer (orderer/make-orderer m)
+              :peer (peer/make-peer m)))
+          (make-channel [n orderers peers]
+            (channel/make-channel :name n :crypto-suite crypto-suite :user-context user-context
+                                  :peers peers :orderer orderers))]
+    (for [[n m] defs
+          :let [orderers (mapv #(make-node :orderer %) (:orderers m))
+                peers (mapv #(make-node :peer %) (:peers m))]]
+      (make-channel n orderers peers))))
 
-(defn find-channel [client name]
-  (get @(:channels client) name))
+
+(defn make-client
+  [user-map crypto-map channel-defs]
+  (let [user (user/make-user user-map)
+        crypto-suite (crypto-suite/make-crypto-suite crypto-map)]
+    (assoc (->Client nil crypto-suite user)
+           :channels (channel-defs->channels user crypto-suite channel-defs))))
 
 ;;; new_chain
 ;;;
@@ -83,37 +99,11 @@
 ;;         name (str): The name of the chain, recommend using namespaces to avoid collision
 ;;   Returns:
 ;;         (Chain instance): The uninitialized chain instance."
-(defn add-channel!
-  ([channel]
-   (add-channel! *client* channel))
-  ([client channel]
-   (let [found (get @(:channels client) name)]
-     (if (= found channel)
-       ;; Implementation Note
-       ;;       The spec doesn't say anything about existing channel.
-       ;;       Return if there is an existing channel with the name.
-       found
-       ;; replace or add
-       (swap! (:channels client) assoc name channel)))))
-
-#_
-(defn new-channel!
-  
-  ([name]
-   (new-channel! *client* name))
-  ([client name]
-   (new-channel! *client* name {}))
-  ([client name opts]
-   (let [channels (:channels client)]
-     (if-let [found (get @channels name)]
-       ;; Implementation Note
-       ;;       The spec doesn't say anything about existing channel.
-       ;;       Return if there is an existing channel with the name.
-       found
-       (swap! channels assoc name (-> opts (assoc :name name) (map->Channel)))))))
+;;
+;;
+;; Immutable
 
 ;;; get_chain
-#_
 (defn get-channel
   "Get a chain instance from the state storage. This allows existing chain instances to be saved
   for retrieval later and to be shared among instances of the application. Note that it's the 
@@ -126,17 +116,17 @@
         (Chain instance or None): the chain instance for the name.
   Error:  The state store has not been set
         A chain does not exist under that name"
+  ;; Implementation Note:
+  ;;    Not a storage operation 
   ([name]
    (get-channel *client* name))
   ([client name]
-   (if (nil? client)
-     (throw (Exception. "The state store has not been set"))
-     (if-let [found (get @(:channels client) name)]
-       found
-       ;; Implementation Note
-       ;;       The spec says that Returns is chain Instance or None
-       ;;       How it can be None and also throw an exception?
-       (throw (Exception. "A channel does not exist under that name"))))))
+   (if-let [found (get (:channels client) name)]
+     found
+     ;; Implementation Note
+     ;;       The spec says that Returns is chain Instance or None
+     ;;       How it can be None and also throw an exception?
+     (throw (Exception. "A channel does not exist under that name")))))
 
 ;;; query_chain-info
 (defn query-channel-info

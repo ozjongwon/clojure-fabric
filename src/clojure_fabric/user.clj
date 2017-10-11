@@ -37,8 +37,8 @@
 (defrecord User [msp-id name roles enrollment %roles])
 
 (defn make-user
-  [& {:keys [msp-id name private-key cert roles %roles]
-      :or {roles #{} %roles #{}}}]
+  [{:keys [msp-id name private-key cert roles %roles]
+    :or {roles #{} %roles #{}}}]
   ;; roles client, auditor
   ;; %roles peer, validator
   (->User msp-id name roles (->Enrollment private-key cert) %roles))
