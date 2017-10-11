@@ -220,3 +220,9 @@
                                   {:algorithm (:key-algorithm crypto-suite)})
                          (ByteString/copyFrom)))
       (.build)))
+
+(defn send-proposal-to-peers
+  [proposal peers]
+  ;; - timeout value. I.e. how long to wait?
+  ;; - tx-id, channel-id, 
+  )

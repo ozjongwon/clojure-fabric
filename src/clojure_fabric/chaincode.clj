@@ -121,7 +121,7 @@
 ;;; User level functions
 ;;;
 (defn make-chaincode-proposal
-  [chaincode-key crypto-suite user-context & {:keys [args]}]
+  [chaincode-key user-context crypto-suite & {:keys [args]}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
 
@@ -136,3 +136,8 @@
        (grpc/get-epoch system-channel-name))
       (grpc/make-signature-header identity-byte-string nonce-byte-string))
      proposal-payload)))
+
+(defn make-chaincode-signed-proposal
+  [chaincode-key user-context crypto-suite & {:keys [args]}]
+  (-> (make-chaincode-proposal chaincode-key user-context crypto-suite :args args)
+      (grpc/make-signed-proposal user-context crypto-suite)))

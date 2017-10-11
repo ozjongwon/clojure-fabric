@@ -139,9 +139,9 @@
    (let [{:keys [channel-peers crypto-suite user-context]} (get-channel client name)
          unknown-peers (clojure.set/difference (set peers) channel-peers)]
      (if (empty? unknown-peers)
-       (chaincode/make-chaincode-proposal :query-channel-info
-                                          crypto-suite
-                                          user-context)
+       (chaincode/make-chaincode-signed-proposal :query-channel-info
+                                                 user-context
+                                                 crypto-suite)
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 ;;;
@@ -252,9 +252,9 @@ Returns:
    (query-installed-chaincodes channel/*channel* peer))
   ([{:keys [peers crypto-suite user-context]} peer]
    (if (contains? peers peer)
-     (chaincode/make-chaincode-proposal :query-installed-chaincodes
-                                        crypto-suite
-                                        user-context)
+     (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
+                                               user-context
+                                               crypto-suite)
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;;;;;;;;;;

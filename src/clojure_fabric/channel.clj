@@ -189,7 +189,7 @@
   ([]
    (query-info *channel*))
   ([{:keys [name crypto-suite user-context]}]
-   (chaincode/make-chaincode-proposal :query-info crypto-suite user-context :args [name])))
+   (chaincode/make-chaincode-signed-proposal :query-info user-context crypto-suite :args [name])))
 
 ;;;query_block
 (defn query-block
@@ -201,8 +201,8 @@
   ([block-number]
    (query-block *channel* block-number))
   ([{:keys [name crypto-suite user-context]} block-number]
-   (chaincode/make-chaincode-proposal :query-block crypto-suite user-context
-                                      :args [name block-number])))
+   (chaincode/make-chaincode-signed-proposal :query-block user-context crypto-suite
+                                             :args [name block-number])))
 
 (defn query-block-by-hash
   "Queries the ledger for Block by block hash
@@ -213,10 +213,10 @@
   ([block-hash]
    (query-block *channel* block-hash))
   ([{:keys [name crypto-suite user-context]} block-hash]
-   (chaincode/make-chaincode-proposal :query-block-by-hash crypto-suite user-context
-                                      :args [name (if (utils/bytes? block-hash)
-                                                    block-hash
-                                                    (Hex/decode ^String block-hash))])))
+   (chaincode/make-chaincode-signed-proposal :query-block-by-hash user-context crypto-suite
+                                             :args [name (if (utils/bytes? block-hash)
+                                                           block-hash
+                                                           (Hex/decode ^String block-hash))])))
 
 ;;; query_transaction
 (defn query-transaction
@@ -228,8 +228,8 @@
   ([transaction-id]
    (query-transaction *channel* transaction-id))
   ([{:keys [name crypto-suite user-context]} transaction-id]
-   (chaincode/make-chaincode-proposal :query-transaction crypto-suite user-context
-                                      :args [name transaction-id])))
+   (chaincode/make-chaincode-signed-proposal :query-transaction user-context crypto-suite
+                                             :args [name transaction-id])))
 
 ;;;create_deploy_proposal
 (defn create-deploy-proposal
