@@ -36,10 +36,6 @@
            [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
            [com.google.protobuf ByteString Timestamp]))
 
-;;;
-;;; Low level functions
-;;;
-
 (defn make-chaincode-id
   ([name]
    (make-chaincode-id name {}))
@@ -193,10 +189,6 @@
        (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload payload))
        (.setExtension extension)
        (.build))))
-
-;;;
-;;; User level functions
-;;;
 
 (defn make-proposal-payload [chaincode-id fcn args]
   (assert (vector? args))
