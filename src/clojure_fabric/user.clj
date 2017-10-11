@@ -32,16 +32,14 @@
 
 (defonce ^:dynamic *user* nil)
 
-(defrecord Enrollment [private-key certificate])
-
-(defrecord User [msp-id name roles enrollment %roles])
+(defrecord User [msp-id name roles %roles private-key certificate])
 
 (defn make-user
   [{:keys [msp-id name private-key cert roles %roles]
     :or {roles #{} %roles #{}}}]
   ;; roles client, auditor
   ;; %roles peer, validator
-  (->User msp-id name roles (->Enrollment private-key cert) %roles))
+  (->User msp-id name roles %roles private-key cert))
 
 ;;; get_name
 (defn get-name
@@ -75,7 +73,7 @@
   ([]
    (get-enrollment-certificate *user*))
   ([user]
-   (get-in user [:enrollment :certificate])))
+   (:certificate user)))
 
 ;;; set_name
 ;;; Immutable
