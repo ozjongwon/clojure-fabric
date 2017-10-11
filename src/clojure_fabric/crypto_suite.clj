@@ -280,16 +280,16 @@
 (defn sign
   "Sign the data.
   Params
-        Key (Key) private signing key
         digest (byte[]) fixed-length digest of the target message to be signed
+        Key (Key) private signing key
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  [priv-key ^bytes digest {:keys [algorithm]}]
-  (doto (Signature/getInstance (name algorithm))
-    (.initSign priv-key)
-    (.update digest)
-    (.sign)))
+  [^bytes digest priv-key {:keys [algorithm]}]
+  (let [signature (Signature/getInstance (name algorithm))]
+    (.initSign signature priv-key)
+    (.update signature digest)
+    (.sign signature)))
 
 ;;; verify
 (defn verify
@@ -301,9 +301,9 @@
   Returns
         (bool): verification successful or not"
   [pub-key signature ^bytes digest {:keys [algorithm]}]
-  (doto (Signature/getInstance (name algorithm))
-    (.initVerify pub-key) ;; Reflection warning! - pub-key type is unknown :(
-    (.update digest)
+  (let [signature (Signature/getInstance (name algorithm))]
+    (.initVerify signature pub-key) ;; Reflection warning! - pub-key type is unknown :(
+    (.update signature digest)
     (.verify signature)))
 
 #_
