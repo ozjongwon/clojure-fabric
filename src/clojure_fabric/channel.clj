@@ -89,7 +89,7 @@
   ([]
    (get-peers *channel*))
   ([channel]
-   @(:peers channel)))
+   (:peers channel)))
 
 ;;;
 ;;;
@@ -129,7 +129,7 @@
   ([]
    (get-orderers *channel*))
   ([channel]
-   @(:orderers channel)))
+   (:orderers channel)))
 
 ;;; initialize_chain
 (defn initialize-channel

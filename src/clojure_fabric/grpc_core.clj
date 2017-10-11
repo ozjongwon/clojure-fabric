@@ -196,9 +196,11 @@
 ;;;
 ;;; User level functions
 ;;;
+
 (defn make-proposal-payload [chaincode-id fcn args]
   (assert (vector? args))
   (->> (make-chaincode-input (mapv #(ByteString/copyFromUtf8 (str %)) `[~fcn ~@args]))
        (make-chaincode-spec chaincode-id)
        (make-chaincode-invocation-spec)
        (make-chaincode-proposal-payload)))
+

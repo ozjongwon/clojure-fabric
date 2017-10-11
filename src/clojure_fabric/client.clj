@@ -129,25 +129,6 @@
      ;;       How it can be None and also throw an exception?
      (throw (Exception. "A channel does not exist under that name")))))
 
-(defn- %query-channel-info [{:keys [name crypto-suite user-context]} peers]
-  (let [{:keys [chaincode-id header-extension proposal-payload]}
-        (chaincode/get-system-chaincode-request-parts :query-channel-info)
-
-        identity-byte-string (grpc/make-identity-byte-string user-context)
-        nonce-byte-string (grpc/make-nonce-byte-string)
-        
-        tx-id (grpc/identity-nonce->tx-id identity-byte-string nonce-byte-string crypto-suite)
-
-        chain-header (grpc/make-chaincode-header chaincode-id
-                                                 name
-                                                 tx-id
-                                                 (grpc/get-epoch channel peers))
-        ;;  byte[] der = cp.certificateToDER(cert);
-        signature-header (grpc/make-signature-header identity-byte-string
-                                                     nonce-byte-string)
-        header (grpc/make-header chain-header signature-header)]
-    (grpc/make-proposal header proposal-payload)))
-
 ;;; query_chain-info
 (defn query-channel-info
   "This is a network call to the designated Peer(s) to discover the chain information.
@@ -167,7 +148,10 @@
    (let [channel (get-channel client name)
          unknown-peers (clojure.set/difference (set peers) (channel/get-peers channel))]
      (if (empty? unknown-peers)
-       (%query-channel-info channel peers)
+       (chaincode/make-chaincode-proposal :query-channel-info
+                                          name
+                                          (:crypto-suite channel)
+                                          (:user-context channel))
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 ;;;
