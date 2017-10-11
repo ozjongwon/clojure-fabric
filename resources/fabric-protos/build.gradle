@@ -72,6 +72,12 @@ protobuf {
                     }
                 }
             }
+            all()*.plugins {
+                grpc {
+                  option 'enable_deprecated=false'
+                }
+            }
+
         }
 
   allprojects {
