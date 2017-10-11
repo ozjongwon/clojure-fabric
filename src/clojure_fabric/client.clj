@@ -77,10 +77,10 @@
           (make-channel [n orderers peers]
             (channel/make-channel :name n :crypto-suite crypto-suite :user-context user-context
                                   :peers peers :orderer orderers))]
-    (for [[n m] defs
-          :let [orderers (mapv #(make-node :orderer %) (:orderers m))
-                peers (mapv #(make-node :peer %) (:peers m))]]
-      (make-channel n orderers peers))))
+    (into {} (for [[n m] defs
+                   :let [orderers (into #{} (map #(make-node :orderer %) (:orderers m)))
+                         peers (into #{} (map #(make-node :peer %) (:peers m)))]]
+               [n (make-channel n orderers peers)]))))
 
 
 (defn make-client
@@ -128,6 +128,9 @@
      ;;       How it can be None and also throw an exception?
      (throw (Exception. "A channel does not exist under that name")))))
 
+(defn- %query-channel-info [channel peers]
+  )
+
 ;;; query_chain-info
 (defn query-channel-info
   "This is a network call to the designated Peer(s) to discover the chain information.
@@ -144,11 +147,10 @@
   ([name peers]
    (query-channel-info *client* name peers))
   ([client name peers]
-   #_
-   (let [channel (get-channel name)]
-     (if (= (channel/get-peers channel) peers)
-       ;;(%query-channel-info channel peers)
-       :FIXME
+   (let [channel (get-channel client name)
+         unknown-peers (clojure.set/difference (set peers) (channel/get-peers channel))]
+     (if (empty? unknown-peers)
+       (%query-channel-info channel peers)
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 ;;;
