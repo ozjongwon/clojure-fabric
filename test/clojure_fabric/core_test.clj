@@ -1,5 +1,6 @@
 (ns clojure-fabric.core-test
   (:require [clojure.test :refer :all]
+            [clojure.java.io :as io]
             [clojure-fabric.core :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.grpc-core :as grpc]))
@@ -7,6 +8,33 @@
 ;;;
 ;;; (Originally from End2endAndBackaGainIT.java)
 ;;;
+;;; Test scenario
+;;;
+;;; 1. Create two - v1 and v11, in resource/fixture/gocc/ - chaincode IDs
+;;; 2. Create
+;;; 
+;;;
+;;;
+
+;;;
+;;; Utility functions
+;;;
+(defn domain-name->cert-map
+  [domain-name]
+  (let [cert-pem (-> "fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/%s/ca/ca.%s-cert.pem"
+                     (format domain-name domain-name)
+                     (io/resource)
+                     (io/as-file))]
+    (if cert-pem
+      {:pem-file                cert-pem
+       :allow-all-host-names    true}
+      {})))
+
+(defonce default-defs
+  {:invoke-wait-time    100000
+   :deploy-wait-time    120000
+   :proposal-wait-time  120000})
+
 (defonce chaincode-id-defs
   {:v1  {:name "example_cc_go" :path "github.com/example_cc" :version "1"}
    :v11 {:name "example_cc_go" :path "github.com/example_cc" :version "11"}})
@@ -15,7 +43,33 @@
   {:foo {:name "foo"}
    :bar {:name "bar"}})
 
-;;;;
+(defonce org-defs
+  (into {}
+        (map #(vector (:msp-id %)
+                      (merge % (domain-name->cert-map (:domain-name %))))
+             [{:msp-id                   "Org1MSP"
+               :domain-name              "org1.example.com"
+               :ca-location              "http://localhost:7054"
+               :ca-name                  "ca0"
+               :peer-locations           ["peer0.org1.example.com@grpc://localhost:7051"
+                                          "peer1.org1.example.com@grpc://localhost:7056"]
+               :orderer-locations        ["orderer.example.com@grpc://localhost:7050"]
+               :eventhub-locations       ["peer0.org1.example.com@grpc://localhost:7053"
+                                          "peer1.org1.example.com@grpc://localhost:7058"]
+               :pem-file                 nil
+               :allow-all-host-names     false}
+              {:msp-id                   "Org2MSP"
+               :domain-name              "org2.example.com"
+               :ca-location              "http://localhost:8054"
+               :ca-name                  "ca0"
+               :peer-locations           ["peer0.org2.example.com@grpc://localhost:8051"
+                                          "peer1.org2.example.com@grpc://localhost:8056"]
+               :orderer-locations        ["orderer.example.com@grpc://localhost:7050"]
+               :eventhub-locations       ["peer0.org2.example.com@grpc://localhost:8053"
+                                          "peer1.org2.example.com@grpc://localhost:8058"]
+               :pem-file                 nil
+               :allow-all-host-names     false}])))
+
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
