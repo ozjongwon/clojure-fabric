@@ -31,12 +31,15 @@
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
             Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
-            ProposalPackage$Proposal ProposalPackage$SignedProposal EndorserGrpc]
+            ProposalPackage$Proposal ProposalPackage$SignedProposal EndorserGrpc
+            EndorserGrpc$EndorserStub]
            [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
             Common$Header Common$SignatureHeader]
            [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
            [com.google.protobuf ByteString Timestamp]
            [java.io ByteArrayInputStream] 
+           [io.grpc ManagedChannel]
+           [io.grpc.stub StreamObserver]
            [io.grpc.netty NettyChannelBuilder GrpcSslContexts]
            [io.netty.handler.ssl SslContext SslProvider]
            ))
@@ -261,9 +264,24 @@
                     (.overrideAuthority channel-builder ^String hostname-override)))))
     (.build channel-builder)))
 
+(defn response-waiting-observer
+  [ch]
+  (reify StreamObserver
+    (onNext [this proposal-response]
+      (async/put! ch [:ok proposal-response]))
+    (onError [this err]
+      (async/put! ch [:error err]))
+    (onCompleted [this]
+      (async/put! ch [:done]))))
+    
 (defn send-chaincode-request-to-peer
   [peer proposal]
-  )
+  (let [ch (async/chan 1)]
+    (.processProposal (EndorserGrpc/newStub ^ManagedChannel (peer->channel peer))
+                     proposal
+                     (response-waiting-observer ch))
+    (async/<!! ch)))
+
 #_
 (defn send-chaincode-request
   [chaincode-key peers user-context crypto-suite]
