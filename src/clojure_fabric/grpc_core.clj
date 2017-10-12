@@ -265,32 +265,28 @@
     (.build channel-builder)))
 
 (defn response-waiting-observer
-  [ch]
+  [k ch]
   (reify StreamObserver
     (onNext [this proposal-response]
-      (async/put! ch [:ok proposal-response]))
+      (async/put! ch [k proposal-response]))
     (onError [this err]
-      (async/put! ch [:error err]))
-    (onCompleted [this]
-      (async/put! ch [:done]))))
-    
+      (async/put! ch [k err]))
+    (onCompleted [this])))
+
+(defmacro binding-grpc-waiting-auto-callback [[k callback-fn] & body]
+  `(let [ch# (async/chan)
+         ~callback-fn (response-waiting-observer ~k ch#)]
+     ~@body
+     ch#))
+
 (defn send-chaincode-request-to-peer
   [peer proposal]
-  (let [ch (async/chan 1)]
+  (binding-grpc-waiting-auto-callback [peer callback]
     (.processProposal (EndorserGrpc/newStub ^ManagedChannel (peer->channel peer))
                      proposal
-                     (response-waiting-observer ch))
-    (async/<!! ch)))
+                     callback)))
 
-#_
-(defn send-chaincode-request
-  [chaincode-key peers user-context crypto-suite]
-  (let [peers (utils/ensure-vector peers)]
-    (let [signed-proposal (make-chaincode-signed-proposal :query-channel-info
-                                                          user-context crypto-suite)]
-      (doseq [peer peers]
-        #_
-        (send-chaincode-request-to-peer peer signed-proposal)))))
+
 
 ;; Grpc
 ;; EventsGrpc - EventHub

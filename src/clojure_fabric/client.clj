@@ -257,6 +257,11 @@ Returns:
    (query-installed-chaincodes channel/*channel* peer))
   ([{:keys [peers crypto-suite user-context]} peer]
    (if (contains? peers peer)
+     (chaincode/send-chaincode-request :query-installed-chaincodes
+                                       peers
+                                       user-context
+                                       crypto-suite)
+     #_
      (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
                                                user-context
                                                crypto-suite)
