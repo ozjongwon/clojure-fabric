@@ -26,15 +26,20 @@
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.user :as user]
             [clojure-fabric.crypto-suite :as crypto-suite]
-            [clojure-fabric.utils :as utils])
+            [clojure-fabric.utils :as utils]
+            [clojure.core.async :as async])
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
             Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
-            ProposalPackage$Proposal ProposalPackage$SignedProposal]
+            ProposalPackage$Proposal ProposalPackage$SignedProposal EndorserGrpc]
            [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
             Common$Header Common$SignatureHeader]
            [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
-           [com.google.protobuf ByteString Timestamp]))
+           [com.google.protobuf ByteString Timestamp]
+           [java.io ByteArrayInputStream] 
+           [io.grpc.netty NettyChannelBuilder GrpcSslContexts]
+           [io.netty.handler.ssl SslContext SslProvider]
+           ))
 
 
 (defonce ^:dynamic *grpc-configuration*
@@ -232,3 +237,43 @@
                                   {:algorithm (:key-algorithm crypto-suite)})
                          (ByteString/copyFrom)))
       (.build)))
+
+
+;;;
+;;; Async processing
+;;;
+(defn peer->channel
+  [{:keys [url pem hostname-override ssl-provider negotiation-type trust-server-certificate?]
+    :as peer}]
+  (let [{:keys [protocol host port]} (utils/parse-grpc-url url)
+        channel-builder (NettyChannelBuilder/forAddress ^String host ^int port)]
+    (case protocol
+      "grpc"  (.usePlaintext channel-builder true)
+      ;; From Java SDK
+      "grpcs" (if (nil? pem)
+                (throw (Exception. "FIXME: Implement - use root certificate!"))
+                (let [ssl-context (-> (GrpcSslContexts/forClient)
+                                      (.trustManager (ByteArrayInputStream. pem))
+                                      (.sslProvider ssl-provider)
+                                      (.build))]
+                  (.negotiationType (.sslContext channel-builder ssl-context) negotiation-type)
+                  (when hostname-override
+                    (.overrideAuthority channel-builder ^String hostname-override)))))
+    (.build channel-builder)))
+
+(defn send-chaincode-request-to-peer
+  [peer proposal]
+  )
+#_
+(defn send-chaincode-request
+  [chaincode-key peers user-context crypto-suite]
+  (let [peers (utils/ensure-vector peers)]
+    (let [signed-proposal (make-chaincode-signed-proposal :query-channel-info
+                                                          user-context crypto-suite)]
+      (doseq [peer peers]
+        #_
+        (send-chaincode-request-to-peer peer signed-proposal)))))
+
+;; Grpc
+;; EventsGrpc - EventHub
+;; AtomicBroadcastGrpc - Orderer

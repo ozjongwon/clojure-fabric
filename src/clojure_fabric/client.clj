@@ -139,6 +139,11 @@
    (let [{:keys [channel-peers crypto-suite user-context]} (get-channel client name)
          unknown-peers (clojure.set/difference (set peers) channel-peers)]
      (if (empty? unknown-peers)
+       (chaincode/send-chaincode-request :query-channel-info
+                                         peers
+                                         user-context
+                                         crypto-suite)
+       #_
        (chaincode/make-chaincode-signed-proposal :query-channel-info
                                                  user-context
                                                  crypto-suite)

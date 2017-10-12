@@ -141,3 +141,13 @@
   [chaincode-key user-context crypto-suite & {:keys [args]}]
   (-> (make-chaincode-proposal chaincode-key user-context crypto-suite :args args)
       (grpc/make-signed-proposal user-context crypto-suite)))
+
+(defn send-chaincode-request
+  [chaincode-key peers user-context crypto-suite]
+  (let [signed-proposal (chaincode/make-chaincode-signed-proposal :query-channel-info
+                                                           user-context crypto-suite)]
+    (publish signed-proposal)
+    )
+  
+  
+  )
