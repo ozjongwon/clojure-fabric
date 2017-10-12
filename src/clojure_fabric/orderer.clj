@@ -21,7 +21,9 @@
 
 (defonce ^:dynamic *orderer* nil)
 
-(defrecord Orderer [name url])
+(defrecord Orderer [name url
+                    ;; From Java SDK (see HFClient.java)
+                    pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
 
 (defn make-orderer [m]
   (map->Orderer m))

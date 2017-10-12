@@ -33,7 +33,9 @@
 ;; an endorser, committer and/or submitter
 ;; endorser is a committer
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url])
+(defrecord Peer [name url
+                 ;; From Java SDK (see HFClient.java)
+                 pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
 
 (defn make-peer [m]
   (map->Peer m))
