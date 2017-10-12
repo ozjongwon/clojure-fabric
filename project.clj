@@ -20,6 +20,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  ;;[org.clojure/core.cache "0.6.5"]
                  [org.clojure/data.codec "0.1.0"]
+                 [org.clojure/core.async "0.3.443"]
+                 
                  [medley "1.0.0"]
                  [buddy/buddy-core "1.4.0"] ;; for test
                  [org.bouncycastle/bcprov-jdk15on "1.58"]

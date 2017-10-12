@@ -26,3 +26,20 @@
 (defonce bytes-type (type (byte-array 8)))
 (defn bytes? [x]
   (instance? bytes-type x))
+
+(defn ensure-vector [x]
+  (cond (vector? x) x
+        (sequential? x) (vector x)
+        :else [x]))
+
+(def hostname-regex "((?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])(?:\\.(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9]))*)")
+
+(def grpc-url-pattern (re-pattern (str "(grpcs?)[:]//" hostname-regex "[:](\\d+)")))
+
+(defrecord gRpcUrl [protocol host port])
+(defn parse-grpc-url [url]
+  (let [[_ protocol host port] (re-matches grpc-url-pattern url)]
+    (when-not (and protocol host port)
+      (throw (Exception. "Invalid gRPC URL! Must be 'grpc|grpcs://<hostname>:<port>'")))
+    (->gRpcUrl protocol host port)))
+
