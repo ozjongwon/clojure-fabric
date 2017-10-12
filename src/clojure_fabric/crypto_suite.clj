@@ -13,7 +13,8 @@
 ;; limitations under the License.
 
 (ns clojure-fabric.crypto-suite
-  (:require [clojure.data.codec.base64 :as b64])
+  (:require [clojure.data.codec.base64 :as b64]
+            [clojure-fabric.utils :as utils])
   (:import [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
            [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECNamedCurveSpec]
@@ -302,8 +303,10 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [pub-key-byte signature ^bytes digest {:keys [algorithm curve type security-provider] :as opts}]
-  (let [^PublicKey pub-key (import-key pub-key-byte opts)
+  [pub-key signature ^bytes digest {:keys [algorithm curve type security-provider] :as opts}]
+  (let [^PublicKey pub-key (cond (utils/bytes? pub-key) (import-key pub-key opts)
+                                 (string? pub-key) (import-key (cert-string->bytes pub-key))
+                                 :else pub-key)
         signer (Signature/getInstance (name algorithm))]
     (.initVerify signer pub-key)
     (.update signer digest)
