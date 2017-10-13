@@ -13,5 +13,77 @@
 ;; limitations under the License.
 
 (ns clojure-fabric.core
-  )
+  (:import [org.bouncycastle.jce.provider BouncyCastleProvider]))
 
+;;;
+;;; User(and Client)
+;;;
+
+;; Toplevel users: all mutation happens with 'users'
+(defonce users (atom {}))     ; key = [msp-id name]
+
+(defonce ^:dynamic *user* nil)
+
+(defn get-user
+  [msp-id name]
+  (get @core/users [msp-id name]))
+
+(defrecord User [msp-id name channels crypto-suite
+                 roles %roles
+                 private-key certificate
+                 ;; For CA-Client
+                 ca-location])
+
+(defn make-user
+  [& {:keys [msp-id name channels crypto-suite roles %roles private-key certificate ca-location]
+      :or {channels {} roles #{} %roles #{}}}]
+  (->User msp-id name channels crypto-suite roles %roles private-key certificate ca-location))
+
+;;;
+;;; Channel
+;;;
+(defonce ^:dynamic *channel* nil)
+
+(defrecord Channel [user-key name peers orderers])
+(defn make-channel [& {:keys [user-key name peers orderers] :or {peers {} orderers {}}}]
+  (->Channel user-key name peers orderers))
+
+;;;
+;;; CryptoSuite
+;;; 
+(defrecord CryptoSuite [security-provider key-algorithm curve-name hash-algorithm])
+(defn make-crypto-suite
+  [{:keys [security-provider key-algorithm curve-name hash-algorithm]
+    :or {security-provider BouncyCastleProvider/PROVIDER_NAME
+         key-algorithm :ECDSA
+         curve-name :secp256r1
+         hash-algorithm :sha3-384}}]
+  (->CryptoSuite security-provider key-algorithm curve-name hash-algorithm))
+
+;;;
+;;; Peer
+;;;
+(defonce ^:dynamic *peer* nil)
+
+;; an endorser, committer and/or submitter
+;; endorser is a committer
+;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
+(defrecord Peer [name url
+                 ;; From Java SDK (see HFClient.java)
+                 pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
+
+(defn make-peer [m]
+  (map->Peer m))
+
+
+;;;
+;;; Orderer
+;;;
+(defonce ^:dynamic *orderer* nil)
+
+(defrecord Orderer [name url
+                    ;; From Java SDK (see HFClient.java)
+                    pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
+
+(defn make-orderer [m]
+  (map->Orderer m))

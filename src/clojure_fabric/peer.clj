@@ -26,19 +26,8 @@
 ;; It should be noted that Peer event streams function at the Peer level and not at the chain
 ;; and chaincode levels.
 
-(ns clojure-fabric.peer)
-
-(defonce ^:dynamic *peer* nil)
-
-;; an endorser, committer and/or submitter
-;; endorser is a committer
-;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url
-                 ;; From Java SDK (see HFClient.java)
-                 pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
-
-(defn make-peer [m]
-  (map->Peer m))
+(ns clojure-fabric.peer
+  (:import [clojure-fabric.core :as core]))
 
 ;;connectEventSource
 (defn connect-event-source
@@ -55,7 +44,7 @@
   Result:
         Promise/Future: this gives the app a handle to attach “success” and “error” listeners"
   ([]
-   (connect-event-source *peer*))
+   (connect-event-source core/*peer*))
   ([peer]
    ;; TBD register to eventhub
    ))
@@ -74,7 +63,7 @@
         (boolean): whether the said event has been listened on by some application instance
         on that chain"
   ([event-name]
-   (event-listened? *peer* event-name))
+   (event-listened? core/*peer* event-name))
   ([peer event-name]
    (event-listened? peer event-name nil))
   ([peer event-name chain]
@@ -101,7 +90,7 @@
         [event-listener-ref] a reference to the event listener, some language uses an ID
         (javascript), others uses object reference (Java)"
   ([event-type event-type-data event-call-back]
-   (add-listener *peer* event-type event-type-data event-call-back))
+   (add-listener core/*peer* event-type event-type-data event-call-back))
   ([peer event-type event-type-data event-call-back]
    ;; TBD
    ))
@@ -115,7 +104,7 @@
   Returns:
         statusFlag: Success / Failure"
   ([event-listener-ref]
-   (remove-listener *peer* event-listener-ref))
+   (remove-listener core/*peer* event-listener-ref))
   ([peer event-listener-ref]
    ;; TBD
    ))
@@ -127,7 +116,7 @@
   Returns (str): 
         The name of the Peer"
   ([]
-   (get-name *peer*))
+   (get-name core/*peer*))
   ([peer]
    (:name peer)))
 

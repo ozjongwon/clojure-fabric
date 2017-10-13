@@ -15,18 +15,10 @@
 ;;
 ;; Orderer implementation of "Fabric SDK Design Spec"
 ;; 
-
 (ns clojure-fabric.orderer
-  (:require [clojure-fabric.user :as user]))
+  (:require [clojure-fabric.user :as user])
+  (:import [clojure-fabric.core :as core]))
 
-(defonce ^:dynamic *orderer* nil)
-
-(defrecord Orderer [name url
-                    ;; From Java SDK (see HFClient.java)
-                    pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
-
-(defn make-orderer [m]
-  (map->Orderer m))
 
 (defn- broadcast-client
   ([]))

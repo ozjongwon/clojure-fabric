@@ -26,58 +26,46 @@
 ;;;
 
 (ns clojure-fabric.channel
-  (:require [clojure-fabric.peer :as peer]
+  (:require [clojure-fabric.core :as core]
+            [clojure-fabric.peer :as peer]
             [clojure-fabric.orderer :as orderer]
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.utils :as utils]
             [medley.core :as medley])
   (:import [org.bouncycastle.util.encoders Hex]))
 
-(defonce ^:dynamic *channel* nil)
-
-;; FIXME: immutable!
-;; Implementation Note:
-;;      crypto-suite and user-context are copies of client's
-;;      All data are immutable.
-(defrecord Channel [name crypto-suite user-context peers orderers])
-(defn make-channel [& {:keys [name crypto-suite user-context peers orderers] :as args}]
-  (map->Channel args))
-
 ;;;
 ;;; Functions
 ;;;
+(defn- new-channel-end!
+  [channel {:keys [url] :as channel-end} channel-ends-key]
+  (swap! core/users assoc-in [(:user-key channel) :channels channel-ends-key url]
+         channel-end))
 
-(defn- add-channel-end
+(defn- remove-channel-end!
   [channel {:keys [name url] :as channel-end} channel-ends-key]
-  (when-not (medley/find-first #(and (= (:name %) name) (= (:url %) url)) @(channel-ends-key channel))
-    (swap! (channel-ends-key channel) conj channel-end)))
-
-(defn- remove-channel-end
-  [channel {:keys [name url] :as channel-end} channel-ends-key]
-  (let [channel-ends @(channel-ends-key channel)]
-    (when-let [idx (first (utils/indices #(and (= (:name %) name) (= (:url %) url)) channel-ends))]
-      (reset! (channel-ends-key channel) (utils/removev-index channel-ends idx)))))
+  (swap! core/users update-in [(:user-key channel) :channels channel-ends-key] dissoc url))
 
 ;;; add_peer
-(defn add-peer
+(defn add-peer!
   "Add peer endpoint to a chain object, this is a local-only operation
   Params:
         peer (Peer): an instance of the Peer class that has been initialized with URL,
         TLC certificate, and enrollment certificate"
-  ([peer]
-   (add-peer *channel* peer))
-  ([channel peer]
-   (add-channel-end channel peer :peers)))
+  ([peer-opts]
+   (add-peer! core/*channel* peer-opts))
+  ([channel peer-opts]
+   (new-channel-end! channel peer-opts :peers)))
 
 ;;; remove_peer
-(defn remove-peer
+(defn remove-peer!
   "Remove peer endpoint from a chain object, this is a local-only operation
   Params
         peer (Peer): an instance of the Peer class"
   ([peer]
-   (remove-peer *channel* peer))
+   (remove-peer! core/*channel* peer))
   ([channel peer]
-   (remove-channel-end channel peer :peers)))
+   (remove-channel-end! channel peer :peers)))
 
 ;;; get_peers
 
@@ -88,7 +76,7 @@
   Returns
         (Peer list): The peer list on the chain"
   ([]
-   (get-peers *channel*))
+   (get-peers core/*channel*))
   ([channel]
    (:peers channel)))
 
@@ -96,7 +84,7 @@
 ;;;
 
 ;;; add_orderer
-(defn add-orderer
+(defn add-orderer!
   "Add orderer endpoint to a chain object, this is a local-only operation. A chain instance may
   choose to use a single orderer node, which will broadcast requests to the rest of the orderer
   network. Or if the application does not trust the orderer nodes, it can choose to use more than
@@ -106,19 +94,19 @@
   Params
         orderer (Orderer): an instance of the Orderer class"
   ([orderer]
-   (add-orderer *channel* orderer))
+   (add-orderer! core/*channel* orderer))
   ([channel orderer]
-   (add-channel-end channel orderer :orderers)))
+   (new-channel-end! channel orderer :orderers)))
 
 ;;; remove_orderer
-(defn remove-orderer
+(defn remove-orderer!
   "Remove orderer endpoint from a chain object, this is a local-only operation. 
   Params
         orderer (Orderer): an instance of the Orderer class"
   ([orderer]
-   (remove-orderer *channel* orderer))
+   (remove-orderer! core/*channel* orderer))
   ([channel orderer]
-   (remove-channel-end channel orderer :orderers)))
+   (remove-channel-end! channel orderer :orderers)))
 
 ;;; get_orderers
 (defn get-orderers
@@ -128,56 +116,56 @@
   Returns
         (Orderer list): The orderer list on the chain"
   ([]
-   (get-orderers *channel*))
+   (get-orderers core/*channel*))
   ([channel]
    (:orderers channel)))
 
-;;; initialize_chain
-(defn initialize-channel
-  "Calls the orderer(s) to start building the new chain, which is a combination of opening
-  new message stream and connecting the list of participating peers. This is a long-running process.
-  Only one of the application instances needs to call this method. Once the chain is successfully
-  created, other application instances only need to call get_chain() to obtain the information
-  about this chain.
-  Params
-        None
-  Returns
-        (bool): whether the chain initialization process was successful"
-  ([]
-   (initialize-channel *channel*))
-  ([channel]
-   ;; TBD
-   ))
+;; ;;; initialize_chain
+;; (defn initialize-channel
+;;   "Calls the orderer(s) to start building the new chain, which is a combination of opening
+;;   new message stream and connecting the list of participating peers. This is a long-running process.
+;;   Only one of the application instances needs to call this method. Once the chain is successfully
+;;   created, other application instances only need to call get_chain() to obtain the information
+;;   about this chain.
+;;   Params
+;;         None
+;;   Returns
+;;         (bool): whether the chain initialization process was successful"
+;;   ([]
+;;    (initialize-channel core/*channel*))
+;;   ([channel]
+;;    ;; TBD
+;;    ))
 
-;;; update_chain
-(defn update-channel
-  "Calls the orderer(s) to update an existing chain. This allows the addition and deletion of Peer
-  nodes to an existing chain, as well as the update of Peer certificate information upon
-  certificate renewals.
-  Params
-        None
-  Returns
-        (bool): whether the chain update process was successful"
-  ([]
-   (update-channel *channel*))
-  ([channel]
-   ;;TBD
-   ))
+;; ;;; update_chain
+;; (defn update-channel
+;;   "Calls the orderer(s) to update an existing chain. This allows the addition and deletion of Peer
+;;   nodes to an existing chain, as well as the update of Peer certificate information upon
+;;   certificate renewals.
+;;   Params
+;;         None
+;;   Returns
+;;         (bool): whether the chain update process was successful"
+;;   ([]
+;;    (update-channel core/*channel*))
+;;   ([channel]
+;;    ;;TBD
+;;    ))
 
-;;;is_readonly
-(defn is-readonly
-  "Get chain status to see if the underlying channel has been terminated, making it a read-only
-  chain, where information (transactions and states) can be queried but no new transactions
-  can be submitted.
-  Params
-        None
-  Returns
-        (bool): is ready-only (true) or not "
-  ([]
-   (is-readonly *channel*))
-  ([channel]
-   ;; TBD
-   ))
+;; ;;;is_readonly
+;; (defn is-readonly
+;;   "Get chain status to see if the underlying channel has been terminated, making it a read-only
+;;   chain, where information (transactions and states) can be queried but no new transactions
+;;   can be submitted.
+;;   Params
+;;         None
+;;   Returns
+;;         (bool): is ready-only (true) or not "
+;;   ([]
+;;    (is-readonly core/*channel*))
+;;   ([channel]
+;;    ;; TBD
+;;    ))
 
 ;;;query_info
 (defn query-info
@@ -187,9 +175,9 @@
   Returns 
         (ChainInfo) with height, currently the only useful info"
   ([]
-   (query-info *channel*))
-  ([{:keys [name crypto-suite user-context]}]
-   (chaincode/make-chaincode-signed-proposal :query-info user-context crypto-suite :args [name])))
+   (query-info core/*channel*))
+  ([{:keys [user-key name]}]
+   (chaincode/make-chaincode-signed-proposal :query-info (core/get-user user-key) :args [name])))
 
 ;;;query_block
 (defn query-block
@@ -199,9 +187,9 @@
   Returns 
         Object containing the block"
   ([block-number]
-   (query-block *channel* block-number))
-  ([{:keys [name crypto-suite user-context]} block-number]
-   (chaincode/make-chaincode-signed-proposal :query-block user-context crypto-suite
+   (query-block core/*channel* block-number))
+  ([{:keys [user-key name]} block-number]
+   (chaincode/make-chaincode-signed-proposal :query-block (core/get-user user-key)
                                              :args [name block-number])))
 
 (defn query-block-by-hash
@@ -211,9 +199,9 @@
   Returns 
         Object containing the block"
   ([block-hash]
-   (query-block *channel* block-hash))
-  ([{:keys [name crypto-suite user-context]} block-hash]
-   (chaincode/make-chaincode-signed-proposal :query-block-by-hash user-context crypto-suite
+   (query-block core/*channel* block-hash))
+  ([{:keys [user-key name]} block-hash]
+   (chaincode/make-chaincode-signed-proposal :query-block-by-hash (core/get-user user-key)
                                              :args [name (if (utils/bytes? block-hash)
                                                            block-hash
                                                            (Hex/decode ^String block-hash))])))
@@ -226,9 +214,9 @@
   Returns 
         TransactionInfo containing the transaction"
   ([transaction-id]
-   (query-transaction *channel* transaction-id))
-  ([{:keys [name crypto-suite user-context]} transaction-id]
-   (chaincode/make-chaincode-signed-proposal :query-transaction user-context crypto-suite
+   (query-transaction core/*channel* transaction-id))
+  ([{:keys [user-key name]} transaction-id]
+   (chaincode/make-chaincode-signed-proposal :query-transaction (core/get-user user-key)
                                              :args [name transaction-id])))
 
 ;;;create_deploy_proposal
@@ -245,7 +233,7 @@
   Returns
         (Proposal): The created Proposal instance or None."
   ([chaincod-path chaincode-name fcn args sign]
-   (create-deploy-proposal *channel* chaincod-path chaincode-name fcn args sign))
+   (create-deploy-proposal core/*channel* chaincod-path chaincode-name fcn args sign))
   ([channel chaincod-path chaincode-name fcn args sign]
    ;;; TBD
    ))
@@ -263,9 +251,9 @@
   Returns
         (Transaction_Proposal instance): The created Transaction_Proposal instance or None."
   ([chaincode-name fcn args sign]
-   (create-transaction-proposal *channel* chaincode-name fcn args sign))
+   (create-transaction-proposal core/*channel* chaincode-name fcn args sign))
   ([channel chaincode-name fcn args sign]
-   (let [{:keys [user-context crypto-suite]} channel]
+   (let [{:keys [user-key name]} channel]
      #_
      (get-transaction-context channel user-context crypto-suite))
    ))
@@ -281,7 +269,7 @@
   Returns
         (Transaction_Proposal_Response response): The response to send proposal request."
   ([transaction-proposal retry]
-   (send-transaction-proposal *channel* transaction-proposal retry))
+   (send-transaction-proposal core/*channel* transaction-proposal retry))
   ([channel transaction-proposal retry]
    ;; 1. ensure the channel is initialized
    ;; 2. set chaincode id and options
@@ -298,7 +286,7 @@
   Returns
         (Transaction instance): The created transaction object instance."
   ([proposal-responses]
-   (create-transaction *channel* proposal-responses))
+   (create-transaction core/*channel* proposal-responses))
   ([channel proposal-responses]
    ;;; TBD
    ))
@@ -326,7 +314,7 @@
   Returns
         result (EventEmitter): an handle to allow the application to attach event handlers on “submitted”, “complete”, and “error”."
   ([transaction]
-   (send-transaction *channel* transaction))
+   (send-transaction core/*channel* transaction))
   ([channel transaction]
    ;;; TBD
    ))

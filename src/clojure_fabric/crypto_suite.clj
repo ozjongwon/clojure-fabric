@@ -57,21 +57,6 @@
       (.readPemObject)
       (.getContent)))
 
-;;;
-;;; Interface
-;;;
-;;; 'opts' is CryptoSuite
-;;; 
-(defrecord CryptoSuite [security-provider key-algorithm curve-name hash-algorithm])
-(defn make-crypto-suite
-  [{:keys [security-provider key-algorithm curve-name hash-algorithm]
-    :or {security-provider BouncyCastleProvider/PROVIDER_NAME
-         key-algorithm :ECDSA
-         curve-name :secp256r1
-         hash-algorithm :sha3-384}}]
-  (->CryptoSuite security-provider key-algorithm curve-name hash-algorithm))
-
-
 ;; (defonce key-store (atom nil))
 
 ;; TBD
