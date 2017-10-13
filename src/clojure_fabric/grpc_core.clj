@@ -231,13 +231,13 @@
        (make-chaincode-proposal-payload)))
 
 (defn make-signed-proposal
-  [^ProposalPackage$Proposal proposal user-context crypto-suite]
+  [^ProposalPackage$Proposal proposal user]
   (-> (ProposalPackage$SignedProposal/newBuilder)
       (.setProposalBytes (.toByteString proposal))
       (.setSignature (-> (.toByteArray proposal)
                          #^bytes (crypto-suite/sign
-                                  (:private-key user-context)
-                                  {:algorithm (:key-algorithm crypto-suite)})
+                                  (:private-key user)
+                                  {:algorithm (:key-algorithm (:crypto-suite user))})
                          (ByteString/copyFrom)))
       (.build)))
 
