@@ -305,7 +305,7 @@
         (bool): verification successful or not"
   [pub-key signature ^bytes digest {:keys [algorithm curve type security-provider] :as opts}]
   (let [^PublicKey pub-key (cond (utils/bytes? pub-key) (import-key pub-key opts)
-                                 (string? pub-key) (import-key (cert-string->bytes pub-key))
+                                 (string? pub-key) (import-key (cert-string->bytes pub-key) opts)
                                  :else pub-key)
         signer (Signature/getInstance (name algorithm))]
     (.initVerify signer pub-key)
