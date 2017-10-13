@@ -35,4 +35,5 @@
                  ]
   :main ^:skip-aot grpc-clj.core
   :target-path "target/%s"
-  :java-source-paths ["resources/fabric-protos/generated/main"])
+  :java-source-paths ["resources/fabric-protos/generated/main"]
+  :plugins [[lein-expectations "0.0.8"]])

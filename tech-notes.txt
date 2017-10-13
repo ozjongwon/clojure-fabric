@@ -6,4 +6,20 @@ There are three types of stubs: asynchronous, blocking, and future.
 - Blocking only supports server-streaming, no client/bidirectional-streaming
 - Future does not support streaming
 
-Supporting Async and Blocking seem good enough.
+Supporting Async (and/or Blocking) seem good enough.
+
+---
+
+* Cryptography
+- PKI(Public Key Infrastructure) : CAs.
+- CA(Certificate Authority) : CA provides a signed public key as a part of PKI.
+- CSR(Certificate Signing Request) : format to submit to CA.
+- PKCS(Public Key Cryptography Standards) : a password container format, fully encrypted.
+- ASN.1(Abstract Syntax Notation One): a formal language standard, which is used to describe X509.
+- X509 : a standard for public key certificate format.
+- PEM(Privacy Enhanced Mail) : a container format for public cert.
+  or cert chain(pub key, private key, root certificates). May encode CSR as PKCS10 format, etc.
+  Usually base64 encoded x509 ASN.1 keys.
+- KEY : a .key file is PEM formatted version of private key.
+- DER : a canonical method to encode ASN.1 syntax in binary.
+  For example, a .pem file is a base64 encoded der.

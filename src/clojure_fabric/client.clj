@@ -54,7 +54,13 @@
   `(binding [*client* ~client]
      ~@body))
 
-(defrecord Client [channels crypto-suite user-context])
+(defrecord Client [channels crypto-suite user-context
+                   ;; For CA-Client
+                   ca-location])
+
+(defn ca-client?
+  [client]
+  (not (nil? ca-location)))
 
 (defn channel-defs->channels
   ;; Ex:
