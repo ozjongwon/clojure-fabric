@@ -30,6 +30,8 @@
 
 (ns clojure-fabric.user)
 
+(defonce ^:private users (atom {}))     ; key = [msp-id name]
+
 (defonce ^:dynamic *user* nil)
 
 (defrecord User [msp-id name roles %roles private-key certificate])

@@ -42,7 +42,10 @@
             [clojure-fabric.grpc-core :as grpc])
   (:import clojure_fabric.channel.Channel))
 
-(defonce ^:private clients (atom {}))
+(defonce ^:private clients (atom {})) ;; key msp-id
+(defn reset-clients!
+  []
+  (reset! clients {}))
 
 (defonce ^:dynamic *client* nil)
 
@@ -58,9 +61,27 @@
                    ;; For CA-Client
                    ca-location])
 
+(defn new-client!
+  ([name]
+   (new-client! name (map->Client {})))
+  ([name new-client]
+   (swap! clients assoc name new-client)))
+
+(defn find-client
+  [name]
+  (get @clients name))
+
+;; REMOVE
+;; (defn make-client
+;;   [user-map crypto-map channel-defs]
+;;   (let [user (user/make-user user-map)
+;;         crypto-suite (crypto-suite/make-crypto-suite crypto-map)]
+;;     (assoc (->Client nil crypto-suite user)
+;;            :channels (channel-defs->channels user crypto-suite channel-defs))))
+
 (defn ca-client?
   [client]
-  (not (nil? ca-location)))
+  (not (nil? (:ca-location client))))
 
 (defn channel-defs->channels
   ;; Ex:
@@ -80,13 +101,6 @@
                          peers (into #{} (map #(make-node :peer %) (:peers m)))]]
                [n (make-channel n orderers peers)]))))
 
-
-(defn make-client
-  [user-map crypto-map channel-defs]
-  (let [user (user/make-user user-map)
-        crypto-suite (crypto-suite/make-crypto-suite crypto-map)]
-    (assoc (->Client nil crypto-suite user)
-           :channels (channel-defs->channels user crypto-suite channel-defs))))
 
 ;;; new_chain
 ;;;
@@ -260,7 +274,7 @@ Returns:
 ;;; 
 (defn query-installed-chaincodes
   ([peer]
-   (query-installed-chaincodes channel/*channel* peer))
+   (query-installed-chaincodes *client* peer))
   ([{:keys [peers crypto-suite user-context]} peer]
    (if (contains? peers peer)
      (chaincode/send-chaincode-request :query-installed-chaincodes

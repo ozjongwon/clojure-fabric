@@ -1,7 +1,7 @@
 (ns clojure-fabric.core-test
   (:require [expectations :refer :all]
-            [clojure.test :refer :all]
             [clojure.java.io :as io]
+            [clojure-fabric.client :refer :all]
             [clojure-fabric.core :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.grpc-core :as grpc]))
@@ -81,12 +81,19 @@
 
 ;;;
 ;;; 1. create clients for org1 and org2
+(let []
+  (reset-clients!)
+  (doseq [[name _] org-defs]
+    (new-client! name)))
+
+
 ;;; 2. Add a channel
 ;;; 3. Add orderers and peers
 ;;; 4. Add event-hubs
 ;;; 5. Check getters for client, channel, peers, orderers, status checks, etc
 ;;; 6. query-channels for each peers and orderers and see if the current channel is in
 ;;; 7. ... Add more (Line 530 of End2endAndBackAgainIT.java)
+
 
 (let [client (make-client {:msp-id "Org1MSP" :name "PeerAdmin"
                            :private-key (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
