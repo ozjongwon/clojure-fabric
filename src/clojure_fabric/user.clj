@@ -32,39 +32,22 @@
 ;; An application cannot use the Peer identity to sign things because the application doesn’t
 ;; have access to the Peer identity’s private key.
 
-(ns clojure-fabric.client-user
-  (:require [clojure-fabric.channel :as channel]
+(ns clojure-fabric.user
+  (:require [clojure-fabric.core :as core]
+            [clojure-fabric.channel :as channel]
             [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.crypto-suite :as crypto-suite]))
-
-(defonce ^:private users (atom {}))     ; key = [msp-id name]
-
-(defonce ^:dynamic *user* nil)
-
-(defrecord User [msp-id name channels crypto-suite
-                 roles %roles
-                 private-key certificate
-                 ;; For CA-Client
-                 ca-location])
 
 (defn ca-user?
   [user]
   (not (nil? (:ca-location user))))
 
 (defn new-user!
-  [& {:keys [msp-id name channels crypto-suite roles %roles private-key certificate ca-location]
-      :or {channels {} roles #{} %roles #{}}}]
+  [& {:keys [msp-id name]
+      :as args}]
   ;; roles - client, auditor
   ;; %roles - peer, validator
-  (swap! users
-         assoc
-         [msp-id name]
-         (->User msp-id name channels crypto-suite roles %roles private-key certificate ca-location)))
-
-(defn get-user
-  [msp-id name]
-  (get @users [msp-id name]))
-
+  (swap! core/users assoc [msp-id name] (core/make-user args)))
 
 ;;; new_chain
 ;;;
@@ -78,11 +61,11 @@
 ;;
 ;;
 (defn new-channel!
-  ([channel-name channel-opts]
-   (new-channel! *user* channel-name))
-  ([{msp-id :msp-id user-name :name} channel-name channel-opts]
-   (swap! users assoc-in [[msp-id user-name] channel-name]
-          (channel/make-channel (assoc channel-opts :user-key [msp-id user-name])))))
+  ([channel-opts]
+   (new-channel! core/*user* channel-opts))
+  ([{msp-id :msp-id user-name :name} channel-opts]
+   (swap! core/users assoc-in [[msp-id user-name] :channels (:name channel-opts)]
+          (core/make-channel channel-opts))))
 
 ;;; get_chain
 (defn get-channel
@@ -100,7 +83,7 @@
   ;; Implementation Note:
   ;;    Not a storage operation 
   ([channel-name]
-   (get-channel *user* channel-name))
+   (get-channel core/*user* channel-name))
   ([{:keys [msp-id name channels]} channel-name]
    (if-let [found (get-in channels [[msp-id name] channel-name])]
      found
@@ -123,7 +106,7 @@
         The target Peer(s) does not know anything about the chain"
 
   ([name peers]
-   (query-channel-info *user* name peers))
+   (query-channel-info core/*user* name peers))
   ([user name peers]
    (let [{:keys [channel-peers crypto-suite user-context]} (get-channel user name)
          unknown-peers (clojure.set/difference (set peers) channel-peers)]
@@ -181,10 +164,10 @@
 
 (defn new-crypto-suite!
   ([crypto-opts]
-   (new-crypto-suite! *user* crypto-opts))
+   (new-crypto-suite! core/*user* crypto-opts))
   ([{:keys [msp-id name]} user crypto-opts]
-   (swap! users assoc-in [[msp-id name] crypto-opts]
-          (crypto-suite/make-crypto-suite crypto-opts))))
+   (swap! core/users assoc-in [[msp-id name] crypto-opts]
+          (core/make-crypto-suite crypto-opts))))
 
 ;; Params:
 ;;   Suite (object): an instance of a crypto suite implementation"
@@ -200,7 +183,7 @@
         (CryptoSuite instance): The CryptoSuite implementation object set within this Client, 
         or null if it does not exist"
   ([]
-   (get-crypto-suite *user*))
+   (get-crypto-suite core/*user*))
   ([user]
    (:crypto-suite user)))
 
@@ -246,24 +229,18 @@
 ;;; 
 (defn query-installed-chaincodes
   ([peer]
-   (query-installed-chaincodes *user* peer))
+   (query-installed-chaincodes core/*user* peer))
   ([user peer]
    (let [peers (channel/get-peers user)]
-    (if (contains? peers peer)
-      (chaincode/send-chaincode-request :query-installed-chaincodes
-                                        peers
-                                        user)
-      #_
-      (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
-                                                user-context
-                                                crypto-suite)
-      (throw (Exception. "The target Peer does not know anything about the channel"))))))
-
-
-
-
-
-
+     (if (contains? peers peer)
+       (chaincode/send-chaincode-request :query-installed-chaincodes
+                                         peers
+                                         user)
+       #_
+       (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
+                                                 user-context
+                                                 crypto-suite)
+       (throw (Exception. "The target Peer does not know anything about the channel"))))))
 
 ;;; get_name
 (defn get-name
@@ -271,7 +248,7 @@
   Returns (str): 
         The name of the user"
   ([]
-   (get-name *user*))
+   (get-name core/*user*))
   ([user]
    (:name user)))
 
@@ -284,7 +261,7 @@
   Returns: (str[]): 
         The roles for this user"
   ([]
-   (get-roles *user*))
+   (get-roles core/*user*))
   ([user]
    (:roles user)))
 
@@ -297,7 +274,7 @@
   Returns:
         Certificate in PEM format signed by the trusted CA"
   ([]
-   (get-enrollment-certificate *user*))
+   (get-enrollment-certificate core/*user*))
   ([user]
    (:certificate user)))
 
@@ -322,7 +299,7 @@
 ;;   Returns (TCert[]): 
 ;;         An array of TCerts"
 ;;   ([count attributes]
-;;    (generate-tcerts *user*))
+;;    (generate-tcerts core/*user*))
 ;;   ([user count attributes])
 ;;   ;; TBD
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)

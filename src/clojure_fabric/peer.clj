@@ -27,7 +27,7 @@
 ;; and chaincode levels.
 
 (ns clojure-fabric.peer
-  (:import [clojure-fabric.core :as core]))
+  (:require [clojure-fabric.core :as core]))
 
 ;;connectEventSource
 (defn connect-event-source

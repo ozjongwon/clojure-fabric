@@ -1,7 +1,7 @@
 (ns clojure-fabric.core-test
   (:require [expectations :refer :all]
             [clojure.java.io :as io]
-            [clojure-fabric.client :refer :all]
+            [clojure-fabric.user :refer :all]
             [clojure-fabric.core :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.grpc-core :as grpc]))

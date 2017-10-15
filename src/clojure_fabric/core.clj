@@ -26,7 +26,7 @@
 
 (defn get-user
   [msp-id name]
-  (get @core/users [msp-id name]))
+  (get @users [msp-id name]))
 
 (defrecord User [msp-id name channels crypto-suite
                  roles %roles
