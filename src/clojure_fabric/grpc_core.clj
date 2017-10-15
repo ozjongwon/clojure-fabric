@@ -24,8 +24,7 @@
 ;;      the fabric events “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause
 ;;      the method to emit “complete” or “error” events to the application
 (ns clojure-fabric.grpc-core
-  (:require [clojure-fabric.user :as user]
-            [clojure-fabric.crypto-suite :as crypto-suite]
+  (:require [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
@@ -150,7 +149,7 @@
 
 (defn make-serialized-identity [user]   ; i.e. user-context
   (-> (Identities$SerializedIdentity/newBuilder)
-      (.setIdBytes (ByteString/copyFromUtf8 (user/get-enrollment-certificate user)))
+      (.setIdBytes (ByteString/copyFromUtf8 (:certificate user)))
       (.setMspid (:msp-id user))
       (.build)))
 

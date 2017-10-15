@@ -16,8 +16,7 @@
 ;; Orderer implementation of "Fabric SDK Design Spec"
 ;; 
 (ns clojure-fabric.orderer
-  (:require [clojure-fabric.user :as user])
-  (:import [clojure-fabric.core :as core]))
+  (:require [clojure-fabric.core :as core]))
 
 
 (defn- broadcast-client
