@@ -35,8 +35,8 @@
                  ca-location])
 
 (defn make-user
-  [& {:keys [msp-id name channels crypto-suite roles %roles private-key certificate ca-location]
-      :or {channels {} roles #{} %roles #{}}}]
+  [{:keys [msp-id name channels crypto-suite roles %roles private-key certificate ca-location]
+    :or {channels {} roles #{} %roles #{}}}]
   (->User msp-id name channels crypto-suite roles %roles private-key certificate ca-location))
 
 ;;;

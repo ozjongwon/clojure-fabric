@@ -25,10 +25,13 @@ Supporting Async (and/or Blocking) seem good enough.
   For example, a .pem file is a base64 encoded der.
 
 
-* Cryptogen
-- Per org root cert - ca/
-- Client communication
-        private key - fixture/e2e-2Orgs/channel/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore
-        public key - fixture/e2e-2Orgs/channel/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts
-- Peer defs
-
+* Cryptogen(http://hyperledger-fabric.readthedocs.io/en/latest/msp.html)
+Self signed certs, 'the root of trust' - a folder 'cacerts' to include PEM files each corresponding to a root CA’s certificate
+Admin's certs for MSP - a folder 'admincerts' to include PEM files each corresponding to an administrator certificate
+a folder 'keystore' to include a PEM file with the node’s signing key; we emphasise that currently RSA keys are not supported
+a folder 'signcerts' to include a PEM file with the node’s X.509 certificate
+(optional) a folder 'tlscacerts' to include PEM files each corresponding to a TLS root CA’s certificate
+(optional) a folder intermediatecerts to include PEM files each corresponding to an intermediate CA’s certificate
+(optional) a file config.yaml to include information on the considered OUs; the latter are defined as pairs of <Certificate, OrganizationalUnitIdentifier> entries of a yaml array called OrganizationalUnitIdentifiers, where Certificate represents the relative path to the certificate of the certificate authority (root or intermediate) that should be considered for certifying members of this organizational unit (e.g. ./cacerts/cacert.pem), and OrganizationalUnitIdentifier represents the actual string as expected to appear in X.509 certificate OU-field (e.g. “COP”)
+(optional) a folder crls to include the considered CRLs
+(optional) a folder tlsintermediatecerts to include PEM files each corresponding to an intermediate TLS CA’s certificate

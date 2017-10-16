@@ -112,32 +112,22 @@
     {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name) (io/resource) (io/as-file))}))
 
 (defonce org-defs
-  [{:msp-id     "Org1MSP"
-    :org-type   :peer
-    :domain-name "org1.example.com"
-    :users [{:name "user1" :role :admin}
-            {:name "admin" :role :user}]
-    :peers          [{:name "peer0" :url "grpc://localhost:7051"}
-                     {:name "peer1" :url "grpc://localhost:7056"}]
-    :orderers       [{:name "orderer" :url "grpc://localhost:7050"}]}
-   {:msp-id     "Org2MSP"
-    :org-type   :peer
-    :domain-name "org2.example.com"
-    :users [{:name "user1" :role :admin
-             ;;:private-key "/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/f3c01db816069a226654d66a023c2260695f71e19b322a6564dad3e32ccf063b_sk"
-             ;;:certificate "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem"
-             }
-            {:name "admin" :role :user
-             :private-key "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/6b32e59640c594cf633ad8c64b5958ef7e5ba2a205cfeefd44a9e982ce624d93_sk"
-             :certificate "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"}]
-
-    ;; For CA Client
-    ;; :ca-location             "http://localhost:7054"
-    ;; :ca-name                 "ca0"
-    :peers          [{:name "peer0" :url "grpc://localhost:8051" :pem "./msp/signcerts/peer0.org1.example.com-cert.pem"}
-                     {:name "peer01" :url "grpc://localhost:8056" :pem "./msp/signcerts/peer0.org1.example.com-cert.pem"}]
-    :orderers       [{:name "orderer" :url "grpc://localhost:7050" :pem "???" :domain "orderer.example.com"}]
-    }])
+  [{:msp-id             "Org1MSP"
+    :org-type           :peer
+    :domain-name        "org1.example.com"
+    :users              [{:name "user1" :roles #{:user}}
+                         {:name "admin" :roles #{:admin}}]
+    :peers              [{:name "peer0" :url "grpc://localhost:7051"}
+                         {:name "peer1" :url "grpc://localhost:7056"}]
+    :orderers           [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}
+   {:msp-id             "Org2MSP"
+    :org-type           :peer
+    :domain-name        "org2.example.com"
+    :users              [{:name "user1" :roles #{:user}}
+                         {:name "admin" :roles #{:admin}}]
+    :peers              [{:name "peer0" :url "grpc://localhost:8051"}
+                         {:name "peer01" :url "grpc://localhost:8056"}]
+    :orderers [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}])
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -146,22 +136,19 @@
                                                   (get chaincode-id-defs :v11)))
 
 
-(defonce user-defs
-  ;; Per org users
-  [{:admin "admin" :user "user1" :peer-admin ""}
-   {:name "user1"}])
-
-(defonce peer-admin
-  {:name "PeerAdmin" :mspid "Org1MSP" :roles nil :affiliation "" :enrollmentSecret ""
-   :enrollment {:signingIdentity "cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec"
-                :identity {:certificate "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n"}}})
-
 ;;;
 ;;; 1. create clients for org1 and org2
-(do
-  (doseq [[name org-map] org-defs]
-    (doseq [[[user-name ] ]]
-     (new-user! org-map ))))
+
+[msp-id name channels crypto-suite
+ roles %roles
+ private-key certificate
+ ;; For CA-Client
+ ca-location]
+
+;; Make users/clients
+(doseq [{:keys [msp-id org-type domain-name users peers orderers] :as org} org-defs]
+  (doseq [user users]
+    (new-user! (merge org (get-user-crypto-files org user) {:crypto-suite (make-crypto-suite {})}))))
 
 
 ;;; 2. Add a channel
