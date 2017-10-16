@@ -43,8 +43,8 @@
   (not (nil? (:ca-location user))))
 
 (defn new-user!
-  [& {:keys [msp-id name]
-      :as args}]
+  [{:keys [msp-id name]
+    :as args}]
   ;; roles - client, auditor
   ;; %roles - peer, validator
   (swap! core/users assoc [msp-id name] (core/make-user args)))

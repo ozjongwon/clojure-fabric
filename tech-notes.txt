@@ -23,3 +23,12 @@ Supporting Async (and/or Blocking) seem good enough.
 - KEY : a .key file is PEM formatted version of private key.
 - DER : a canonical method to encode ASN.1 syntax in binary.
   For example, a .pem file is a base64 encoded der.
+
+
+* Cryptogen
+- Per org root cert - ca/
+- Client communication
+        private key - fixture/e2e-2Orgs/channel/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore
+        public key - fixture/e2e-2Orgs/channel/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts
+- Peer defs
+
