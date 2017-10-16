@@ -6,6 +6,12 @@
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.grpc-core :as grpc]))
 
+
+;;;
+;;; See:
+;;;     fabric-sdk-java/src/test/java/org/hyperledger/fabric/sdk/testutils/TestConfig.java
+;;;
+
 ;;;
 ;;; Utility functions
 ;;;
@@ -33,11 +39,26 @@
   {:foo {:name "foo"}
    :bar {:name "bar"}})
 
+#_
 (defonce org-defs
   (into {}
         (map #(vector (:msp-id %)
                       (merge % (domain-name->cert-map (:domain-name %))))
-             [{:msp-id                  "Org1MSP"
+             [{:msp-id                  "OrdererMSP"
+               :domain-name             "example.com"
+               :ca-location             "???http://localhost:7054"
+               :ca-name                 "???ca0"
+               :peer-locations          ["???peer0.org1.example.com@grpc://localhost:7051"
+                                         "???peer1.org1.example.com@grpc://localhost:7056"]
+               :orderer-locations       ["???orderer.example.com@grpc://localhost:7050"]
+               :eventhub-locations      ["???peer0.org1.example.com@grpc://localhost:7053"
+                                         "???peer1.org1.example.com@grpc://localhost:7058"]
+               :pem-file                nil
+               :allow-all-host-names    false
+               :ca-client               nil
+               :users [{:name "admin" :type :admin :key "f1a9a940f57419a18a83a852884790d59b378281347dd3d4a88c2b820a0f70c9"}
+                       {:name "orderer" :type :orderer :key "30652478a0678558e8573fa33246175b33997226b63fa40503290187e0f99144"}]}
+              {:msp-id                  "Org1MSP"
                :domain-name             "org1.example.com"
                :ca-location             "http://localhost:7054"
                :ca-name                 "ca0"
@@ -48,7 +69,9 @@
                                          "peer1.org1.example.com@grpc://localhost:7058"]
                :pem-file                nil
                :allow-all-host-names    false
-               :ca-client               nil}
+               :ca-client               nil
+               :users [{:name "admin" :type :admin :key "6b32e59640c594cf633ad8c64b5958ef7e5ba2a205cfeefd44a9e982ce624d93"}
+                       {:name "user1" :type :user :key "f3c01db816069a226654d66a023c2260695f71e19b322a6564dad3e32ccf063b"}]}
               {:msp-id                  "Org2MSP"
                :domain-name             "org2.example.com"
                :ca-location             "http://localhost:8054"
@@ -60,7 +83,61 @@
                                          "peer1.org2.example.com@grpc://localhost:8058"]
                :pem-file                nil
                :allow-all-host-names    false
-               :ca-client               nil}])))
+               :ca-client               nil
+               :users [{:name "admin" :type :admin :key "b2e2536de633960859d965f02b296083d1e8aa1e868016417c4e4fb760270b96"}
+                       {:name "user1" :type :user :key "9f97934915db15db4c803b6eff5b6f4966bdef05d13f99e4d60c7128a6f22733"}]}])))
+
+
+(defn get-user-crypto-files
+  [{:keys [org-type domain-name]} {user-name :name}]
+  (let [org-type-name (name org-type)
+        user-name+domain-name (format "%s@%s" (clojure.string/capitalize user-name) domain-name)
+        dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/users/%s/msp/"
+                    org-type-name domain-name user-name+domain-name)
+        private-file (-> (str dir "keystore/") (io/resource) (io/as-file) (file-seq) (second))]
+    {:private-key private-file
+     :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name) (io/resource) (io/as-file))}))
+
+(defn get-node-end-crypto-files
+  [{:keys [org-type domain-name]} {node-end-name :name}]
+  (let [org-type-name (name org-type)
+        node-end-name+domain-name (format "%s.%s" (name node-end-name) domain-name)
+        end-node-dir (format "%s/%s"
+                             (case org-type
+                               :peer "peers"
+                               :orderer "orderers")
+                             node-end-name+domain-name)
+        dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/%s/msp/"
+                    org-type-name domain-name end-node-dir)]
+    {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name) (io/resource) (io/as-file))}))
+
+(defonce org-defs
+  [{:msp-id     "Org1MSP"
+    :org-type   :peer
+    :domain-name "org1.example.com"
+    :users [{:name "user1" :role :admin}
+            {:name "admin" :role :user}]
+    :peers          [{:name "peer0" :url "grpc://localhost:7051"}
+                     {:name "peer1" :url "grpc://localhost:7056"}]
+    :orderers       [{:name "orderer" :url "grpc://localhost:7050"}]}
+   {:msp-id     "Org2MSP"
+    :org-type   :peer
+    :domain-name "org2.example.com"
+    :users [{:name "user1" :role :admin
+             ;;:private-key "/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/f3c01db816069a226654d66a023c2260695f71e19b322a6564dad3e32ccf063b_sk"
+             ;;:certificate "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem"
+             }
+            {:name "admin" :role :user
+             :private-key "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/6b32e59640c594cf633ad8c64b5958ef7e5ba2a205cfeefd44a9e982ce624d93_sk"
+             :certificate "resources/fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"}]
+
+    ;; For CA Client
+    ;; :ca-location             "http://localhost:7054"
+    ;; :ca-name                 "ca0"
+    :peers          [{:name "peer0" :url "grpc://localhost:8051" :pem "./msp/signcerts/peer0.org1.example.com-cert.pem"}
+                     {:name "peer01" :url "grpc://localhost:8056" :pem "./msp/signcerts/peer0.org1.example.com-cert.pem"}]
+    :orderers       [{:name "orderer" :url "grpc://localhost:7050" :pem "???" :domain "orderer.example.com"}]
+    }])
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -81,10 +158,10 @@
 
 ;;;
 ;;; 1. create clients for org1 and org2
-(let []
-  (reset-clients!)
-  (doseq [[name _] org-defs]
-    (new-client! name)))
+(do
+  (doseq [[name org-map] org-defs]
+    (doseq [[[user-name ] ]]
+     (new-user! org-map ))))
 
 
 ;;; 2. Add a channel
