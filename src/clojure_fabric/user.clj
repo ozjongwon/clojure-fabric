@@ -227,21 +227,35 @@
 
 ;;;
 ;;; Not in spec, but in some SDKs
-;;; 
+;;;
+
+(defn known-channel-peer?
+  [channel {target-name :name target-url :url target-pem :pem}]
+  (loop [[[_ {:keys [name url pem]}] & more-peer] (seq (:peers channel))]
+    (cond (nil? name) false
+          (and (= target-name name) (= target-url url) (= target-pem pem)) true
+          :else (recur more-peer))))
+
+(defn known-user-peer?
+  [user peer]
+  (loop [[[_ c] & more-c] (seq (:channels user))]
+    (cond (nil? c) false
+          (known-channel-peer? c peer) true
+          :else (recur more-c))))
+
 (defn query-installed-chaincodes
   ([peer]
    (query-installed-chaincodes core/*user* peer))
   ([user peer]
-   (let [peers (channel/get-peers user)]
-     (if (contains? peers peer)
-       (chaincode/send-chaincode-request :query-installed-chaincodes
-                                         peers
-                                         user)
-       #_
-       (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
-                                                 user-context
-                                                 crypto-suite)
-       (throw (Exception. "The target Peer does not know anything about the channel"))))))
+   (if (known-user-peer? user peer)
+     (chaincode/send-chaincode-request :query-installed-chaincodes
+                                       peer
+                                       user)
+     #_
+     (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
+                                               user-context
+                                               crypto-suite)
+     (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
 (defn get-name
