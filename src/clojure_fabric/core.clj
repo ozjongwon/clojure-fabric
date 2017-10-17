@@ -45,7 +45,7 @@
 (defonce ^:dynamic *channel* nil)
 
 (defrecord Channel [user-key name peers orderers])
-(defn make-channel [& {:keys [user-key name peers orderers] :or {peers {} orderers {}}}]
+(defn make-channel [{:keys [user-key name peers orderers] :or {peers {} orderers {}}}]
   (->Channel user-key name peers orderers))
 
 ;;;
@@ -74,7 +74,6 @@
 
 (defn make-peer [m]
   (map->Peer m))
-
 
 ;;;
 ;;; Orderer

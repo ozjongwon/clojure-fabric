@@ -112,22 +112,22 @@
     {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name) (io/resource) (io/as-file))}))
 
 (defonce org-defs
-  [{:msp-id             "Org1MSP"
-    :org-type           :peer
-    :domain-name        "org1.example.com"
-    :users              [{:name "user1" :roles #{:user}}
-                         {:name "admin" :roles #{:admin}}]
-    :peers              [{:name "peer0" :url "grpc://localhost:7051"}
-                         {:name "peer1" :url "grpc://localhost:7056"}]
-    :orderers           [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}
-   {:msp-id             "Org2MSP"
-    :org-type           :peer
-    :domain-name        "org2.example.com"
-    :users              [{:name "user1" :roles #{:user}}
-                         {:name "admin" :roles #{:admin}}]
-    :peers              [{:name "peer0" :url "grpc://localhost:8051"}
-                         {:name "peer01" :url "grpc://localhost:8056"}]
-    :orderers [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}])
+  {"Org1MSP" {:msp-id           "Org1MSP"
+              :org-type         :peer
+              :domain-name      "org1.example.com"
+              :users            [{:name "user1" :roles #{:client}}
+                                 {:name "admin" :roles #{:client}}]
+              :peers            [{:name "peer0" :url "grpc://localhost:7051"}
+                                 {:name "peer1" :url "grpc://localhost:7056"}]
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}
+   "Org2MSP" {:msp-id           "Org2MSP"
+              :org-type         :peer
+              :domain-name      "org2.example.com"
+              :users            [{:name "user1" :roles #{:client}}
+                                 {:name "admin" :roles #{:client}}]
+              :peers            [{:name "peer0" :url "grpc://localhost:8051"}
+                                 {:name "peer01" :url "grpc://localhost:8056"}]
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}})
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -136,23 +136,34 @@
                                                   (get chaincode-id-defs :v11)))
 
 
-;;;
-;;; 1. create clients for org1 and org2
-
-[msp-id name channels crypto-suite
- roles %roles
- private-key certificate
- ;; For CA-Client
- ca-location]
-
-;; Make users/clients
-(doseq [{:keys [msp-id org-type domain-name users peers orderers] :as org} org-defs]
-  (doseq [user users]
-    (new-user! (merge org (get-user-crypto-files org user) {:crypto-suite (make-crypto-suite {})}))))
-
+;;
+;; 1. Make users/clients
+(defn populate-clients!
+  []
+  (doseq [[_ {:keys [msp-id org-type domain-name users peers orderers] :as org}] org-defs]
+    (doseq [user users]
+      (new-user! (merge org user (get-user-crypto-files org user) {:crypto-suite (make-crypto-suite {})})))))
 
 ;;; 2. Add a channel
+(defn populate-orderers
+  [org-def]
+  (into {} (mapv (fn [o]
+                   [(:name o) (make-orderer (merge o (get-node-end-crypto-files org-def o)))]) (:orderers org-def))))
+
+(defn populate-peers
+  [org-def]
+  (into {} (mapv (fn [p]
+                   [(:name p) (make-peer (merge p (get-node-end-crypto-files org-def p)))]) (:peers org-def))))
+
+(defn add-channels!
+  []
+  (doseq [[_ v] @users]
+    (let [org-def (get org-defs (:msp-id v))]
+     (new-channel! v {:name "foo" :orderers (populate-orderers org-def) :peers (populate-peers org-def)})
+     (new-channel! v {:name "bar" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
+
 ;;; 3. Add orderers and peers
+
 ;;; 4. Add event-hubs
 ;;; 5. Check getters for client, channel, peers, orderers, status checks, etc
 ;;; 6. query-channels for each peers and orderers and see if the current channel is in

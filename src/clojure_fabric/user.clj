@@ -64,8 +64,9 @@
   ([channel-opts]
    (new-channel! core/*user* channel-opts))
   ([{msp-id :msp-id user-name :name} channel-opts]
-   (swap! core/users assoc-in [[msp-id user-name] :channels (:name channel-opts)]
-          (core/make-channel channel-opts))))
+   (let [user-key [msp-id user-name]]
+     (swap! core/users assoc-in [user-key :channels (:name channel-opts)]
+            (core/make-channel (assoc channel-opts :user-key user-key))))))
 
 ;;; get_chain
 (defn get-channel
