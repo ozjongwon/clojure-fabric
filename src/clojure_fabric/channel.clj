@@ -80,6 +80,11 @@
   ([channel]
    (:peers channel)))
 
+(defn get-random-peer
+  ([]
+   (get-peers core/*channel*))
+  ([channel]
+   (second (rand-nth (seq (:peers channel))))))
 ;;;
 ;;;
 

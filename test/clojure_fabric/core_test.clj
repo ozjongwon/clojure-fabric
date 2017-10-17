@@ -3,7 +3,9 @@
             [clojure.java.io :as io]
             [clojure-fabric.user :refer :all]
             [clojure-fabric.core :refer :all]
+            [clojure-fabric.channel :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
+            ;;[expectations.clojure.test :refer [defexpect]] ;; available on 2.2.0
             [clojure-fabric.grpc-core :as grpc]))
 
 
@@ -162,6 +164,51 @@
      (new-channel! v {:name "foo" :orderers (populate-orderers org-def) :peers (populate-peers org-def)})
      (new-channel! v {:name "bar" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
 
+(defn clear-users!
+  []
+  (reset! users {}))
+
+(defn populate-date
+  {:expectations-options :before-run}
+  []
+  (populate-clients!)
+  (add-channels!))
+
+(defn clear-data
+  {:expectations-options :after-run}
+  []
+  (clear-users!))
+
+;; Test get-user
+(expect clojure_fabric.core.User (get-user "Org1MSP" "user1"))
+(expect clojure_fabric.core.User (get-user "Org1MSP" "admin"))
+(expect clojure_fabric.core.User (get-user "Org2MSP" "user1"))
+(expect clojure_fabric.core.User (get-user "Org2MSP" "admin"))
+
+(expect clojure_fabric.core.Channel
+        (let [user (get-user "Org1MSP" "user1")]
+          (get-channel user "foo")))
+(expect clojure_fabric.core.Channel
+        (let [user (get-user "Org1MSP" "user1")]
+          (get-channel user "bar")))
+(expect clojure_fabric.core.Channel
+        (let [user (get-user "Org2MSP" "user1")]
+          (get-channel user "foo")))
+(expect clojure_fabric.core.Channel
+        (let [user (get-user "Org2MSP" "user1")]
+          (get-channel user "bar")))
+
+(expect (let [user (get-user "Org1MSP" "user1")
+              bar-chan (get-channel user "bar")]
+          (get-peers bar-chan)))
+
+(expect (let [user (get-user "Org1MSP" "user1")
+              bar-chan (get-channel user "bar")]
+          (query-installed-chaincodes user (get-random-peer bar-chan))))
+#_
+(expect 11
+        (let [user (get-user "Org2MSP" "user1")]
+          (oquery-installed-chaincodes user "bar")))
 ;;; 3. Add orderers and peers
 
 ;;; 4. Add event-hubs
@@ -169,7 +216,7 @@
 ;;; 6. query-channels for each peers and orderers and see if the current channel is in
 ;;; 7. ... Add more (Line 530 of End2endAndBackAgainIT.java)
 
-
+#_
 (let [client (make-client {:msp-id "Org1MSP" :name "PeerAdmin"
                            :private-key (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")
                                             (keys/str->private-key))
@@ -202,7 +249,4 @@
   (def channel (get-in cli [:channels "mychannel"]))
   
   )
-(-> "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQFSxnLAGsu04zrFkAEwzn6zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xNzA4MzEwOTE0MzJaFw0yNzA4MjkwOTE0MzJa\nMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMR8wHQYDVQQDDBZBZG1pbkBvcmcxLmV4YW1wbGUuY29tMFkw\nEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEV1dfmKxsFKWo7o6DNBIaIVebCCPAM9C/\nsLBt4pJRre9pWE987DjXZoZ3glc4+DoPMtTmBRqbPVwYcUvpbYY8p6NNMEswDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgQjmqDc122u64\nugzacBhR0UUE0xqtGy3d26xqVzZeSXwwCgYIKoZIzj0EAwIDRwAwRAIgXMy26AEU\n/GUMPfCMs/nQjQME1ZxBHAYZtKEuRR361JsCIEg9BOZdIoioRivJC+ZUzvJUnkXu\no2HkWiuxLsibGxtE\n-----END CERTIFICATE-----\n"
-    crypto-suite/cert-string->bytes
-    (crypto-suite/hash
-     {:algorithm :sha3-384}))
+

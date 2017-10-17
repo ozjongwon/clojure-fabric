@@ -85,8 +85,8 @@
   ;;    Not a storage operation 
   ([channel-name]
    (get-channel core/*user* channel-name))
-  ([{:keys [msp-id name channels]} channel-name]
-   (if-let [found (get-in channels [[msp-id name] channel-name])]
+  ([{:keys [channels]} channel-name]
+   (if-let [found (get channels channel-name)]
      found
      ;; Implementation Note
      ;;       The spec says that Returns is chain Instance or None
