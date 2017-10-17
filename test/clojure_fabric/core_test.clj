@@ -95,10 +95,17 @@
   (let [org-type-name (name org-type)
         user-name+domain-name (format "%s@%s" (clojure.string/capitalize user-name) domain-name)
         dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/users/%s/msp/"
-                    org-type-name domain-name user-name+domain-name)
-        private-file (-> (str dir "keystore/") (io/resource) (io/as-file) (file-seq) (second))]
-    {:private-key private-file
-     :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name) (io/resource) (io/as-file))}))
+                    org-type-name domain-name user-name+domain-name)]
+    {:private-key (-> (str dir "keystore/")
+                      (io/resource)
+                      (io/as-file)
+                      (file-seq)
+                      (second)
+                      (crypto-suite/pem-file->bytes))
+     :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
+                      (io/resource)
+                      (io/as-file)
+                      (crypto-suite/pem-file->bytes))}))
 
 (defn get-node-end-crypto-files
   [{:keys [org-type domain-name]} {node-end-name :name}]
@@ -111,7 +118,10 @@
                              node-end-name+domain-name)
         dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/%s/msp/"
                     org-type-name domain-name end-node-dir)]
-    {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name) (io/resource) (io/as-file))}))
+    {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name)
+              (io/resource)
+              (io/as-file)
+              (crypto-suite/pem-file->bytes))}))
 
 (defonce org-defs
   {"Org1MSP" {:msp-id           "Org1MSP"
@@ -121,15 +131,15 @@
                                  {:name "admin" :roles #{:client}}]
               :peers            [{:name "peer0" :url "grpc://localhost:7051"}
                                  {:name "peer1" :url "grpc://localhost:7056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}
    "Org2MSP" {:msp-id           "Org2MSP"
               :org-type         :peer
               :domain-name      "org2.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
               :peers            [{:name "peer0" :url "grpc://localhost:8051"}
-                                 {:name "peer01" :url "grpc://localhost:8056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "orderer.example.com"}]}})
+                                 {:name "peer1" :url "grpc://localhost:8056"}]
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}})
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -150,12 +160,18 @@
 (defn populate-orderers
   [org-def]
   (into {} (mapv (fn [o]
-                   [(:name o) (make-orderer (merge o (get-node-end-crypto-files org-def o)))]) (:orderers org-def))))
+                   [(:name o)
+                    (->> o
+                         (get-node-end-crypto-files (assoc org-def :org-type :orderer :domain-name (:domain-name o)))
+                         (merge o)
+                         make-orderer)])
+                 (:orderers org-def))))
 
 (defn populate-peers
   [org-def]
   (into {} (mapv (fn [p]
-                   [(:name p) (make-peer (merge p (get-node-end-crypto-files org-def p)))]) (:peers org-def))))
+                   [(:name p) (make-peer (merge p (get-node-end-crypto-files org-def p)))])
+                 (:peers org-def))))
 
 (defn add-channels!
   []

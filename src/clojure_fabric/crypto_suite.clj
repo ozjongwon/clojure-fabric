@@ -24,7 +24,7 @@
            [org.bouncycastle.util.io.pem PemObject PemReader]
 
            [org.bouncycastle.util.encoders Hex]
-           [java.io FileInputStream StringReader]
+           [java.io FileInputStream StringReader FileReader File]
            [java.util Arrays]
            [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
@@ -53,6 +53,13 @@
 (defn cert-string->bytes
   [cert]
   (-> (StringReader. cert)
+      (PemReader.)
+      (.readPemObject)
+      (.getContent)))
+
+(defn pem-file->bytes
+  [cert]
+  (-> (FileReader. ^File cert)
       (PemReader.)
       (.readPemObject)
       (.getContent)))
@@ -172,11 +179,9 @@
         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
         curve (.getCurve parameter-spec)
         curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
-        #^bytes k-byte-array (if (string? k)
-                       ;; assume base64
-                       (b64/decode (.getBytes ^String k))
-                       ;; otherwise bytes
-                       k)
+        #^bytes k-byte-array (cond (utils/bytes? k) k
+                                   (string? k) (b64/decode (.getBytes ^String k)) ; assume base64
+                                   )
         key-size (count k-byte-array)]
     (if (= curve-size key-size)
       (let [middle (int (/ key-size 2))
@@ -216,7 +221,7 @@
         hashing algorithms such as “SHA2” or “SHA3”
   Returns
         (Key) An instance of the Key class corresponding to the ski"
-  [msg {:keys [algorithm]}]
+  [msg {:keys [algorithm] :or {algorithm :sha3-256}}]
   (let [md (MessageDigest/getInstance (name algorithm))]
     (->> (if (string? msg)
            (.getBytes ^String msg)
@@ -235,10 +240,8 @@
         tk (SecretKeySpec. k tname)
         cipher (doto (Cipher/getInstance tname)
                  (.init ^java.lang.Integer (cipher-mode-map cipher-mode) tk))]
-    (.doFinal cipher
-              (if (string? text)
-                (.getBytes ^String text)
-                text))))
+    (.doFinal cipher (cond (string? text) (.getBytes ^String text)
+                           (utils/bytes? text) text))))
 
 ;;;encrypt
 (defn encrypt
