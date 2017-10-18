@@ -20,7 +20,7 @@
 ;;;
 (defn domain-name->cert-map
   [domain-name]
-  (let [cert-pem (-> "fixture/e2e-2Orgs/channel/crypto-config/peerOrganizations/%s/ca/ca.%s-cert.pem"
+  (let [cert-pem (-> "fixture/balance-transfer/artifacts/channel/crypto-config/peerOrganizations/%s/ca/ca.%s-cert.pem"
                      (format domain-name domain-name)
                      (io/resource)
                      (io/as-file))]
@@ -39,8 +39,7 @@
    :v11 {:name "example_cc_go" :path "github.com/example_cc" :version "11"}})
 
 (defonce channel-defs
-  {:foo {:name "foo"}
-   :bar {:name "bar"}})
+  {:mychannel {:name "mychannel"}})
 
 #_
 (defonce org-defs
@@ -95,7 +94,7 @@
   [{:keys [org-type domain-name]} {user-name :name}]
   (let [org-type-name (name org-type)
         user-name+domain-name (format "%s@%s" (clojure.string/capitalize user-name) domain-name)
-        dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/users/%s/msp/"
+        dir (format "fixture/balance-transfer/artifacts/channel/crypto-config/%sOrganizations/%s/users/%s/msp/"
                     org-type-name domain-name user-name+domain-name)]
     {:private-key (-> (str dir "keystore/")
                       (io/resource)
@@ -118,7 +117,7 @@
                                :peer "peers"
                                :orderer "orderers")
                              node-end-name+domain-name)
-        dir (format "fixture/e2e-2Orgs/channel/crypto-config/%sOrganizations/%s/%s/msp/"
+        dir (format "fixture/balance-transfer/artifacts/channel/crypto-config/%sOrganizations/%s/%s/msp/"
                     org-type-name domain-name end-node-dir)]
     {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name)
               (io/resource)
@@ -180,8 +179,7 @@
   []
   (doseq [[_ v] @users]
     (let [org-def (get org-defs (:msp-id v))]
-     (new-channel! v {:name "foo" :orderers (populate-orderers org-def) :peers (populate-peers org-def)})
-     (new-channel! v {:name "bar" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
+     (new-channel! v {:name "mychannel" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
 
 (defn clear-users!
   []
@@ -206,28 +204,19 @@
 
 (expect clojure_fabric.core.Channel
         (let [user (get-user "Org1MSP" "user1")]
-          (get-channel user "foo")))
-(expect clojure_fabric.core.Channel
-        (let [user (get-user "Org1MSP" "user1")]
-          (get-channel user "bar")))
+          (get-channel user "mychannel")))
 (expect clojure_fabric.core.Channel
         (let [user (get-user "Org2MSP" "user1")]
-          (get-channel user "foo")))
-(expect clojure_fabric.core.Channel
-        (let [user (get-user "Org2MSP" "user1")]
-          (get-channel user "bar")))
+          (get-channel user "mychannel")))
 
 (expect (let [user (get-user "Org1MSP" "user1")
-              bar-chan (get-channel user "bar")]
-          (get-peers bar-chan)))
+              mychannel (get-channel user "mychannel")]
+          (get-peers mychannel)))
 
 (expect (let [user (get-user "Org1MSP" "user1")
-              bar-chan (get-channel user "bar")]
-          (query-installed-chaincodes user (get-random-peer bar-chan))))
-#_
-(expect 11
-        (let [user (get-user "Org2MSP" "user1")]
-          (oquery-installed-chaincodes user "bar")))
+              mychannel (get-channel user "mychannel")]
+          (query-installed-chaincodes user (get-random-peer mychannel))))
+
 ;;; 3. Add orderers and peers
 
 ;;; 4. Add event-hubs
