@@ -12,6 +12,10 @@ jc@kepler:~/Work/fabric$ git pull --depth=2 origin master
 https://github.com/grpc/grpc-java
 Search for protobuf:protoc and use correct versions for protoc and protoc-gen-grpc-java
 
+jc@kepler:~/Work/clojure-fabric/resources/fabric-protos$ gradle clean
+jc@kepler:~/Work/clojure-fabric/resources/fabric-protos$ gradle build
+jc@kepler:~/Work/clojure-fabric/resources/fabric-protos$ gradle generateProto
+
 3. lein compile
 
 

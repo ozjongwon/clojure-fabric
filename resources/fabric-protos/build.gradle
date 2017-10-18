@@ -24,9 +24,12 @@ repositories {
 
 dependencies {
   compile 'com.google.protobuf:protobuf-java:3.4.0'
-  compile "io.grpc:grpc-netty:1.6.1"
-  compile "io.grpc:grpc-protobuf:1.6.1"
-  compile "io.grpc:grpc-stub:1.6.1"
+  compile 'com.google.protobuf:protobuf-java-util:3.4.0'
+  compile 'io.netty:netty-tcnative-boringssl-static:2.0.6.Final'
+  compile "io.grpc:grpc-core:1.7.0"
+  compile "io.grpc:grpc-netty:1.7.0"
+  compile "io.grpc:grpc-protobuf:1.7.0"
+  compile "io.grpc:grpc-stub:1.7.0"
 }
 
 // FIXME 
@@ -43,11 +46,11 @@ protobuf {
   generatedFilesBaseDir = "$projectDir/generated"
 
   protoc {
-    artifact = 'com.google.protobuf:protoc:3.3.0'
+    artifact = 'com.google.protobuf:protoc:3.4.0'
   }
   plugins {
     grpc {
-      artifact = "io.grpc:protoc-gen-grpc-java:1.6.1"
+      artifact = "io.grpc:protoc-gen-grpc-java:1.7.0"
     }
   }
   // generateProtoTasks {

@@ -27,11 +27,12 @@
                  [org.bouncycastle/bcprov-jdk15on "1.58"]
                  [joda-time "2.9.9"]
 
-                 [io.grpc/grpc-core "1.6.1" ]
-                 [io.grpc/grpc-netty "1.6.1" :exclusions [io.grpc/grpc-core io.netty/netty-codec-http2]]
-                 [io.grpc/grpc-protobuf "1.6.1"]
-                 [io.grpc/grpc-stub "1.6.1"]
-                 [io.netty/netty-codec-http2 "4.1.11.Final"]
+                 [io.grpc/grpc-core "1.7.0" ]
+                 [io.grpc/grpc-netty "1.7.0" :exclusions [io.grpc/grpc-core io.netty/netty-codec-http2]]
+                 [io.grpc/grpc-protobuf "1.7.0"]
+                 [io.grpc/grpc-stub "1.7.0"]
+                 [io.netty/netty-codec-http2 "4.1.16.Final"]
+                 [io.netty/netty-tcnative-boringssl-static "2.0.6.Final"]
                  ]
   :main ^:skip-aot grpc-clj.core
   :target-path "target/%s"
