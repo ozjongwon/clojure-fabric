@@ -165,7 +165,7 @@
   [^ByteString identity ^ByteString nonce {algorithm :hash-algorithm}]
   (-> (.concat nonce identity)
       (.toByteArray)
-      (crypto-suite/hash {:algorithm algorithm})))
+      (crypto-suite/hash :algorithm algorithm)))
 
 
 (defonce default-epoch 0)

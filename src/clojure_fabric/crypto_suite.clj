@@ -12,6 +12,11 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
+;;
+;;http://hyperledger-fabric-ca.readthedocs.io/en/latest/users-guide.html
+;;
+;; 'Algorithms and key sizes'
+
 (ns clojure-fabric.crypto-suite
   (:require [clojure.data.codec.base64 :as b64]
             [clojure-fabric.utils :as utils])
@@ -81,7 +86,8 @@
         “ephemeral”.
   Returns
         Result (Key): The key object"
-  [{:keys [algorithm curve ephemeral ^String security-provider]}]
+  [{:keys [algorithm curve ephemeral ^String security-provider]
+    :or {algorithm :ECDSA curve :secp256r1 :security-provider BouncyCastleProvider/PROVIDER_NAME}}]
   (let [generator (-> algorithm
                       name
                       (KeyPairGenerator/getInstance security-provider))
@@ -174,26 +180,27 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  [k {:keys [algorithm curve ephemeral type ^String security-provider]}]
-  (let [curve-name (name curve)
-        parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
-        curve (.getCurve parameter-spec)
-        curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
-        #^bytes k-byte-array (cond (utils/bytes? k) k
-                                   (string? k) (b64/decode (.getBytes ^String k)) ; assume base64
-                                   )
-        key-size (count k-byte-array)]
-    (if (= curve-size key-size)
-      (let [middle (int (/ key-size 2))
-            kf (KeyFactory/getInstance (name algorithm) security-provider)
-            spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
-                                             (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
-                                   (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
-                                                      (.getH parameter-spec) (.getSeed parameter-spec)))]
-        (case type
-          :public (.generatePublic kf spec)
-          :private (.generatePrivate kf spec)))
-      (throw (Exception. (format "Key size(%d) does not match with the chosen curve(%d)" key-size curve-size))))))
+  ([k {:keys [algorithm curve ephemeral type ^String security-provider]
+       :or {algorithm :ECDSA curve :secp256r1 type :public :security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+   (let [curve-name (name curve)
+         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
+         curve (.getCurve parameter-spec)
+         curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
+         #^bytes k-byte-array (cond (utils/bytes? k) k
+                                    (string? k) (b64/decode (.getBytes ^String k)) ; assume base64
+                                    )
+         key-size (count k-byte-array)]
+     (if (= curve-size key-size)
+       (let [middle (int (/ key-size 2))
+             kf (KeyFactory/getInstance (name algorithm) security-provider)
+             spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
+                                              (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
+                                    (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
+                                                       (.getH parameter-spec) (.getSeed parameter-spec)))]
+         (case type
+           :public (.generatePublic kf spec)
+           :private (.generatePrivate kf spec)))
+       (throw (Exception. (format "Key size(%d) does not match with the chosen curve(%d)" key-size curve-size)))))))
 ;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
 ;; (def x (Arrays/copyOfRange *1 1 65))
 ;; (import-key x {:algorithm :ECDSA :curve :secp256r1 :type :public})
@@ -221,21 +228,21 @@
         hashing algorithms such as “SHA2” or “SHA3”
   Returns
         (Key) An instance of the Key class corresponding to the ski"
-  [msg {:keys [algorithm] :or {algorithm :sha3-256}}]
+  [msg & {:keys [algorithm] :or {algorithm :sha3-256}}]
   (let [md (MessageDigest/getInstance (name algorithm))]
     (->> (if (string? msg)
            (.getBytes ^String msg)
            msg)
          (.digest md)
          (Hex/toHexString))))
-;;(hash test-msg {:algorithm :sha384})
+;;(hash test-msg)
 
 (defonce cipher-mode-map {:encrypt Cipher/ENCRYPT_MODE
                           :decrypt Cipher/DECRYPT_MODE})
 
 (defn %encrypt-or-decrypt
   ;; https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html
-  [k text {:keys [algorithm cipher-mode]}]
+  [k text {:keys [algorithm cipher-mode] :or {algorithm :aes}}]
   (let [tname (name algorithm)
         tk (SecretKeySpec. k tname)
         cipher (doto (Cipher/getInstance tname)
@@ -276,7 +283,7 @@
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  [^bytes digest priv-key {:keys [algorithm]}]
+  [^bytes digest priv-key {:keys [algorithm] :or {algorithm :ecdsa}}]
   (let [signer (Signature/getInstance (name algorithm))]
     (.initSign signer priv-key)
     (.update signer digest)
@@ -291,10 +298,12 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [pub-key signature ^bytes digest {:keys [algorithm curve type security-provider] :as opts}]
-  (let [^PublicKey pub-key (cond (utils/bytes? pub-key) (import-key pub-key opts)
-                                 (string? pub-key) (import-key (cert-string->bytes pub-key) opts)
-                                 :else pub-key)
+  [pub-key signature ^bytes digest
+   {:keys [algorithm curve security-provider] :as opts
+    :or {algorithm :ecdsa}}]
+  (let [^PublicKey pub-key (import-key (cond (utils/bytes? pub-key) pub-key
+                                             (string? pub-key) (cert-string->bytes pub-key))
+                                       (assoc opts :type :public))
         signer (Signature/getInstance (name algorithm))]
     (.initVerify signer pub-key)
     (.update signer digest)
@@ -375,15 +384,15 @@
 "BAHpeA=="
 "-----END CERTIFICATE-----"))
 
-  (= (hash test-msg {:algorithm :sha256}) hash-msg-sha256)
-  (= (hash test-long-msg {:algorithm :sha256}) hash-long-msg-sha256)
-  (= (hash test-msg {:algorithm :sha384}) hash-msg-sha384)
-  (= (hash test-long-msg {:algorithm :sha384}) hash-long-msg-sha384)
+  (= (hash test-msg :algorithm :sha256) hash-msg-sha256)
+  (= (hash test-long-msg :algorithm :sha256) hash-long-msg-sha256)
+  (= (hash test-msg :algorithm :sha384) hash-msg-sha384)
+  (= (hash test-long-msg :algorithm :sha384) hash-long-msg-sha384)
 
-  (= (hash test-msg {:algorithm :sha3-256}) hash-msg-sha3-256)
-  (= (hash test-long-msg {:algorithm :sha3-256}) hash-long-msg-sha3-256)
-  (= (hash test-msg {:algorithm :sha3-384}) hash-msg-sha3-384)
-  (= (hash test-long-msg {:algorithm :sha3-384}) hash-long-msg-sha3-384)
+  (= (hash test-msg :algorithm :sha3-256) hash-msg-sha3-256)
+  (= (hash test-long-msg :algorithm :sha3-256) hash-long-msg-sha3-256)
+  (= (hash test-msg :algorithm :sha3-384) hash-msg-sha3-384)
+  (= (hash test-long-msg :algorithm :sha3-384) hash-long-msg-sha3-384)
   
   )
 

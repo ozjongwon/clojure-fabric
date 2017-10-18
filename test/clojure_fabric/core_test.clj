@@ -105,7 +105,8 @@
      :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
                       (io/resource)
                       (io/as-file)
-                      (crypto-suite/pem-file->bytes))}))
+                      (crypto-suite/pem-file->bytes)
+                      (crypto-suite/hash))}))
 
 (defn get-node-end-crypto-files
   [{:keys [org-type domain-name]} {node-end-name :name}]
