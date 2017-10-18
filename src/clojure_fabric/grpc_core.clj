@@ -40,7 +40,7 @@
            [java.io ByteArrayInputStream] 
            [io.grpc ManagedChannel]
            [io.grpc.stub StreamObserver]
-           [io.grpc.netty NettyChannelBuilder GrpcSslContexts]
+           [io.grpc.netty NegotiationType NettyChannelBuilder GrpcSslContexts]
            [io.netty.handler.ssl SslContext SslProvider]
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPublicKey]))
 
@@ -247,20 +247,22 @@
 ;;; Async processing
 ;;;
 (defn peer->channel
-  [{:keys [url pem hostname-override ssl-provider negotiation-type trust-server-certificate?]
+  [{:keys [url pem hostname-override trust-server-certificate?]
     :as peer}]
+  ;; pem = byte of ASN.1 encoding 
   (let [{:keys [protocol host port]} (utils/parse-grpc-url url)
         channel-builder (NettyChannelBuilder/forAddress ^String host (Integer/parseInt port))]
     (case protocol
       "grpc"  (.usePlaintext channel-builder true)
-      ;; From Java SDK
+      ;; From Fabric Java SDK
       "grpcs" (if (nil? pem)
                 (throw (Exception. "FIXME: Implement - use root certificate!"))
                 (let [ssl-context (-> (GrpcSslContexts/forClient)
+                                      ;;;;;;;;;;;;;;;;;;;;; FIXME PEM not ASN.1!!!
                                       (.trustManager (ByteArrayInputStream. pem))
-                                      (.sslProvider ssl-provider)
+                                      (.sslProvider SslProvider/OPENSSL)
                                       (.build))]
-                  (.negotiationType (.sslContext channel-builder ssl-context) negotiation-type)
+                  (.negotiationType (.sslContext channel-builder ssl-context) NegotiationType/TLS)
                   (when hostname-override
                     (.overrideAuthority channel-builder ^String hostname-override)))))
     (.build channel-builder)))

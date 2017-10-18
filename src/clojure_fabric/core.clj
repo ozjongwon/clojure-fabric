@@ -70,7 +70,7 @@
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
 (defrecord Peer [name url
                  ;; From Java SDK (see HFClient.java)
-                 pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
+                 pem hostname-override trust-server-certificate?])
 
 (defn make-peer [m]
   (map->Peer m))
@@ -82,7 +82,8 @@
 
 (defrecord Orderer [name url
                     ;; From Java SDK (see HFClient.java)
-                    pem hostname-override ssl-provider negotiation-type trust-server-certificate?])
+                    pem hostname-override trust-server-certificate?])
+
 
 (defn make-orderer [m]
   (map->Orderer m))

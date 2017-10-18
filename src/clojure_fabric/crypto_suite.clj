@@ -34,6 +34,7 @@
            [org.bouncycastle.cert X509CertificateHolder]
            [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
            [org.bouncycastle.openssl PEMParser]
+           [org.bouncycastle.cert.jcajce JcaX509CertificateConverter]
 
            [java.io FileInputStream StringReader FileReader File]
            [java.util Arrays]
@@ -190,15 +191,13 @@
   [k & {:keys [^String security-provider]
         :or {security-provider BouncyCastleProvider/PROVIDER_NAME}}]
   (with-open [reader (io/reader k)]
-    (let [obj           (.readObject (PEMParser. reader))
-          converter     (doto (JcaPEMKeyConverter.)
-                          (.setProvider security-provider))]
+    (let [obj           (.readObject (PEMParser. reader))]
       (cond (instance? PrivateKeyInfo obj)
-            (.getPrivateKey converter obj)
-            
+            (.getPrivateKey (JcaPEMKeyConverter.) obj)
+
+            ;; FIXME: just return bytes (see core_test get-node-end-crypto-files)
             (instance? X509CertificateHolder obj)
-            (.getPublicKey converter 
-                           (.getSubjectPublicKeyInfo ^X509CertificateHolder obj))))))
+            (.getEncoded ^X509CertificateHolder obj)))))
 
 ;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
 ;; (def x (Arrays/copyOfRange *1 1 65))

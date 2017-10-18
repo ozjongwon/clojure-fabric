@@ -101,12 +101,18 @@
                       (io/as-file)
                       (file-seq)
                       (second)
+                      ;; FIXME:  do same as get-node-end-crypto-files ??
                       (crypto-suite/import-key))
      :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
                       (io/resource)
                       (crypto-suite/import-key)
-                      (.getEncoded)
                       (Hex/toHexString))}))
+
+(defn file->bytes [file]
+  (with-open [xin (io/input-stream file)
+              xout (java.io.ByteArrayOutputStream.)]
+    (io/copy xin xout)
+    (.toByteArray xout)))
 
 (defn get-node-end-crypto-files
   [{:keys [org-type domain-name]} {node-end-name :name}]
@@ -121,8 +127,12 @@
                     org-type-name domain-name end-node-dir)]
     {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name)
               (io/resource)
+              (file->bytes)
+              #_
               (crypto-suite/import-key)
+              #_
               (.getEncoded)
+              #_
               (Hex/toHexString))}))
 
 (defonce org-defs
@@ -131,17 +141,17 @@
               :domain-name      "org1.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpc://localhost:7051"}
-                                 {:name "peer1" :url "grpc://localhost:7056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}
+              :peers            [{:name "peer0" :url "grpcs://localhost:7051"}
+                                 {:name "peer1" :url "grpcs://localhost:7056"}]
+              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}
    "Org2MSP" {:msp-id           "Org2MSP"
               :org-type         :peer
               :domain-name      "org2.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpc://localhost:8051"}
-                                 {:name "peer1" :url "grpc://localhost:8056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}})
+              :peers            [{:name "peer0" :url "grpcs://localhost:8051"}
+                                 {:name "peer1" :url "grpcs://localhost:8056"}]
+              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}})
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
