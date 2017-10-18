@@ -6,7 +6,8 @@
             [clojure-fabric.channel :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             ;;[expectations.clojure.test :refer [defexpect]] ;; available on 2.2.0
-            [clojure-fabric.grpc-core :as grpc]))
+            [clojure-fabric.grpc-core :as grpc])
+  (:import [org.bouncycastle.util.encoders Hex]))
 
 
 ;;;
@@ -101,12 +102,12 @@
                       (io/as-file)
                       (file-seq)
                       (second)
-                      (crypto-suite/pem-file->bytes))
+                      (crypto-suite/import-key))
      :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
                       (io/resource)
-                      (io/as-file)
-                      (crypto-suite/pem-file->bytes)
-                      (crypto-suite/hash))}))
+                      (crypto-suite/import-key)
+                      (.getEncoded)
+                      (Hex/toHexString))}))
 
 (defn get-node-end-crypto-files
   [{:keys [org-type domain-name]} {node-end-name :name}]
@@ -121,8 +122,9 @@
                     org-type-name domain-name end-node-dir)]
     {:pem (-> (format "%ssigncerts/%s-cert.pem" dir node-end-name+domain-name)
               (io/resource)
-              (io/as-file)
-              (crypto-suite/pem-file->bytes))}))
+              (crypto-suite/import-key)
+              (.getEncoded)
+              (Hex/toHexString))}))
 
 (defonce org-defs
   {"Org1MSP" {:msp-id           "Org1MSP"

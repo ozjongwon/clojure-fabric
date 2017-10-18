@@ -25,6 +25,7 @@
 ;;      the method to emit “complete” or “error” events to the application
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.crypto-suite :as crypto-suite]
+            ;;[clojure-fabric.user :as user]
             [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
   (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
@@ -41,7 +42,7 @@
            [io.grpc.stub StreamObserver]
            [io.grpc.netty NettyChannelBuilder GrpcSslContexts]
            [io.netty.handler.ssl SslContext SslProvider]
-           ))
+           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPublicKey]))
 
 
 (defonce ^:dynamic *grpc-configuration*
@@ -149,6 +150,7 @@
 
 (defn make-serialized-identity [user]   ; i.e. user-context
   (-> (Identities$SerializedIdentity/newBuilder)
+      ;;(.setIdBytes (ByteString/copyFromUtf8 (.getEncoded ^BCECPublicKey (:certificate user))))
       (.setIdBytes (ByteString/copyFromUtf8 (:certificate user)))
       (.setMspid (:msp-id user))
       (.build)))
@@ -248,7 +250,7 @@
   [{:keys [url pem hostname-override ssl-provider negotiation-type trust-server-certificate?]
     :as peer}]
   (let [{:keys [protocol host port]} (utils/parse-grpc-url url)
-        channel-builder (NettyChannelBuilder/forAddress ^String host ^int port)]
+        channel-builder (NettyChannelBuilder/forAddress ^String host (Integer/parseInt port))]
     (case protocol
       "grpc"  (.usePlaintext channel-builder true)
       ;; From Java SDK

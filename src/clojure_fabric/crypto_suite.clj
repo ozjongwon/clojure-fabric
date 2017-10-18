@@ -19,7 +19,8 @@
 
 (ns clojure-fabric.crypto-suite
   (:require [clojure.data.codec.base64 :as b64]
-            [clojure-fabric.utils :as utils])
+            [clojure-fabric.utils :as utils]
+            [clojure.java.io :as io])
   (:import [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
            [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECNamedCurveSpec]
@@ -27,8 +28,13 @@
            [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
             BCECPrivateKey BCECPublicKey]
            [org.bouncycastle.util.io.pem PemObject PemReader]
-
            [org.bouncycastle.util.encoders Hex]
+           [org.bouncycastle.asn1.pkcs PrivateKeyInfo]
+           [org.bouncycastle.asn1.x509 SubjectPublicKeyInfo]
+           [org.bouncycastle.cert X509CertificateHolder]
+           [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
+           [org.bouncycastle.openssl PEMParser]
+
            [java.io FileInputStream StringReader FileReader File]
            [java.util Arrays]
            [javax.crypto Cipher SecretKeyFactory]
@@ -55,17 +61,18 @@
     (.nextBytes (SecureRandom.) rbytes)
     rbytes))
 
+#_
 (defn cert-string->bytes
   [cert]
   (-> (StringReader. cert)
       (PemReader.)
       (.readPemObject)
       (.getContent)))
-
+#_
 (defn pem-file->bytes
   [cert]
-  (-> (FileReader. ^File cert)
-      (PemReader.)
+  (-> (io/reader cert)
+      (PemParser.)
       (.readPemObject)
       (.getContent)))
 
@@ -87,7 +94,7 @@
   Returns
         Result (Key): The key object"
   [{:keys [algorithm curve ephemeral ^String security-provider]
-    :or {algorithm :ECDSA curve :secp256r1 :security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+    :or {algorithm :ECDSA curve :secp256r1 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
   (let [generator (-> algorithm
                       name
                       (KeyPairGenerator/getInstance security-provider))
@@ -180,30 +187,22 @@
         opts (Object)
   Returns
         (Key) An instance of the Key class wrapping the raw key bytes"
-  ([k {:keys [algorithm curve ephemeral type ^String security-provider]
-       :or {algorithm :ECDSA curve :secp256r1 type :public :security-provider BouncyCastleProvider/PROVIDER_NAME}}]
-   (let [curve-name (name curve)
-         parameter-spec (ECNamedCurveTable/getParameterSpec curve-name)
-         curve (.getCurve parameter-spec)
-         curve-size (/ (* 2 (.getFieldSize curve)) 8) ;; x + y
-         #^bytes k-byte-array (cond (utils/bytes? k) k
-                                    (string? k) (b64/decode (.getBytes ^String k)) ; assume base64
-                                    )
-         key-size (count k-byte-array)]
-     (if (= curve-size key-size)
-       (let [middle (int (/ key-size 2))
-             kf (KeyFactory/getInstance (name algorithm) security-provider)
-             spec (ECPublicKeySpec. (ECPoint. (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array (int 0) middle))
-                                              (java.math.BigInteger. 1 (Arrays/copyOfRange k-byte-array middle key-size)))
-                                    (ECNamedCurveSpec. curve-name curve (.getG parameter-spec) (.getN parameter-spec)
-                                                       (.getH parameter-spec) (.getSeed parameter-spec)))]
-         (case type
-           :public (.generatePublic kf spec)
-           :private (.generatePrivate kf spec)))
-       (throw (Exception. (format "Key size(%d) does not match with the chosen curve(%d)" key-size curve-size)))))))
+  [k & {:keys [^String security-provider]
+        :or {security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+  (with-open [reader (io/reader k)]
+    (let [obj           (.readObject (PEMParser. reader))
+          converter     (doto (JcaPEMKeyConverter.)
+                          (.setProvider security-provider))]
+      (cond (instance? PrivateKeyInfo obj)
+            (.getPrivateKey converter obj)
+            
+            (instance? X509CertificateHolder obj)
+            (.getPublicKey converter 
+                           (.getSubjectPublicKeyInfo ^X509CertificateHolder obj))))))
+
 ;; (b64/decode (.getBytes "BOg4fylDlzNxMFFTvtQBRsakfxaBJBPJf25sx8Iaim8v3h0ml9mnNCrUVJjBAeXyeGAX69NbAxbaAkNHT+6gJtU="))
 ;; (def x (Arrays/copyOfRange *1 1 65))
-;; (import-key x {:algorithm :ECDSA :curve :secp256r1 :type :public})
+;; (import-key x)
                                          
 
 ;;;getKey
@@ -298,13 +297,10 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [pub-key signature ^bytes digest
+  [^PublicKey pub-key signature ^bytes digest
    {:keys [algorithm curve security-provider] :as opts
     :or {algorithm :ecdsa}}]
-  (let [^PublicKey pub-key (import-key (cond (utils/bytes? pub-key) pub-key
-                                             (string? pub-key) (cert-string->bytes pub-key))
-                                       (assoc opts :type :public))
-        signer (Signature/getInstance (name algorithm))]
+  (let [signer (Signature/getInstance (name algorithm))]
     (.initVerify signer pub-key)
     (.update signer digest)
     (.verify signer signature)))

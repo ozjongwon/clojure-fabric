@@ -233,7 +233,7 @@
   [channel {target-name :name target-url :url target-pem :pem}]
   (loop [[[_ {:keys [name url pem]}] & more-peer] (seq (:peers channel))]
     (cond (nil? name) false
-          (and (= target-name name) (= target-url url) (= (seq target-pem) (seq pem))) true
+          (and (= target-name name) (= target-url url) (= target-pem pem)) true
           :else (recur more-peer))))
 
 (defn known-user-peer?
