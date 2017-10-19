@@ -111,6 +111,8 @@
                       (crypto-suite/import-key))
      :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
                       (io/resource)
+                      ;; see make-serialized-identity in grpc_core
+                      ;; - (ByteString/copyFromUtf8 (:certificate user))
                       (slurp))}))
 
 (defn get-node-end-crypto-files
