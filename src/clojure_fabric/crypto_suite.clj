@@ -232,6 +232,7 @@
            (.getBytes ^String msg)
            msg)
          (.digest md)
+         #_
          (Hex/toHexString))))
 ;;(hash test-msg)
 
@@ -281,10 +282,12 @@
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  [^bytes digest priv-key {:keys [algorithm] :or {algorithm :ecdsa}}]
-  (let [signer (Signature/getInstance (name algorithm))]
+  [^bytes digest priv-key {:keys [algorithm hash-algorithm]
+                           :or {algorithm :ecdsa hash-algorithm :sha256}}]
+  (let [hashed (hash digest :algorithm hash-algorithm)
+        signer (Signature/getInstance (name algorithm))]
     (.initSign signer priv-key)
-    (.update signer digest)
+    (.update signer hashed)
     (.sign signer)))
 
 ;;; verify

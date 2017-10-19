@@ -57,7 +57,7 @@
     :or {security-provider BouncyCastleProvider/PROVIDER_NAME
          key-algorithm :ECDSA
          curve-name :secp256r1
-         hash-algorithm :sha3-384}}]
+         hash-algorithm :sha256}}]
   (->CryptoSuite security-provider key-algorithm curve-name hash-algorithm))
 
 ;;;

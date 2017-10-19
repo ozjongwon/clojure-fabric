@@ -45,7 +45,8 @@
            [io.grpc.stub StreamObserver]
            [io.grpc.netty NegotiationType NettyChannelBuilder GrpcSslContexts]
            [io.netty.handler.ssl SslContext SslProvider]
-           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPublicKey]))
+           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPublicKey]
+           [org.bouncycastle.util.encoders Hex]))
 
 
 (defonce ^:dynamic *grpc-configuration*
@@ -153,7 +154,6 @@
 
 (defn make-serialized-identity [user]   ; i.e. user-context
   (-> (Identities$SerializedIdentity/newBuilder)
-      ;;(.setIdBytes (ByteString/copyFromUtf8 (.getEncoded ^BCECPublicKey (:certificate user))))
       (.setIdBytes (ByteString/copyFromUtf8 (:certificate user)))
       (.setMspid (:msp-id user))
       (.build)))
@@ -170,7 +170,8 @@
   [^ByteString identity ^ByteString nonce {algorithm :hash-algorithm}]
   (-> (.concat nonce identity)
       (.toByteArray)
-      (crypto-suite/hash :algorithm algorithm)))
+      (crypto-suite/hash :algorithm algorithm)
+      (Hex/toHexString)))
 
 
 (defonce default-epoch 0)
