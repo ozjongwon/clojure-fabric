@@ -37,4 +37,14 @@
   :main ^:skip-aot grpc-clj.core
   :target-path "target/%s"
   :java-source-paths ["resources/fabric-protos/generated/main"]
-  :plugins [[lein-expectations "0.0.8"]])
+  :profiles {:dev {:jvm-opts ["-Djavax.net.debug=ssl"
+                              #=(eval (str "-Djavax.net.ssl.trustStore=" (System/getenv "PWD") "/resources/SSL/clojure-fabric.store"))
+                              #=(eval (str "-Djavax.net.ssl.keyStore=" (System/getenv "PWD") "/resources/SSL/clojure-fabric.store"))]
+                   :plugins [[lein-expectations "0.0.8"]]
+                   :dependencies [[expectations "2.1.9"]]
+                   :warn-on-reflection true}}
+  :jvm-opts ["-Duser.timezone=GMT" #_ "-Xmx1g" #_ "-server"]
+
+  :plugins [[lein-expectations "0.0.8"]]
+  )
+
