@@ -90,6 +90,12 @@
                        {:name "user1" :type :user :key "9f97934915db15db4c803b6eff5b6f4966bdef05d13f99e4d60c7128a6f22733"}]}])))
 
 
+(defn file->bytes [file]
+  (with-open [xin (io/input-stream file)
+              xout (java.io.ByteArrayOutputStream.)]
+    (io/copy xin xout)
+    (.toByteArray xout)))
+
 (defn get-user-crypto-files
   [{:keys [org-type domain-name]} {user-name :name}]
   (let [org-type-name (name org-type)
@@ -105,14 +111,7 @@
                       (crypto-suite/import-key))
      :certificate (-> (format "%ssigncerts/%s-cert.pem" dir user-name+domain-name)
                       (io/resource)
-                      (crypto-suite/import-key)
-                      (Hex/toHexString))}))
-
-(defn file->bytes [file]
-  (with-open [xin (io/input-stream file)
-              xout (java.io.ByteArrayOutputStream.)]
-    (io/copy xin xout)
-    (.toByteArray xout)))
+                      (slurp))}))
 
 (defn get-node-end-crypto-files
   [{:keys [org-type domain-name]} {node-end-name :name}]
