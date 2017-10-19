@@ -1,3 +1,7 @@
+* Hyperldeger
+- https://wiki.hyperledger.org/projects/fabric/design-docs
+- https://www.slideshare.net/BinhNguyen79/blockchain-explored-a-technical-deepdive
+
 * gRPC stub mapping between Java and Clojure
 (See https://grpc.io/docs/reference/java/generated-code.html)
 

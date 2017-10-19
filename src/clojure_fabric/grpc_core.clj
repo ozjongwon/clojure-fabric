@@ -23,6 +23,9 @@
 ;;      event source Peer as part of the internal event hub mechanism in order to support
 ;;      the fabric events “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause
 ;;      the method to emit “complete” or “error” events to the application
+;;
+;; Java Secure Socket Extension
+;; http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.crypto-suite :as crypto-suite]
             ;;[clojure-fabric.user :as user]
@@ -247,7 +250,7 @@
 ;;; Async processing
 ;;;
 (defn peer->channel
-  [{:keys [url pem hostname-override trust-server-certificate?]
+  [{:keys [url pem hostname-override?]
     :as peer}]
   ;; pem = byte of ASN.1 encoding 
   (let [{:keys [protocol host port]} (utils/parse-grpc-url url)
@@ -258,13 +261,17 @@
       "grpcs" (if (nil? pem)
                 (throw (Exception. "FIXME: Implement - use root certificate!"))
                 (let [ssl-context (-> (GrpcSslContexts/forClient)
-                                      ;;;;;;;;;;;;;;;;;;;;; FIXME PEM not ASN.1!!!
                                       (.trustManager (ByteArrayInputStream. pem))
                                       (.sslProvider SslProvider/OPENSSL)
                                       (.build))]
                   (.negotiationType (.sslContext channel-builder ssl-context) NegotiationType/TLS)
-                  (when hostname-override
-                    (.overrideAuthority channel-builder ^String hostname-override)))))
+                  (when hostname-override?
+                    (.overrideAuthority channel-builder ^String (:host (utils/parse-grpc-url url))))
+                  ;; set builder properties
+                  ;; keepAliveTime
+                  ;; keepAliveTimeout
+                  ;; withOption
+                  )))
     (.build channel-builder)))
 
 (defn response-waiting-observer

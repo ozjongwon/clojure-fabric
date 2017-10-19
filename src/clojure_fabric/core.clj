@@ -68,9 +68,7 @@
 ;; an endorser, committer and/or submitter
 ;; endorser is a committer
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url
-                 ;; From Java SDK (see HFClient.java)
-                 pem hostname-override trust-server-certificate?])
+(defrecord Peer [name url pem hostname-override?])
 
 (defn make-peer [m]
   (map->Peer m))
@@ -80,9 +78,7 @@
 ;;;
 (defonce ^:dynamic *orderer* nil)
 
-(defrecord Orderer [name url
-                    ;; From Java SDK (see HFClient.java)
-                    pem hostname-override trust-server-certificate?])
+(defrecord Orderer [name url pem hostname-override?])
 
 
 (defn make-orderer [m]

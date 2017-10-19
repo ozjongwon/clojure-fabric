@@ -141,17 +141,17 @@
               :domain-name      "org1.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpcs://localhost:7051"}
-                                 {:name "peer1" :url "grpcs://localhost:7056"}]
-              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}
+              :peers            [{:name "peer0" :url "grpc://localhost:7051"}
+                                 {:name "peer1" :url "grpc://localhost:7056"}]
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}
    "Org2MSP" {:msp-id           "Org2MSP"
               :org-type         :peer
               :domain-name      "org2.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpcs://localhost:8051"}
-                                 {:name "peer1" :url "grpcs://localhost:8056"}]
-              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}})
+              :peers            [{:name "peer0" :url "grpc://localhost:8051"}
+                                 {:name "peer1" :url "grpc://localhost:8056"}]
+              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}})
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -175,14 +175,14 @@
                    [(:name o)
                     (->> o
                          (get-node-end-crypto-files (assoc org-def :org-type :orderer :domain-name (:domain-name o)))
-                         (merge o)
+                         (merge o {:hostname-override? true})
                          make-orderer)])
                  (:orderers org-def))))
 
 (defn populate-peers
   [org-def]
   (into {} (mapv (fn [p]
-                   [(:name p) (make-peer (merge p (get-node-end-crypto-files org-def p)))])
+                   [(:name p) (make-peer (merge p (get-node-end-crypto-files org-def p) {:hostname-override? true}))])
                  (:peers org-def))))
 
 (defn add-channels!
@@ -267,4 +267,21 @@
   (def channel (get-in cli [:channels "mychannel"]))
   
   )
+#_
+(comment
+ (defonce ca-files {"org1" "resources/fixture/balance-transfer/artifacts/channel/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem"
+                    "org2" "resources/fixture/balance-transfer/artifacts/channel/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem"
+                    "orderer" "resources/fixture/balance-transfer/artifacts/channel/crypto-config/ordererOrganizations/example.com/ca/ca.example.com-cert.pem"})
 
+ (import [java.io FileInputStream FileOutputStream]
+         [java.security KeyStore KeyStore$TrustedCertificateEntry]
+         [java.security.cert CertificateFactory])
+
+ (let [key-store (KeyStore/getInstance (KeyStore/getDefaultType))]
+   (.load key-store nil nil)
+   (doseq [[k f] ca-files]
+     (let [x509 (-> (CertificateFactory/getInstance "X.509")
+                    (.generateCertificate (FileInputStream. f)))]
+       (.setCertificateEntry key-store k x509)
+       (.store key-store (FileOutputStream. "/tmp/trust-store") (char-array 0)))))
+ )

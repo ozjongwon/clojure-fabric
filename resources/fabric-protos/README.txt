@@ -19,3 +19,9 @@ jc@kepler:~/Work/clojure-fabric/resources/fabric-protos$ gradle generateProto
 3. lein compile
 
 
+4. Add certs for tests(This may not work, see importing code in core_test.clj)
+keytool -import -alias org1 -file fixture/balance-transfer/artifacts/channel/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem -keystore SSL/clojure-fabric.store
+keytool -import -alias org2 -file fixture/balance-transfer/artifacts/channel/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem -keystore SSL/clojure-fabric.store
+keytool -import -alias order1 -file fixture/balance-transfer/artifacts/channel/crypto-config/ordererOrganizations/example.com/ca/ca.example.com-cert.pem -keystore SSL/clojure-fabric.store
+keytool -list -keystore SSL/clojure-fabric.store
+
