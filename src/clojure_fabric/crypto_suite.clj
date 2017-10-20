@@ -282,7 +282,7 @@
     (.subtract curve-n s)
     s))
 
-(defonce key+hash-algorithm
+(defonce key+hash-algorithm-map
   {[:ecdsa :sha256] "SHA256withECDSA"})
 
 ;;;sign
@@ -295,9 +295,9 @@
   Returns
         Result(Object):Signature object"
   ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
-  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
-                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
-  (let [signer (doto (Signature/getInstance (key+hash-algorithm [algorithm hash-algorithm]))
+  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm security-provider]
+                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+  (let [signer (doto (Signature/getInstance ^String (key+hash-algorithm-map [algorithm hash-algorithm]) ^String security-provider)
                  (.initSign priv-key)
                  (.update digest))
         asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
