@@ -55,7 +55,7 @@
 (defn make-crypto-suite
   [{:keys [security-provider key-algorithm curve-name hash-algorithm]
     :or {security-provider BouncyCastleProvider/PROVIDER_NAME
-         key-algorithm :ECDSA
+         key-algorithm :ecdsa
          curve-name :secp256r1
          hash-algorithm :sha256}}]
   (->CryptoSuite security-provider key-algorithm curve-name hash-algorithm))

@@ -20,7 +20,8 @@
 (ns clojure-fabric.crypto-suite
   (:require [clojure.data.codec.base64 :as b64]
             [clojure-fabric.utils :as utils]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [clojure.string :as str])
   (:import [java.math BigInteger]
    [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
@@ -32,7 +33,7 @@
            [org.bouncycastle.util.encoders Hex]
            [org.bouncycastle.asn1.pkcs PrivateKeyInfo]
            [org.bouncycastle.asn1.x509 SubjectPublicKeyInfo]
-           [org.bouncycastle.asn1 ASN1Integer DERSequence ASN1InputStream ASN1Sequence]
+           [org.bouncycastle.asn1 ASN1Integer DERSequence ASN1InputStream ASN1Sequence ASN1Primitive]
            [org.bouncycastle.cert X509CertificateHolder]
            [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
            [org.bouncycastle.openssl PEMParser]
@@ -98,7 +99,7 @@
   Returns
         Result (Key): The key object"
   [{:keys [algorithm curve ephemeral ^String security-provider]
-    :or {algorithm :ECDSA curve :secp256r1 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+    :or {algorithm :ecdsa curve :secp256r1 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
   (let [generator (-> algorithm
                       name
                       (KeyPairGenerator/getInstance security-provider))
@@ -106,7 +107,7 @@
     (.initialize generator param-specs (SecureRandom.))
     (.generateKeyPair generator)))
 ;;;
-;;; Ex - (generate-key {:algorithm :ECDSA :curve :secp256r1)
+;;; Ex - (generate-key {:algorithm :ecdsa :curve :secp256r1)
 ;;; 
 
 (defprotocol IBCECKey
@@ -171,7 +172,7 @@
   ;;    Only Go SDK implements this function(and hard to understand Go code!).
   ;;    Wait until ithere are test cases to check correctness
   ;;
-  ;; (def kp (generate-key {:algorithm :ECDSA :curve :secp256r1}))
+  ;; (def kp (generate-key {:algorithm :ecdsa :curve :secp256r1}))
   ;; (def pri (.getPrivate kp))
   ;; (def pub (.getPublic kp))
   ;; (derive-key pri {})
@@ -281,9 +282,10 @@
     (.subtract curve-n s)
     s))
 
+(defonce key+hash-algorithm
+  {[:ecdsa :sha256] "SHA256withECDSA"})
+
 ;;;sign
-
-#_
 (defn sign
   "Sign the data.
   Params
@@ -295,65 +297,7 @@
   ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
   [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
                            :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
-  (let [signer (doto (Signature/getInstance (name algorithm))
-                 (.initSign priv-key)
-                 ;; FIXME: not sure need of hash call
-                 ;;(.update (hash digest :algorithm hash-algorithm))
-                 (.update digest))
-        asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
-    (aset asn-encodables 1 (-> (aget asn-encodables 1)
-                               (.getValue)
-                               (malleability-free-s (-> (name curve)
-                                                        (ECNamedCurveTable/getParameterSpec)
-                                                        (.getN)))
-                               (ASN1Integer.)))
-    (let [result (.getEncoded (DERSequence. asn-encodables))]
-      (println "***1" (aget asn-encodables 1) (aget asn-encodables 1) )
-      (println "***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
-      
-      result)))
-
-;;;; WORKS
-#_
-(defn sign
-  "Sign the data.
-  Params
-        digest (byte[]) fixed-length digest of the target message to be signed
-        Key (Key) private signing key
-        opts (function) hashing function to use
-  Returns
-        Result(Object):Signature object"
-  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
-                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
-  (let [signer (ECDSASigner.)
-        priv-params (-> curve name ECNamedCurveTable/getParameterSpec)
-        curve-n (.getN priv-params) ]
-    (->> (ECDomainParameters. (.getCurve priv-params) (.getG priv-params) curve-n)
-         (ECPrivateKeyParameters. (.getS ^BCECPrivateKey priv-key))
-         (.init signer true))
-    (let [signature (.generateSignature signer
-                                        (hash digest :algorithm hash-algorithm))
-          der-array (doto (make-array ASN1Integer 2)
-                      (aset 0 (ASN1Integer. (aget signature 0)))
-                      (aset 1 (-> (aget signature 1) (malleability-free-s curve-n) (ASN1Integer.))))
-          result (.getEncoded (DERSequence. der-array))]
-      (println "***1" (aget signature 0) (aget signature 1))
-      (println "***12" (aget der-array 0) (aget der-array 1))
-      (println "***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
-      result)))
-
-(defn sign
-  "Sign the data.
-  Params
-        digest (byte[]) fixed-length digest of the target message to be signed
-        Key (Key) private signing key
-        opts (function) hashing function to use
-  Returns
-        Result(Object):Signature object"
-  ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
-  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
-                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
-  (let [signer (doto (Signature/getInstance "SHA256withECDSA")
+  (let [signer (doto (Signature/getInstance (key+hash-algorithm [algorithm hash-algorithm]))
                  (.initSign priv-key)
                  (.update digest))
         asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
@@ -363,11 +307,7 @@
                                                         (ECNamedCurveTable/getParameterSpec)
                                                         (.getN)))
                                (ASN1Integer.)))
-    (let [result ]
-      (println "***1" (aget asn-encodables 0) (aget asn-encodables 1) )
-      (println ">***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
-      
-      result)))
+    (.getEncoded (DERSequence. asn-encodables))))
 
 ;;; verify
 (defn verify
