@@ -21,7 +21,8 @@
   (:require [clojure.data.codec.base64 :as b64]
             [clojure-fabric.utils :as utils]
             [clojure.java.io :as io])
-  (:import [org.bouncycastle.crypto.generators ECKeyPairGenerator]
+  (:import [java.math BigInteger]
+   [org.bouncycastle.crypto.generators ECKeyPairGenerator]
            [org.bouncycastle.jce ECNamedCurveTable]
            [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECNamedCurveSpec]
            [org.bouncycastle.jce.provider BouncyCastleProvider]
@@ -31,12 +32,14 @@
            [org.bouncycastle.util.encoders Hex]
            [org.bouncycastle.asn1.pkcs PrivateKeyInfo]
            [org.bouncycastle.asn1.x509 SubjectPublicKeyInfo]
+           [org.bouncycastle.asn1 ASN1Integer DERSequenceGenerator]
            [org.bouncycastle.cert X509CertificateHolder]
            [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
            [org.bouncycastle.openssl PEMParser]
            [org.bouncycastle.cert.jcajce JcaX509CertificateConverter]
-
-           [java.io FileInputStream StringReader FileReader File]
+           [org.bouncycastle.crypto.signers ECDSASigner]
+           [org.bouncycastle.crypto.params ECDomainParameters ECPrivateKeyParameters]
+           [java.io FileInputStream StringReader FileReader File ByteArrayOutputStream]
            [java.util Arrays]
            [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
@@ -107,8 +110,7 @@
 ;;; 
 
 (defprotocol IBCECKey
-  (algorithm [this])
-  (curve-spec [this])
+;;  (key->value [this])
   (curve-params [this])
   (%derive-key [this opts]))
 
@@ -138,16 +140,14 @@
 ;;;
 (extend-type BCECPrivateKey
   IBCECKey
-  (algorithm [this] (-> this .getAlgorithm keyword))
-  (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
+;;  (key->value [this] (.getD this))
   (curve-params [this] (-> this .getParameters %curve-params))
   (%derive-key [this opts]
     (derive-bcec-key (curve-params this))))
 
 (extend-type BCECPublicKey
   IBCECKey
-  (algorithm [this] (-> this .getAlgorithm keyword))
-  (curve-spec [this] (keyword (.getName ^ECNamedCurveSpec (.getParams this))))
+;;  (key->value [this] (.getQ this))
   (curve-params [this] (-> this .getParameters %curve-params))
   (%derive-key [this opts]
     (derive-bcec-key (curve-params this))))
@@ -273,6 +273,15 @@
   [k cipher-text {:keys [algorithm] :as opts}]
   (%encrypt-or-decrypt k cipher-text (assoc opts :cipher-mode :decrypt)))
 
+(defn- prevent-malleability
+  [signature ^BigInteger curve-n]
+  ;; Copy from Fabric SDK Java
+  (let [cmp-val ^BigInteger (.divide curve-n (biginteger 2))
+        s-val (aget signature 1)]
+    (when (= (.compareTo ^BigInteger s-val cmp-val) 1)
+      (aset signature 1 s-val))
+    signature))
+
 ;;;sign
 (defn sign
   "Sign the data.
@@ -282,13 +291,27 @@
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  [^bytes digest priv-key {:keys [algorithm hash-algorithm]
-                           :or {algorithm :ecdsa hash-algorithm :sha256}}]
-  (let [hashed (hash digest :algorithm hash-algorithm)
-        signer (Signature/getInstance (name algorithm))]
-    (.initSign signer priv-key)
-    (.update signer hashed)
-    (.sign signer)))
+  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
+                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
+  (let [signer (ECDSASigner.)
+        priv-params (-> curve name ECNamedCurveTable/getParameterSpec)
+        curve-n (.getN priv-params) ]
+    (->> (ECDomainParameters. (.getCurve priv-params) (.getG priv-params) curve-n)
+         (ECPrivateKeyParameters. (.getS ^BCECPrivateKey priv-key))
+         (.init signer true))
+    (let [out-stream (ByteArrayOutputStream.)
+          der-seq (DERSequenceGenerator. out-stream)
+          signature (prevent-malleability (.generateSignature signer
+                                                              (hash digest :algorithm hash-algorithm))
+                                          curve-n)]
+      (try 
+        (.addObject der-seq (ASN1Integer. ^BigInteger (aget signature 0)))
+        (.addObject der-seq (ASN1Integer. ^BigInteger (aget signature 1)))
+        (catch Exception e
+          (println "FIXME: log error?" e))
+        (finally (.close der-seq)))
+      
+      (.toByteArray out-stream))))
 
 ;;; verify
 (defn verify
