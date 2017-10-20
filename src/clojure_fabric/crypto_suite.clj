@@ -300,7 +300,7 @@
   (let [signer (doto (Signature/getInstance ^String (key+hash-algorithm-map [algorithm hash-algorithm]) ^String security-provider)
                  (.initSign priv-key)
                  (.update digest))
-        asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
+        asn-encodables (-> (.sign signer) (ASN1InputStream.) (.readObject) (.toArray))]
     (aset asn-encodables 1 (-> (aget asn-encodables 1)
                                (.getValue)
                                (malleability-free-s (-> (name curve)
