@@ -32,14 +32,14 @@
            [org.bouncycastle.util.encoders Hex]
            [org.bouncycastle.asn1.pkcs PrivateKeyInfo]
            [org.bouncycastle.asn1.x509 SubjectPublicKeyInfo]
-           [org.bouncycastle.asn1 ASN1Integer DERSequenceGenerator]
+           [org.bouncycastle.asn1 ASN1Integer DERSequence ASN1InputStream ASN1Sequence]
            [org.bouncycastle.cert X509CertificateHolder]
            [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
            [org.bouncycastle.openssl PEMParser]
            [org.bouncycastle.cert.jcajce JcaX509CertificateConverter]
            [org.bouncycastle.crypto.signers ECDSASigner]
            [org.bouncycastle.crypto.params ECDomainParameters ECPrivateKeyParameters]
-           [java.io FileInputStream StringReader FileReader File ByteArrayOutputStream]
+           [java.io FileInputStream StringReader FileReader File ByteArrayOutputStream ByteArrayInputStream]
            [java.util Arrays]
            [javax.crypto Cipher SecretKeyFactory]
            [javax.crypto.spec SecretKeySpec]
@@ -273,16 +273,48 @@
   [k cipher-text {:keys [algorithm] :as opts}]
   (%encrypt-or-decrypt k cipher-text (assoc opts :cipher-mode :decrypt)))
 
-(defn- prevent-malleability
-  [signature ^BigInteger curve-n]
+(defn- malleability-free-s
+  [^BigInteger s ^BigInteger curve-n]
   ;; Copy from Fabric SDK Java
-  (let [cmp-val ^BigInteger (.divide curve-n (biginteger 2))
-        s-val (aget signature 1)]
-    (when (= (.compareTo ^BigInteger s-val cmp-val) 1)
-      (aset signature 1 s-val))
-    signature))
+  (if (= (->> (biginteger 2) (.divide curve-n) (.compareTo s))
+         1)
+    (.subtract curve-n s)
+    s))
 
 ;;;sign
+
+#_
+(defn sign
+  "Sign the data.
+  Params
+        digest (byte[]) fixed-length digest of the target message to be signed
+        Key (Key) private signing key
+        opts (function) hashing function to use
+  Returns
+        Result(Object):Signature object"
+  ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
+  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
+                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
+  (let [signer (doto (Signature/getInstance (name algorithm))
+                 (.initSign priv-key)
+                 ;; FIXME: not sure need of hash call
+                 ;;(.update (hash digest :algorithm hash-algorithm))
+                 (.update digest))
+        asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
+    (aset asn-encodables 1 (-> (aget asn-encodables 1)
+                               (.getValue)
+                               (malleability-free-s (-> (name curve)
+                                                        (ECNamedCurveTable/getParameterSpec)
+                                                        (.getN)))
+                               (ASN1Integer.)))
+    (let [result (.getEncoded (DERSequence. asn-encodables))]
+      (println "***1" (aget asn-encodables 1) (aget asn-encodables 1) )
+      (println "***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
+      
+      result)))
+
+;;;; WORKS
+#_
 (defn sign
   "Sign the data.
   Params
@@ -299,19 +331,43 @@
     (->> (ECDomainParameters. (.getCurve priv-params) (.getG priv-params) curve-n)
          (ECPrivateKeyParameters. (.getS ^BCECPrivateKey priv-key))
          (.init signer true))
-    (let [out-stream (ByteArrayOutputStream.)
-          der-seq (DERSequenceGenerator. out-stream)
-          signature (prevent-malleability (.generateSignature signer
-                                                              (hash digest :algorithm hash-algorithm))
-                                          curve-n)]
-      (try 
-        (.addObject der-seq (ASN1Integer. ^BigInteger (aget signature 0)))
-        (.addObject der-seq (ASN1Integer. ^BigInteger (aget signature 1)))
-        (catch Exception e
-          (println "FIXME: log error?" e))
-        (finally (.close der-seq)))
+    (let [signature (.generateSignature signer
+                                        (hash digest :algorithm hash-algorithm))
+          der-array (doto (make-array ASN1Integer 2)
+                      (aset 0 (ASN1Integer. (aget signature 0)))
+                      (aset 1 (-> (aget signature 1) (malleability-free-s curve-n) (ASN1Integer.))))
+          result (.getEncoded (DERSequence. der-array))]
+      (println "***1" (aget signature 0) (aget signature 1))
+      (println "***12" (aget der-array 0) (aget der-array 1))
+      (println "***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
+      result)))
+
+(defn sign
+  "Sign the data.
+  Params
+        digest (byte[]) fixed-length digest of the target message to be signed
+        Key (Key) private signing key
+        opts (function) hashing function to use
+  Returns
+        Result(Object):Signature object"
+  ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
+  [^bytes digest priv-key {:keys [algorithm curve hash-algorithm]
+                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256}}]
+  (let [signer (doto (Signature/getInstance "SHA256withECDSA")
+                 (.initSign priv-key)
+                 (.update digest))
+        asn-encodables (.toArray (.readObject (ASN1InputStream. (.sign signer))))]
+    (aset asn-encodables 1 (-> (aget asn-encodables 1)
+                               (.getValue)
+                               (malleability-free-s (-> (name curve)
+                                                        (ECNamedCurveTable/getParameterSpec)
+                                                        (.getN)))
+                               (ASN1Integer.)))
+    (let [result ]
+      (println "***1" (aget asn-encodables 0) (aget asn-encodables 1) )
+      (println ">***2" (javax.xml.bind.DatatypeConverter/printHexBinary result))
       
-      (.toByteArray out-stream))))
+      result)))
 
 ;;; verify
 (defn verify
