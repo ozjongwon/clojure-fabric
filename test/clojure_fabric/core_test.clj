@@ -224,17 +224,34 @@
               mychannel (get-channel user "mychannel")]
           (get-peers mychannel)))
 
-(expect (let [user (get-user "Org1MSP" "user1")
+;; This must be available with Admin user
+(expect (let [user (get-user "Org1MSP" "user1") ;; user == error!
               mychannel (get-channel user "mychannel")]
           (query-installed-chaincodes user (get-random-peer mychannel))))
 
-(expect (let [user (get-user "Org1MSP" "user1")
-              bar-chan (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (:peers bar-chan))))
+(expect (let [user (get-user "Org1MSP" "admin")
+              mychannel (get-channel user "mychannel")]
+          (query-installed-chaincodes user (get-random-peer mychannel))))
 
-(expect (let [bar-chan (-> (get-user "Org1MSP" "user1")
+(expect (let [user (get-user "Org2MSP" "admin")
+              mychannel (get-channel user "mychannel")]
+          (query-installed-chaincodes user (get-random-peer mychannel))))
+
+(expect (let [user (get-user "Org2MSP" "admin")
+              mychannel (get-channel user "mychannel")]
+          (query-channel-info user "mychannel" (get-peers mychannel))))
+
+(expect (let [user (get-user "Org1MSP" "user1")
+              mychannel (get-channel user "mychannel")]
+          (query-channel-info user "mychannel" (get-peers mychannel))))
+
+(expect (let [user (get-user "Org1MSP" "admin")
+              mychannel (get-channel user "mychannel")]
+          (query-channel-info user "mychannel" (get-peers mychannel))))
+
+(expect (let [mychannel (-> (get-user "Org1MSP" "user1")
                            (get-channel "mychannel"))]
-          (query-info bar-chan)))
+          (query-info mychannel)))
 ;;; 3. Add orderers and peers
 
 ;;; 4. Add event-hubs

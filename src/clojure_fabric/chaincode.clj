@@ -71,7 +71,7 @@
     {:chaincode-id lifecycle-system-chaincode
      :header-extension lscc-chaincode-header-extension
      :proposal-payload (grpc/make-proposal-payload lifecycle-system-chaincode
-                                                   "queryinstalledchaincodes"
+                                                   "getinstalledchaincodes"
                                                    [])})
 
    :query-channel-info
