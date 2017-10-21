@@ -85,28 +85,28 @@
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetChainInfo")})
    
    :query-block-by-hash
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByHash")})
 
    :query-block
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByNumber")})
 
    :query-transaction
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-proposal-payload
                                 lifecycle-system-chaincode "GetTransactionByID")})})
 
 (defn get-system-chaincode-request-parts
@@ -146,9 +146,9 @@
       (grpc/make-signed-proposal user)))
 
 (defn send-chaincode-request
-  [chaincode-key peers user]
+  [chaincode-key peers user & {:keys [args]}]
   (let [peers (utils/ensure-vector peers)]
-    (let [signed-proposal (make-chaincode-signed-proposal :query-channel-info user)]
+    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key user :args args)]
       (->> peers
            (mapv #(grpc/send-chaincode-request-to-peer % signed-proposal))
            (mapv #(async/<!! %))))))

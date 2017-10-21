@@ -115,10 +115,6 @@
        (chaincode/send-chaincode-request :query-channel-info
                                          target-peers
                                          user)
-       #_
-       (chaincode/make-chaincode-signed-proposal :query-channel-info
-                                                 user-context
-                                                 crypto-suite)
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
 
 
@@ -250,10 +246,6 @@
      (chaincode/send-chaincode-request :query-installed-chaincodes
                                        peer
                                        user)
-     #_
-     (chaincode/make-chaincode-signed-proposal :query-installed-chaincodes
-                                               user-context
-                                               crypto-suite)
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name

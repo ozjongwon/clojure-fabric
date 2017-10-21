@@ -178,8 +178,11 @@
         (ChainInfo) with height, currently the only useful info"
   ([]
    (query-info core/*channel*))
-  ([{:keys [user-key name]}]
-   (chaincode/make-chaincode-signed-proposal :query-info (core/get-user user-key) :args [name])))
+  ([{:keys [user-key name] :as channel}]
+   (chaincode/send-chaincode-request :query-info
+                                     (get-random-peer channel)
+                                     (apply core/get-user user-key)
+                                     :args [name])))
 
 ;;;query_block
 (defn query-block
