@@ -117,13 +117,11 @@
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
 
-(defonce system-channel-name "")
-
 ;;;
 ;;; User level functions
 ;;;
 (defn make-chaincode-proposal
-  [chaincode-key user & {:keys [args]}]
+  [chaincode-key channel-name user & {:keys [args]}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
 
@@ -133,22 +131,23 @@
      (grpc/make-header
       (grpc/make-chaincode-header
        chaincode-id
-       system-channel-name
+       channel-name
        (grpc/identity-nonce->tx-id identity-byte-string nonce-byte-string (:crypto-suite user))
-       (grpc/get-epoch system-channel-name))
+       (grpc/get-epoch channel-name))
       (grpc/make-signature-header identity-byte-string nonce-byte-string))
      proposal-payload)))
 
 (defn make-chaincode-signed-proposal
-  [chaincode-key user & {:keys [args]}]
+  [chaincode-key channel-name user & {:keys [args]}]
   (-> chaincode-key
-      (make-chaincode-proposal user :args args)
+      (make-chaincode-proposal channel-name user :args args)
       (grpc/make-signed-proposal user)))
 
 (defn send-chaincode-request
-  [chaincode-key peers user & {:keys [args]}]
+  [chaincode-key channel-name peers user & {:keys [args]}]
   (let [peers (utils/ensure-vector peers)]
-    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key user :args args)]
+    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user
+                                                          :args args)]
       (->> peers
            (mapv #(grpc/send-chaincode-request-to-peer % signed-proposal))
            (mapv #(async/<!! %))))))

@@ -180,6 +180,7 @@
    (query-info core/*channel*))
   ([{:keys [user-key name] :as channel}]
    (chaincode/send-chaincode-request :query-info
+                                     name
                                      (get-random-peer channel)
                                      (apply core/get-user user-key)
                                      :args [name])))
@@ -193,9 +194,12 @@
         Object containing the block"
   ([block-number]
    (query-block core/*channel* block-number))
-  ([{:keys [user-key name]} block-number]
-   (chaincode/make-chaincode-signed-proposal :query-block (core/get-user user-key)
-                                             :args [name block-number])))
+  ([{:keys [user-key name] :as channel} block-number]
+   (chaincode/send-chaincode-request :query-block
+                                     name
+                                     (get-random-peer channel)
+                                     (apply core/get-user user-key)
+                                     :args [name block-number])))
 
 (defn query-block-by-hash
   "Queries the ledger for Block by block hash

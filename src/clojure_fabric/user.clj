@@ -92,6 +92,9 @@
      ;;       How it can be None and also throw an exception?
      (throw (Exception. "A channel does not exist under that name")))))
 
+
+(defonce system-channel-name "")
+
 ;;; query_chain-info
 (defn query-channel-info
   "This is a network call to the designated Peer(s) to discover the chain information.
@@ -113,6 +116,7 @@
          unknown-peers (clojure.set/difference (set target-peers) peers)]
      (if (empty? unknown-peers)
        (chaincode/send-chaincode-request :query-channel-info
+                                         system-channel-name
                                          target-peers
                                          user)
        (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
@@ -244,6 +248,7 @@
   ([user peer]
    (if (known-user-peer? user peer)
      (chaincode/send-chaincode-request :query-installed-chaincodes
+                                       system-channel-name
                                        peer
                                        user)
      (throw (Exception. "The target Peer does not know anything about the channel")))))
