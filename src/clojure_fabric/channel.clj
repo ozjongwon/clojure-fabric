@@ -26,13 +26,10 @@
 ;;;
 
 (ns clojure-fabric.channel
-  (:require [clojure-fabric.core :as core]
-            [clojure-fabric.peer :as peer]
-            [clojure-fabric.orderer :as orderer]
-            [clojure-fabric.chaincode :as chaincode]
-            [clojure-fabric.utils :as utils]
-            [medley.core :as medley])
-  (:import [org.bouncycastle.util.encoders Hex]))
+  (:require [clojure-fabric.chaincode :as chaincode]
+            [clojure-fabric.core :as core]
+            [clojure-fabric.utils :as utils])
+  (:import org.bouncycastle.util.encoders.Hex))
 
 ;;;
 ;;; Functions

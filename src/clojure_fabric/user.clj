@@ -33,10 +33,8 @@
 ;; have access to the Peer identity’s private key.
 
 (ns clojure-fabric.user
-  (:require [clojure-fabric.core :as core]
-            [clojure-fabric.channel :as channel]
-            [clojure-fabric.chaincode :as chaincode]
-            [clojure-fabric.crypto-suite :as crypto-suite]))
+  (:require [clojure-fabric.chaincode :as chaincode]
+            [clojure-fabric.core :as core]))
 
 (defn ca-user?
   [user]

@@ -13,7 +13,7 @@
 ;; limitations under the License.
 
 (ns clojure-fabric.core
-  (:import [org.bouncycastle.jce.provider BouncyCastleProvider]))
+  (:import org.bouncycastle.jce.provider.BouncyCastleProvider))
 
 ;;;
 ;;; User(and Client)

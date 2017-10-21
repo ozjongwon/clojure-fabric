@@ -18,36 +18,21 @@
 ;; 'Algorithms and key sizes'
 
 (ns clojure-fabric.crypto-suite
-  (:require [clojure.data.codec.base64 :as b64]
-            [clojure-fabric.utils :as utils]
-            [clojure.java.io :as io]
-            [clojure.string :as str])
-  (:import [java.math BigInteger]
-   [org.bouncycastle.crypto.generators ECKeyPairGenerator]
-           [org.bouncycastle.jce ECNamedCurveTable]
-           [org.bouncycastle.jce.spec ECNamedCurveParameterSpec ECNamedCurveSpec]
-           [org.bouncycastle.jce.provider BouncyCastleProvider]
-           [org.bouncycastle.jcajce.provider.asymmetric.ec KeyPairGeneratorSpi$ECDSA
-            BCECPrivateKey BCECPublicKey]
-           [org.bouncycastle.util.io.pem PemObject PemReader]
-           [org.bouncycastle.util.encoders Hex]
-           [org.bouncycastle.asn1.pkcs PrivateKeyInfo]
-           [org.bouncycastle.asn1.x509 SubjectPublicKeyInfo]
-           [org.bouncycastle.asn1 ASN1Integer DERSequence ASN1InputStream ASN1Sequence ASN1Primitive]
-           [org.bouncycastle.cert X509CertificateHolder]
-           [org.bouncycastle.openssl.jcajce JcaPEMKeyConverter]
-           [org.bouncycastle.openssl PEMParser]
-           [org.bouncycastle.cert.jcajce JcaX509CertificateConverter]
-           [org.bouncycastle.crypto.signers ECDSASigner]
-           [org.bouncycastle.crypto.params ECDomainParameters ECPrivateKeyParameters]
-           [java.io FileInputStream StringReader FileReader File ByteArrayOutputStream ByteArrayInputStream]
-           [java.util Arrays]
-           [javax.crypto Cipher SecretKeyFactory]
-           [javax.crypto.spec SecretKeySpec]
-           [java.security Key KeyStore KeyFactory KeyPairGenerator SecureRandom
-            Security MessageDigest Signature PublicKey]
-           [java.security.spec ECPoint ECParameterSpec ECPublicKeySpec ECPrivateKeySpec])
-  (:refer-clojure :exclude [hash]))
+  (:refer-clojure :exclude [hash])
+  (:require [clojure-fabric.utils :as utils]
+            [clojure.java.io :as io])
+  (:import java.math.BigInteger
+           [java.security KeyPairGenerator MessageDigest PublicKey SecureRandom Security Signature]
+           javax.crypto.Cipher
+           javax.crypto.spec.SecretKeySpec
+           [org.bouncycastle.asn1 ASN1InputStream ASN1Integer DERSequence]
+           org.bouncycastle.asn1.pkcs.PrivateKeyInfo
+           org.bouncycastle.cert.X509CertificateHolder
+           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey BCECPublicKey]
+           org.bouncycastle.jce.ECNamedCurveTable
+           org.bouncycastle.jce.provider.BouncyCastleProvider
+           org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
+           org.bouncycastle.openssl.PEMParser))
 
 ;;;
 ;;; http://www.bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories

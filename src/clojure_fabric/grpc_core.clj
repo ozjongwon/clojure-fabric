@@ -28,26 +28,18 @@
 ;; http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.crypto-suite :as crypto-suite]
-            ;;[clojure-fabric.user :as user]
             [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
-  (:import [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeSpec
-            Chaincode$ChaincodeInput Chaincode$ChaincodeSpec$Type Chaincode$ChaincodeInvocationSpec
-            ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload
-            ProposalPackage$Proposal ProposalPackage$SignedProposal EndorserGrpc
-            EndorserGrpc$EndorserStub]
-           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$HeaderType
-            Common$Header Common$SignatureHeader]
-           [org.hyperledger.fabric.protos.msp Identities$SerializedIdentity]
-           [com.google.protobuf ByteString Timestamp]
-           [java.io ByteArrayInputStream] 
-           [io.grpc ManagedChannel]
-           [io.grpc.stub StreamObserver]
-           [io.grpc.netty NegotiationType NettyChannelBuilder GrpcSslContexts]
-           [io.netty.handler.ssl SslContext SslProvider]
-           [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPublicKey]
-           [org.bouncycastle.util.encoders Hex]))
-
+  (:import [com.google.protobuf ByteString Timestamp]
+           io.grpc.ManagedChannel
+           [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
+           io.grpc.stub.StreamObserver
+           io.netty.handler.ssl.SslProvider
+           java.io.ByteArrayInputStream
+           org.bouncycastle.util.encoders.Hex
+           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$Header Common$HeaderType Common$SignatureHeader]
+           org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal]))
 
 (defonce ^:dynamic *grpc-configuration*
   ;; From Java SDK
