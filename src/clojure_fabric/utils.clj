@@ -29,7 +29,7 @@
 
 (defn ensure-vector [x]
   (cond (vector? x) x
-        (sequential? x) (vector x)
+        (sequential? x) (vec x)
         :else [x]))
 
 (defonce hostname-regex "((?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])(?:\\.(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9]))*)")

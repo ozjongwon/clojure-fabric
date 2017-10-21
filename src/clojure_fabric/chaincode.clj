@@ -152,3 +152,17 @@
       (->> peers
            (mapv #(grpc/send-chaincode-request-to-peer % signed-proposal))
            (mapv #(async/<!! %))))))
+
+;; Responses -
+;;
+;;(import [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse])
+;;query-installed-chaincodes
+;;(.getChaincodesList (Query$ChaincodeQueryResponse/parseFrom (.getPayload (.getResponse r1))))
+;;
+;;
+;;(import [org.hyperledger.fabric.protos.peer Query$ChannelQueryResponse])
+;;query-channel-info
+;;(.getChannelsList (Query$ChannelQueryResponse/parseFrom (.getPayload (.getResponse x1))))
+;;(.getChannelsList (Query$ChannelQueryResponse/parseFrom (.getPayload (.getResponse x2))))
+
+

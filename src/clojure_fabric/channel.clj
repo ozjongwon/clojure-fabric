@@ -75,7 +75,7 @@
   ([]
    (get-peers core/*channel*))
   ([channel]
-   (:peers channel)))
+   (map second (:peers channel))))
 
 (defn get-random-peer
   ([]

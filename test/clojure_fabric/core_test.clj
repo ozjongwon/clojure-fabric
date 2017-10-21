@@ -228,6 +228,9 @@
               mychannel (get-channel user "mychannel")]
           (query-installed-chaincodes user (get-random-peer mychannel))))
 
+(expect (let [user (get-user "Org1MSP" "user1")
+              bar-chan (get-channel user "mychannel")]
+          (query-channel-info user "mychannel" (:peers bar-chan))))
 ;;; 3. Add orderers and peers
 
 ;;; 4. Add event-hubs

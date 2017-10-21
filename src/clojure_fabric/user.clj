@@ -34,6 +34,7 @@
 
 (ns clojure-fabric.user
   (:require [clojure-fabric.chaincode :as chaincode]
+            [clojure-fabric.channel :as channel]
             [clojure-fabric.core :as core]))
 
 (defn ca-user?
@@ -106,14 +107,14 @@
 
   ([name peers]
    (query-channel-info core/*user* name peers))
-  ([user name peers]
-   (let [{:keys [channel-peers crypto-suite user-context]} (get-channel user name)
-         unknown-peers (clojure.set/difference (set peers) channel-peers)]
+  ([user name target-peers]
+   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user name)
+         peers (channel/get-peers channel)
+         unknown-peers (clojure.set/difference (set target-peers) peers)]
      (if (empty? unknown-peers)
        (chaincode/send-chaincode-request :query-channel-info
-                                         peers
-                                         user-context
-                                         crypto-suite)
+                                         target-peers
+                                         user)
        #_
        (chaincode/make-chaincode-signed-proposal :query-channel-info
                                                  user-context
