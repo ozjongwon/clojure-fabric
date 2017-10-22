@@ -65,7 +65,7 @@
    (remove-channel-end! channel peer :peers)))
 
 ;;; get_peers
-
+#_
 (defn get-peers
   "Get peers of a chain from local information.
   Params
@@ -75,11 +75,11 @@
   ([]
    (get-peers core/*channel*))
   ([channel]
-   (map second (:peers channel))))
+   (core/get-peers channel)))
 
 (defn get-random-peer
   ([]
-   (get-peers core/*channel*))
+   (core/get-peers core/*channel*))
   ([channel]
    (second (rand-nth (seq (:peers channel))))))
 ;;;

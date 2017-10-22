@@ -6,7 +6,8 @@
             [clojure-fabric.channel :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             ;;[expectations.clojure.test :refer [defexpect]] ;; available on 2.2.0
-            [clojure-fabric.grpc-core :as grpc])
+            [clojure-fabric.grpc-core :as grpc]
+            [clojure-fabric.core :as core])
   (:import [org.bouncycastle.util.encoders Hex]))
 
 
@@ -222,7 +223,7 @@
 
 (expect (let [user (get-user "Org1MSP" "user1")
               mychannel (get-channel user "mychannel")]
-          (get-peers mychannel)))
+          (core/get-peers mychannel)))
 
 ;; This must be available with Admin user
 (expect (let [user (get-user "Org1MSP" "user1") ;; user == error!
@@ -239,15 +240,15 @@
 
 (expect (let [user (get-user "Org2MSP" "admin")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (get-peers mychannel))))
+          (query-channel-info user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [user (get-user "Org1MSP" "user1")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (get-peers mychannel))))
+          (query-channel-info user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [user (get-user "Org1MSP" "admin")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (get-peers mychannel))))
+          (query-channel-info user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
                            (get-channel "mychannel"))]

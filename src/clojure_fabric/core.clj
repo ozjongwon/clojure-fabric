@@ -19,6 +19,9 @@
 ;;; User(and Client)
 ;;;
 
+(defprotocol IPeers
+  (get-peers [this]))
+
 ;; Toplevel users: all mutation happens with 'users'
 (defonce users (atom {}))     ; key = [msp-id name]
 
@@ -32,7 +35,10 @@
                  roles %roles
                  private-key certificate
                  ;; For CA-Client
-                 ca-location])
+                 ca-location]
+  IPeers
+  (get-peers [this]
+    (mapcat (fn [[_ ch]] (get-peers ch)) (:channels this))))
 
 (defn make-user
   [{:keys [msp-id name channels crypto-suite roles %roles private-key certificate ca-location]
@@ -44,7 +50,11 @@
 ;;;
 (defonce ^:dynamic *channel* nil)
 
-(defrecord Channel [user-key name peers orderers])
+(defrecord Channel [user-key name peers orderers]
+  IPeers
+  (get-peers [this]
+    (map second (:peers this))))
+
 (defn make-channel [{:keys [user-key name peers orderers] :or {peers {} orderers {}}}]
   (->Channel user-key name peers orderers))
 

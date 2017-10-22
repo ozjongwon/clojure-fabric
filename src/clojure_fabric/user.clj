@@ -92,10 +92,17 @@
      ;;       How it can be None and also throw an exception?
      (throw (Exception. "A channel does not exist under that name")))))
 
+(defmacro with-validating-peers
+  [[user-or-channel target-peers] & body]
+  `(let [unknown-peers# (clojure.set/difference (set ~target-peers) (core/get-peers ~user-or-channel))]
+     (when-not (empty? unknown-peers#)
+       (throw (Exception. "The target Peer(s) does not know anything about the channel")))
+     ~@body))
 
 (defonce system-channel-name "")
 
 ;;; query_chain-info
+#_
 (defn query-channel-info
   "This is a network call to the designated Peer(s) to discover the chain information.
   The target Peer(s) must be part of the chain in question to be able to return the requested
@@ -107,21 +114,18 @@
         (Chain instance or None): the chain instance for the name.
   Error: 
         The target Peer(s) does not know anything about the chain"
+  )
 
-  ([name peers]
-   (query-channel-info core/*user* name peers))
-  ([user name target-peers]
-   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user name)
-         peers (channel/get-peers channel)
-         unknown-peers (clojure.set/difference (set target-peers) peers)]
-     (if (empty? unknown-peers)
-       (chaincode/send-chaincode-request :query-channel-info
-                                         system-channel-name
-                                         target-peers
-                                         user)
-       (throw (Exception. "The target Peer(s) does not know anything about the channel"))))))
-
-
+(defn query-channels
+  ([channel-name peers]
+   (query-channel-info core/*user* channel-name peers))
+  ([user channel-name target-peers]
+   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user channel-name)]
+     (with-validating-peers [channel target-peers]
+                             (chaincode/send-chaincode-request :query-channels
+                                                               system-channel-name
+                                                               target-peers
+                                                               user)))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -315,3 +319,13 @@
 ;;   ;; TBD
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)
 ;;   )
+
+(defn install-chaincode
+  ([name path version package target-peers]
+   (install-chaincode core/*user* name path version package target-peers))
+  ([user name path version package target-peers]
+   (with-validating-peers [user target-peers]
+     (chaincode/send-chaincode-request :install-chaincode
+                                       system-channel-name
+                                       target-peers
+                                       ))))
