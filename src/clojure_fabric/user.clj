@@ -103,7 +103,7 @@
 
 ;;; query_chain-info
 #_
-(defn query-channel-info
+(defn query-channels
   "This is a network call to the designated Peer(s) to discover the chain information.
   The target Peer(s) must be part of the chain in question to be able to return the requested
   information.
@@ -118,7 +118,7 @@
 
 (defn query-channels
   ([channel-name peers]
-   (query-channel-info core/*user* channel-name peers))
+   (query-channels core/*user* channel-name peers))
   ([user channel-name target-peers]
    (let [{:keys [crypto-suite user-context] :as channel} (get-channel user channel-name)]
      (with-validating-peers [channel target-peers]

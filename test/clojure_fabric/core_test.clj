@@ -42,55 +42,6 @@
 (defonce channel-defs
   {:mychannel {:name "mychannel"}})
 
-#_
-(defonce org-defs
-  (into {}
-        (map #(vector (:msp-id %)
-                      (merge % (domain-name->cert-map (:domain-name %))))
-             [{:msp-id                  "OrdererMSP"
-               :domain-name             "example.com"
-               :ca-location             "???http://localhost:7054"
-               :ca-name                 "???ca0"
-               :peer-locations          ["???peer0.org1.example.com@grpc://localhost:7051"
-                                         "???peer1.org1.example.com@grpc://localhost:7056"]
-               :orderer-locations       ["???orderer.example.com@grpc://localhost:7050"]
-               :eventhub-locations      ["???peer0.org1.example.com@grpc://localhost:7053"
-                                         "???peer1.org1.example.com@grpc://localhost:7058"]
-               :pem-file                nil
-               :allow-all-host-names    false
-               :ca-client               nil
-               :users [{:name "admin" :type :admin :key "f1a9a940f57419a18a83a852884790d59b378281347dd3d4a88c2b820a0f70c9"}
-                       {:name "orderer" :type :orderer :key "30652478a0678558e8573fa33246175b33997226b63fa40503290187e0f99144"}]}
-              {:msp-id                  "Org1MSP"
-               :domain-name             "org1.example.com"
-               :ca-location             "http://localhost:7054"
-               :ca-name                 "ca0"
-               :peer-locations          ["peer0.org1.example.com@grpc://localhost:7051"
-                                         "peer1.org1.example.com@grpc://localhost:7056"]
-               :orderer-locations       ["orderer.example.com@grpc://localhost:7050"]
-               :eventhub-locations      ["peer0.org1.example.com@grpc://localhost:7053"
-                                         "peer1.org1.example.com@grpc://localhost:7058"]
-               :pem-file                nil
-               :allow-all-host-names    false
-               :ca-client               nil
-               :users [{:name "admin" :type :admin :key "6b32e59640c594cf633ad8c64b5958ef7e5ba2a205cfeefd44a9e982ce624d93"}
-                       {:name "user1" :type :user :key "f3c01db816069a226654d66a023c2260695f71e19b322a6564dad3e32ccf063b"}]}
-              {:msp-id                  "Org2MSP"
-               :domain-name             "org2.example.com"
-               :ca-location             "http://localhost:8054"
-               :ca-name                 "ca0"
-               :peer-locations          ["peer0.org2.example.com@grpc://localhost:8051"
-                                         "peer1.org2.example.com@grpc://localhost:8056"]
-               :orderer-locations       ["orderer.example.com@grpc://localhost:7050"]
-               :eventhub-locations      ["peer0.org2.example.com@grpc://localhost:8053"
-                                         "peer1.org2.example.com@grpc://localhost:8058"]
-               :pem-file                nil
-               :allow-all-host-names    false
-               :ca-client               nil
-               :users [{:name "admin" :type :admin :key "b2e2536de633960859d965f02b296083d1e8aa1e868016417c4e4fb760270b96"}
-                       {:name "user1" :type :user :key "9f97934915db15db4c803b6eff5b6f4966bdef05d13f99e4d60c7128a6f22733"}]}])))
-
-
 (defn file->bytes [file]
   (with-open [xin (io/input-stream file)
               xout (java.io.ByteArrayOutputStream.)]
@@ -143,17 +94,17 @@
               :domain-name      "org1.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpc://localhost:7051"}
-                                 {:name "peer1" :url "grpc://localhost:7056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}
+              :peers            [{:name "peer0" :url "grpcs://localhost:7051"}
+                                 {:name "peer1" :url "grpcs://localhost:7056"}]
+              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}
    "Org2MSP" {:msp-id           "Org2MSP"
               :org-type         :peer
               :domain-name      "org2.example.com"
               :users            [{:name "user1" :roles #{:client}}
                                  {:name "admin" :roles #{:client}}]
-              :peers            [{:name "peer0" :url "grpc://localhost:8051"}
-                                 {:name "peer1" :url "grpc://localhost:8056"}]
-              :orderers         [{:name "orderer" :url "grpc://localhost:7050" :domain-name "example.com"}]}})
+              :peers            [{:name "peer0" :url "grpcs://localhost:8051"}
+                                 {:name "peer1" :url "grpcs://localhost:8056"}]
+              :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}})
 
 (defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
                                                  (get chaincode-id-defs :v1)))
@@ -240,15 +191,15 @@
 
 (expect (let [user (get-user "Org2MSP" "admin")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (core/get-peers mychannel))))
+          (query-channels user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [user (get-user "Org1MSP" "user1")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (core/get-peers mychannel))))
+          (query-channels user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [user (get-user "Org1MSP" "admin")
               mychannel (get-channel user "mychannel")]
-          (query-channel-info user "mychannel" (core/get-peers mychannel))))
+          (query-channels user "mychannel" (core/get-peers mychannel))))
 
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
                            (get-channel "mychannel"))]
@@ -279,8 +230,8 @@
   (require '[buddy.core.keys :as keys])
   (def channel-defs
     {"mychannel"
-     {:orderers [{:name "orderer" :grpc-url "grpc://localhost:7050"}]
-      :peers [{:name "peer" :grpc-url "grpc://localhost:7051"}]}})
+     {:orderers [{:name "orderer" :grpc-url "grpcs://localhost:7050"}]
+      :peers [{:name "peer" :grpc-url "grpcs://localhost:7051"}]}})
 
   (def cli (make-client {:msp-id "Org1MSP" :name "PeerAdmin"
                          :private-key (-> (slurp "resources/creds/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec-priv")

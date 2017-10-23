@@ -33,6 +33,7 @@
   (:import [com.google.protobuf ByteString Timestamp]
            io.grpc.ManagedChannel
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
+           io.netty.handler.ssl.util.InsecureTrustManagerFactory
            io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            java.io.ByteArrayInputStream
@@ -251,13 +252,29 @@
       ;; From Fabric Java SDK
       "grpcs" (if (nil? pem)
                 (throw (Exception. "FIXME: Implement - use root certificate!"))
-                (let [ssl-context (-> (GrpcSslContexts/forClient)
-                                      (.trustManager (ByteArrayInputStream. pem))
-                                      (.sslProvider SslProvider/OPENSSL)
-                                      (.build))]
-                  (.negotiationType (.sslContext channel-builder ssl-context) NegotiationType/TLS)
+
+                ;; FIXME: somehow this does not work!!
+                ;; (maybe 'overrideAuthority' is still experimental??
+                ;; 
+                ;; (let [ssl-context (-> (GrpcSslContexts/forClient)
+                ;;                       (.trustManager (ByteArrayInputStream. pem))
+                ;;                       (.sslProvider SslProvider/OPENSSL)
+                ;;                       (.build))]
+                ;;   (when hostname-override?
+                ;;     (let [{:keys [host port]} (utils/parse-grpc-url url)]
+                ;;       (.overrideAuthority channel-builder ^String (str host ":" port))))
+                ;;   (.negotiationType (.sslContext channel-builder (.build ssl-context)) NegotiationType/TLS)
+                ;;   ;; set builder properties
+                ;;   ;; keepAliveTime
+                ;;   ;; keepAliveTimeout
+                ;;   ;; withOption
+                ;;   )
+                (let [ssl-context-builder (-> (GrpcSslContexts/forClient)
+                                              (.sslProvider SslProvider/OPENSSL))]
                   (when hostname-override?
-                    (.overrideAuthority channel-builder ^String (:host (utils/parse-grpc-url url))))
+                    ;; This is for 'development' purpose
+                    (.trustManager ssl-context-builder (InsecureTrustManagerFactory/INSTANCE)))
+                  (.negotiationType (.sslContext channel-builder (.build ssl-context-builder)) NegotiationType/TLS)
                   ;; set builder properties
                   ;; keepAliveTime
                   ;; keepAliveTimeout
