@@ -66,47 +66,54 @@
 ;;;
 (defrecord SystemChaincodeRequestParts [chaincode-id header-extension proposal-payload])
 (defonce system-chaincode-request-parts
-  {:query-installed-chaincodes
+  {;; :install-chaincode
+   ;; (map->SystemChaincodeRequestParts
+   ;;  {:chaincode-id (grpc/make-chaincode-id name :version 1 :path "/")
+   ;;   :header-extension lscc-chaincode-header-extension
+   ;;   :proposal-payload (grpc/make-chaincode-proposal-payload lifecycle-system-chaincode ??????
+   ;;                                                 "install"
+   ;;                                                 [])})
+   :query-installed-chaincodes
    (map->SystemChaincodeRequestParts
     {:chaincode-id lifecycle-system-chaincode
      :header-extension lscc-chaincode-header-extension
-     :proposal-payload (grpc/make-proposal-payload lifecycle-system-chaincode
+     :proposal-payload (grpc/make-chaincode-proposal-payload lifecycle-system-chaincode
                                                    "getinstalledchaincodes"
                                                    [])})
 
-   :query-channel-info
+   :query-channels
    (map->SystemChaincodeRequestParts
     {:chaincode-id configuration-system-chaincode
      :header-extension cscc-chaincode-header-extension
-     :proposal-payload (grpc/make-proposal-payload configuration-system-chaincode
+     :proposal-payload (grpc/make-chaincode-proposal-payload configuration-system-chaincode
                                                    "GetChannels"
                                                    [])})
    :query-info
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetChainInfo")})
    
    :query-block-by-hash
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByHash")})
 
    :query-block
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetBlockByNumber")})
 
    :query-transaction
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'grpc/make-proposal-payload
+     :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetTransactionByID")})})
 
 (defn get-system-chaincode-request-parts

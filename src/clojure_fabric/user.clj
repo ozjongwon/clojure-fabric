@@ -320,12 +320,17 @@
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)
 ;;   )
 
-(defn install-chaincode
-  ([name path version package target-peers]
-   (install-chaincode core/*user* name path version package target-peers))
-  ([user name path version package target-peers]
-   (with-validating-peers [user target-peers]
-     (chaincode/send-chaincode-request :install-chaincode
-                                       system-channel-name
-                                       target-peers
-                                       ))))
+;; (defn install-chaincode
+;;   ([name path version package target-peers]
+;;    (install-chaincode core/*user* name path version package target-peers))
+;;   ([user name path version package target-peers]
+;;    (with-validating-peers [user target-peers]
+;;      (chaincode/send-chaincode-request :install-chaincode
+;;                                        system-channel-name
+;;                                        target-peers
+;; ;;;
+;; ;;;chaincodeID = chaincode-name::chaincode-path::chaincode-version
+;; ;;;
+;;  upload via stream
+                                       
+;;                                        ))))

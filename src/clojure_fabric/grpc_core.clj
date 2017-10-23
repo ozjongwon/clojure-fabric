@@ -116,8 +116,8 @@
   ([^Chaincode$ChaincodeID chaincode-id payload-visibility]
    (-> (ProposalPackage$ChaincodeHeaderExtension/newBuilder)
        (.setChaincodeId chaincode-id)
-       ;; FIXME: payload-visibility is ByteString
-       ;; Use above arity 1 function - currently all other SDKs do this
+       ;; NOTE: payload-visibility is ByteString
+       ;; Currently only full visibility
        (.setPayloadVisibility payload-visibility)
        (.build))))
 
@@ -182,15 +182,6 @@
 
 (defonce java-empty-map (java.util.Collections/emptyMap))
 
-(defn make-chaincode-proposal-payload
-  ([chaincode-invocation-spec]
-   (make-chaincode-proposal-payload chaincode-invocation-spec java-empty-map))
-  ([^Chaincode$ChaincodeInvocationSpec chaincode-invocation-spec transient-map]
-   (-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
-       (.setInput (.toByteString chaincode-invocation-spec))
-       (.putAllTransientMap transient-map)
-       (.build))))
-
 (defn make-signature-header
   [creator nonce]
   (-> (Common$SignatureHeader/newBuilder)
@@ -215,17 +206,24 @@
        (.setExtension extension)
        (.build))))
 
-(defn make-proposal-payload [chaincode-id fcn args]
-  (assert (vector? args))
-  ;; FIXME: From Java comment
-  ;; 
-  (->> (make-chaincode-input (mapv #(if (utils/bytes? %)
-                                      (ByteString/copyFrom #^bytes %)
-                                      (ByteString/copyFromUtf8 (str %)))
-                                   `[~fcn ~@args]))
-       (make-chaincode-spec chaincode-id)
-       (make-chaincode-invocation-spec)
-       (make-chaincode-proposal-payload)))
+(defn make-chaincode-proposal-payload
+  ([chaincode-id fcn args]
+   (make-chaincode-proposal-payload chaincode-id fcn args java-empty-map))
+  ([chaincode-id fcn args transient-map]
+   (assert (vector? args))
+   (let [^Chaincode$ChaincodeInvocationSpec
+         chaincode-invocation-spec
+         (->> (make-chaincode-input (mapv #(if (utils/bytes? %)
+                                             (ByteString/copyFrom #^bytes %)
+                                             (ByteString/copyFromUtf8 (str %)))
+                                          `[~fcn ~@args]))
+              (make-chaincode-spec chaincode-id)
+              (make-chaincode-invocation-spec))]
+     
+     (-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
+         (.setInput (.toByteString chaincode-invocation-spec))
+         (.putAllTransientMap transient-map)
+         (.build)))))
 
 (defn make-signed-proposal
   [^ProposalPackage$Proposal proposal user]
