@@ -286,7 +286,8 @@
   [k ch]
   (reify StreamObserver
     (onNext [this proposal-response]
-      (async/put! ch [k proposal-response]))
+      ;;(async/put! ch [k proposal-response])
+      (async/put! ch proposal-response))
     (onError [this err]
       (async/put! ch [k err]))
     (onCompleted [this])))

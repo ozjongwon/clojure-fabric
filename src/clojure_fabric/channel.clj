@@ -170,32 +170,32 @@
 ;;    ))
 
 ;;;query_info
-(defn query-info
+(defn query-blockchain-info
   "Queries for various useful information on the state of the Chain (height, known peers)
   Params
         none
   Returns 
         (ChainInfo) with height, currently the only useful info"
   ([]
-   (query-info core/*channel*))
+   (query-blockchain-info core/*channel*))
   ([{:keys [user-key name] :as channel}]
-   (chaincode/send-chaincode-request :query-info
+   (chaincode/send-chaincode-request :query-blockchain-info
                                      name
                                      (get-random-peer channel)
                                      (apply core/get-user user-key)
                                      :args [name])))
 
 ;;;query_block
-(defn query-block
+(defn query-block-by-number
   "Queries the ledger for Block by block number
   Params
         blockNumber (number)
   Returns 
         Object containing the block"
   ([block-number]
-   (query-block core/*channel* block-number))
+   (query-block-by-number core/*channel* block-number))
   ([{:keys [user-key name] :as channel} block-number]
-   (chaincode/send-chaincode-request :query-block
+   (chaincode/send-chaincode-request :query-block-by-number
                                      name
                                      (get-random-peer channel)
                                      (apply core/get-user user-key)
@@ -215,9 +215,20 @@
                                                            block-hash
                                                            (Hex/decode ^String block-hash))])))
 
+(defn query-block-by-tx-id
+  "Queries the ledger for Transaction by number
+  Params
+        transactionID
+  Returns 
+        TransactionInfo containing the transaction"
+  ([transaction-id]
+   (query-block-by-tx-id core/*channel* transaction-id))
+  ([{:keys [user-key name]} transaction-id]
+   (chaincode/make-chaincode-signed-proposal :query-block-by-tx-id (core/get-user user-key)
+                                             :args [name transaction-id])))
 ;;; query_transaction
 (defn query-transaction
- "Queries the ledger for Transaction by number
+  "Queries the ledger for Transaction by number
   Params
         transactionID
   Returns 
@@ -225,7 +236,7 @@
   ([transaction-id]
    (query-transaction core/*channel* transaction-id))
   ([{:keys [user-key name]} transaction-id]
-   (chaincode/make-chaincode-signed-proposal :query-transaction (core/get-user user-key)
+   (chaincode/make-chaincode-signed-proposal :query-tx-by-id (core/get-user user-key)
                                              :args [name transaction-id])))
 
 ;;;create_deploy_proposal

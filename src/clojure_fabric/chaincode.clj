@@ -48,7 +48,9 @@
 (ns clojure-fabric.chaincode
   (:require [clojure-fabric.grpc-core :as grpc]
             [clojure-fabric.utils :as utils]
-            [clojure.core.async :as async]))
+            [clojure.core.async :as async])
+  (:import [org.hyperledger.fabric.protos.common Ledger$BlockchainInfo Common$Block]
+           [org.hyperledger.fabric.protos.peer TransactionPackage$ProcessedTransaction]))
 
 ;;; System Chaincodes
 (defonce lifecycle-system-chaincode (grpc/make-chaincode-id "lscc"))
@@ -64,7 +66,12 @@
   (grpc/make-chaincode-header-extention query-system-chaincode))
 
 ;;;
+(defmacro response-processor [class getter]
+  `(fn [resp#]
+     (. (. ~class ~(symbol "parseFrom") (.getPayload (.getResponse resp#))) ~(symbol (name getter)))))
+
 (defrecord SystemChaincodeRequestParts [chaincode-id header-extension proposal-payload])
+
 (defonce system-chaincode-request-parts
   {;; :install-chaincode
    ;; (map->SystemChaincodeRequestParts
@@ -79,7 +86,8 @@
      :header-extension lscc-chaincode-header-extension
      :proposal-payload (grpc/make-chaincode-proposal-payload lifecycle-system-chaincode
                                                    "getinstalledchaincodes"
-                                                   [])})
+                                                   [])
+     :->response (response-processor Query$ChaincodeQueryResponse getChaincodesList)})
 
    :query-channels
    (map->SystemChaincodeRequestParts
@@ -87,34 +95,48 @@
      :header-extension cscc-chaincode-header-extension
      :proposal-payload (grpc/make-chaincode-proposal-payload configuration-system-chaincode
                                                    "GetChannels"
-                                                   [])})
-   :query-info
+                                                   [])
+     :->response (response-processor Query$ChannelQueryResponse getChannelsList)})
+
+   :query-blockchain-info
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
-                                lifecycle-system-chaincode "GetChainInfo")})
+                                lifecycle-system-chaincode "GetChainInfo")
+     :response Ledger$BlockchainInfo})
    
    :query-block-by-hash
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
-                                lifecycle-system-chaincode "GetBlockByHash")})
+                                query-system-chaincode "GetBlockByHash")
+     :response-type Common$Block})
 
-   :query-block
+   :query-block-by-number
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
-                                lifecycle-system-chaincode "GetBlockByNumber")})
+                                query-system-chaincode "GetBlockByNumber")
+     :response-type Common$Block})
 
-   :query-transaction
+   :query-block-by-tx-id
    (map->SystemChaincodeRequestParts
     {:chaincode-id query-system-chaincode
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
-                                lifecycle-system-chaincode "GetTransactionByID")})})
+                                query-system-chaincode "GetBlockByTxID")
+     :response-type Common$Block})
+   
+   :query-tx-by-id
+   (map->SystemChaincodeRequestParts
+    {:chaincode-id query-system-chaincode
+     :header-extension qscc-chaincode-header-extension
+     :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
+                                query-system-chaincode "GetTransactionByID")
+     :response-type TransactionPackage$ProcessedTransaction})})
 
 (defn get-system-chaincode-request-parts
   [k & {:keys [args]}]
@@ -154,10 +176,11 @@
   [chaincode-key channel-name peers user & {:keys [args]}]
   (let [peers (utils/ensure-vector peers)]
     (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user
-                                                          :args args)]
+                                                          :args args)
+          response-fn (get-in system-chaincode-request-parts [chaincode-key :->response])]
       (->> peers
            (mapv #(grpc/send-chaincode-request-to-peer % signed-proposal))
-           (mapv #(async/<!! %))))))
+           (mapv #(response-fn (async/<!! %)))))))
 
 ;; Responses -
 ;;
