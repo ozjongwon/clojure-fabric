@@ -2,63 +2,8 @@
   (:import org.hyperledger.fabric.protos.peer.EventsPackage))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.EventsPackage
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.EventsPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.EventsPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.EventsPackage/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-  events-package$-chaincode-reg]
- (. events-package$-chaincode-reg getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-  events-package$-chaincode-reg]
- (. events-package$-chaincode-reg getSerializedSize))
-
-;;;  EVENT_NAME_FIELD_NUMBER
-(defn
- event_-name_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/EVENT_NAME_FIELD_NUMBER))
-
-;;;  CHAINCODE_ID_FIELD_NUMBER
-(defn
- chaincode_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/CHAINCODE_ID_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-  events-package$-chaincode-reg]
- (. events-package$-chaincode-reg toBuilder))
 
 ;;;  getEventName
 (defn
@@ -66,15 +11,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
   events-package$-chaincode-reg]
  (. events-package$-chaincode-reg getEventName))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-  events-package$-chaincode-reg
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-chaincode-reg writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -237,20 +173,6 @@
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$Interest
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-  events-package$-interest]
- (. events-package$-interest getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-  events-package$-interest]
- (. events-package$-interest getSerializedSize))
-
 ;;;  getEventType
 (defn
  get-event-type
@@ -258,31 +180,12 @@
   events-package$-interest]
  (. events-package$-interest getEventType))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-  events-package$-interest]
- (. events-package$-interest toBuilder))
-
 ;;;  getRegInfoCase
 (defn
  get-reg-info-case
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
   events-package$-interest]
  (. events-package$-interest getRegInfoCase))
-
-;;;  EVENT_TYPE_FIELD_NUMBER
-(defn
- event_-type_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/EVENT_TYPE_FIELD_NUMBER))
-
-;;;  CHAINCODE_REG_INFO_FIELD_NUMBER
-(defn
- chaincode_-reg_-info_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/CHAINCODE_REG_INFO_FIELD_NUMBER))
 
 ;;;  hasChaincodeRegInfo
 (defn
@@ -297,21 +200,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
   events-package$-interest]
  (. events-package$-interest getChainID))
-
-;;;  CHAINID_FIELD_NUMBER
-(defn
- chainid_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/CHAINID_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-  events-package$-interest
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-interest writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -481,36 +369,6 @@
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$Register
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Register
-  events-package$-register]
- (. events-package$-register getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Register
-  events-package$-register]
- (. events-package$-register getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Register
-  events-package$-register]
- (. events-package$-register toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Register
-  events-package$-register
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-register writeTo coded-output-stream0))
-
 ;;;  getEvents
 (defn
  get-events
@@ -519,12 +377,6 @@
   
   int0]
  (. events-package$-register getEvents int0))
-
-;;;  EVENTS_FIELD_NUMBER
-(defn
- events_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Register/EVENTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -696,20 +548,6 @@
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-  events-package$-rejection]
- (. events-package$-rejection getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-  events-package$-rejection]
- (. events-package$-rejection getSerializedSize))
-
 ;;;  getErrorMsg
 (defn
  get-error-msg
@@ -717,28 +555,12 @@
   events-package$-rejection]
  (. events-package$-rejection getErrorMsg))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-  events-package$-rejection]
- (. events-package$-rejection toBuilder))
-
 ;;;  getTxOrBuilder
 (defn
  get-tx-or-builder
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
   events-package$-rejection]
  (. events-package$-rejection getTxOrBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-  events-package$-rejection
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-rejection writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -839,12 +661,6 @@
   events-package$-rejection]
  (. events-package$-rejection hashCode))
 
-;;;  ERROR_MSG_FIELD_NUMBER
-(defn
- error_-msg_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/ERROR_MSG_FIELD_NUMBER))
-
 ;;;  parser
 (defn
  parser
@@ -895,12 +711,6 @@
   events-package$-rejection]
  (. events-package$-rejection getDefaultInstanceForType))
 
-;;;  TX_FIELD_NUMBER
-(defn
- tx_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/TX_FIELD_NUMBER))
-
 ;;;  getTx
 (defn
  get-tx
@@ -913,36 +723,6 @@
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-  events-package$-unregister]
- (. events-package$-unregister getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-  events-package$-unregister]
- (. events-package$-unregister getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-  events-package$-unregister]
- (. events-package$-unregister toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-  events-package$-unregister
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-unregister writeTo coded-output-stream0))
-
 ;;;  getEvents
 (defn
  get-events
@@ -951,12 +731,6 @@
   
   int0]
  (. events-package$-unregister getEvents int0))
-
-;;;  EVENTS_FIELD_NUMBER
-(defn
- events_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/EVENTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1128,39 +902,12 @@
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-  events-package$-filtered-block]
- (. events-package$-filtered-block getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-  events-package$-filtered-block]
- (. events-package$-filtered-block getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-  events-package$-filtered-block]
- (. events-package$-filtered-block toBuilder))
-
 ;;;  getChannelId
 (defn
  get-channel-id
  [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
   events-package$-filtered-block]
  (. events-package$-filtered-block getChannelId))
-
-;;;  CHANNEL_ID_FIELD_NUMBER
-(defn
- channel_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/CHANNEL_ID_FIELD_NUMBER))
 
 ;;;  getFilteredTxList
 (defn
@@ -1182,15 +929,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
   events-package$-filtered-block]
  (. events-package$-filtered-block getFilteredTxOrBuilderList))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-  events-package$-filtered-block
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-filtered-block writeTo coded-output-stream0))
 
 ;;;  getFilteredTx
 (defn
@@ -1322,12 +1060,6 @@
  []
  (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parser))
 
-;;;  FILTERED_TX_FIELD_NUMBER
-(defn
- filtered_-tx_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/FILTERED_TX_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1365,49 +1097,9 @@
   events-package$-filtered-block]
  (. events-package$-filtered-block getDefaultInstanceForType))
 
-;;;  NUMBER_FIELD_NUMBER
-(defn
- number_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/NUMBER_FIELD_NUMBER))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-  events-package$-filtered-transaction]
- (. events-package$-filtered-transaction getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-  events-package$-filtered-transaction]
- (. events-package$-filtered-transaction getSerializedSize))
-
-;;;  CCEVENT_FIELD_NUMBER
-(defn
- ccevent_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/CCEVENT_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-  events-package$-filtered-transaction]
- (. events-package$-filtered-transaction toBuilder))
-
-;;;  TXID_FIELD_NUMBER
-(defn
- txid_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/TXID_FIELD_NUMBER))
 
 ;;;  getTxidBytes
 (defn
@@ -1430,12 +1122,6 @@
   events-package$-filtered-transaction]
  (. events-package$-filtered-transaction getTxValidationCode))
 
-;;;  TX_VALIDATION_CODE_FIELD_NUMBER
-(defn
- tx_-validation_-code_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/TX_VALIDATION_CODE_FIELD_NUMBER))
-
 ;;;  getTxid
 (defn
  get-txid
@@ -1449,15 +1135,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
   events-package$-filtered-transaction]
  (. events-package$-filtered-transaction getTxValidationCodeValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-  events-package$-filtered-transaction
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-filtered-transaction writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1612,21 +1289,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-  events-package$-signed-event]
- (. events-package$-signed-event getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-  events-package$-signed-event]
- (. events-package$-signed-event getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
@@ -1634,34 +1296,12 @@
   events-package$-signed-event]
  (. events-package$-signed-event getSignature))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-  events-package$-signed-event]
- (. events-package$-signed-event toBuilder))
-
 ;;;  getEventBytes
 (defn
  get-event-bytes
  [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
   events-package$-signed-event]
  (. events-package$-signed-event getEventBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-  events-package$-signed-event
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-signed-event writeTo coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1731,12 +1371,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
   events-package$-signed-event]
  (. events-package$-signed-event isInitialized))
-
-;;;  EVENTBYTES_FIELD_NUMBER
-(defn
- eventbytes_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/EVENTBYTES_FIELD_NUMBER))
 
 ;;;  getParserForType
 (defn
@@ -1816,51 +1450,12 @@
   events-package$-event]
  (. events-package$-event hasRegister))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
-  events-package$-event]
- (. events-package$-event getUnknownFields))
-
-;;;  CREATOR_FIELD_NUMBER
-(defn
- creator_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/CREATOR_FIELD_NUMBER))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
-  events-package$-event]
- (. events-package$-event getSerializedSize))
-
 ;;;  getChaincodeEventOrBuilder
 (defn
  get-chaincode-event-or-builder
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
   events-package$-event]
  (. events-package$-event getChaincodeEventOrBuilder))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
-  events-package$-event]
- (. events-package$-event toBuilder))
-
-;;;  BLOCK_FIELD_NUMBER
-(defn
- block_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/BLOCK_FIELD_NUMBER))
-
-;;;  FILTERED_BLOCK_FIELD_NUMBER
-(defn
- filtered_-block_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/FILTERED_BLOCK_FIELD_NUMBER))
 
 ;;;  getRejectionOrBuilder
 (defn
@@ -1875,12 +1470,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
   events-package$-event]
  (. events-package$-event getFilteredBlockOrBuilder))
-
-;;;  REJECTION_FIELD_NUMBER
-(defn
- rejection_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/REJECTION_FIELD_NUMBER))
 
 ;;;  getUnregister
 (defn
@@ -1902,15 +1491,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
   events-package$-event]
  (. events-package$-event hasUnregister))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
-  events-package$-event
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. events-package$-event writeTo coded-output-stream0))
 
 ;;;  getBlock
 (defn
@@ -2053,12 +1633,6 @@
   events-package$-event]
  (. events-package$-event getEventCase))
 
-;;;  REGISTER_FIELD_NUMBER
-(defn
- register_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/REGISTER_FIELD_NUMBER))
-
 ;;;  getRegister
 (defn
  get-register
@@ -2078,12 +1652,6 @@
  parser
  []
  (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parser))
-
-;;;  CHAINCODE_EVENT_FIELD_NUMBER
-(defn
- chaincode_-event_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/CHAINCODE_EVENT_FIELD_NUMBER))
 
 ;;;  getCreator
 (defn
@@ -2149,9 +1717,3 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
   events-package$-event]
  (. events-package$-event getDefaultInstanceForType))
-
-;;;  UNREGISTER_FIELD_NUMBER
-(defn
- unregister_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/UNREGISTER_FIELD_NUMBER))

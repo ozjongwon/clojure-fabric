@@ -1,58 +1,10 @@
 (ns clojure-fabric.identities
   (:import org.hyperledger.fabric.protos.msp.Identities))
 
-;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.msp.Identities
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.msp.Identities/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.msp.Identities/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.msp.Identities/registerAllExtensions
-   generic-arg1)))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-  identities$-serialized-identity]
- (. identities$-serialized-identity getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-  identities$-serialized-identity]
- (. identities$-serialized-identity getSerializedSize))
-
-;;;  ID_BYTES_FIELD_NUMBER
-(defn
- id_-bytes_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/ID_BYTES_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-  identities$-serialized-identity]
- (. identities$-serialized-identity toBuilder))
 
 ;;;  getIdBytes
 (defn
@@ -60,15 +12,6 @@
  [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
   identities$-serialized-identity]
  (. identities$-serialized-identity getIdBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-  identities$-serialized-identity
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. identities$-serialized-identity writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -155,12 +98,6 @@
   object0]
  (. identities$-serialized-identity equals object0))
 
-;;;  MSPID_FIELD_NUMBER
-(defn
- mspid_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/MSPID_FIELD_NUMBER))
-
 ;;;  getMspid
 (defn
  get-mspid
@@ -230,51 +167,12 @@
 ;;;org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-  identities$-serialized-idemix-identity]
- (. identities$-serialized-idemix-identity getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-  identities$-serialized-idemix-identity]
- (. identities$-serialized-idemix-identity getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-  identities$-serialized-idemix-identity]
- (. identities$-serialized-idemix-identity toBuilder))
-
-;;;  ROLE_FIELD_NUMBER
-(defn
- role_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/ROLE_FIELD_NUMBER))
-
 ;;;  getNymX
 (defn
  get-nym-x
  [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
   identities$-serialized-idemix-identity]
  (. identities$-serialized-idemix-identity getNymX))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-  identities$-serialized-idemix-identity
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  identities$-serialized-idemix-identity
-  writeTo
-  coded-output-stream0))
 
 ;;;  getRole
 (defn
@@ -382,18 +280,6 @@
   identities$-serialized-idemix-identity]
  (. identities$-serialized-idemix-identity getOU))
 
-;;;  OU_FIELD_NUMBER
-(defn
- ou_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/OU_FIELD_NUMBER))
-
-;;;  NYMY_FIELD_NUMBER
-(defn
- nymy_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/NYMY_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -420,12 +306,6 @@
   (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseDelimitedFrom
    input-stream0
    extension-registry-lite1)))
-
-;;;  NYMX_FIELD_NUMBER
-(defn
- nymx_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/NYMX_FIELD_NUMBER))
 
 ;;;  newBuilder
 (defn

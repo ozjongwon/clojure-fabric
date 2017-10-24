@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.msp.MspConfigPackage))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.msp.MspConfigPackage
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.msp.MspConfigPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.msp.MspConfigPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.msp.MspConfigPackage/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-  msp-config-package$-msp-config]
- (. msp-config-package$-msp-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-  msp-config-package$-msp-config]
- (. msp-config-package$-msp-config getSerializedSize))
 
 ;;;  getType
 (defn
@@ -48,33 +12,6 @@
   msp-config-package$-msp-config]
  (. msp-config-package$-msp-config getType))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-  msp-config-package$-msp-config]
- (. msp-config-package$-msp-config toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-  msp-config-package$-msp-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. msp-config-package$-msp-config writeTo coded-output-stream0))
-
-;;;  CONFIG_FIELD_NUMBER
-(defn
- config_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/CONFIG_FIELD_NUMBER))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -230,20 +167,6 @@
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config getCryptoConfig))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-  msp-config-package$-fabric-msp-config]
- (. msp-config-package$-fabric-msp-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-  msp-config-package$-fabric-msp-config]
- (. msp-config-package$-fabric-msp-config getSerializedSize))
-
 ;;;  getRootCertsList
 (defn
  get-root-certs-list
@@ -267,13 +190,6 @@
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config getSigningIdentityOrBuilder))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-  msp-config-package$-fabric-msp-config]
- (. msp-config-package$-fabric-msp-config toBuilder))
-
 ;;;  getAdmins
 (defn
  get-admins
@@ -294,12 +210,6 @@
   msp-config-package$-fabric-msp-config
   getOrganizationalUnitIdentifiers
   int0))
-
-;;;  ROOT_CERTS_FIELD_NUMBER
-(defn
- root_-certs_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/ROOT_CERTS_FIELD_NUMBER))
 
 ;;;  getOrganizationalUnitIdentifiersOrBuilder
 (defn
@@ -380,12 +290,6 @@
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config getIntermediateCertsList))
 
-;;;  INTERMEDIATE_CERTS_FIELD_NUMBER
-(defn
- intermediate_-certs_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/INTERMEDIATE_CERTS_FIELD_NUMBER))
-
 ;;;  getOrganizationalUnitIdentifiersCount
 (defn
  get-organizational-unit-identifiers-count
@@ -395,39 +299,12 @@
   msp-config-package$-fabric-msp-config
   getOrganizationalUnitIdentifiersCount))
 
-;;;  CRYPTO_CONFIG_FIELD_NUMBER
-(defn
- crypto_-config_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/CRYPTO_CONFIG_FIELD_NUMBER))
-
-;;;  TLS_INTERMEDIATE_CERTS_FIELD_NUMBER
-(defn
- tls_-intermediate_-certs_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/TLS_INTERMEDIATE_CERTS_FIELD_NUMBER))
-
 ;;;  getRevocationListCount
 (defn
  get-revocation-list-count
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config getRevocationListCount))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-  msp-config-package$-fabric-msp-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. msp-config-package$-fabric-msp-config writeTo coded-output-stream0))
-
-;;;  ORGANIZATIONAL_UNIT_IDENTIFIERS_FIELD_NUMBER
-(defn
- organizational_-unit_-identifiers_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/ORGANIZATIONAL_UNIT_IDENTIFIERS_FIELD_NUMBER))
 
 ;;;  getIntermediateCerts
 (defn
@@ -444,12 +321,6 @@
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config getAdminsList))
-
-;;;  TLS_ROOT_CERTS_FIELD_NUMBER
-(defn
- tls_-root_-certs_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/TLS_ROOT_CERTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -527,18 +398,6 @@
   msp-config-package$-fabric-msp-config]
  (. msp-config-package$-fabric-msp-config isInitialized))
 
-;;;  ADMINS_FIELD_NUMBER
-(defn
- admins_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/ADMINS_FIELD_NUMBER))
-
-;;;  REVOCATION_LIST_FIELD_NUMBER
-(defn
- revocation_-list_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/REVOCATION_LIST_FIELD_NUMBER))
-
 ;;;  getParserForType
 (defn
  get-parser-for-type
@@ -554,18 +413,6 @@
   ^java.lang.Object
   object0]
  (. msp-config-package$-fabric-msp-config equals object0))
-
-;;;  SIGNING_IDENTITY_FIELD_NUMBER
-(defn
- signing_-identity_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/SIGNING_IDENTITY_FIELD_NUMBER))
-
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/NAME_FIELD_NUMBER))
 
 ;;;  getRevocationList
 (defn
@@ -698,33 +545,6 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
 ;;;
 
-;;;  SIGNATURE_HASH_FAMILY_FIELD_NUMBER
-(defn
- signature_-hash_-family_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/SIGNATURE_HASH_FAMILY_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-  msp-config-package$-fabric-crypto-config]
- (. msp-config-package$-fabric-crypto-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-  msp-config-package$-fabric-crypto-config]
- (. msp-config-package$-fabric-crypto-config getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-  msp-config-package$-fabric-crypto-config]
- (. msp-config-package$-fabric-crypto-config toBuilder))
-
 ;;;  getIdentityIdentifierHashFunctionBytes
 (defn
  get-identity-identifier-hash-function-bytes
@@ -751,18 +571,6 @@
  (.
   msp-config-package$-fabric-crypto-config
   getSignatureHashFamilyBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-  msp-config-package$-fabric-crypto-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  msp-config-package$-fabric-crypto-config
-  writeTo
-  coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -840,12 +648,6 @@
   msp-config-package$-fabric-crypto-config]
  (. msp-config-package$-fabric-crypto-config getParserForType))
 
-;;;  IDENTITY_IDENTIFIER_HASH_FUNCTION_FIELD_NUMBER
-(defn
- identity_-identifier_-hash_-function_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/IDENTITY_IDENTIFIER_HASH_FUNCTION_FIELD_NUMBER))
-
 ;;;  equals
 (defn
  equals
@@ -917,33 +719,12 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-  msp-config-package$-idemix-msp-config]
- (. msp-config-package$-idemix-msp-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-  msp-config-package$-idemix-msp-config]
- (. msp-config-package$-idemix-msp-config getSerializedSize))
-
 ;;;  getSignerOrBuilder
 (defn
  get-signer-or-builder
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
   msp-config-package$-idemix-msp-config]
  (. msp-config-package$-idemix-msp-config getSignerOrBuilder))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-  msp-config-package$-idemix-msp-config]
- (. msp-config-package$-idemix-msp-config toBuilder))
 
 ;;;  getName
 (defn
@@ -958,27 +739,6 @@
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
   msp-config-package$-idemix-msp-config]
  (. msp-config-package$-idemix-msp-config getIPk))
-
-;;;  SIGNER_FIELD_NUMBER
-(defn
- signer_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/SIGNER_FIELD_NUMBER))
-
-;;;  IPK_FIELD_NUMBER
-(defn
- ipk_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/IPK_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-  msp-config-package$-idemix-msp-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. msp-config-package$-idemix-msp-config writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1079,12 +839,6 @@
   msp-config-package$-idemix-msp-config]
  (. msp-config-package$-idemix-msp-config getSigner))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/NAME_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -1147,27 +901,6 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-  msp-config-package$-idemix-msp-signer-config]
- (. msp-config-package$-idemix-msp-signer-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-  msp-config-package$-idemix-msp-signer-config]
- (. msp-config-package$-idemix-msp-signer-config getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-  msp-config-package$-idemix-msp-signer-config]
- (. msp-config-package$-idemix-msp-signer-config toBuilder))
-
 ;;;  getOrganizationalUnitIdentifier
 (defn
  get-organizational-unit-identifier
@@ -1177,36 +910,12 @@
   msp-config-package$-idemix-msp-signer-config
   getOrganizationalUnitIdentifier))
 
-;;;  ORGANIZATIONAL_UNIT_IDENTIFIER_FIELD_NUMBER
-(defn
- organizational_-unit_-identifier_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/ORGANIZATIONAL_UNIT_IDENTIFIER_FIELD_NUMBER))
-
 ;;;  getSk
 (defn
  get-sk
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
   msp-config-package$-idemix-msp-signer-config]
  (. msp-config-package$-idemix-msp-signer-config getSk))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-  msp-config-package$-idemix-msp-signer-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  msp-config-package$-idemix-msp-signer-config
-  writeTo
-  coded-output-stream0))
-
-;;;  CRED_FIELD_NUMBER
-(defn
- cred_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/CRED_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1307,18 +1016,6 @@
   object0]
  (. msp-config-package$-idemix-msp-signer-config equals object0))
 
-;;;  IS_ADMIN_FIELD_NUMBER
-(defn
- is_-admin_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/IS_ADMIN_FIELD_NUMBER))
-
-;;;  SK_FIELD_NUMBER
-(defn
- sk_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/SK_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -1385,39 +1082,12 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-  msp-config-package$-signing-identity-info]
- (. msp-config-package$-signing-identity-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-  msp-config-package$-signing-identity-info]
- (. msp-config-package$-signing-identity-info getSerializedSize))
-
 ;;;  getPublicSigner
 (defn
  get-public-signer
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
   msp-config-package$-signing-identity-info]
  (. msp-config-package$-signing-identity-info getPublicSigner))
-
-;;;  PRIVATE_SIGNER_FIELD_NUMBER
-(defn
- private_-signer_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/PRIVATE_SIGNER_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-  msp-config-package$-signing-identity-info]
- (. msp-config-package$-signing-identity-info toBuilder))
 
 ;;;  getPrivateSignerOrBuilder
 (defn
@@ -1434,18 +1104,6 @@
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
   msp-config-package$-signing-identity-info]
  (. msp-config-package$-signing-identity-info getPrivateSigner))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-  msp-config-package$-signing-identity-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  msp-config-package$-signing-identity-info
-  writeTo
-  coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1539,12 +1197,6 @@
   object0]
  (. msp-config-package$-signing-identity-info equals object0))
 
-;;;  PUBLIC_SIGNER_FIELD_NUMBER
-(defn
- public_-signer_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/PUBLIC_SIGNER_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -1602,54 +1254,12 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-  msp-config-package$-key-info]
- (. msp-config-package$-key-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-  msp-config-package$-key-info]
- (. msp-config-package$-key-info getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-  msp-config-package$-key-info]
- (. msp-config-package$-key-info toBuilder))
-
-;;;  KEY_IDENTIFIER_FIELD_NUMBER
-(defn
- key_-identifier_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/KEY_IDENTIFIER_FIELD_NUMBER))
-
 ;;;  getKeyIdentifierBytes
 (defn
  get-key-identifier-bytes
  [^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
   msp-config-package$-key-info]
  (. msp-config-package$-key-info getKeyIdentifierBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-  msp-config-package$-key-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. msp-config-package$-key-info writeTo coded-output-stream0))
-
-;;;  KEY_MATERIAL_FIELD_NUMBER
-(defn
- key_-material_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/KEY_MATERIAL_FIELD_NUMBER))
 
 ;;;  getKeyIdentifier
 (defn
@@ -1805,27 +1415,6 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-  msp-config-package$-fabric-ou-identifier]
- (. msp-config-package$-fabric-ou-identifier getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-  msp-config-package$-fabric-ou-identifier]
- (. msp-config-package$-fabric-ou-identifier getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-  msp-config-package$-fabric-ou-identifier]
- (. msp-config-package$-fabric-ou-identifier toBuilder))
-
 ;;;  getOrganizationalUnitIdentifier
 (defn
  get-organizational-unit-identifier
@@ -1834,30 +1423,6 @@
  (.
   msp-config-package$-fabric-ou-identifier
   getOrganizationalUnitIdentifier))
-
-;;;  CERTIFICATE_FIELD_NUMBER
-(defn
- certificate_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/CERTIFICATE_FIELD_NUMBER))
-
-;;;  ORGANIZATIONAL_UNIT_IDENTIFIER_FIELD_NUMBER
-(defn
- organizational_-unit_-identifier_-field_-number
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/ORGANIZATIONAL_UNIT_IDENTIFIER_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-  msp-config-package$-fabric-ou-identifier
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  msp-config-package$-fabric-ou-identifier
-  writeTo
-  coded-output-stream0))
 
 ;;;  getCertificate
 (defn

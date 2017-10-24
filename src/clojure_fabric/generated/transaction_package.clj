@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.peer.TransactionPackage))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.TransactionPackage
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.TransactionPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.TransactionPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.TransactionPackage/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-  transaction-package$-signed-transaction]
- (. transaction-package$-signed-transaction getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-  transaction-package$-signed-transaction]
- (. transaction-package$-signed-transaction getSerializedSize))
 
 ;;;  getSignature
 (defn
@@ -47,31 +11,6 @@
  [^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
   transaction-package$-signed-transaction]
  (. transaction-package$-signed-transaction getSignature))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-  transaction-package$-signed-transaction]
- (. transaction-package$-signed-transaction toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-  transaction-package$-signed-transaction
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  transaction-package$-signed-transaction
-  writeTo
-  coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -185,12 +124,6 @@
   (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseDelimitedFrom
    input-stream0)))
 
-;;;  TRANSACTION_BYTES_FIELD_NUMBER
-(defn
- transaction_-bytes_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/TRANSACTION_BYTES_FIELD_NUMBER))
-
 ;;;  newBuilder
 (defn
  new-builder
@@ -226,27 +159,6 @@
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-  transaction-package$-processed-transaction]
- (. transaction-package$-processed-transaction getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-  transaction-package$-processed-transaction]
- (. transaction-package$-processed-transaction getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-  transaction-package$-processed-transaction]
- (. transaction-package$-processed-transaction toBuilder))
-
 ;;;  getTransactionEnvelope
 (defn
  get-transaction-envelope
@@ -260,24 +172,6 @@
  [^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
   transaction-package$-processed-transaction]
  (. transaction-package$-processed-transaction getValidationCode))
-
-;;;  VALIDATIONCODE_FIELD_NUMBER
-(defn
- validationcode_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/VALIDATIONCODE_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-  transaction-package$-processed-transaction
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  transaction-package$-processed-transaction
-  writeTo
-  coded-output-stream0))
 
 ;;;  getTransactionEnvelopeOrBuilder
 (defn
@@ -380,12 +274,6 @@
   object0]
  (. transaction-package$-processed-transaction equals object0))
 
-;;;  TRANSACTIONENVELOPE_FIELD_NUMBER
-(defn
- transactionenvelope_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/TRANSACTIONENVELOPE_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -442,42 +330,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-  transaction-package$-transaction]
- (. transaction-package$-transaction getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-  transaction-package$-transaction]
- (. transaction-package$-transaction getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-  transaction-package$-transaction]
- (. transaction-package$-transaction toBuilder))
-
-;;;  ACTIONS_FIELD_NUMBER
-(defn
- actions_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/ACTIONS_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-  transaction-package$-transaction
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. transaction-package$-transaction writeTo coded-output-stream0))
 
 ;;;  getActions
 (defn
@@ -658,52 +510,6 @@
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-  transaction-package$-transaction-action]
- (. transaction-package$-transaction-action getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-  transaction-package$-transaction-action]
- (. transaction-package$-transaction-action getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-  transaction-package$-transaction-action]
- (. transaction-package$-transaction-action toBuilder))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-  transaction-package$-transaction-action
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  transaction-package$-transaction-action
-  writeTo
-  coded-output-stream0))
-
-
-;;;  HEADER_FIELD_NUMBER
-(defn
- header_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/HEADER_FIELD_NUMBER))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -858,33 +664,6 @@
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
 ;;;
 
-;;;  ACTION_FIELD_NUMBER
-(defn
- action_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/ACTION_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-  transaction-package$-chaincode-action-payload]
- (. transaction-package$-chaincode-action-payload getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-  transaction-package$-chaincode-action-payload]
- (. transaction-package$-chaincode-action-payload getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-  transaction-package$-chaincode-action-payload]
- (. transaction-package$-chaincode-action-payload toBuilder))
-
 ;;;  hasAction
 (defn
  has-action
@@ -914,18 +693,6 @@
  (.
   transaction-package$-chaincode-action-payload
   getChaincodeProposalPayload))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-  transaction-package$-chaincode-action-payload
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  transaction-package$-chaincode-action-payload
-  writeTo
-  coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1064,30 +831,9 @@
   transaction-package$-chaincode-action-payload
   getDefaultInstanceForType))
 
-;;;  CHAINCODE_PROPOSAL_PAYLOAD_FIELD_NUMBER
-(defn
- chaincode_-proposal_-payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/CHAINCODE_PROPOSAL_PAYLOAD_FIELD_NUMBER))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-  transaction-package$-chaincode-endorsed-action]
- (. transaction-package$-chaincode-endorsed-action getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-  transaction-package$-chaincode-endorsed-action]
- (. transaction-package$-chaincode-endorsed-action getSerializedSize))
 
 ;;;  getProposalResponsePayload
 (defn
@@ -1098,13 +844,6 @@
   transaction-package$-chaincode-endorsed-action
   getProposalResponsePayload))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-  transaction-package$-chaincode-endorsed-action]
- (. transaction-package$-chaincode-endorsed-action toBuilder))
-
 ;;;  getEndorsementsCount
 (defn
  get-endorsements-count
@@ -1113,24 +852,6 @@
  (.
   transaction-package$-chaincode-endorsed-action
   getEndorsementsCount))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-  transaction-package$-chaincode-endorsed-action
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  transaction-package$-chaincode-endorsed-action
-  writeTo
-  coded-output-stream0))
-
-;;;  ENDORSEMENTS_FIELD_NUMBER
-(defn
- endorsements_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/ENDORSEMENTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1186,12 +907,6 @@
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     
     generic-arg1))))
-
-;;;  PROPOSAL_RESPONSE_PAYLOAD_FIELD_NUMBER
-(defn
- proposal_-response_-payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/PROPOSAL_RESPONSE_PAYLOAD_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn

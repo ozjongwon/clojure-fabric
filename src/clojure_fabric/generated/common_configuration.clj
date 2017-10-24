@@ -2,50 +2,8 @@
   (:import org.hyperledger.fabric.protos.common.Configuration))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.common.Configuration
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.common.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.common.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.common.Configuration/registerAllExtensions
-   generic-arg1)))
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-  configuration$-hashing-algorithm]
- (. configuration$-hashing-algorithm getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-  configuration$-hashing-algorithm]
- (. configuration$-hashing-algorithm getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-  configuration$-hashing-algorithm]
- (. configuration$-hashing-algorithm toBuilder))
 
 ;;;  getName
 (defn
@@ -53,15 +11,6 @@
  [^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
   configuration$-hashing-algorithm]
  (. configuration$-hashing-algorithm getName))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-  configuration$-hashing-algorithm
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-hashing-algorithm writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -148,12 +97,6 @@
   object0]
  (. configuration$-hashing-algorithm equals object0))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/NAME_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -215,45 +158,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
 ;;;
-
-;;;  WIDTH_FIELD_NUMBER
-(defn
- width_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/WIDTH_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-  configuration$-block-data-hashing-structure]
- (. configuration$-block-data-hashing-structure getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-  configuration$-block-data-hashing-structure]
- (. configuration$-block-data-hashing-structure getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-  configuration$-block-data-hashing-structure]
- (. configuration$-block-data-hashing-structure toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-  configuration$-block-data-hashing-structure
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  configuration$-block-data-hashing-structure
-  writeTo
-  coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -404,27 +308,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-  configuration$-orderer-addresses]
- (. configuration$-orderer-addresses getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-  configuration$-orderer-addresses]
- (. configuration$-orderer-addresses getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-  configuration$-orderer-addresses]
- (. configuration$-orderer-addresses toBuilder))
-
 ;;;  getAddressesBytes
 (defn
  get-addresses-bytes
@@ -433,15 +316,6 @@
   
   int0]
  (. configuration$-orderer-addresses getAddressesBytes int0))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-  configuration$-orderer-addresses
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-orderer-addresses writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -594,12 +468,6 @@
  []
  (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/getDefaultInstance))
 
-;;;  ADDRESSES_FIELD_NUMBER
-(defn
- addresses_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/ADDRESSES_FIELD_NUMBER))
-
 ;;;  getDefaultInstanceForType
 (defn
  get-default-instance-for-type
@@ -612,42 +480,12 @@
 ;;;org.hyperledger.fabric.protos.common.Configuration$Consortium
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configuration$Consortium
-  configuration$-consortium]
- (. configuration$-consortium getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configuration$Consortium
-  configuration$-consortium]
- (. configuration$-consortium getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configuration$Consortium
-  configuration$-consortium]
- (. configuration$-consortium toBuilder))
-
 ;;;  getName
 (defn
  get-name
  [^org.hyperledger.fabric.protos.common.Configuration$Consortium
   configuration$-consortium]
  (. configuration$-consortium getName))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configuration$Consortium
-  configuration$-consortium
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-consortium writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -734,12 +572,6 @@
   object0]
  (. configuration$-consortium equals object0))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configuration$Consortium/NAME_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -802,20 +634,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configuration$Capabilities
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configuration$Capabilities
-  configuration$-capabilities]
- (. configuration$-capabilities getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configuration$Capabilities
-  configuration$-capabilities]
- (. configuration$-capabilities getSerializedSize))
-
 ;;;  getCapabilitiesOrThrow
 (defn
  get-capabilities-or-throw
@@ -824,28 +642,6 @@
   ^java.lang.String
   string0]
  (. configuration$-capabilities getCapabilitiesOrThrow string0))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configuration$Capabilities
-  configuration$-capabilities]
- (. configuration$-capabilities toBuilder))
-
-;;;  CAPABILITIES_FIELD_NUMBER
-(defn
- capabilities_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configuration$Capabilities/CAPABILITIES_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configuration$Capabilities
-  configuration$-capabilities
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-capabilities writeTo coded-output-stream0))
 
 ;;;  getCapabilities
 (defn

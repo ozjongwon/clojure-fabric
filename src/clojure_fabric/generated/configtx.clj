@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.common.Configtx))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.common.Configtx
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.common.Configtx/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.common.Configtx/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.common.Configtx/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-  configtx$-config-envelope]
- (. configtx$-config-envelope getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-  configtx$-config-envelope]
- (. configtx$-config-envelope getSerializedSize))
 
 ;;;  getConfigOrBuilder
 (defn
@@ -47,13 +11,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
   configtx$-config-envelope]
  (. configtx$-config-envelope getConfigOrBuilder))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-  configtx$-config-envelope]
- (. configtx$-config-envelope toBuilder))
 
 ;;;  getLastUpdate
 (defn
@@ -82,21 +39,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
   configtx$-config-envelope]
  (. configtx$-config-envelope hasConfig))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-  configtx$-config-envelope
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-envelope writeTo coded-output-stream0))
-
-;;;  CONFIG_FIELD_NUMBER
-(defn
- config_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/CONFIG_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -183,12 +125,6 @@
   object0]
  (. configtx$-config-envelope equals object0))
 
-;;;  LAST_UPDATE_FIELD_NUMBER
-(defn
- last_-update_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/LAST_UPDATE_FIELD_NUMBER))
-
 ;;;  getConfig
 (defn
  get-config
@@ -258,26 +194,6 @@
   configtx$-config-group-schema]
  (. configtx$-config-group-schema getValuesMap))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-  configtx$-config-group-schema]
- (. configtx$-config-group-schema getUnknownFields))
-
-;;;  POLICIES_FIELD_NUMBER
-(defn
- policies_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/POLICIES_FIELD_NUMBER))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-  configtx$-config-group-schema]
- (. configtx$-config-group-schema getSerializedSize))
-
 ;;;  getPoliciesMap
 (defn
  get-policies-map
@@ -291,13 +207,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
   configtx$-config-group-schema]
  (. configtx$-config-group-schema getPoliciesCount))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-  configtx$-config-group-schema]
- (. configtx$-config-group-schema toBuilder))
 
 ;;;  getPolicies
 (defn
@@ -334,21 +243,6 @@
   getPoliciesOrDefault
   string0
   configtx$-config-policy-schema1))
-
-;;;  GROUPS_FIELD_NUMBER
-(defn
- groups_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/GROUPS_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-  configtx$-config-group-schema
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-group-schema writeTo coded-output-stream0))
 
 ;;;  getGroups
 (defn
@@ -570,12 +464,6 @@
   (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/newBuilder
    configtx$-config-group-schema0)))
 
-;;;  VALUES_FIELD_NUMBER
-(defn
- values_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/VALUES_FIELD_NUMBER))
-
 ;;;  getDefaultInstance
 (defn
  get-default-instance
@@ -600,36 +488,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-  configtx$-config-value-schema]
- (. configtx$-config-value-schema getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-  configtx$-config-value-schema]
- (. configtx$-config-value-schema getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-  configtx$-config-value-schema]
- (. configtx$-config-value-schema toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-  configtx$-config-value-schema
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-value-schema writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -771,36 +629,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-  configtx$-config-policy-schema]
- (. configtx$-config-policy-schema getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-  configtx$-config-policy-schema]
- (. configtx$-config-policy-schema getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-  configtx$-config-policy-schema]
- (. configtx$-config-policy-schema toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-  configtx$-config-policy-schema
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-policy-schema writeTo coded-output-stream0))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -941,33 +769,12 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$Config
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$Config
-  configtx$-config]
- (. configtx$-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$Config
-  configtx$-config]
- (. configtx$-config getSerializedSize))
-
 ;;;  getType
 (defn
  get-type
  [^org.hyperledger.fabric.protos.common.Configtx$Config
   configtx$-config]
  (. configtx$-config getType))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$Config
-  configtx$-config]
- (. configtx$-config toBuilder))
 
 ;;;  getChannelGroup
 (defn
@@ -982,27 +789,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$Config
   configtx$-config]
  (. configtx$-config getSequence))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$Config
-  configtx$-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config writeTo coded-output-stream0))
-
-;;;  SEQUENCE_FIELD_NUMBER
-(defn
- sequence_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$Config/SEQUENCE_FIELD_NUMBER))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$Config/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1132,12 +918,6 @@
    configtx$-config0))
  ([] (org.hyperledger.fabric.protos.common.Configtx$Config/newBuilder)))
 
-;;;  CHANNEL_GROUP_FIELD_NUMBER
-(defn
- channel_-group_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$Config/CHANNEL_GROUP_FIELD_NUMBER))
-
 ;;;  getDefaultInstance
 (defn
  get-default-instance
@@ -1163,33 +943,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-  configtx$-config-update-envelope]
- (. configtx$-config-update-envelope getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-  configtx$-config-update-envelope]
- (. configtx$-config-update-envelope getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-  configtx$-config-update-envelope]
- (. configtx$-config-update-envelope toBuilder))
-
-;;;  SIGNATURES_FIELD_NUMBER
-(defn
- signatures_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/SIGNATURES_FIELD_NUMBER))
-
 ;;;  getSignaturesCount
 (defn
  get-signatures-count
@@ -1205,15 +958,6 @@
   
   int0]
  (. configtx$-config-update-envelope getSignatures int0))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-  configtx$-config-update-envelope
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-update-envelope writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1322,12 +1066,6 @@
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parser))
 
-;;;  CONFIG_UPDATE_FIELD_NUMBER
-(defn
- config_-update_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/CONFIG_UPDATE_FIELD_NUMBER))
-
 ;;;  getConfigUpdate
 (defn
  get-config-update
@@ -1391,20 +1129,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-  configtx$-config-update]
- (. configtx$-config-update getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-  configtx$-config-update]
- (. configtx$-config-update getSerializedSize))
-
 ;;;  getType
 (defn
  get-type
@@ -1412,31 +1136,12 @@
   configtx$-config-update]
  (. configtx$-config-update getType))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-  configtx$-config-update]
- (. configtx$-config-update toBuilder))
-
 ;;;  getChannelId
 (defn
  get-channel-id
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
   configtx$-config-update]
  (. configtx$-config-update getChannelId))
-
-;;;  WRITE_SET_FIELD_NUMBER
-(defn
- write_-set_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/WRITE_SET_FIELD_NUMBER))
-
-;;;  CHANNEL_ID_FIELD_NUMBER
-(defn
- channel_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/CHANNEL_ID_FIELD_NUMBER))
 
 ;;;  getWriteSet
 (defn
@@ -1460,27 +1165,6 @@
   ^java.lang.String
   string0]
  (. configtx$-config-update containsIsolatedData string0))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-  configtx$-config-update
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-update writeTo coded-output-stream0))
-
-;;;  READ_SET_FIELD_NUMBER
-(defn
- read_-set_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/READ_SET_FIELD_NUMBER))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/TYPE_FIELD_NUMBER))
 
 ;;;  getChannelIdBytes
 (defn
@@ -1550,12 +1234,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
   configtx$-config-update]
  (. configtx$-config-update getReadSetOrBuilder))
-
-;;;  ISOLATED_DATA_FIELD_NUMBER
-(defn
- isolated_-data_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/ISOLATED_DATA_FIELD_NUMBER))
 
 ;;;  getIsolatedDataOrThrow
 (defn
@@ -1715,26 +1393,6 @@
   configtx$-config-group]
  (. configtx$-config-group getValuesMap))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-  configtx$-config-group]
- (. configtx$-config-group getUnknownFields))
-
-;;;  POLICIES_FIELD_NUMBER
-(defn
- policies_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/POLICIES_FIELD_NUMBER))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-  configtx$-config-group]
- (. configtx$-config-group getSerializedSize))
-
 ;;;  getPoliciesMap
 (defn
  get-policies-map
@@ -1748,19 +1406,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
   configtx$-config-group]
  (. configtx$-config-group getPoliciesCount))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-  configtx$-config-group]
- (. configtx$-config-group toBuilder))
-
-;;;  MOD_POLICY_FIELD_NUMBER
-(defn
- mod_-policy_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/MOD_POLICY_FIELD_NUMBER))
 
 ;;;  getPolicies
 (defn
@@ -1798,12 +1443,6 @@
   string0
   configtx$-config-policy1))
 
-;;;  GROUPS_FIELD_NUMBER
-(defn
- groups_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/GROUPS_FIELD_NUMBER))
-
 ;;;  getVersion
 (defn
  get-version
@@ -1811,27 +1450,12 @@
   configtx$-config-group]
  (. configtx$-config-group getVersion))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-  configtx$-config-group
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-group writeTo coded-output-stream0))
-
 ;;;  getGroups
 (defn
  get-groups
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
   configtx$-config-group]
  (. configtx$-config-group getGroups))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -2060,12 +1684,6 @@
   (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/newBuilder
    configtx$-config-group0)))
 
-;;;  VALUES_FIELD_NUMBER
-(defn
- values_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/VALUES_FIELD_NUMBER))
-
 ;;;  getDefaultInstance
 (defn
  get-default-instance
@@ -2091,33 +1709,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigValue
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-  configtx$-config-value]
- (. configtx$-config-value getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-  configtx$-config-value]
- (. configtx$-config-value getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-  configtx$-config-value]
- (. configtx$-config-value toBuilder))
-
-;;;  MOD_POLICY_FIELD_NUMBER
-(defn
- mod_-policy_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/MOD_POLICY_FIELD_NUMBER))
-
 ;;;  getVersion
 (defn
  get-version
@@ -2131,21 +1722,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
   configtx$-config-value]
  (. configtx$-config-value getValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-  configtx$-config-value
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-value writeTo coded-output-stream0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -2259,12 +1835,6 @@
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parser))
 
-;;;  VALUE_FIELD_NUMBER
-(defn
- value_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/VALUE_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -2307,33 +1877,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-  configtx$-config-policy]
- (. configtx$-config-policy getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-  configtx$-config-policy]
- (. configtx$-config-policy getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-  configtx$-config-policy]
- (. configtx$-config-policy toBuilder))
-
-;;;  MOD_POLICY_FIELD_NUMBER
-(defn
- mod_-policy_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/MOD_POLICY_FIELD_NUMBER))
-
 ;;;  getVersion
 (defn
  get-version
@@ -2347,21 +1890,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
   configtx$-config-policy]
  (. configtx$-config-policy hasPolicy))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-  configtx$-config-policy
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-policy writeTo coded-output-stream0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -2462,12 +1990,6 @@
   configtx$-config-policy]
  (. configtx$-config-policy getPolicy))
 
-;;;  POLICY_FIELD_NUMBER
-(defn
- policy_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/POLICY_FIELD_NUMBER))
-
 ;;;  getModPolicyBytes
 (defn
  get-mod-policy-bytes
@@ -2537,20 +2059,6 @@
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-  configtx$-config-signature]
- (. configtx$-config-signature getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-  configtx$-config-signature]
- (. configtx$-config-signature getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
@@ -2558,34 +2066,12 @@
   configtx$-config-signature]
  (. configtx$-config-signature getSignature))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-  configtx$-config-signature]
- (. configtx$-config-signature toBuilder))
-
 ;;;  getSignatureHeader
 (defn
  get-signature-header
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
   configtx$-config-signature]
  (. configtx$-config-signature getSignatureHeader))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-  configtx$-config-signature
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configtx$-config-signature writeTo coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -2641,12 +2127,6 @@
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     
     generic-arg1))))
-
-;;;  SIGNATURE_HEADER_FIELD_NUMBER
-(defn
- signature_-header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/SIGNATURE_HEADER_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn

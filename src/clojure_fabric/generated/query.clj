@@ -2,28 +2,6 @@
   (:import org.hyperledger.fabric.protos.peer.Query))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.Query
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Query/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Query/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.Query/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
 ;;;
 
@@ -40,42 +18,6 @@
  [^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
   query$-chaincode-query-response]
  (. query$-chaincode-query-response getChaincodesList))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-  query$-chaincode-query-response]
- (. query$-chaincode-query-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-  query$-chaincode-query-response]
- (. query$-chaincode-query-response getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-  query$-chaincode-query-response]
- (. query$-chaincode-query-response toBuilder))
-
-;;;  CHAINCODES_FIELD_NUMBER
-(defn
- chaincodes_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/CHAINCODES_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-  query$-chaincode-query-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. query$-chaincode-query-response writeTo coded-output-stream0))
 
 ;;;  getChaincodes
 (defn
@@ -242,33 +184,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-  query$-chaincode-info]
- (. query$-chaincode-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-  query$-chaincode-info]
- (. query$-chaincode-info getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-  query$-chaincode-info]
- (. query$-chaincode-info toBuilder))
-
-;;;  INPUT_FIELD_NUMBER
-(defn
- input_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/INPUT_FIELD_NUMBER))
-
 ;;;  getName
 (defn
  get-name
@@ -282,12 +197,6 @@
  [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
   query$-chaincode-info]
  (. query$-chaincode-info getPathBytes))
-
-;;;  VSCC_FIELD_NUMBER
-(defn
- vscc_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/VSCC_FIELD_NUMBER))
 
 ;;;  getEscc
 (defn
@@ -310,27 +219,12 @@
   query$-chaincode-info]
  (. query$-chaincode-info getVersion))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-  query$-chaincode-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. query$-chaincode-info writeTo coded-output-stream0))
-
 ;;;  getEsccBytes
 (defn
  get-escc-bytes
  [^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
   query$-chaincode-info]
  (. query$-chaincode-info getEsccBytes))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -431,24 +325,6 @@
   object0]
  (. query$-chaincode-info equals object0))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/NAME_FIELD_NUMBER))
-
-;;;  ESCC_FIELD_NUMBER
-(defn
- escc_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/ESCC_FIELD_NUMBER))
-
-;;;  PATH_FIELD_NUMBER
-(defn
- path_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/PATH_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -532,27 +408,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-  query$-channel-query-response]
- (. query$-channel-query-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-  query$-channel-query-response]
- (. query$-channel-query-response getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-  query$-channel-query-response]
- (. query$-channel-query-response toBuilder))
-
 ;;;  getChannels
 (defn
  get-channels
@@ -561,15 +416,6 @@
   
   int0]
  (. query$-channel-query-response getChannels int0))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-  query$-channel-query-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. query$-channel-query-response writeTo coded-output-stream0))
 
 ;;;  getChannelsOrBuilder
 (defn
@@ -713,12 +559,6 @@
    input-stream0
    extension-registry-lite1)))
 
-;;;  CHANNELS_FIELD_NUMBER
-(defn
- channels_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/CHANNELS_FIELD_NUMBER))
-
 ;;;  newBuilder
 (defn
  new-builder
@@ -747,48 +587,12 @@
 ;;;org.hyperledger.fabric.protos.peer.Query$ChannelInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-  query$-channel-info]
- (. query$-channel-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-  query$-channel-info]
- (. query$-channel-info getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-  query$-channel-info]
- (. query$-channel-info toBuilder))
-
 ;;;  getChannelId
 (defn
  get-channel-id
  [^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
   query$-channel-info]
  (. query$-channel-info getChannelId))
-
-;;;  CHANNEL_ID_FIELD_NUMBER
-(defn
- channel_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/CHANNEL_ID_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-  query$-channel-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. query$-channel-info writeTo coded-output-stream0))
 
 ;;;  getChannelIdBytes
 (defn

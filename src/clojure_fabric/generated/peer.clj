@@ -2,63 +2,14 @@
   (:import org.hyperledger.fabric.protos.peer.Peer))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.Peer
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Peer/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Peer/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.Peer/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Peer$PeerID
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Peer$PeerID peer$-peer-id]
- (. peer$-peer-id getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Peer$PeerID peer$-peer-id]
- (. peer$-peer-id getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Peer$PeerID peer$-peer-id]
- (. peer$-peer-id toBuilder))
 
 ;;;  getName
 (defn
  get-name
  [^org.hyperledger.fabric.protos.peer.Peer$PeerID peer$-peer-id]
  (. peer$-peer-id getName))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Peer$PeerID
-  peer$-peer-id
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. peer$-peer-id writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -142,12 +93,6 @@
   object0]
  (. peer$-peer-id equals object0))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Peer$PeerID/NAME_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -202,48 +147,12 @@
 ;;;org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-  peer$-peer-endpoint]
- (. peer$-peer-endpoint getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-  peer$-peer-endpoint]
- (. peer$-peer-endpoint getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-  peer$-peer-endpoint]
- (. peer$-peer-endpoint toBuilder))
-
 ;;;  getAddressBytes
 (defn
  get-address-bytes
  [^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
   peer$-peer-endpoint]
  (. peer$-peer-endpoint getAddressBytes))
-
-;;;  ADDRESS_FIELD_NUMBER
-(defn
- address_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/ADDRESS_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-  peer$-peer-endpoint
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. peer$-peer-endpoint writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -357,11 +266,6 @@
  []
  (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parser))
 
-;;;  ID_FIELD_NUMBER
-(defn
- id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/ID_FIELD_NUMBER))
 
 ;;;  parseDelimitedFrom
 (defn

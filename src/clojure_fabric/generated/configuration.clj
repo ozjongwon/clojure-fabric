@@ -2,43 +2,8 @@
   (:import org.hyperledger.fabric.protos.peer.Configuration))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.Configuration
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.Configuration/registerAllExtensions
-   generic-arg1)))
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-  configuration$-anchor-peers]
- (. configuration$-anchor-peers getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-  configuration$-anchor-peers]
- (. configuration$-anchor-peers getSerializedSize))
 
 ;;;  getAnchorPeersOrBuilderList
 (defn
@@ -46,28 +11,6 @@
  [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
   configuration$-anchor-peers]
  (. configuration$-anchor-peers getAnchorPeersOrBuilderList))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-  configuration$-anchor-peers]
- (. configuration$-anchor-peers toBuilder))
-
-;;;  ANCHOR_PEERS_FIELD_NUMBER
-(defn
- anchor_-peers_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/ANCHOR_PEERS_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-  configuration$-anchor-peers
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
-  (. configuration$-anchor-peers writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -241,54 +184,12 @@
 ;;;org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
 ;;;
 
-;;;  PORT_FIELD_NUMBER
-(defn
- port_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/PORT_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-  configuration$-anchor-peer]
- (. configuration$-anchor-peer getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-  configuration$-anchor-peer]
- (. configuration$-anchor-peer getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-  configuration$-anchor-peer]
- (. configuration$-anchor-peer toBuilder))
-
 ;;;  getHostBytes
 (defn
  get-host-bytes
  [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
   configuration$-anchor-peer]
  (. configuration$-anchor-peer getHostBytes))
-
-;;;  writeTo
-(defn
-  write-to
-  [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-   configuration$-anchor-peer
-   ^com.google.protobuf.CodedOutputStream
-   coded-output-stream0]
-  (. configuration$-anchor-peer writeTo coded-output-stream0))
-
-;;;  HOST_FIELD_NUMBER
-(defn
- host_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/HOST_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn

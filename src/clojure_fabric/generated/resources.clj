@@ -2,66 +2,8 @@
   (:import org.hyperledger.fabric.protos.peer.Resources))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.Resources
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Resources/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.Resources/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.Resources/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Resources$Resource
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Resources$Resource
-  resources$-resource]
- (. resources$-resource getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Resources$Resource
-  resources$-resource]
- (. resources$-resource getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Resources$Resource
-  resources$-resource]
- (. resources$-resource toBuilder))
-
-;;;  POLICY_REF_FIELD_NUMBER
-(defn
- policy_-ref_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Resources$Resource/POLICY_REF_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Resources$Resource
-  resources$-resource
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. resources$-resource writeTo coded-output-stream0))
 
 ;;;  getPolicyRef
 (defn

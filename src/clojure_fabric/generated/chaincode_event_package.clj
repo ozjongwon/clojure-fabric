@@ -5,63 +5,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-  chaincode-event-package$-chaincode-event]
- (. chaincode-event-package$-chaincode-event getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-  chaincode-event-package$-chaincode-event]
- (. chaincode-event-package$-chaincode-event getSerializedSize))
-
-;;;  EVENT_NAME_FIELD_NUMBER
-(defn
- event_-name_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/EVENT_NAME_FIELD_NUMBER))
-
-;;;  CHAINCODE_ID_FIELD_NUMBER
-(defn
- chaincode_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/CHAINCODE_ID_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-  chaincode-event-package$-chaincode-event]
- (. chaincode-event-package$-chaincode-event toBuilder))
-
 ;;;  getEventName
 (defn
  get-event-name
  [^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
   chaincode-event-package$-chaincode-event]
  (. chaincode-event-package$-chaincode-event getEventName))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-  chaincode-event-package$-chaincode-event
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  chaincode-event-package$-chaincode-event
-  writeTo
-  coded-output-stream0))
 
 ;;;  getTxId
 (defn
@@ -124,12 +73,6 @@
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     
     generic-arg1))))
-
-;;;  TX_ID_FIELD_NUMBER
-(defn
- tx_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/TX_ID_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn

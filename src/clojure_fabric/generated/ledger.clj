@@ -2,79 +2,14 @@
   (:import org.hyperledger.fabric.protos.common.Ledger))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.common.Ledger
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.common.Ledger/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.common.Ledger/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.common.Ledger/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-  ledger$-blockchain-info]
- (. ledger$-blockchain-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-  ledger$-blockchain-info]
- (. ledger$-blockchain-info getSerializedSize))
-
-;;;  CURRENTBLOCKHASH_FIELD_NUMBER
-(defn
- currentblockhash_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/CURRENTBLOCKHASH_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-  ledger$-blockchain-info]
- (. ledger$-blockchain-info toBuilder))
-
-;;;  HEIGHT_FIELD_NUMBER
-(defn
- height_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/HEIGHT_FIELD_NUMBER))
-
 ;;;  getHeight
 (defn
  get-height
  [^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
   ledger$-blockchain-info]
  (. ledger$-blockchain-info getHeight))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-  ledger$-blockchain-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ledger$-blockchain-info writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -201,12 +136,6 @@
  ([^java.io.InputStream input-stream0]
   (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseDelimitedFrom
    input-stream0)))
-
-;;;  PREVIOUSBLOCKHASH_FIELD_NUMBER
-(defn
- previousblockhash_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/PREVIOUSBLOCKHASH_FIELD_NUMBER))
 
 ;;;  newBuilder
 (defn

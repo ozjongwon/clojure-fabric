@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.orderer.Kafka))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.orderer.Kafka
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.orderer.Kafka/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.orderer.Kafka/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.orderer.Kafka/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-  kafka$-kafka-message]
- (. kafka$-kafka-message getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-  kafka$-kafka-message]
- (. kafka$-kafka-message getSerializedSize))
 
 ;;;  getConnect
 (defn
@@ -48,31 +12,12 @@
   kafka$-kafka-message]
  (. kafka$-kafka-message getConnect))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-  kafka$-kafka-message]
- (. kafka$-kafka-message toBuilder))
-
 ;;;  getTypeCase
 (defn
  get-type-case
  [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
   kafka$-kafka-message]
  (. kafka$-kafka-message getTypeCase))
-
-;;;  CONNECT_FIELD_NUMBER
-(defn
- connect_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/CONNECT_FIELD_NUMBER))
-
-;;;  TIME_TO_CUT_FIELD_NUMBER
-(defn
- time_-to_-cut_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/TIME_TO_CUT_FIELD_NUMBER))
 
 ;;;  getTimeToCutOrBuilder
 (defn
@@ -94,21 +39,6 @@
  [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
   kafka$-kafka-message]
  (. kafka$-kafka-message getRegular))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-  kafka$-kafka-message
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. kafka$-kafka-message writeTo coded-output-stream0))
-
-;;;  REGULAR_FIELD_NUMBER
-(defn
- regular_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/REGULAR_FIELD_NUMBER))
 
 ;;;  getRegularOrBuilder
 (defn
@@ -285,54 +215,12 @@
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-  kafka$-kafka-message-regular]
- (. kafka$-kafka-message-regular getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-  kafka$-kafka-message-regular]
- (. kafka$-kafka-message-regular getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-  kafka$-kafka-message-regular]
- (. kafka$-kafka-message-regular toBuilder))
-
 ;;;  getConfigSeq
 (defn
  get-config-seq
  [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
   kafka$-kafka-message-regular]
  (. kafka$-kafka-message-regular getConfigSeq))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-  kafka$-kafka-message-regular
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. kafka$-kafka-message-regular writeTo coded-output-stream0))
-
-;;;  CLASS_FIELD_NUMBER
-(defn
- class_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/CLASS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -426,12 +314,6 @@
   object0]
  (. kafka$-kafka-message-regular equals object0))
 
-;;;  CONFIG_SEQ_FIELD_NUMBER
-(defn
- config_-seq_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/CONFIG_SEQ_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -501,42 +383,12 @@
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-  kafka$-kafka-message-time-to-cut]
- (. kafka$-kafka-message-time-to-cut getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-  kafka$-kafka-message-time-to-cut]
- (. kafka$-kafka-message-time-to-cut getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-  kafka$-kafka-message-time-to-cut]
- (. kafka$-kafka-message-time-to-cut toBuilder))
-
 ;;;  getBlockNumber
 (defn
  get-block-number
  [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
   kafka$-kafka-message-time-to-cut]
  (. kafka$-kafka-message-time-to-cut getBlockNumber))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-  kafka$-kafka-message-time-to-cut
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. kafka$-kafka-message-time-to-cut writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -666,12 +518,6 @@
  []
  (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/getDefaultInstance))
 
-;;;  BLOCK_NUMBER_FIELD_NUMBER
-(defn
- block_-number_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/BLOCK_NUMBER_FIELD_NUMBER))
-
 ;;;  getDefaultInstanceForType
 (defn
  get-default-instance-for-type
@@ -683,42 +529,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-  kafka$-kafka-message-connect]
- (. kafka$-kafka-message-connect getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-  kafka$-kafka-message-connect]
- (. kafka$-kafka-message-connect getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-  kafka$-kafka-message-connect]
- (. kafka$-kafka-message-connect toBuilder))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-  kafka$-kafka-message-connect
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. kafka$-kafka-message-connect writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -867,36 +677,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-  kafka$-kafka-metadata]
- (. kafka$-kafka-metadata getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-  kafka$-kafka-metadata]
- (. kafka$-kafka-metadata getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-  kafka$-kafka-metadata]
- (. kafka$-kafka-metadata toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-  kafka$-kafka-metadata
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. kafka$-kafka-metadata writeTo coded-output-stream0))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -981,12 +761,6 @@
   ^java.lang.Object
   object0]
  (. kafka$-kafka-metadata equals object0))
-
-;;;  LAST_OFFSET_PERSISTED_FIELD_NUMBER
-(defn
- last_-offset_-persisted_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/LAST_OFFSET_PERSISTED_FIELD_NUMBER))
 
 ;;;  hashCode
 (defn

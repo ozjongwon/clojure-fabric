@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.common.Policies))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.common.Policies
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.common.Policies/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.common.Policies/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.common.Policies/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Policies$Policy
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Policies$Policy
-  policies$-policy]
- (. policies$-policy getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Policies$Policy
-  policies$-policy]
- (. policies$-policy getSerializedSize))
 
 ;;;  getType
 (defn
@@ -48,34 +12,12 @@
   policies$-policy]
  (. policies$-policy getType))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Policies$Policy
-  policies$-policy]
- (. policies$-policy toBuilder))
-
 ;;;  getValue
 (defn
  get-value
  [^org.hyperledger.fabric.protos.common.Policies$Policy
   policies$-policy]
  (. policies$-policy getValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Policies$Policy
-  policies$-policy
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. policies$-policy writeTo coded-output-stream0))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$Policy/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -175,12 +117,6 @@
  []
  (org.hyperledger.fabric.protos.common.Policies$Policy/parser))
 
-;;;  VALUE_FIELD_NUMBER
-(defn
- value_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$Policy/VALUE_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -222,27 +158,6 @@
 ;;;org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-  policies$-signature-policy-envelope]
- (. policies$-signature-policy-envelope getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-  policies$-signature-policy-envelope]
- (. policies$-signature-policy-envelope getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-  policies$-signature-policy-envelope]
- (. policies$-signature-policy-envelope toBuilder))
-
 ;;;  hasRule
 (defn
  has-rule
@@ -266,27 +181,12 @@
   int0]
  (. policies$-signature-policy-envelope getIdentitiesOrBuilder int0))
 
-;;;  IDENTITIES_FIELD_NUMBER
-(defn
- identities_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/IDENTITIES_FIELD_NUMBER))
-
 ;;;  getVersion
 (defn
  get-version
  [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
   policies$-signature-policy-envelope]
  (. policies$-signature-policy-envelope getVersion))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-  policies$-signature-policy-envelope
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. policies$-signature-policy-envelope writeTo coded-output-stream0))
 
 ;;;  getIdentities
 (defn
@@ -296,12 +196,6 @@
   
   int0]
  (. policies$-signature-policy-envelope getIdentities int0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -371,12 +265,6 @@
  [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
   policies$-signature-policy-envelope]
  (. policies$-signature-policy-envelope isInitialized))
-
-;;;  RULE_FIELD_NUMBER
-(defn
- rule_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/RULE_FIELD_NUMBER))
 
 ;;;  getParserForType
 (defn
@@ -491,48 +379,12 @@
   policies$-signature-policy]
  (. policies$-signature-policy hasNOutOf))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-  policies$-signature-policy]
- (. policies$-signature-policy getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-  policies$-signature-policy]
- (. policies$-signature-policy getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-  policies$-signature-policy]
- (. policies$-signature-policy toBuilder))
-
 ;;;  getTypeCase
 (defn
  get-type-case
  [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
   policies$-signature-policy]
  (. policies$-signature-policy getTypeCase))
-
-;;;  N_OUT_OF_FIELD_NUMBER
-(defn
- n_-out_-of_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/N_OUT_OF_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-  policies$-signature-policy
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. policies$-signature-policy writeTo coded-output-stream0))
 
 ;;;  getNOutOf
 (defn
@@ -639,12 +491,6 @@
  []
  (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parser))
 
-;;;  SIGNED_BY_FIELD_NUMBER
-(defn
- signed_-by_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/SIGNED_BY_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -701,33 +547,6 @@
   policies$-signature-policy$-n-out-of]
  (. policies$-signature-policy$-n-out-of getRulesCount))
 
-;;;  N_FIELD_NUMBER
-(defn
- n_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/N_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-  policies$-signature-policy$-n-out-of]
- (. policies$-signature-policy$-n-out-of getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-  policies$-signature-policy$-n-out-of]
- (. policies$-signature-policy$-n-out-of getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-  policies$-signature-policy$-n-out-of]
- (. policies$-signature-policy$-n-out-of toBuilder))
-
 ;;;  getRulesOrBuilder
 (defn
  get-rules-or-builder
@@ -737,27 +556,12 @@
   int0]
  (. policies$-signature-policy$-n-out-of getRulesOrBuilder int0))
 
-;;;  RULES_FIELD_NUMBER
-(defn
- rules_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/RULES_FIELD_NUMBER))
-
 ;;;  getRulesList
 (defn
  get-rules-list
  [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
   policies$-signature-policy$-n-out-of]
  (. policies$-signature-policy$-n-out-of getRulesList))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-  policies$-signature-policy$-n-out-of
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. policies$-signature-policy$-n-out-of writeTo coded-output-stream0))
 
 ;;;  getRulesOrBuilderList
 (defn
@@ -929,27 +733,6 @@
   policies$-implicit-meta-policy]
  (. policies$-implicit-meta-policy getSubPolicyBytes))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-  policies$-implicit-meta-policy]
- (. policies$-implicit-meta-policy getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-  policies$-implicit-meta-policy]
- (. policies$-implicit-meta-policy getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-  policies$-implicit-meta-policy]
- (. policies$-implicit-meta-policy toBuilder))
-
 ;;;  getSubPolicy
 (defn
  get-sub-policy
@@ -963,15 +746,6 @@
  [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
   policies$-implicit-meta-policy]
  (. policies$-implicit-meta-policy getRuleValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-  policies$-implicit-meta-policy
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. policies$-implicit-meta-policy writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1042,12 +816,6 @@
   policies$-implicit-meta-policy]
  (. policies$-implicit-meta-policy isInitialized))
 
-;;;  RULE_FIELD_NUMBER
-(defn
- rule_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/RULE_FIELD_NUMBER))
-
 ;;;  getParserForType
 (defn
  get-parser-for-type
@@ -1070,12 +838,6 @@
  [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
   policies$-implicit-meta-policy]
  (. policies$-implicit-meta-policy hashCode))
-
-;;;  SUB_POLICY_FIELD_NUMBER
-(defn
- sub_-policy_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/SUB_POLICY_FIELD_NUMBER))
 
 ;;;  parser
 (defn

@@ -5,26 +5,6 @@
 ;;;org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
 ;;;
 
-;;;  STATUS_FIELD_NUMBER
-(defn
- status_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/STATUS_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-  admin-package$-server-status]
- (. admin-package$-server-status getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-  admin-package$-server-status]
- (. admin-package$-server-status getSerializedSize))
-
 ;;;  getStatus
 (defn
  get-status
@@ -32,28 +12,12 @@
   admin-package$-server-status]
  (. admin-package$-server-status getStatus))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-  admin-package$-server-status]
- (. admin-package$-server-status toBuilder))
-
 ;;;  getStatusValue
 (defn
  get-status-value
  [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
   admin-package$-server-status]
  (. admin-package$-server-status getStatusValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-  admin-package$-server-status
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. admin-package$-server-status writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -195,61 +159,12 @@
 ;;;org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
 ;;;
 
-;;;  LOG_LEVEL_FIELD_NUMBER
-(defn
- log_-level_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/LOG_LEVEL_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-  admin-package$-log-level-request]
- (. admin-package$-log-level-request getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-  admin-package$-log-level-request]
- (. admin-package$-log-level-request getSerializedSize))
-
-;;;  getLogLevel
-(defn
- get-log-level
- [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-  admin-package$-log-level-request]
- (. admin-package$-log-level-request getLogLevel))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-  admin-package$-log-level-request]
- (. admin-package$-log-level-request toBuilder))
-
-;;;  LOG_MODULE_FIELD_NUMBER
-(defn
- log_-module_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/LOG_MODULE_FIELD_NUMBER))
-
 ;;;  getLogModule
 (defn
  get-log-module
  [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
   admin-package$-log-level-request]
  (. admin-package$-log-level-request getLogModule))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-  admin-package$-log-level-request
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. admin-package$-log-level-request writeTo coded-output-stream0))
 
 ;;;  getLogModuleBytes
 (defn

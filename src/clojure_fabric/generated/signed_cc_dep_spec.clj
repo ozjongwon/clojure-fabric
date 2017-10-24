@@ -2,48 +2,8 @@
   (:import org.hyperledger.fabric.protos.peer.SignedCcDepSpec))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.SignedCcDepSpec
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.SignedCcDepSpec/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.SignedCcDepSpec/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.SignedCcDepSpec/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec]
- (.
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec
-  getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec]
- (.
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec
-  getSerializedSize))
 
 ;;;  getOwnerEndorsementsList
 (defn
@@ -53,12 +13,6 @@
  (.
   signed-cc-dep-spec$-signed-chaincode-deployment-spec
   getOwnerEndorsementsList))
-
-;;;  INSTANTIATION_POLICY_FIELD_NUMBER
-(defn
- instantiation_-policy_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/INSTANTIATION_POLICY_FIELD_NUMBER))
 
 ;;;  getOwnerEndorsements
 (defn
@@ -71,13 +25,6 @@
   signed-cc-dep-spec$-signed-chaincode-deployment-spec
   getOwnerEndorsements
   int0))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec]
- (. signed-cc-dep-spec$-signed-chaincode-deployment-spec toBuilder))
 
 ;;;  getInstantiationPolicy
 (defn
@@ -108,24 +55,6 @@
  (.
   signed-cc-dep-spec$-signed-chaincode-deployment-spec
   getOwnerEndorsementsOrBuilderList))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  signed-cc-dep-spec$-signed-chaincode-deployment-spec
-  writeTo
-  coded-output-stream0))
-
-;;;  CHAINCODE_DEPLOYMENT_SPEC_FIELD_NUMBER
-(defn
- chaincode_-deployment_-spec_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/CHAINCODE_DEPLOYMENT_SPEC_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -227,12 +156,6 @@
  (.
   signed-cc-dep-spec$-signed-chaincode-deployment-spec
   getChaincodeDeploymentSpec))
-
-;;;  OWNER_ENDORSEMENTS_FIELD_NUMBER
-(defn
- owner_-endorsements_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/OWNER_ENDORSEMENTS_FIELD_NUMBER))
 
 ;;;  hashCode
 (defn

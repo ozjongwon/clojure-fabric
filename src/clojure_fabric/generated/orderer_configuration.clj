@@ -2,44 +2,8 @@
   (:import org.hyperledger.fabric.protos.orderer.Configuration))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.orderer.Configuration
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.orderer.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.orderer.Configuration/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.orderer.Configuration/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-  configuration$-consensus-type]
- (. configuration$-consensus-type getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-  configuration$-consensus-type]
- (. configuration$-consensus-type getSerializedSize))
 
 ;;;  getType
 (defn
@@ -47,28 +11,6 @@
  [^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
   configuration$-consensus-type]
  (. configuration$-consensus-type getType))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-  configuration$-consensus-type]
- (. configuration$-consensus-type toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-  configuration$-consensus-type
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-consensus-type writeTo coded-output-stream0))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -217,27 +159,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-  configuration$-batch-size]
- (. configuration$-batch-size getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-  configuration$-batch-size]
- (. configuration$-batch-size getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-  configuration$-batch-size]
- (. configuration$-batch-size toBuilder))
-
 ;;;  getPreferredMaxBytes
 (defn
  get-preferred-max-bytes
@@ -251,15 +172,6 @@
  [^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
   configuration$-batch-size]
  (. configuration$-batch-size getAbsoluteMaxBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-  configuration$-batch-size
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-batch-size writeTo coded-output-stream0))
 
 ;;;  getMaxMessageCount
 (defn
@@ -353,12 +265,6 @@
   object0]
  (. configuration$-batch-size equals object0))
 
-;;;  ABSOLUTE_MAX_BYTES_FIELD_NUMBER
-(defn
- absolute_-max_-bytes_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/ABSOLUTE_MAX_BYTES_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -386,11 +292,6 @@
   (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseDelimitedFrom
    input-stream0)))
 
-;;;  MAX_MESSAGE_COUNT_FIELD_NUMBER
-(defn
- max_-message_-count_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/MAX_MESSAGE_COUNT_FIELD_NUMBER))
 
 ;;;  newBuilder
 (defn
@@ -402,11 +303,6 @@
  ([]
   (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/newBuilder)))
 
-;;;  PREFERRED_MAX_BYTES_FIELD_NUMBER
-(defn
- preferred_-max_-bytes_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/PREFERRED_MAX_BYTES_FIELD_NUMBER))
 
 ;;;  getDefaultInstance
 (defn
@@ -425,36 +321,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-  configuration$-batch-timeout]
- (. configuration$-batch-timeout getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-  configuration$-batch-timeout]
- (. configuration$-batch-timeout getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-  configuration$-batch-timeout]
- (. configuration$-batch-timeout toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-  configuration$-batch-timeout
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-batch-timeout writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -511,11 +377,6 @@
     generic-arg1
     extension-registry-lite1))))
 
-;;;  TIMEOUT_FIELD_NUMBER
-(defn
- timeout_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/TIMEOUT_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -616,33 +477,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-  configuration$-kafka-brokers]
- (. configuration$-kafka-brokers getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-  configuration$-kafka-brokers]
- (. configuration$-kafka-brokers getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-  configuration$-kafka-brokers]
- (. configuration$-kafka-brokers toBuilder))
-
-;;;  BROKERS_FIELD_NUMBER
-(defn
- brokers_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/BROKERS_FIELD_NUMBER))
-
 ;;;  getBrokersBytes
 (defn
  get-brokers-bytes
@@ -667,15 +501,6 @@
  [^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
   configuration$-kafka-brokers]
  (. configuration$-kafka-brokers getBrokersCount))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-  configuration$-kafka-brokers
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-kafka-brokers writeTo coded-output-stream0))
 
 ;;;  getBrokersList
 (defn
@@ -823,42 +648,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-  configuration$-channel-restrictions]
- (. configuration$-channel-restrictions getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-  configuration$-channel-restrictions]
- (. configuration$-channel-restrictions getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-  configuration$-channel-restrictions]
- (. configuration$-channel-restrictions toBuilder))
-
-;;;  MAX_COUNT_FIELD_NUMBER
-(defn
- max_-count_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/MAX_COUNT_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-  configuration$-channel-restrictions
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-channel-restrictions writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn

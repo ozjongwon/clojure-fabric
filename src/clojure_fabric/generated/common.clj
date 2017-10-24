@@ -5,42 +5,6 @@
 ;;;org.hyperledger.fabric.protos.common.Common$LastConfig
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$LastConfig
-  common$-last-config]
- (. common$-last-config getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$LastConfig
-  common$-last-config]
- (. common$-last-config getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$LastConfig
-  common$-last-config]
- (. common$-last-config toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$LastConfig
-  common$-last-config
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-last-config writeTo coded-output-stream0))
-
-;;;  INDEX_FIELD_NUMBER
-(defn
- index_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$LastConfig/INDEX_FIELD_NUMBER))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -188,33 +152,6 @@
 ;;;org.hyperledger.fabric.protos.common.Common$Metadata
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$Metadata
-  common$-metadata]
- (. common$-metadata getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$Metadata
-  common$-metadata]
- (. common$-metadata getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$Metadata
-  common$-metadata]
- (. common$-metadata toBuilder))
-
-;;;  SIGNATURES_FIELD_NUMBER
-(defn
- signatures_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Metadata/SIGNATURES_FIELD_NUMBER))
-
 ;;;  getSignaturesCount
 (defn
  get-signatures-count
@@ -237,15 +174,6 @@
  [^org.hyperledger.fabric.protos.common.Common$Metadata
   common$-metadata]
  (. common$-metadata getValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$Metadata
-  common$-metadata
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-metadata writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -354,12 +282,6 @@
  []
  (org.hyperledger.fabric.protos.common.Common$Metadata/parser))
 
-;;;  VALUE_FIELD_NUMBER
-(defn
- value_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Metadata/VALUE_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -415,20 +337,6 @@
 ;;;org.hyperledger.fabric.protos.common.Common$MetadataSignature
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$MetadataSignature
-  common$-metadata-signature]
- (. common$-metadata-signature getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$MetadataSignature
-  common$-metadata-signature]
- (. common$-metadata-signature getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
@@ -436,34 +344,12 @@
   common$-metadata-signature]
  (. common$-metadata-signature getSignature))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$MetadataSignature
-  common$-metadata-signature]
- (. common$-metadata-signature toBuilder))
-
 ;;;  getSignatureHeader
 (defn
  get-signature-header
  [^org.hyperledger.fabric.protos.common.Common$MetadataSignature
   common$-metadata-signature]
  (. common$-metadata-signature getSignatureHeader))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$MetadataSignature
-  common$-metadata-signature
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-metadata-signature writeTo coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$MetadataSignature/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -519,12 +405,6 @@
     
     generic-arg1
     extension-registry-lite1))))
-
-;;;  SIGNATURE_HEADER_FIELD_NUMBER
-(defn
- signature_-header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$MetadataSignature/SIGNATURE_HEADER_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -611,44 +491,11 @@
 ;;;org.hyperledger.fabric.protos.common.Common$Header
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$Header common$-header]
- (. common$-header getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$Header common$-header]
- (. common$-header getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$Header common$-header]
- (. common$-header toBuilder))
-
 ;;;  getSignatureHeader
 (defn
  get-signature-header
  [^org.hyperledger.fabric.protos.common.Common$Header common$-header]
  (. common$-header getSignatureHeader))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$Header
-  common$-header
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-header writeTo coded-output-stream0))
-
-;;;  CHANNEL_HEADER_FIELD_NUMBER
-(defn
- channel_-header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Header/CHANNEL_HEADER_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -704,12 +551,6 @@
     
     generic-arg1
     extension-registry-lite1))))
-
-;;;  SIGNATURE_HEADER_FIELD_NUMBER
-(defn
- signature_-header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Header/SIGNATURE_HEADER_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -816,33 +657,12 @@
   common$-channel-header]
  (. common$-channel-header hasTimestamp))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
-  common$-channel-header]
- (. common$-channel-header getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
-  common$-channel-header]
- (. common$-channel-header getSerializedSize))
-
 ;;;  getType
 (defn
  get-type
  [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
   common$-channel-header]
  (. common$-channel-header getType))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
-  common$-channel-header]
- (. common$-channel-header toBuilder))
 
 ;;;  getChannelId
 (defn
@@ -858,24 +678,6 @@
   common$-channel-header]
  (. common$-channel-header getTimestamp))
 
-;;;  CHANNEL_ID_FIELD_NUMBER
-(defn
- channel_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/CHANNEL_ID_FIELD_NUMBER))
-
-;;;  TIMESTAMP_FIELD_NUMBER
-(defn
- timestamp_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/TIMESTAMP_FIELD_NUMBER))
-
-;;;  EPOCH_FIELD_NUMBER
-(defn
- epoch_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/EPOCH_FIELD_NUMBER))
-
 ;;;  getVersion
 (defn
  get-version
@@ -883,39 +685,12 @@
   common$-channel-header]
  (. common$-channel-header getVersion))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
-  common$-channel-header
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-channel-header writeTo coded-output-stream0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/VERSION_FIELD_NUMBER))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/TYPE_FIELD_NUMBER))
-
 ;;;  getTxId
 (defn
  get-tx-id
  [^org.hyperledger.fabric.protos.common.Common$ChannelHeader
   common$-channel-header]
  (. common$-channel-header getTxId))
-
-;;;  EXTENSION_FIELD_NUMBER
-(defn
- extension_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/EXTENSION_FIELD_NUMBER))
 
 ;;;  getChannelIdBytes
 (defn
@@ -978,12 +753,6 @@
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     
     generic-arg1))))
-
-;;;  TX_ID_FIELD_NUMBER
-(defn
- tx_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/TX_ID_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -1083,48 +852,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Common$SignatureHeader
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$SignatureHeader
-  common$-signature-header]
- (. common$-signature-header getUnknownFields))
-
-;;;  CREATOR_FIELD_NUMBER
-(defn
- creator_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$SignatureHeader/CREATOR_FIELD_NUMBER))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$SignatureHeader
-  common$-signature-header]
- (. common$-signature-header getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$SignatureHeader
-  common$-signature-header]
- (. common$-signature-header toBuilder))
-
-;;;  NONCE_FIELD_NUMBER
-(defn
- nonce_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$SignatureHeader/NONCE_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$SignatureHeader
-  common$-signature-header
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-signature-header writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1280,44 +1007,11 @@
 ;;;org.hyperledger.fabric.protos.common.Common$Payload
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$Payload common$-payload]
- (. common$-payload getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$Payload common$-payload]
- (. common$-payload getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$Payload common$-payload]
- (. common$-payload toBuilder))
-
 ;;;  hasHeader
 (defn
  has-header
  [^org.hyperledger.fabric.protos.common.Common$Payload common$-payload]
  (. common$-payload hasHeader))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$Payload
-  common$-payload
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-payload writeTo coded-output-stream0))
-
-;;;  HEADER_FIELD_NUMBER
-(defn
- header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Payload/HEADER_FIELD_NUMBER))
 
 ;;;  getHeaderOrBuilder
 (defn
@@ -1431,12 +1125,6 @@
  []
  (org.hyperledger.fabric.protos.common.Common$Payload/parser))
 
-;;;  DATA_FIELD_NUMBER
-(defn
- data_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Payload/DATA_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1477,55 +1165,12 @@
 ;;;org.hyperledger.fabric.protos.common.Common$Envelope
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$Envelope
-  common$-envelope]
- (. common$-envelope getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$Envelope
-  common$-envelope]
- (. common$-envelope getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
  [^org.hyperledger.fabric.protos.common.Common$Envelope
   common$-envelope]
  (. common$-envelope getSignature))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$Envelope
-  common$-envelope]
- (. common$-envelope toBuilder))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Envelope/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$Envelope
-  common$-envelope
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-envelope writeTo coded-output-stream0))
-
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Envelope/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1673,30 +1318,6 @@
 ;;;org.hyperledger.fabric.protos.common.Common$Block
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$Block common$-block]
- (. common$-block getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$Block common$-block]
- (. common$-block getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$Block common$-block]
- (. common$-block toBuilder))
-
-;;;  METADATA_FIELD_NUMBER
-(defn
- metadata_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Block/METADATA_FIELD_NUMBER))
-
 ;;;  hasHeader
 (defn
  has-header
@@ -1715,26 +1336,11 @@
  [^org.hyperledger.fabric.protos.common.Common$Block common$-block]
  (. common$-block getMetadata))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$Block
-  common$-block
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-block writeTo coded-output-stream0))
-
 ;;;  hasData
 (defn
  has-data
  [^org.hyperledger.fabric.protos.common.Common$Block common$-block]
  (. common$-block hasData))
-
-;;;  HEADER_FIELD_NUMBER
-(defn
- header_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Block/HEADER_FIELD_NUMBER))
 
 ;;;  getHeaderOrBuilder
 (defn
@@ -1854,12 +1460,6 @@
  []
  (org.hyperledger.fabric.protos.common.Common$Block/parser))
 
-;;;  DATA_FIELD_NUMBER
-(defn
- data_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$Block/DATA_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1904,48 +1504,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Common$BlockHeader
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$BlockHeader
-  common$-block-header]
- (. common$-block-header getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$BlockHeader
-  common$-block-header]
- (. common$-block-header getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$BlockHeader
-  common$-block-header]
- (. common$-block-header toBuilder))
-
-;;;  PREVIOUS_HASH_FIELD_NUMBER
-(defn
- previous_-hash_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$BlockHeader/PREVIOUS_HASH_FIELD_NUMBER))
-
-;;;  DATA_HASH_FIELD_NUMBER
-(defn
- data_-hash_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$BlockHeader/DATA_HASH_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$BlockHeader
-  common$-block-header
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-block-header writeTo coded-output-stream0))
 
 ;;;  getPreviousHash
 (defn
@@ -2103,46 +1661,9 @@
   common$-block-header]
  (. common$-block-header getDataHash))
 
-;;;  NUMBER_FIELD_NUMBER
-(defn
- number_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$BlockHeader/NUMBER_FIELD_NUMBER))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Common$BlockData
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$BlockData
-  common$-block-data]
- (. common$-block-data getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$BlockData
-  common$-block-data]
- (. common$-block-data getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$BlockData
-  common$-block-data]
- (. common$-block-data toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$BlockData
-  common$-block-data
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-block-data writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -2258,12 +1779,6 @@
  []
  (org.hyperledger.fabric.protos.common.Common$BlockData/parser))
 
-;;;  DATA_FIELD_NUMBER
-(defn
- data_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$BlockData/DATA_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -2313,33 +1828,6 @@
 ;;;org.hyperledger.fabric.protos.common.Common$BlockMetadata
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.common.Common$BlockMetadata
-  common$-block-metadata]
- (. common$-block-metadata getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.common.Common$BlockMetadata
-  common$-block-metadata]
- (. common$-block-metadata getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.common.Common$BlockMetadata
-  common$-block-metadata]
- (. common$-block-metadata toBuilder))
-
-;;;  METADATA_FIELD_NUMBER
-(defn
- metadata_-field_-number
- []
- (org.hyperledger.fabric.protos.common.Common$BlockMetadata/METADATA_FIELD_NUMBER))
-
 ;;;  getMetadataCount
 (defn
  get-metadata-count
@@ -2362,15 +1850,6 @@
  [^org.hyperledger.fabric.protos.common.Common$BlockMetadata
   common$-block-metadata]
  (. common$-block-metadata getMetadataList))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.common.Common$BlockMetadata
-  common$-block-metadata
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. common$-block-metadata writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn

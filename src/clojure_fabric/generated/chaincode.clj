@@ -5,27 +5,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-  chaincode$-chaincode-id]
- (. chaincode$-chaincode-id getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-  chaincode$-chaincode-id]
- (. chaincode$-chaincode-id getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-  chaincode$-chaincode-id]
- (. chaincode$-chaincode-id toBuilder))
-
 ;;;  getName
 (defn
  get-name
@@ -46,21 +25,6 @@
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
   chaincode$-chaincode-id]
  (. chaincode$-chaincode-id getVersion))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-  chaincode$-chaincode-id
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode$-chaincode-id writeTo coded-output-stream0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/VERSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -154,18 +118,6 @@
   object0]
  (. chaincode$-chaincode-id equals object0))
 
-;;;  NAME_FIELD_NUMBER
-(defn
- name_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/NAME_FIELD_NUMBER))
-
-;;;  PATH_FIELD_NUMBER
-(defn
- path_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/PATH_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -242,39 +194,12 @@
   chaincode$-chaincode-input]
  (. chaincode$-chaincode-input getDecorations))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-  chaincode$-chaincode-input]
- (. chaincode$-chaincode-input getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-  chaincode$-chaincode-input]
- (. chaincode$-chaincode-input getSerializedSize))
-
-;;;  DECORATIONS_FIELD_NUMBER
-(defn
- decorations_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/DECORATIONS_FIELD_NUMBER))
-
 ;;;  getArgsList
 (defn
  get-args-list
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
   chaincode$-chaincode-input]
  (. chaincode$-chaincode-input getArgsList))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-  chaincode$-chaincode-input]
- (. chaincode$-chaincode-input toBuilder))
 
 ;;;  containsDecorations
 (defn
@@ -293,15 +218,6 @@
   
   int0]
  (. chaincode$-chaincode-input getArgs int0))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-  chaincode$-chaincode-input
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode$-chaincode-input writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -394,12 +310,6 @@
   ^java.lang.Object
   object0]
  (. chaincode$-chaincode-input equals object0))
-
-;;;  ARGS_FIELD_NUMBER
-(defn
- args_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/ARGS_FIELD_NUMBER))
 
 ;;;  hashCode
 (defn
@@ -494,45 +404,12 @@
 ;;;org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-  chaincode$-chaincode-spec]
- (. chaincode$-chaincode-spec getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-  chaincode$-chaincode-spec]
- (. chaincode$-chaincode-spec getSerializedSize))
-
-;;;  CHAINCODE_ID_FIELD_NUMBER
-(defn
- chaincode_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/CHAINCODE_ID_FIELD_NUMBER))
-
 ;;;  getType
 (defn
  get-type
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
   chaincode$-chaincode-spec]
  (. chaincode$-chaincode-spec getType))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-  chaincode$-chaincode-spec]
- (. chaincode$-chaincode-spec toBuilder))
-
-;;;  INPUT_FIELD_NUMBER
-(defn
- input_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/INPUT_FIELD_NUMBER))
 
 ;;;  getChaincodeIdOrBuilder
 (defn
@@ -547,21 +424,6 @@
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
   chaincode$-chaincode-spec]
  (. chaincode$-chaincode-spec getInputOrBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-  chaincode$-chaincode-spec
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode$-chaincode-spec writeTo coded-output-stream0))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -617,12 +479,6 @@
     
     generic-arg1
     extension-registry-lite1))))
-
-;;;  TIMEOUT_FIELD_NUMBER
-(defn
- timeout_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/TIMEOUT_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -758,33 +614,12 @@
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec hasEffectiveDate))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-  chaincode$-chaincode-deployment-spec]
- (. chaincode$-chaincode-deployment-spec getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-  chaincode$-chaincode-deployment-spec]
- (. chaincode$-chaincode-deployment-spec getSerializedSize))
-
 ;;;  getExecEnv
 (defn
  get-exec-env
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec getExecEnv))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-  chaincode$-chaincode-deployment-spec]
- (. chaincode$-chaincode-deployment-spec toBuilder))
 
 ;;;  hasChaincodeSpec
 (defn
@@ -800,12 +635,6 @@
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec getChaincodeSpecOrBuilder))
 
-;;;  EXEC_ENV_FIELD_NUMBER
-(defn
- exec_-env_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/EXEC_ENV_FIELD_NUMBER))
-
 ;;;  getChaincodeSpec
 (defn
  get-chaincode-spec
@@ -813,27 +642,12 @@
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec getChaincodeSpec))
 
-;;;  CHAINCODE_SPEC_FIELD_NUMBER
-(defn
- chaincode_-spec_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/CHAINCODE_SPEC_FIELD_NUMBER))
-
 ;;;  getEffectiveDateOrBuilder
 (defn
  get-effective-date-or-builder
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec getEffectiveDateOrBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-  chaincode$-chaincode-deployment-spec
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode$-chaincode-deployment-spec writeTo coded-output-stream0))
 
 ;;;  getCodePackage
 (defn
@@ -941,12 +755,6 @@
   object0]
  (. chaincode$-chaincode-deployment-spec equals object0))
 
-;;;  EFFECTIVE_DATE_FIELD_NUMBER
-(defn
- effective_-date_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/EFFECTIVE_DATE_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -973,12 +781,6 @@
  ([^java.io.InputStream input-stream0]
   (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseDelimitedFrom
    input-stream0)))
-
-;;;  CODE_PACKAGE_FIELD_NUMBER
-(defn
- code_-package_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/CODE_PACKAGE_FIELD_NUMBER))
 
 ;;;  newBuilder
 (defn
@@ -1008,27 +810,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-  chaincode$-chaincode-invocation-spec]
- (. chaincode$-chaincode-invocation-spec getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-  chaincode$-chaincode-invocation-spec]
- (. chaincode$-chaincode-invocation-spec getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-  chaincode$-chaincode-invocation-spec]
- (. chaincode$-chaincode-invocation-spec toBuilder))
-
 ;;;  hasChaincodeSpec
 (defn
  has-chaincode-spec
@@ -1056,27 +837,6 @@
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
   chaincode$-chaincode-invocation-spec]
  (. chaincode$-chaincode-invocation-spec getIdGenerationAlgBytes))
-
-;;;  ID_GENERATION_ALG_FIELD_NUMBER
-(defn
- id_-generation_-alg_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/ID_GENERATION_ALG_FIELD_NUMBER))
-
-;;;  CHAINCODE_SPEC_FIELD_NUMBER
-(defn
- chaincode_-spec_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/CHAINCODE_SPEC_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-  chaincode$-chaincode-invocation-spec
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode$-chaincode-invocation-spec writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn

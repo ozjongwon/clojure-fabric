@@ -5,39 +5,12 @@
 ;;;org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
 ;;;
 
-;;;  STATUS_FIELD_NUMBER
-(defn
- status_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/STATUS_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-  ab$-broadcast-response]
- (. ab$-broadcast-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-  ab$-broadcast-response]
- (. ab$-broadcast-response getSerializedSize))
-
 ;;;  getStatus
 (defn
  get-status
  [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
   ab$-broadcast-response]
  (. ab$-broadcast-response getStatus))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-  ab$-broadcast-response]
- (. ab$-broadcast-response toBuilder))
 
 ;;;  getStatusValue
 (defn
@@ -52,21 +25,6 @@
  [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
   ab$-broadcast-response]
  (. ab$-broadcast-response getInfo))
-
-;;;  INFO_FIELD_NUMBER
-(defn
- info_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/INFO_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-  ab$-broadcast-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-broadcast-response writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -215,33 +173,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest ab$-seek-newest]
- (. ab$-seek-newest getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest ab$-seek-newest]
- (. ab$-seek-newest getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest ab$-seek-newest]
- (. ab$-seek-newest toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-  ab$-seek-newest
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-seek-newest writeTo coded-output-stream0))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -376,33 +307,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest ab$-seek-oldest]
- (. ab$-seek-oldest getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest ab$-seek-oldest]
- (. ab$-seek-oldest getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest ab$-seek-oldest]
- (. ab$-seek-oldest toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-  ab$-seek-oldest
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-seek-oldest writeTo coded-output-stream0))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -536,36 +440,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-  ab$-seek-specified]
- (. ab$-seek-specified getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-  ab$-seek-specified]
- (. ab$-seek-specified getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-  ab$-seek-specified]
- (. ab$-seek-specified toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-  ab$-seek-specified
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-seek-specified writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -709,37 +583,10 @@
   ab$-seek-specified]
  (. ab$-seek-specified getDefaultInstanceForType))
 
-;;;  NUMBER_FIELD_NUMBER
-(defn
- number_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/NUMBER_FIELD_NUMBER))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-  ab$-seek-position]
- (. ab$-seek-position getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-  ab$-seek-position]
- (. ab$-seek-position getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-  ab$-seek-position]
- (. ab$-seek-position toBuilder))
 
 ;;;  hasSpecified
 (defn
@@ -769,12 +616,6 @@
   ab$-seek-position]
  (. ab$-seek-position getOldest))
 
-;;;  SPECIFIED_FIELD_NUMBER
-(defn
- specified_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/SPECIFIED_FIELD_NUMBER))
-
 ;;;  hasOldest
 (defn
  has-oldest
@@ -795,27 +636,6 @@
  [^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
   ab$-seek-position]
  (. ab$-seek-position hasNewest))
-
-;;;  NEWEST_FIELD_NUMBER
-(defn
- newest_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/NEWEST_FIELD_NUMBER))
-
-;;;  OLDEST_FIELD_NUMBER
-(defn
- oldest_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/OLDEST_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-  ab$-seek-position
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-seek-position writeTo coded-output-stream0))
 
 ;;;  getSpecified
 (defn
@@ -978,24 +798,6 @@
 ;;;org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
- (. ab$-seek-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
- (. ab$-seek-info getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
- (. ab$-seek-info toBuilder))
-
 ;;;  hasStop
 (defn
  has-stop
@@ -1007,15 +809,6 @@
  get-stop
  [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
  (. ab$-seek-info getStop))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-  ab$-seek-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-seek-info writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1135,12 +928,6 @@
  []
  (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parser))
 
-;;;  BEHAVIOR_FIELD_NUMBER
-(defn
- behavior_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/BEHAVIOR_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1154,12 +941,6 @@
  ([^java.io.InputStream input-stream0]
   (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseDelimitedFrom
    input-stream0)))
-
-;;;  START_FIELD_NUMBER
-(defn
- start_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/START_FIELD_NUMBER))
 
 ;;;  newBuilder
 (defn
@@ -1193,36 +974,9 @@
  [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
  (. ab$-seek-info getStopOrBuilder))
 
-;;;  STOP_FIELD_NUMBER
-(defn
- stop_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/STOP_FIELD_NUMBER))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
 ;;;
-
-;;;  STATUS_FIELD_NUMBER
-(defn
- status_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/STATUS_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-  ab$-deliver-response]
- (. ab$-deliver-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-  ab$-deliver-response]
- (. ab$-deliver-response getSerializedSize))
 
 ;;;  getStatus
 (defn
@@ -1231,25 +985,12 @@
   ab$-deliver-response]
  (. ab$-deliver-response getStatus))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-  ab$-deliver-response]
- (. ab$-deliver-response toBuilder))
-
 ;;;  getTypeCase
 (defn
  get-type-case
  [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
   ab$-deliver-response]
  (. ab$-deliver-response getTypeCase))
-
-;;;  BLOCK_FIELD_NUMBER
-(defn
- block_-field_-number
- []
- (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/BLOCK_FIELD_NUMBER))
 
 ;;;  getStatusValue
 (defn
@@ -1264,15 +1005,6 @@
  [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
   ab$-deliver-response]
  (. ab$-deliver-response hasBlock))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-  ab$-deliver-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. ab$-deliver-response writeTo coded-output-stream0))
 
 ;;;  getBlock
 (defn

@@ -2,28 +2,6 @@
   (:import org.hyperledger.fabric.protos.peer.ProposalPackage))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.ProposalPackage
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ProposalPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ProposalPackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.ProposalPackage/registerAllExtensions
-   generic-arg1)))
-
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
 ;;;
 
@@ -34,26 +12,6 @@
   proposal-package$-signed-proposal]
  (. proposal-package$-signed-proposal getProposalBytes))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-  proposal-package$-signed-proposal]
- (. proposal-package$-signed-proposal getUnknownFields))
-
-;;;  PROPOSAL_BYTES_FIELD_NUMBER
-(defn
- proposal_-bytes_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/PROPOSAL_BYTES_FIELD_NUMBER))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-  proposal-package$-signed-proposal]
- (. proposal-package$-signed-proposal getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
@@ -61,27 +19,6 @@
   proposal-package$-signed-proposal]
  (. proposal-package$-signed-proposal getSignature))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-  proposal-package$-signed-proposal]
- (. proposal-package$-signed-proposal toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-  proposal-package$-signed-proposal
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. proposal-package$-signed-proposal writeTo coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -230,53 +167,6 @@
   proposal-package$-proposal]
  (. proposal-package$-proposal getExtension))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-  proposal-package$-proposal]
- (. proposal-package$-proposal getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-  proposal-package$-proposal]
- (. proposal-package$-proposal getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-  proposal-package$-proposal]
- (. proposal-package$-proposal toBuilder))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/PAYLOAD_FIELD_NUMBER))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-  proposal-package$-proposal
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. proposal-package$-proposal writeTo coded-output-stream0))
-
-;;;  HEADER_FIELD_NUMBER
-(defn
- header_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/HEADER_FIELD_NUMBER))
-
-;;;  EXTENSION_FIELD_NUMBER
-(defn
- extension_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/EXTENSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -432,39 +322,6 @@
 ;;;org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-  proposal-package$-chaincode-header-extension]
- (. proposal-package$-chaincode-header-extension getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-  proposal-package$-chaincode-header-extension]
- (. proposal-package$-chaincode-header-extension getSerializedSize))
-
-;;;  CHAINCODE_ID_FIELD_NUMBER
-(defn
- chaincode_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/CHAINCODE_ID_FIELD_NUMBER))
-
-;;;  PAYLOAD_VISIBILITY_FIELD_NUMBER
-(defn
- payload_-visibility_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/PAYLOAD_VISIBILITY_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-  proposal-package$-chaincode-header-extension]
- (. proposal-package$-chaincode-header-extension toBuilder))
-
 ;;;  getChaincodeIdOrBuilder
 (defn
  get-chaincode-id-or-builder
@@ -474,17 +331,6 @@
   proposal-package$-chaincode-header-extension
   getChaincodeIdOrBuilder))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-  proposal-package$-chaincode-header-extension
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  proposal-package$-chaincode-header-extension
-  writeTo
-  coded-output-stream0))
 
 ;;;  getPayloadVisibility
 (defn
@@ -649,39 +495,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-  proposal-package$-chaincode-proposal-payload]
- (. proposal-package$-chaincode-proposal-payload getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-  proposal-package$-chaincode-proposal-payload]
- (. proposal-package$-chaincode-proposal-payload getSerializedSize))
-
 ;;;  getTransientMap
 (defn
  get-transient-map
  [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
   proposal-package$-chaincode-proposal-payload]
  (. proposal-package$-chaincode-proposal-payload getTransientMap))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-  proposal-package$-chaincode-proposal-payload]
- (. proposal-package$-chaincode-proposal-payload toBuilder))
-
-;;;  INPUT_FIELD_NUMBER
-(defn
- input_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/INPUT_FIELD_NUMBER))
 
 ;;;  containsTransientMap
 (defn
@@ -716,24 +535,6 @@
   getTransientMapOrDefault
   string0
   byte-string1))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-  proposal-package$-chaincode-proposal-payload
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  proposal-package$-chaincode-proposal-payload
-  writeTo
-  coded-output-stream0))
-
-;;;  TRANSIENTMAP_FIELD_NUMBER
-(defn
- transientmap_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/TRANSIENTMAP_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -917,33 +718,6 @@
   proposal-package$-chaincode-action]
  (. proposal-package$-chaincode-action getResults))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-  proposal-package$-chaincode-action]
- (. proposal-package$-chaincode-action getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-  proposal-package$-chaincode-action]
- (. proposal-package$-chaincode-action getSerializedSize))
-
-;;;  CHAINCODE_ID_FIELD_NUMBER
-(defn
- chaincode_-id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/CHAINCODE_ID_FIELD_NUMBER))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-  proposal-package$-chaincode-action]
- (. proposal-package$-chaincode-action toBuilder))
-
 ;;;  getResponse
 (defn
  get-response
@@ -958,15 +732,6 @@
   proposal-package$-chaincode-action]
  (. proposal-package$-chaincode-action getChaincodeIdOrBuilder))
 
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-  proposal-package$-chaincode-action
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. proposal-package$-chaincode-action writeTo coded-output-stream0))
-
 ;;;  getEvents
 (defn
  get-events
@@ -974,24 +739,12 @@
   proposal-package$-chaincode-action]
  (. proposal-package$-chaincode-action getEvents))
 
-;;;  EVENTS_FIELD_NUMBER
-(defn
- events_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/EVENTS_FIELD_NUMBER))
-
 ;;;  hasResponse
 (defn
  has-response
  [^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
   proposal-package$-chaincode-action]
  (. proposal-package$-chaincode-action hasResponse))
-
-;;;  RESULTS_FIELD_NUMBER
-(defn
- results_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/RESULTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1077,12 +830,6 @@
   ^java.lang.Object
   object0]
  (. proposal-package$-chaincode-action equals object0))
-
-;;;  RESPONSE_FIELD_NUMBER
-(defn
- response_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/RESPONSE_FIELD_NUMBER))
 
 ;;;  hashCode
 (defn

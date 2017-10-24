@@ -2,27 +2,6 @@
   (:import org.hyperledger.fabric.protos.peer.ChaincodeShim))
 
 ;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.ChaincodeShim
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ChaincodeShim/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ChaincodeShim/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.ChaincodeShim/registerAllExtensions
-   generic-arg1)))
-
-;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
 ;;;
 
@@ -33,32 +12,12 @@
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message getTimestampOrBuilder))
 
-;;;  PROPOSAL_FIELD_NUMBER
-(defn
- proposal_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/PROPOSAL_FIELD_NUMBER))
-
 ;;;  hasTimestamp
 (defn
  has-timestamp
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message hasTimestamp))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-  chaincode-shim$-chaincode-message]
- (. chaincode-shim$-chaincode-message getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-  chaincode-shim$-chaincode-message]
- (. chaincode-shim$-chaincode-message getSerializedSize))
 
 ;;;  getChaincodeEventOrBuilder
 (defn
@@ -74,19 +33,6 @@
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message getType))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-  chaincode-shim$-chaincode-message]
- (. chaincode-shim$-chaincode-message toBuilder))
-
-;;;  TXID_FIELD_NUMBER
-(defn
- txid_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/TXID_FIELD_NUMBER))
-
 ;;;  getTxidBytes
 (defn
  get-txid-bytes
@@ -101,39 +47,12 @@
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message getTimestamp))
 
-;;;  TIMESTAMP_FIELD_NUMBER
-(defn
- timestamp_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/TIMESTAMP_FIELD_NUMBER))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/PAYLOAD_FIELD_NUMBER))
-
 ;;;  getTxid
 (defn
  get-txid
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message getTxid))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-  chaincode-shim$-chaincode-message
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-chaincode-message writeTo coded-output-stream0))
-
-;;;  TYPE_FIELD_NUMBER
-(defn
- type_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/TYPE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -247,12 +166,6 @@
  []
  (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parser))
 
-;;;  CHAINCODE_EVENT_FIELD_NUMBER
-(defn
- chaincode_-event_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/CHAINCODE_EVENT_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -330,27 +243,6 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-  chaincode-shim$-put-state-info]
- (. chaincode-shim$-put-state-info getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-  chaincode-shim$-put-state-info]
- (. chaincode-shim$-put-state-info getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-  chaincode-shim$-put-state-info]
- (. chaincode-shim$-put-state-info toBuilder))
-
 ;;;  getKeyBytes
 (defn
  get-key-bytes
@@ -371,21 +263,6 @@
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
   chaincode-shim$-put-state-info]
  (. chaincode-shim$-put-state-info getValue))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-  chaincode-shim$-put-state-info
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-put-state-info writeTo coded-output-stream0))
-
-;;;  KEY_FIELD_NUMBER
-(defn
- key_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/KEY_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -485,12 +362,6 @@
  []
  (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parser))
 
-;;;  VALUE_FIELD_NUMBER
-(defn
- value_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/VALUE_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -533,48 +404,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-  chaincode-shim$-get-state-by-range]
- (. chaincode-shim$-get-state-by-range getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-  chaincode-shim$-get-state-by-range]
- (. chaincode-shim$-get-state-by-range getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-  chaincode-shim$-get-state-by-range]
- (. chaincode-shim$-get-state-by-range toBuilder))
-
-;;;  ENDKEY_FIELD_NUMBER
-(defn
- endkey_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/ENDKEY_FIELD_NUMBER))
-
 ;;;  getEndKeyBytes
 (defn
  get-end-key-bytes
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
   chaincode-shim$-get-state-by-range]
  (. chaincode-shim$-get-state-by-range getEndKeyBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-  chaincode-shim$-get-state-by-range
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-get-state-by-range writeTo coded-output-stream0))
 
 ;;;  getStartKeyBytes
 (defn
@@ -675,12 +510,6 @@
   object0]
  (. chaincode-shim$-get-state-by-range equals object0))
 
-;;;  STARTKEY_FIELD_NUMBER
-(defn
- startkey_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/STARTKEY_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -743,42 +572,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-  chaincode-shim$-get-query-result]
- (. chaincode-shim$-get-query-result getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-  chaincode-shim$-get-query-result]
- (. chaincode-shim$-get-query-result getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-  chaincode-shim$-get-query-result]
- (. chaincode-shim$-get-query-result toBuilder))
-
 ;;;  getQueryBytes
 (defn
  get-query-bytes
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
   chaincode-shim$-get-query-result]
  (. chaincode-shim$-get-query-result getQueryBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-  chaincode-shim$-get-query-result
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-get-query-result writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -922,37 +721,9 @@
   chaincode-shim$-get-query-result]
  (. chaincode-shim$-get-query-result getDefaultInstanceForType))
 
-;;;  QUERY_FIELD_NUMBER
-(defn
- query_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/QUERY_FIELD_NUMBER))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-  chaincode-shim$-get-history-for-key]
- (. chaincode-shim$-get-history-for-key getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-  chaincode-shim$-get-history-for-key]
- (. chaincode-shim$-get-history-for-key getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-  chaincode-shim$-get-history-for-key]
- (. chaincode-shim$-get-history-for-key toBuilder))
 
 ;;;  getKeyBytes
 (defn
@@ -967,21 +738,6 @@
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
   chaincode-shim$-get-history-for-key]
  (. chaincode-shim$-get-history-for-key getKey))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-  chaincode-shim$-get-history-for-key
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-get-history-for-key writeTo coded-output-stream0))
-
-;;;  KEY_FIELD_NUMBER
-(defn
- key_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/KEY_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1123,42 +879,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-  chaincode-shim$-query-state-next]
- (. chaincode-shim$-query-state-next getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-  chaincode-shim$-query-state-next]
- (. chaincode-shim$-query-state-next getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-  chaincode-shim$-query-state-next]
- (. chaincode-shim$-query-state-next toBuilder))
-
 ;;;  getIdBytes
 (defn
  get-id-bytes
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
   chaincode-shim$-query-state-next]
  (. chaincode-shim$-query-state-next getIdBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-  chaincode-shim$-query-state-next
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-query-state-next writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1265,12 +991,6 @@
  []
  (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parser))
 
-;;;  ID_FIELD_NUMBER
-(defn
- id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/ID_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1313,42 +1033,12 @@
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-  chaincode-shim$-query-state-close]
- (. chaincode-shim$-query-state-close getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-  chaincode-shim$-query-state-close]
- (. chaincode-shim$-query-state-close getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-  chaincode-shim$-query-state-close]
- (. chaincode-shim$-query-state-close toBuilder))
-
 ;;;  getIdBytes
 (defn
  get-id-bytes
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
   chaincode-shim$-query-state-close]
  (. chaincode-shim$-query-state-close getIdBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-  chaincode-shim$-query-state-close
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-query-state-close writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1455,12 +1145,6 @@
  []
  (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parser))
 
-;;;  ID_FIELD_NUMBER
-(defn
- id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/ID_FIELD_NUMBER))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -1502,36 +1186,6 @@
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
 ;;;
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-  chaincode-shim$-query-result-bytes]
- (. chaincode-shim$-query-result-bytes getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-  chaincode-shim$-query-result-bytes]
- (. chaincode-shim$-query-result-bytes getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-  chaincode-shim$-query-result-bytes]
- (. chaincode-shim$-query-result-bytes toBuilder))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-  chaincode-shim$-query-result-bytes
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-query-result-bytes writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -1587,12 +1241,6 @@
     
     generic-arg1
     extension-registry-lite1))))
-
-;;;  RESULTBYTES_FIELD_NUMBER
-(defn
- resultbytes_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/RESULTBYTES_FIELD_NUMBER))
 
 ;;;  getResultBytes
 (defn
@@ -1702,33 +1350,12 @@
   chaincode-shim$-query-response]
  (. chaincode-shim$-query-response getResultsOrBuilderList))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-  chaincode-shim$-query-response]
- (. chaincode-shim$-query-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-  chaincode-shim$-query-response]
- (. chaincode-shim$-query-response getSerializedSize))
-
 ;;;  getResultsList
 (defn
  get-results-list
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
   chaincode-shim$-query-response]
  (. chaincode-shim$-query-response getResultsList))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-  chaincode-shim$-query-response]
- (. chaincode-shim$-query-response toBuilder))
 
 ;;;  getIdBytes
 (defn
@@ -1737,33 +1364,12 @@
   chaincode-shim$-query-response]
  (. chaincode-shim$-query-response getIdBytes))
 
-;;;  HAS_MORE_FIELD_NUMBER
-(defn
- has_-more_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/HAS_MORE_FIELD_NUMBER))
-
 ;;;  getHasMore
 (defn
  get-has-more
  [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
   chaincode-shim$-query-response]
  (. chaincode-shim$-query-response getHasMore))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-  chaincode-shim$-query-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. chaincode-shim$-query-response writeTo coded-output-stream0))
-
-;;;  RESULTS_FIELD_NUMBER
-(defn
- results_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/RESULTS_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -1869,12 +1475,6 @@
  parser
  []
  (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parser))
-
-;;;  ID_FIELD_NUMBER
-(defn
- id_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/ID_FIELD_NUMBER))
 
 ;;;  parseDelimitedFrom
 (defn

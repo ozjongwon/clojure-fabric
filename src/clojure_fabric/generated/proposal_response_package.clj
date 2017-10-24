@@ -1,27 +1,6 @@
 (ns clojure-fabric.proposal-response-package
   (:import org.hyperledger.fabric.protos.peer.ProposalResponsePackage))
 
-;;;---------------------------------------------------
-;;;org.hyperledger.fabric.protos.peer.ProposalResponsePackage
-;;;
-
-;;;  registerAllExtensions
-(defn
- register-all-extensions
- [generic-arg1]
- (cond
-  (instance? com.google.protobuf.ExtensionRegistry generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ProposalResponsePackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistry
-   generic-arg1)
-  (instance? com.google.protobuf.ExtensionRegistryLite generic-arg1)
-  (org.hyperledger.fabric.protos.peer.ProposalResponsePackage/registerAllExtensions
-   ^com.google.protobuf.ExtensionRegistryLite
-   generic-arg1)
-  :else
-  (org.hyperledger.fabric.protos.peer.ProposalResponsePackage/registerAllExtensions
-   generic-arg1)))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
@@ -56,28 +35,6 @@
  [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
   proposal-response-package$-proposal-response]
  (. proposal-response-package$-proposal-response hasTimestamp))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-  proposal-response-package$-proposal-response]
- (. proposal-response-package$-proposal-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-  proposal-response-package$-proposal-response]
- (. proposal-response-package$-proposal-response getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-  proposal-response-package$-proposal-response]
- (. proposal-response-package$-proposal-response toBuilder))
-
 ;;;  getTimestamp
 (defn
  get-timestamp
@@ -85,24 +42,12 @@
   proposal-response-package$-proposal-response]
  (. proposal-response-package$-proposal-response getTimestamp))
 
-;;;  TIMESTAMP_FIELD_NUMBER
-(defn
- timestamp_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/TIMESTAMP_FIELD_NUMBER))
-
 ;;;  getResponse
 (defn
  get-response
  [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
   proposal-response-package$-proposal-response]
  (. proposal-response-package$-proposal-response getResponse))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/PAYLOAD_FIELD_NUMBER))
 
 ;;;  hasEndorsement
 (defn
@@ -117,24 +62,6 @@
  [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
   proposal-response-package$-proposal-response]
  (. proposal-response-package$-proposal-response getVersion))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-  proposal-response-package$-proposal-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  proposal-response-package$-proposal-response
-  writeTo
-  coded-output-stream0))
-
-;;;  VERSION_FIELD_NUMBER
-(defn
- version_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/VERSION_FIELD_NUMBER))
 
 ;;;  hasResponse
 (defn
@@ -235,18 +162,6 @@
   proposal-response-package$-proposal-response]
  (. proposal-response-package$-proposal-response getEndorsement))
 
-;;;  ENDORSEMENT_FIELD_NUMBER
-(defn
- endorsement_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/ENDORSEMENT_FIELD_NUMBER))
-
-;;;  RESPONSE_FIELD_NUMBER
-(defn
- response_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/RESPONSE_FIELD_NUMBER))
-
 ;;;  hashCode
 (defn
  hash-code
@@ -311,32 +226,6 @@
 ;;;org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
 ;;;
 
-;;;  STATUS_FIELD_NUMBER
-(defn
- status_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/STATUS_FIELD_NUMBER))
-
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-  proposal-response-package$-response]
- (. proposal-response-package$-response getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-  proposal-response-package$-response]
- (. proposal-response-package$-response getSerializedSize))
-
-;;;  MESSAGE_FIELD_NUMBER
-(defn
- message_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/MESSAGE_FIELD_NUMBER))
-
 ;;;  getStatus
 (defn
  get-status
@@ -344,34 +233,12 @@
   proposal-response-package$-response]
  (. proposal-response-package$-response getStatus))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-  proposal-response-package$-response]
- (. proposal-response-package$-response toBuilder))
-
-;;;  PAYLOAD_FIELD_NUMBER
-(defn
- payload_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/PAYLOAD_FIELD_NUMBER))
-
 ;;;  getMessageBytes
 (defn
  get-message-bytes
  [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
   proposal-response-package$-response]
  (. proposal-response-package$-response getMessageBytes))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-  proposal-response-package$-response
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. proposal-response-package$-response writeTo coded-output-stream0))
 
 ;;;  getMessage
 (defn
@@ -534,31 +401,6 @@
   proposal-response-package$-proposal-response-payload]
  (. proposal-response-package$-proposal-response-payload getExtension))
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-  proposal-response-package$-proposal-response-payload]
- (.
-  proposal-response-package$-proposal-response-payload
-  getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-  proposal-response-package$-proposal-response-payload]
- (.
-  proposal-response-package$-proposal-response-payload
-  getSerializedSize))
-
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-  proposal-response-package$-proposal-response-payload]
- (. proposal-response-package$-proposal-response-payload toBuilder))
-
 ;;;  getProposalHash
 (defn
  get-proposal-hash
@@ -567,24 +409,6 @@
  (.
   proposal-response-package$-proposal-response-payload
   getProposalHash))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-  proposal-response-package$-proposal-response-payload
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  proposal-response-package$-proposal-response-payload
-  writeTo
-  coded-output-stream0))
-
-;;;  EXTENSION_FIELD_NUMBER
-(defn
- extension_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/EXTENSION_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -640,12 +464,6 @@
     
     generic-arg1
     extension-registry-lite1))))
-
-;;;  PROPOSAL_HASH_FIELD_NUMBER
-(defn
- proposal_-hash_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/PROPOSAL_HASH_FIELD_NUMBER))
 
 ;;;  newBuilderForType
 (defn
@@ -741,20 +559,6 @@
 ;;;org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
 ;;;
 
-;;;  getUnknownFields
-(defn
- get-unknown-fields
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-  proposal-response-package$-endorsement]
- (. proposal-response-package$-endorsement getUnknownFields))
-
-;;;  getSerializedSize
-(defn
- get-serialized-size
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-  proposal-response-package$-endorsement]
- (. proposal-response-package$-endorsement getSerializedSize))
-
 ;;;  getSignature
 (defn
  get-signature
@@ -762,37 +566,12 @@
   proposal-response-package$-endorsement]
  (. proposal-response-package$-endorsement getSignature))
 
-;;;  toBuilder
-(defn
- to-builder
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-  proposal-response-package$-endorsement]
- (. proposal-response-package$-endorsement toBuilder))
-
 ;;;  getEndorser
 (defn
  get-endorser
  [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
   proposal-response-package$-endorsement]
  (. proposal-response-package$-endorsement getEndorser))
-
-;;;  writeTo
-(defn
- write-to
- [^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-  proposal-response-package$-endorsement
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (.
-  proposal-response-package$-endorsement
-  writeTo
-  coded-output-stream0))
-
-;;;  SIGNATURE_FIELD_NUMBER
-(defn
- signature_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/SIGNATURE_FIELD_NUMBER))
 
 ;;;  parseFrom
 (defn
@@ -878,12 +657,6 @@
   ^java.lang.Object
   object0]
  (. proposal-response-package$-endorsement equals object0))
-
-;;;  ENDORSER_FIELD_NUMBER
-(defn
- endorser_-field_-number
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/ENDORSER_FIELD_NUMBER))
 
 ;;;  hashCode
 (defn
