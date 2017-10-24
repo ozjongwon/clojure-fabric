@@ -66,6 +66,7 @@
   (grpc/make-chaincode-header-extention query-system-chaincode))
 
 ;;;
+
 (defmacro response-processor [class getter]
   `(fn [resp#]
      (. (. ~class ~(symbol "parseFrom") (.getPayload (.getResponse resp#))) ~(symbol (name getter)))))
@@ -87,7 +88,8 @@
      :proposal-payload (grpc/make-chaincode-proposal-payload lifecycle-system-chaincode
                                                    "getinstalledchaincodes"
                                                    [])
-     :->response (response-processor Query$ChaincodeQueryResponse getChaincodesList)})
+     :->response (response-processor Query$ChaincodeQueryResponse
+                                     {:chaincodes getChaincodesList})})
 
    :query-channels
    (map->SystemChaincodeRequestParts
@@ -96,7 +98,8 @@
      :proposal-payload (grpc/make-chaincode-proposal-payload configuration-system-chaincode
                                                    "GetChannels"
                                                    [])
-     :->response (response-processor Query$ChannelQueryResponse getChannelsList)})
+     :->response (response-processor Query$ChannelQueryResponse
+                                     {:channels getChannelsList})})
 
    :query-blockchain-info
    (map->SystemChaincodeRequestParts
@@ -104,7 +107,10 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetChainInfo")
-     :response Ledger$BlockchainInfo})
+     :->response (response-processor Ledger$BlockchainInfo
+                                     {:heigh getHeight
+                                      :current-block-hash getCurrentBlockHash
+                                      :previous-block-hash getPreviousBlockHash}) })
    
    :query-block-by-hash
    (map->SystemChaincodeRequestParts
@@ -112,7 +118,10 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByHash")
-     :response-type Common$Block})
+     :->response (response-processor Common$Block
+                                     {:block-header     getBlockHeader
+                                      :block-data       getBlockData
+                                      :block-metadata   getBlockMetadata})})
 
    :query-block-by-number
    (map->SystemChaincodeRequestParts
@@ -120,7 +129,10 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByNumber")
-     :response-type Common$Block})
+     :->response (response-processor Common$Block
+                                     {:block-header     getBlockHeader
+                                      :block-data       getBlockData
+                                      :block-metadata   getBlockMetadata})})
 
    :query-block-by-tx-id
    (map->SystemChaincodeRequestParts
@@ -128,7 +140,10 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'grpc/make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByTxID")
-     :response-type Common$Block})
+     :->response (response-processor Common$Block
+                                     {:block-header     getBlockHeader
+                                      :block-data       getBlockData
+                                      :block-metadata   getBlockMetadata})})
    
    :query-tx-by-id
    (map->SystemChaincodeRequestParts
