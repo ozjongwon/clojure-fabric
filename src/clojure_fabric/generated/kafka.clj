@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.orderer.Kafka/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
@@ -115,12 +109,6 @@
  regular_-field_-number
  []
  (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/REGULAR_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/getDescriptor))
 
 ;;;  getRegularOrBuilder
 (defn
@@ -340,12 +328,6 @@
   coded-output-stream0]
  (. kafka$-kafka-message-regular writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/getDescriptor))
-
 ;;;  CLASS_FIELD_NUMBER
 (defn
  class_-field_-number
@@ -556,12 +538,6 @@
   coded-output-stream0]
  (. kafka$-kafka-message-time-to-cut writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -744,12 +720,6 @@
   coded-output-stream0]
  (. kafka$-kafka-message-connect writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -926,12 +896,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. kafka$-kafka-metadata writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/getDescriptor))
 
 ;;;  parseFrom
 (defn

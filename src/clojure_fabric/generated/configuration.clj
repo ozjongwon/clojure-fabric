@@ -22,13 +22,6 @@
   (org.hyperledger.fabric.protos.peer.Configuration/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Configuration/getDescriptor))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
 ;;;
@@ -74,13 +67,7 @@
   configuration$-anchor-peers
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
- (. configuration$-anchor-peers writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/getDescriptor))
+  (. configuration$-anchor-peers writeTo coded-output-stream0))
 
 ;;;  parseFrom
 (defn
@@ -302,12 +289,6 @@
  host_-field_-number
  []
  (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/HOST_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/getDescriptor))
 
 ;;;  parseFrom
 (defn

@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.orderer.Configuration/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
@@ -69,12 +63,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configuration$-consensus-type writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/getDescriptor))
 
 ;;;  TYPE_FIELD_NUMBER
 (defn
@@ -280,12 +268,6 @@
   configuration$-batch-size]
  (. configuration$-batch-size getMaxMessageCount))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -473,12 +455,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configuration$-batch-timeout writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -708,12 +684,6 @@
   configuration$-kafka-brokers]
  (. configuration$-kafka-brokers getBrokersList))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -889,12 +859,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configuration$-channel-restrictions writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/getDescriptor))
 
 ;;;  parseFrom
 (defn

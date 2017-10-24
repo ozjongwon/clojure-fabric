@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.SignedCcDepSpec/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.SignedCcDepSpec/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
@@ -126,12 +120,6 @@
   signed-cc-dep-spec$-signed-chaincode-deployment-spec
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/getDescriptor))
 
 ;;;  CHAINCODE_DEPLOYMENT_SPEC_FIELD_NUMBER
 (defn

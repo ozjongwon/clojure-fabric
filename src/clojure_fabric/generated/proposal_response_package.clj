@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.ProposalResponsePackage/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
@@ -141,12 +135,6 @@
  version_-field_-number
  []
  (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/VERSION_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/getDescriptor))
 
 ;;;  hasResponse
 (defn
@@ -385,12 +373,6 @@
   coded-output-stream0]
  (. proposal-response-package$-response writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/getDescriptor))
-
 ;;;  getMessage
 (defn
  get-message
@@ -597,12 +579,6 @@
   proposal-response-package$-proposal-response-payload
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/getDescriptor))
 
 ;;;  EXTENSION_FIELD_NUMBER
 (defn
@@ -811,12 +787,6 @@
   proposal-response-package$-endorsement
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn

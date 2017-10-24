@@ -5,12 +5,6 @@
 ;;;org.hyperledger.fabric.protos.msp.MspConfigPackage
 ;;;
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage/getDescriptor))
-
 ;;;  registerAllExtensions
 (defn
  register-all-extensions
@@ -75,12 +69,6 @@
  config_-field_-number
  []
  (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/CONFIG_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/getDescriptor))
 
 ;;;  TYPE_FIELD_NUMBER
 (defn
@@ -441,12 +429,6 @@
  []
  (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/ORGANIZATIONAL_UNIT_IDENTIFIERS_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/getDescriptor))
-
 ;;;  getIntermediateCerts
 (defn
  get-intermediate-certs
@@ -782,12 +764,6 @@
   writeTo
   coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1003,12 +979,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. msp-config-package$-idemix-msp-config writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -1231,12 +1201,6 @@
   msp-config-package$-idemix-msp-signer-config
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/getDescriptor))
 
 ;;;  CRED_FIELD_NUMBER
 (defn
@@ -1483,12 +1447,6 @@
   writeTo
   coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1700,12 +1658,6 @@
   msp-config-package$-key-info]
  (. msp-config-package$-key-info getKeyIdentifier))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1906,12 +1858,6 @@
   msp-config-package$-fabric-ou-identifier
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/getDescriptor))
 
 ;;;  getCertificate
 (defn

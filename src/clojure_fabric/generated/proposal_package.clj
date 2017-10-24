@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.ProposalPackage/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
@@ -82,12 +76,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. proposal-package$-signed-proposal writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn
@@ -277,12 +265,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. proposal-package$-proposal writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/getDescriptor))
 
 ;;;  HEADER_FIELD_NUMBER
 (defn
@@ -503,12 +485,6 @@
   proposal-package$-chaincode-header-extension
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/getDescriptor))
 
 ;;;  getPayloadVisibility
 (defn
@@ -759,12 +735,6 @@
  []
  (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/TRANSIENTMAP_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1009,12 +979,6 @@
  events_-field_-number
  []
  (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/EVENTS_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/getDescriptor))
 
 ;;;  hasResponse
 (defn

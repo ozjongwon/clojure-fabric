@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.Query/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Query/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
@@ -82,12 +76,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. query$-chaincode-query-response writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/getDescriptor))
 
 ;;;  getChaincodes
 (defn
@@ -344,12 +332,6 @@
  []
  (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/VERSION_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -589,12 +571,6 @@
   coded-output-stream0]
  (. query$-channel-query-response writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/getDescriptor))
-
 ;;;  getChannelsOrBuilder
 (defn
  get-channels-or-builder
@@ -813,12 +789,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. query$-channel-info writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/getDescriptor))
 
 ;;;  getChannelIdBytes
 (defn

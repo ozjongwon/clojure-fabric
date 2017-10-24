@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.TransactionPackage/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
@@ -72,12 +66,6 @@
   transaction-package$-signed-transaction
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn
@@ -300,12 +288,6 @@
   transaction-package$-processed-transaction
   getTransactionEnvelopeOrBuilder))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/getDescriptor))
-
 ;;;  hasTransactionEnvelope
 (defn
  has-transaction-envelope
@@ -505,12 +487,6 @@
   
   int0]
  (. transaction-package$-transaction getActions int0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -721,11 +697,6 @@
   writeTo
   coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/getDescriptor))
 
 ;;;  HEADER_FIELD_NUMBER
 (defn
@@ -956,12 +927,6 @@
   writeTo
   coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1160,12 +1125,6 @@
   transaction-package$-chaincode-endorsed-action
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/getDescriptor))
 
 ;;;  ENDORSEMENTS_FIELD_NUMBER
 (defn

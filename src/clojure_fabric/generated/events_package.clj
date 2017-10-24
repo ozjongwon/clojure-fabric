@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.peer.EventsPackage/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
@@ -81,12 +75,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. events-package$-chaincode-reg writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -325,12 +313,6 @@
   coded-output-stream0]
  (. events-package$-interest writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -543,12 +525,6 @@
  events_-field_-number
  []
  (org.hyperledger.fabric.protos.peer.EventsPackage$Register/EVENTS_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Register/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -763,12 +739,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. events-package$-rejection writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -987,12 +957,6 @@
  events_-field_-number
  []
  (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/EVENTS_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -1236,12 +1200,6 @@
   
   int0]
  (. events-package$-filtered-block getFilteredTx int0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/getDescriptor))
 
 ;;;  getChannelIdBytes
 (defn
@@ -1501,12 +1459,6 @@
   coded-output-stream0]
  (. events-package$-filtered-transaction writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1704,12 +1656,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. events-package$-signed-event writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn
@@ -1979,12 +1925,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$Event
   events-package$-event]
  (. events-package$-event getUnregisterOrBuilder))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.EventsPackage$Event/getDescriptor))
 
 ;;;  parseFrom
 (defn

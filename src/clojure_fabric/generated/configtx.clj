@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.common.Configtx/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
@@ -103,12 +97,6 @@
  config_-field_-number
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/CONFIG_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -368,12 +356,6 @@
  [^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
   configtx$-config-group-schema]
  (. configtx$-config-group-schema getGroups))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -649,12 +631,6 @@
   coded-output-stream0]
  (. configtx$-config-value-schema writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -824,12 +800,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configtx$-config-policy-schema writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -1021,12 +991,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configtx$-config writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$Config/getDescriptor))
 
 ;;;  SEQUENCE_FIELD_NUMBER
 (defn
@@ -1250,12 +1214,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configtx$-config-update-envelope writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -1517,12 +1475,6 @@
  read_-set_-field_-number
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/READ_SET_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/getDescriptor))
 
 ;;;  TYPE_FIELD_NUMBER
 (defn
@@ -1881,12 +1833,6 @@
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/VERSION_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -2201,12 +2147,6 @@
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/VERSION_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -2422,12 +2362,6 @@
  version_-field_-number
  []
  (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/VERSION_FIELD_NUMBER))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -2646,12 +2580,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configtx$-config-signature writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn

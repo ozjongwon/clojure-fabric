@@ -35,12 +35,6 @@
   coded-output-stream0]
  (. common$-last-config writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$LastConfig/getDescriptor))
-
 ;;;  INDEX_FIELD_NUMBER
 (defn
  index_-field_-number
@@ -252,12 +246,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-metadata writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$Metadata/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -471,12 +459,6 @@
   coded-output-stream0]
  (. common$-metadata-signature writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$MetadataSignature/getDescriptor))
-
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn
  signature_-field_-number
@@ -661,12 +643,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-header writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$Header/getDescriptor))
 
 ;;;  CHANNEL_HEADER_FIELD_NUMBER
 (defn
@@ -922,12 +898,6 @@
  []
  (org.hyperledger.fabric.protos.common.Common$ChannelHeader/VERSION_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$ChannelHeader/getDescriptor))
-
 ;;;  TYPE_FIELD_NUMBER
 (defn
  type_-field_-number
@@ -1156,12 +1126,6 @@
   coded-output-stream0]
  (. common$-signature-header writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$SignatureHeader/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -1348,12 +1312,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-payload writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$Payload/getDescriptor))
 
 ;;;  HEADER_FIELD_NUMBER
 (defn
@@ -1562,11 +1520,6 @@
   coded-output-stream0]
  (. common$-envelope writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$Envelope/getDescriptor))
 
 ;;;  SIGNATURE_FIELD_NUMBER
 (defn
@@ -1770,12 +1723,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-block writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$Block/getDescriptor))
 
 ;;;  hasData
 (defn
@@ -2007,12 +1954,6 @@
   common$-block-header]
  (. common$-block-header getPreviousHash))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$BlockHeader/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -2202,12 +2143,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-block-data writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$BlockData/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -2436,12 +2371,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. common$-block-metadata writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Common$BlockMetadata/getDescriptor))
 
 ;;;  parseFrom
 (defn

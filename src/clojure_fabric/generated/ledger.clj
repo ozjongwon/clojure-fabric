@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.common.Ledger/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Ledger/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
@@ -81,12 +75,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. ledger$-blockchain-info writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/getDescriptor))
 
 ;;;  parseFrom
 (defn

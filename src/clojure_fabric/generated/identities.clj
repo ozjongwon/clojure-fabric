@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.msp.Identities/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.Identities/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
@@ -75,12 +69,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. identities$-serialized-identity writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -287,12 +275,6 @@
   identities$-serialized-idemix-identity
   writeTo
   coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/getDescriptor))
 
 ;;;  getRole
 (defn

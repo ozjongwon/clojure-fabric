@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.common.MspPrincipal/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.MspPrincipal/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
@@ -88,12 +82,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. msp-principal$-msp-principal writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -297,12 +285,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. msp-principal$-organization-unit writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/getDescriptor))
 
 ;;;  getMspIdentifierBytes
 (defn
@@ -521,12 +503,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. msp-principal$-msp-role writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/getDescriptor))
 
 ;;;  getMspIdentifierBytes
 (defn

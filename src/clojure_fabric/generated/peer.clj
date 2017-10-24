@@ -5,12 +5,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Peer
 ;;;
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Peer/getDescriptor))
-
 ;;;  registerAllExtensions
 (defn
  register-all-extensions
@@ -65,12 +59,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. peer$-peer-id writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Peer$PeerID/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -256,12 +244,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. peer$-peer-endpoint writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/getDescriptor))
 
 ;;;  parseFrom
 (defn

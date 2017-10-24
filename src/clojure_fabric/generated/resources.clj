@@ -5,12 +5,6 @@
 ;;;org.hyperledger.fabric.protos.peer.Resources
 ;;;
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Resources/getDescriptor))
-
 ;;;  registerAllExtensions
 (defn
  register-all-extensions
@@ -68,12 +62,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. resources$-resource writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.peer.Resources$Resource/getDescriptor))
 
 ;;;  getPolicyRef
 (defn

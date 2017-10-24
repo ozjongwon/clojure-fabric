@@ -22,13 +22,6 @@
   (org.hyperledger.fabric.protos.common.Configuration/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration/getDescriptor))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
 ;;;
@@ -69,12 +62,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configuration$-hashing-algorithm writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -268,12 +255,6 @@
   writeTo
   coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -461,12 +442,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. configuration$-orderer-addresses writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/getDescriptor))
 
 ;;;  parseFrom
 (defn
@@ -674,12 +649,6 @@
   coded-output-stream0]
  (. configuration$-consortium writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration$Consortium/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -884,12 +853,6 @@
  [^org.hyperledger.fabric.protos.common.Configuration$Capabilities
   configuration$-capabilities]
  (. configuration$-capabilities getCapabilities))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Configuration$Capabilities/getDescriptor))
 
 ;;;  parseFrom
 (defn

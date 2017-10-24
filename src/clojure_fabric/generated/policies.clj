@@ -22,12 +22,6 @@
   (org.hyperledger.fabric.protos.common.Policies/registerAllExtensions
    generic-arg1)))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies/getDescriptor))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.common.Policies$Policy
@@ -76,12 +70,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. policies$-policy writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies$Policy/getDescriptor))
 
 ;;;  TYPE_FIELD_NUMBER
 (defn
@@ -315,12 +303,6 @@
  []
  (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/VERSION_FIELD_NUMBER))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/getDescriptor))
-
 ;;;  parseFrom
 (defn
  parse-from
@@ -552,12 +534,6 @@
   coded-output-stream0]
  (. policies$-signature-policy writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/getDescriptor))
-
 ;;;  getNOutOf
 (defn
  get-n-out-of
@@ -783,12 +759,6 @@
   coded-output-stream0]
  (. policies$-signature-policy$-n-out-of writeTo coded-output-stream0))
 
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/getDescriptor))
-
 ;;;  getRulesOrBuilderList
 (defn
  get-rules-or-builder-list
@@ -1002,12 +972,6 @@
   ^com.google.protobuf.CodedOutputStream
   coded-output-stream0]
  (. policies$-implicit-meta-policy writeTo coded-output-stream0))
-
-;;;  getDescriptor
-(defn
- get-descriptor
- []
- (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/getDescriptor))
 
 ;;;  parseFrom
 (defn
