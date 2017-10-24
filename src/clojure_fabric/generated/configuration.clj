@@ -277,12 +277,12 @@
 
 ;;;  writeTo
 (defn
- write-to
- [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-  configuration$-anchor-peer
-  ^com.google.protobuf.CodedOutputStream
-  coded-output-stream0]
- (. configuration$-anchor-peer writeTo coded-output-stream0))
+  write-to
+  [^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
+   configuration$-anchor-peer
+   ^com.google.protobuf.CodedOutputStream
+   coded-output-stream0]
+  (. configuration$-anchor-peer writeTo coded-output-stream0))
 
 ;;;  HOST_FIELD_NUMBER
 (defn
