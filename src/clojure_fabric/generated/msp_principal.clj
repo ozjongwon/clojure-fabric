@@ -116,13 +116,6 @@
  []
  (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parser))
 
-;;;  getPrincipalClassificationValue
-(defn
- get-principal-classification-value
- [^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-  msp-principal$-msp-principal]
- (. msp-principal$-msp-principal getPrincipalClassificationValue))
-
 ;;;  parseDelimitedFrom
 (defn
  parse-delimited-from
@@ -446,13 +439,6 @@
   ^java.lang.Object
   object0]
  (. msp-principal$-msp-role equals object0))
-
-;;;  getRoleValue
-(defn
- get-role-value
- [^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-  msp-principal$-msp-role]
- (. msp-principal$-msp-role getRoleValue))
 
 ;;;  hashCode
 (defn

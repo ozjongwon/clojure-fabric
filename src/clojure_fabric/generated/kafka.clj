@@ -341,13 +341,6 @@
    input-stream0
    extension-registry-lite1)))
 
-;;;  getClass_Value
-(defn
- get-class_-value
- [^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-  kafka$-kafka-message-regular]
- (. kafka$-kafka-message-regular getClass_Value))
-
 ;;;  newBuilder
 (defn
  new-builder

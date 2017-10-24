@@ -12,13 +12,6 @@
   admin-package$-server-status]
  (. admin-package$-server-status getStatus))
 
-;;;  getStatusValue
-(defn
- get-status-value
- [^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-  admin-package$-server-status]
- (. admin-package$-server-status getStatusValue))
-
 ;;;  parseFrom
 (defn
  parse-from

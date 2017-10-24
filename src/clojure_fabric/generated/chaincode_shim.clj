@@ -231,14 +231,6 @@
   chaincode-shim$-chaincode-message]
  (. chaincode-shim$-chaincode-message getDefaultInstanceForType))
 
-;;;  getTypeValue
-(defn
- get-type-value
- [^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-  chaincode-shim$-chaincode-message]
- (. chaincode-shim$-chaincode-message getTypeValue))
-
-
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
 ;;;

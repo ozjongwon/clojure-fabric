@@ -595,13 +595,6 @@
   chaincode$-chaincode-spec]
  (. chaincode$-chaincode-spec getDefaultInstanceForType))
 
-;;;  getTypeValue
-(defn
- get-type-value
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-  chaincode$-chaincode-spec]
- (. chaincode$-chaincode-spec getTypeValue))
-
 
 ;;;---------------------------------------------------
 ;;;org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
@@ -731,13 +724,6 @@
  [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
   chaincode$-chaincode-deployment-spec]
  (. chaincode$-chaincode-deployment-spec isInitialized))
-
-;;;  getExecEnvValue
-(defn
- get-exec-env-value
- [^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-  chaincode$-chaincode-deployment-spec]
- (. chaincode$-chaincode-deployment-spec getExecEnvValue))
 
 ;;;  getParserForType
 (defn

@@ -344,13 +344,6 @@
  ([]
   (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/newBuilder)))
 
-;;;  getEventTypeValue
-(defn
- get-event-type-value
- [^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-  events-package$-interest]
- (. events-package$-interest getEventTypeValue))
-
 ;;;  getDefaultInstance
 (defn
  get-default-instance
@@ -1128,13 +1121,6 @@
  [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
   events-package$-filtered-transaction]
  (. events-package$-filtered-transaction getTxid))
-
-;;;  getTxValidationCodeValue
-(defn
- get-tx-validation-code-value
- [^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-  events-package$-filtered-transaction]
- (. events-package$-filtered-transaction getTxValidationCodeValue))
 
 ;;;  parseFrom
 (defn

@@ -740,13 +740,6 @@
   policies$-implicit-meta-policy]
  (. policies$-implicit-meta-policy getSubPolicy))
 
-;;;  getRuleValue
-(defn
- get-rule-value
- [^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-  policies$-implicit-meta-policy]
- (. policies$-implicit-meta-policy getRuleValue))
-
 ;;;  parseFrom
 (defn
  parse-from

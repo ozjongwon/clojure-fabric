@@ -12,13 +12,6 @@
   ab$-broadcast-response]
  (. ab$-broadcast-response getStatus))
 
-;;;  getStatusValue
-(defn
- get-status-value
- [^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-  ab$-broadcast-response]
- (. ab$-broadcast-response getStatusValue))
-
 ;;;  getInfo
 (defn
  get-info
@@ -892,12 +885,6 @@
   object0]
  (. ab$-seek-info equals object0))
 
-;;;  getBehaviorValue
-(defn
- get-behavior-value
- [^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo ab$-seek-info]
- (. ab$-seek-info getBehaviorValue))
-
 ;;;  getStart
 (defn
  get-start
@@ -991,13 +978,6 @@
  [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
   ab$-deliver-response]
  (. ab$-deliver-response getTypeCase))
-
-;;;  getStatusValue
-(defn
- get-status-value
- [^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-  ab$-deliver-response]
- (. ab$-deliver-response getStatusValue))
 
 ;;;  hasBlock
 (defn
