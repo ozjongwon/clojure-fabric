@@ -208,7 +208,7 @@
   Returns 
         Object containing the block"
   ([block-hash]
-   (query-block core/*channel* block-hash))
+   (query-block-by-hash core/*channel* block-hash))
   ([{:keys [user-key name]} block-hash]
    (chaincode/make-chaincode-signed-proposal :query-block-by-hash (core/get-user user-key)
                                              :args [name (if (utils/bytes? block-hash)

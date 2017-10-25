@@ -29,6 +29,7 @@
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.utils :as utils]
+            [clojure-fabric.wrappers :as proto]
             [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp]
            io.grpc.ManagedChannel

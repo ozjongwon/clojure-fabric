@@ -201,6 +201,7 @@
               mychannel (get-channel user "mychannel")]
           (query-channels user "mychannel" (core/get-peers mychannel))))
 
+#_
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
                            (get-channel "mychannel"))]
           (query-info mychannel)))
