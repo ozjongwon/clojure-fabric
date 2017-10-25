@@ -25,7 +25,7 @@
            [java.security KeyPairGenerator MessageDigest PublicKey SecureRandom Security Signature]
            javax.crypto.Cipher
            javax.crypto.spec.SecretKeySpec
-           [org.bouncycastle.asn1 ASN1InputStream ASN1Integer DERSequence]
+           [org.bouncycastle.asn1 ASN1InputStream ASN1Integer DERSequence ASN1Sequence]
            org.bouncycastle.asn1.pkcs.PrivateKeyInfo
            org.bouncycastle.cert.X509CertificateHolder
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey BCECPublicKey]
@@ -259,7 +259,7 @@
   [k cipher-text {:keys [algorithm] :as opts}]
   (%encrypt-or-decrypt k cipher-text (assoc opts :cipher-mode :decrypt)))
 
-(defn- malleability-free-s
+(defn- ^BigInteger malleability-free-s
   [^BigInteger s ^BigInteger curve-n]
   ;; Copy from Fabric SDK Java
   (if (= (->> (biginteger 2) (.divide curve-n) (.compareTo s))
@@ -285,9 +285,12 @@
   (let [signer (doto (Signature/getInstance ^String (key+hash-algorithm-map [algorithm hash-algorithm]) ^String security-provider)
                  (.initSign priv-key)
                  (.update digest))
-        asn-encodables (-> (.sign signer) (ASN1InputStream.) (.readObject) (.toArray))]
-    (aset asn-encodables 1 (-> (aget asn-encodables 1)
-                               (.getValue)
+        ;;Type hint hack to speed up
+        ^ASN1Sequence asn1-seq (-> (.sign signer) (ASN1InputStream.) (.readObject))
+        ;; asn1-seq is immutable, make an array to change 'S' value
+        asn-encodables (.toArray asn1-seq)
+        ^ASN1Integer der-s (aget asn-encodables 1)]
+    (aset asn-encodables 1 (-> (.getValue der-s)
                                (malleability-free-s (-> (name curve)
                                                         (ECNamedCurveTable/getParameterSpec)
                                                         (.getN)))
