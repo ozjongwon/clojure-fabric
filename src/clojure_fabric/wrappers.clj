@@ -26,7 +26,8 @@
 (defn
  get-endorsement-or-builder
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -48,7 +49,8 @@
 (defn
  get-response-or-builder
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -85,7 +87,8 @@
 (defn
  get-chaincodes-or-builder-list
  ([query-chaincode-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponseOrBuilder]
    (.
@@ -107,7 +110,8 @@
 (defn
  get-extension
  ([proposal-response-package-proposal-response-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-payload-or-builder])
@@ -161,7 +165,8 @@
 (defn
  get-results
  ([proposal-package-chaincode-action-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-action-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeActionOrBuilder]
    (.
@@ -179,7 +184,8 @@
     proposal-package-chaincode-action-or-builder
     getResults)))
  ([chaincode-shim-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder
     int]
@@ -209,7 +215,8 @@
 (defn
  set-endorsements
  ([transaction-package-chaincode-endorsed-action-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-builder arg0 arg1])
@@ -240,7 +247,8 @@
 (defn
  get-timestamp-or-builder
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -303,7 +311,8 @@
 (defn
  get-rules-count
  ([policies-signature-policy-n-out-of-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder]
    (.
@@ -325,7 +334,8 @@
 (defn
  get-signed-by
  ([policies-signature-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyOrBuilder]
    (.
@@ -347,7 +357,8 @@
 (defn
  get-decorations
  ([chaincode-chaincode-input-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder]
    (.
@@ -389,7 +400,8 @@
 (defn
  set-response
  ([proposal-response-package-proposal-response-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-builder arg0])
@@ -430,7 +442,8 @@
 (defn
  get-values-map
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -467,7 +480,8 @@
 (defn
  get-chaincodes-list
  ([query-chaincode-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponseOrBuilder]
    (.
@@ -502,7 +516,8 @@
 (defn
  get-crypto-config
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -544,7 +559,8 @@
 (defn
  get-results-or-builder-list
  ([chaincode-shim-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder]
    (.
@@ -608,7 +624,8 @@
 (defn
  get-owner-endorsements-list
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder])
@@ -632,7 +649,8 @@
 (defn
  get-event-type
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -654,7 +672,8 @@
 (defn
  get-signature
  ([transaction-package-signed-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-signed-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransactionOrBuilder]
    (.
@@ -766,7 +785,8 @@
 (defn
  get-public-signer
  ([msp-config-package-signing-identity-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-signing-identity-info-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfoOrBuilder]
    (.
@@ -788,7 +808,8 @@
 (defn
  get-policies-map
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -825,7 +846,8 @@
 (defn
  get-connect
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -867,7 +889,8 @@
 (defn
  get-config-or-builder
  ([configtx-config-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelopeOrBuilder]
    (.
@@ -889,7 +912,8 @@
 (defn
  get-transient-map
  ([proposal-package-chaincode-proposal-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-proposal-payload-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayloadOrBuilder]
    (.
@@ -922,7 +946,8 @@
 (defn
  get-exec-env
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -955,7 +980,8 @@
 (defn
  get-policies-count
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -992,7 +1018,8 @@
 (defn
  get-signer-or-builder
  ([msp-config-package-idemix-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfigOrBuilder]
    (.
@@ -1014,7 +1041,8 @@
 (defn
  get-root-certs-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -1047,7 +1075,8 @@
 (defn
  get-log-level
  ([admin-package-log-level-request-or-builder]
-  (case
+  (condp
+   =
    (mapv type [admin-package-log-level-request-or-builder])
    [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder]
    (.
@@ -1093,7 +1122,8 @@
 (defn
  get-organizational-unit-identifiers-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -1115,7 +1145,8 @@
 (defn
  set-private-signer
  ([msp-config-package-signing-identity-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-signing-identity-info-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
     org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder]
@@ -1160,7 +1191,8 @@
 (defn
  get-args-list
  ([chaincode-chaincode-input-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder]
    (.
@@ -1182,7 +1214,8 @@
 (defn
  get-signing-identity-or-builder
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -1211,7 +1244,8 @@
    ^com.google.protobuf.ByteString
    arg0))
  ([events-package-register-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
     int
@@ -1262,7 +1296,8 @@
 (defn
  get-status
  ([proposal-response-package-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ResponseOrBuilder]
    (.
@@ -1329,7 +1364,8 @@
 (defn
  get-results-list
  ([chaincode-shim-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder]
    (.
@@ -1351,7 +1387,8 @@
 (defn
  get-anchor-peers-or-builder-list
  ([configuration-anchor-peers-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-or-builder])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeersOrBuilder]
    (.
@@ -1373,7 +1410,8 @@
 (defn
  get-error-msg
  ([events-package-rejection-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-rejection-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RejectionOrBuilder]
    (.
@@ -1395,7 +1433,8 @@
 (defn
  get-owner-endorsements
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder
@@ -1438,7 +1477,8 @@
 (defn
  get-capabilities-or-throw
  ([configuration-capabilities-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configuration-capabilities-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder
     java.lang.String]
@@ -1469,7 +1509,8 @@
 (defn
  get-proposal-response-payload
  ([transaction-package-chaincode-endorsed-action-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder])
@@ -1493,7 +1534,8 @@
 (defn
  get-chaincode-event-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -1530,7 +1572,8 @@
 (defn
  get-type
  ([chaincode-shim-chaincode-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder]
    (.
@@ -1657,7 +1700,8 @@
 (defn
  set-metadata
  ([common-block-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [common-block-builder arg0])
    [org.hyperledger.fabric.protos.common.Common$Block$Builder
     org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder]
@@ -1689,7 +1733,8 @@
 (defn
  get-type-case
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -1756,7 +1801,8 @@
 (defn
  set-rules
  ([policies-signature-policy-n-out-of-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
     int
@@ -1785,7 +1831,8 @@
 (defn
  get-transaction-envelope
  ([transaction-package-processed-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-processed-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransactionOrBuilder]
    (.
@@ -1807,7 +1854,8 @@
 (defn
  get-admins
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -1838,7 +1886,8 @@
 (defn
  set-config
  ([msp-config-package-msp-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-msp-config-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
     com.google.protobuf.ByteString]
@@ -1869,7 +1918,8 @@
 (defn
  set-newest
  ([ab-seek-position-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
     org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder]
@@ -1892,7 +1942,8 @@
 (defn
  get-channel-group
  ([configtx-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigOrBuilder]
    (.
@@ -1914,7 +1965,8 @@
 (defn
  get-sequence
  ([configtx-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigOrBuilder]
    (.
@@ -1936,7 +1988,8 @@
 (defn
  get-validation-code
  ([transaction-package-processed-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-processed-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransactionOrBuilder]
    (.
@@ -1958,7 +2011,8 @@
 (defn
  set-chaincode-id
  ([proposal-package-chaincode-header-extension-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-package-chaincode-header-extension-builder arg0])
@@ -2040,7 +2094,8 @@
 (defn
  get-channel-id
  ([query-channel-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-channel-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChannelInfoOrBuilder]
    (.
@@ -2107,7 +2162,8 @@
 (defn
  get-specified-or-builder
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -2129,7 +2185,8 @@
 (defn
  set-path
  ([query-chaincode-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
     java.lang.String]
@@ -2152,7 +2209,8 @@
 (defn
  set-status-value
  ([admin-package-server-status-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [admin-package-server-status-builder arg0])
    [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
     int]
@@ -2194,7 +2252,8 @@
 (defn
  get-organizational-unit-identifiers
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -2225,7 +2284,8 @@
 (defn
  set-organizational-unit-identifier
  ([msp-config-package-idemix-msp-signer-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [msp-config-package-idemix-msp-signer-config-builder arg0])
@@ -2258,7 +2318,8 @@
 (defn
  get-signature-header
  ([configtx-config-signature-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-signature-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigSignatureOrBuilder]
    (.
@@ -2310,7 +2371,8 @@
 (defn
  get-reg-info-case
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -2341,7 +2403,8 @@
 (defn
  set-log-level
  ([admin-package-log-level-request-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [admin-package-log-level-request-builder arg0])
    [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
     java.lang.String]
@@ -2364,7 +2427,8 @@
 (defn
  get-chaincode-spec-builder
  ([chaincode-chaincode-deployment-spec-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder]
    (.
@@ -2381,7 +2445,8 @@
 (defn
  get-organizational-unit-identifiers-or-builder
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -2412,7 +2477,8 @@
 (defn
  get-nym-x
  ([identities-serialized-idemix-identity-or-builder]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-idemix-identity-or-builder])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentityOrBuilder]
    (.
@@ -2445,7 +2511,8 @@
 (defn
  get-endorsements-count
  ([transaction-package-chaincode-endorsed-action-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder])
@@ -2469,7 +2536,8 @@
 (defn
  get-chaincode-event-builder
  ([events-package-event-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder]
    (.
@@ -2486,7 +2554,8 @@
 (defn
  get-organizational-unit-identifier
  ([msp-config-package-idemix-msp-signer-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-signer-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder]
    (.
@@ -2538,7 +2607,8 @@
 (defn
  get-root-certs
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -2569,7 +2639,8 @@
 (defn
  set-time-to-cut
  ([kafka-kafka-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
     org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder]
@@ -2605,7 +2676,8 @@
 (defn
  get-event-name
  ([events-package-chaincode-reg-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-chaincode-reg-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeRegOrBuilder]
    (.
@@ -2642,7 +2714,8 @@
 (defn
  get-timestamp
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -2707,7 +2780,8 @@
 (defn
  get-events-builder
  ([events-package-register-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
     int]
@@ -2730,7 +2804,8 @@
 (defn
  get-metadata-count
  ([common-block-metadata-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-metadata-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockMetadataOrBuilder]
    (.
@@ -2761,7 +2836,8 @@
 (defn
  get-oldest
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -2783,7 +2859,8 @@
 (defn
  get-signatures-count
  ([configtx-config-update-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder]
    (.
@@ -2820,7 +2897,8 @@
 (defn
  set-key
  ([chaincode-shim-put-state-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-put-state-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
     java.lang.String]
@@ -2843,7 +2921,8 @@
 (defn
  set-channel-id
  ([query-channel-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-channel-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
     java.lang.String]
@@ -2882,7 +2961,8 @@
 (defn
  get-policies
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -2928,7 +3008,8 @@
 (defn
  set-transaction-envelope
  ([transaction-package-processed-transaction-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-processed-transaction-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
     org.hyperledger.fabric.protos.common.Common$Envelope]
@@ -2951,7 +3032,8 @@
 (defn
  get-rules-or-builder
  ([policies-signature-policy-n-out-of-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder
     int]
@@ -2982,7 +3064,8 @@
 (defn
  set-channel-group
  ([configtx-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$Config$Builder
     org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
@@ -3005,7 +3088,8 @@
 (defn
  get-endorser
  ([proposal-response-package-endorsement-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-endorsement-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$EndorsementOrBuilder]
    (.
@@ -3038,7 +3122,8 @@
 (defn
  get-name
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -3150,7 +3235,8 @@
 (defn
  get-i-pk
  ([msp-config-package-idemix-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfigOrBuilder]
    (.
@@ -3172,7 +3258,8 @@
 (defn
  set-identities
  ([policies-signature-policy-envelope-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
     int
@@ -3219,7 +3306,8 @@
 (defn
  set-payload
  ([transaction-package-transaction-action-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-action-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
     com.google.protobuf.ByteString]
@@ -3298,7 +3386,8 @@
 (defn
  set-version
  ([query-chaincode-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
     java.lang.String]
@@ -3369,7 +3458,8 @@
 (defn
  set-chaincode-event
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
@@ -3426,7 +3516,8 @@
 (defn
  get-intermediate-certs-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -3448,7 +3539,8 @@
 (defn
  get-proposal-hash
  ([proposal-response-package-proposal-response-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-payload-or-builder])
@@ -3483,7 +3575,8 @@
 (defn
  get-data-or-builder
  ([common-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockOrBuilder]
    (.
@@ -3505,7 +3598,8 @@
 (defn
  set-oldest
  ([ab-seek-position-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
     org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
@@ -3539,7 +3633,8 @@
 (defn
  get-rejection-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -3561,7 +3656,8 @@
 (defn
  set-policy
  ([configtx-config-policy-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-policy-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
     org.hyperledger.fabric.protos.common.Policies$Policy$Builder]
@@ -3584,7 +3680,8 @@
 (defn
  get-chaincode-spec-or-builder
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -3621,7 +3718,8 @@
 (defn
  get-tls-intermediate-certs
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -3652,7 +3750,8 @@
 (defn
  get-tls-root-certs-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -3674,7 +3773,8 @@
 (defn
  get-rules-list
  ([policies-signature-policy-n-out-of-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder]
    (.
@@ -3707,7 +3807,8 @@
 (defn
  get-identity-identifier-hash-function
  ([msp-config-package-fabric-crypto-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-crypto-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder]
    (.
@@ -3762,7 +3863,8 @@
 (defn
  get-last-update
  ([configtx-config-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelopeOrBuilder]
    (.
@@ -3784,7 +3886,8 @@
 (defn
  get-admins-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -3806,7 +3909,8 @@
 (defn
  get-status-value
  ([admin-package-server-status-or-builder]
-  (case
+  (condp
+   =
    (mapv type [admin-package-server-status-or-builder])
    [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatusOrBuilder]
    (.
@@ -3869,7 +3973,8 @@
 (defn
  get-chain-id
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -3891,7 +3996,8 @@
 (defn
  get-chaincode-spec
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -3939,7 +4045,8 @@
 (defn
  get-revocation-list-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -3961,7 +4068,8 @@
 (defn
  get-filtered-block-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -4005,7 +4113,8 @@
 (defn
  get-response
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -4042,7 +4151,8 @@
 (defn
  set-block
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.common.Common$Block$Builder]
@@ -4081,7 +4191,8 @@
 (defn
  get-mutable-values
  ([configtx-config-group-schema-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
    (.
@@ -4098,7 +4209,8 @@
 (defn
  get-metadata
  ([common-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockOrBuilder]
    (.
@@ -4116,7 +4228,8 @@
     common-block-or-builder
     getMetadata)))
  ([common-block-metadata-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [common-block-metadata-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Common$BlockMetadataOrBuilder
     int]
@@ -4146,7 +4259,8 @@
 (defn
  get-chaincode-id-or-builder
  ([proposal-package-chaincode-header-extension-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-header-extension-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtensionOrBuilder]
    (.
@@ -4198,7 +4312,8 @@
 (defn
  set-chaincodes
  ([query-chaincode-query-response-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
     int
@@ -4227,7 +4342,8 @@
 (defn
  set-crypto-config
  ([msp-config-package-fabric-msp-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
     org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
@@ -4250,7 +4366,8 @@
 (defn
  get-last-update-or-builder
  ([configtx-config-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelopeOrBuilder]
    (.
@@ -4272,7 +4389,8 @@
 (defn
  get-principal-classification
  ([msp-principal-msp-principal-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-msp-principal-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipalOrBuilder]
    (.
@@ -4294,7 +4412,8 @@
 (defn
  get-info
  ([ab-broadcast-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-broadcast-response-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponseOrBuilder]
    (.
@@ -4325,7 +4444,8 @@
 (defn
  get-channels
  ([query-channel-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponseOrBuilder
     int]
@@ -4355,7 +4475,8 @@
 (defn
  get-args
  ([chaincode-chaincode-input-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder
     int]
@@ -4385,7 +4506,8 @@
 (defn
  set-tx
  ([events-package-rejection-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-rejection-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
     org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder]
@@ -4408,7 +4530,8 @@
 (defn
  get-tx-validation-code
  ([events-package-filtered-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
    (.
@@ -4430,7 +4553,8 @@
 (defn
  get-signatures
  ([configtx-config-update-envelope-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder
     int]
@@ -4482,7 +4606,8 @@
 (defn
  get-unregister
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -4504,7 +4629,8 @@
 (defn
  get-sub-policy
  ([policies-implicit-meta-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-implicit-meta-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicyOrBuilder]
    (.
@@ -4526,7 +4652,8 @@
 (defn
  get-config-seq
  ([kafka-kafka-message-regular-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-regular-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegularOrBuilder]
    (.
@@ -4548,7 +4675,8 @@
 (defn
  get-block-builder
  ([events-package-event-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder]
    (.
@@ -4565,7 +4693,8 @@
 (defn
  get-log-module
  ([admin-package-log-level-request-or-builder]
-  (case
+  (condp
+   =
    (mapv type [admin-package-log-level-request-or-builder])
    [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder]
    (.
@@ -4622,7 +4751,8 @@
 (defn
  get-newest-or-builder
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -4653,7 +4783,8 @@
 (defn
  set-status
  ([proposal-response-package-response-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-response-builder arg0])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
     int]
@@ -4692,7 +4823,8 @@
 (defn
  get-identities-or-builder-list
  ([policies-signature-policy-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder]
    (.
@@ -4714,7 +4846,8 @@
 (defn
  get-metadata-list
  ([common-block-metadata-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-metadata-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockMetadataOrBuilder]
    (.
@@ -4736,7 +4869,8 @@
 (defn
  get-time-to-cut-or-builder
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -4780,7 +4914,8 @@
 (defn
  get-intermediate-certs-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -4802,7 +4937,8 @@
 (defn
  get-instantiation-policy
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder])
@@ -4826,7 +4962,8 @@
 (defn
  get-brokers
  ([configuration-kafka-brokers-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configuration-kafka-brokers-or-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokersOrBuilder
     int]
@@ -4857,7 +4994,8 @@
 (defn
  get-key
  ([chaincode-shim-put-state-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-put-state-info-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfoOrBuilder]
    (.
@@ -4894,7 +5032,8 @@
 (defn
  get-action
  ([transaction-package-chaincode-action-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-action-payload-or-builder])
@@ -4918,7 +5057,8 @@
 (defn
  get-connect-or-builder
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -4951,7 +5091,8 @@
 (defn
  get-signatures-builder-list
  ([configtx-config-update-envelope-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder]
    (.
@@ -4968,7 +5109,8 @@
 (defn
  get-regular
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -4990,7 +5132,8 @@
 (defn
  get-filtered-tx-list
  ([events-package-filtered-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder]
    (.
@@ -5012,7 +5155,8 @@
 (defn
  get-tx-or-builder
  ([events-package-rejection-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-rejection-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RejectionOrBuilder]
    (.
@@ -5034,7 +5178,8 @@
 (defn
  get-owner-endorsements-or-builder
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder
@@ -5068,7 +5213,8 @@
 (defn
  get-msp-identifier
  ([msp-principal-organization-unit-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-organization-unit-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder]
    (.
@@ -5105,7 +5251,8 @@
 (defn
  get-input-or-builder
  ([chaincode-chaincode-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpecOrBuilder]
    (.
@@ -5136,7 +5283,8 @@
 (defn
  get-write-set
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -5158,7 +5306,8 @@
 (defn
  get-identities-or-builder
  ([policies-signature-policy-envelope-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder
     int]
@@ -5189,7 +5338,8 @@
 (defn
  get-block-number
  ([kafka-kafka-message-time-to-cut-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-time-to-cut-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCutOrBuilder]
    (.
@@ -5211,7 +5361,8 @@
 (defn
  set-start
  ([ab-seek-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
     org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder]
@@ -5234,7 +5385,8 @@
 (defn
  get-owner-endorsements-or-builder-list
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder])
@@ -5280,7 +5432,8 @@
 (defn
  get-groups-count
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -5317,7 +5470,8 @@
 (defn
  set-input
  ([query-chaincode-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
     java.lang.String]
@@ -5367,7 +5521,8 @@
 (defn
  get-organizational-unit-identifiers-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -5398,7 +5553,8 @@
 (defn
  get-rule-value
  ([policies-implicit-meta-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-implicit-meta-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicyOrBuilder]
    (.
@@ -5420,7 +5576,8 @@
 (defn
  get-stop
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -5442,7 +5599,8 @@
 (defn
  get-private-signer-or-builder
  ([msp-config-package-signing-identity-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-signing-identity-info-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfoOrBuilder]
    (.
@@ -5464,7 +5622,8 @@
 (defn
  get-response-builder
  ([proposal-response-package-proposal-response-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
    (.
@@ -5490,7 +5649,8 @@
 (defn
  set-proposal
  ([chaincode-shim-chaincode-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
     org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
@@ -5520,7 +5680,8 @@
    ^com.google.protobuf.ByteString
    arg0))
  ([chaincode-shim-query-response-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
     int
@@ -5560,7 +5721,8 @@
 (defn
  get-values-count
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -5617,7 +5779,8 @@
 (defn
  get-sk
  ([msp-config-package-idemix-msp-signer-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-signer-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder]
    (.
@@ -5639,7 +5802,8 @@
 (defn
  get-action-or-builder
  ([transaction-package-chaincode-action-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-action-payload-or-builder])
@@ -5663,7 +5827,8 @@
 (defn
  get-escc
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -5694,7 +5859,8 @@
 (defn
  get-policies-or-default
  ([configtx-config-group-schema-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String
@@ -5767,7 +5933,8 @@
 (defn
  get-has-more
  ([chaincode-shim-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder]
    (.
@@ -5789,7 +5956,8 @@
 (defn
  set-header
  ([transaction-package-transaction-action-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-action-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
     com.google.protobuf.ByteString]
@@ -5844,7 +6012,8 @@
 (defn
  get-effective-date-or-builder
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -5866,7 +6035,8 @@
 (defn
  get-brokers-count
  ([configuration-kafka-brokers-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-kafka-brokers-or-builder])
    [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokersOrBuilder]
    (.
@@ -5888,7 +6058,8 @@
 (defn
  set-timestamp
  ([proposal-response-package-proposal-response-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-builder arg0])
@@ -5965,7 +6136,8 @@
 (defn
  set-signature-header
  ([configtx-config-signature-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-signature-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
     com.google.protobuf.ByteString]
@@ -5996,7 +6168,8 @@
 (defn
  set-stop
  ([ab-seek-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
     org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder]
@@ -6030,7 +6203,8 @@
 (defn
  get-private-signer
  ([msp-config-package-signing-identity-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-signing-identity-info-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfoOrBuilder]
    (.
@@ -6052,7 +6226,8 @@
 (defn
  get-write-set-or-builder
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -6083,7 +6258,8 @@
 (defn
  get-principal
  ([msp-principal-msp-principal-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-msp-principal-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipalOrBuilder]
    (.
@@ -6105,7 +6281,8 @@
 (defn
  get-txid
  ([events-package-filtered-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
    (.
@@ -6142,7 +6319,8 @@
 (defn
  set-signing-identity
  ([msp-config-package-fabric-msp-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
     org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
@@ -6165,7 +6343,8 @@
 (defn
  get-height
  ([ledger-blockchain-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ledger-blockchain-info-or-builder])
    [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfoOrBuilder]
    (.
@@ -6198,7 +6377,8 @@
 (defn
  get-version
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -6325,7 +6505,8 @@
 (defn
  get-tx-validation-code-value
  ([events-package-filtered-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
    (.
@@ -6358,7 +6539,8 @@
 (defn
  get-filtered-tx-count
  ([events-package-filtered-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder]
    (.
@@ -6380,7 +6562,8 @@
 (defn
  get-value
  ([chaincode-shim-put-state-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-put-state-info-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfoOrBuilder]
    (.
@@ -6447,7 +6630,8 @@
 (defn
  get-transient-map-count
  ([proposal-package-chaincode-proposal-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-proposal-payload-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayloadOrBuilder]
    (.
@@ -6469,7 +6653,8 @@
 (defn
  get-value-descriptor
  ([transaction-package-tx-validation-code]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-tx-validation-code])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TxValidationCode]
    (.
@@ -6561,7 +6746,8 @@
 (defn
  get-filtered-tx-or-builder-list
  ([events-package-filtered-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder]
    (.
@@ -6594,7 +6780,8 @@
 (defn
  get-chaincode-proposal-payload
  ([transaction-package-chaincode-action-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-action-payload-or-builder])
@@ -6618,7 +6805,8 @@
 (defn
  get-transient-map-or-default
  ([proposal-package-chaincode-proposal-payload-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-package-chaincode-proposal-payload-or-builder arg0 arg1])
@@ -6660,7 +6848,8 @@
 (defn
  get-revocation-list-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -6684,7 +6873,8 @@
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
    arg0
    arg1]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
@@ -6717,7 +6907,8 @@
 (defn
  get-brokers-list
  ([configuration-kafka-brokers-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-kafka-brokers-or-builder])
    [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokersOrBuilder]
    (.
@@ -6739,7 +6930,8 @@
 (defn
  set-tx-id
  ([chaincode-event-package-chaincode-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-event-package-chaincode-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
     java.lang.String]
@@ -6762,7 +6954,8 @@
 (defn
  set-action
  ([transaction-package-chaincode-action-payload-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-action-payload-builder arg0])
@@ -6787,7 +6980,8 @@
 (defn
  get-actions
  ([transaction-package-transaction-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionOrBuilder
     int]
@@ -6818,7 +7012,8 @@
 (defn
  get-identities
  ([policies-signature-policy-envelope-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder
     int]
@@ -6862,7 +7057,8 @@
 (defn
  get-previous-hash
  ([common-block-header-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-header-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockHeaderOrBuilder]
    (.
@@ -6884,7 +7080,8 @@
 (defn
  get-events
  ([proposal-package-chaincode-action-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-action-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeActionOrBuilder]
    (.
@@ -6902,7 +7099,8 @@
     proposal-package-chaincode-action-or-builder
     getEvents)))
  ([events-package-register-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RegisterOrBuilder
     int]
@@ -6955,7 +7153,8 @@
 (defn
  get-filtered-tx
  ([events-package-filtered-block-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder
     int]
@@ -6985,7 +7184,8 @@
 (defn
  get-groups
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -7022,7 +7222,8 @@
 (defn
  get-block
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -7068,7 +7269,8 @@
 (defn
  get-key-identifier
  ([msp-config-package-key-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-key-info-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfoOrBuilder]
    (.
@@ -7090,7 +7292,8 @@
 (defn
  get-transaction-envelope-or-builder
  ([transaction-package-processed-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-processed-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransactionOrBuilder]
    (.
@@ -7112,7 +7315,8 @@
 (defn
  get-capabilities
  ([configuration-capabilities-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-capabilities-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder]
    (.
@@ -7134,7 +7338,8 @@
 (defn
  set-effective-date
  ([chaincode-chaincode-deployment-spec-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-builder arg0])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
     com.google.protobuf.Timestamp$Builder]
@@ -7166,7 +7371,8 @@
 (defn
  get-unregister-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -7210,7 +7416,8 @@
 (defn
  get-specified
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -7232,7 +7439,8 @@
 (defn
  get-max-message-count
  ([configuration-batch-size-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-batch-size-or-builder])
    [org.hyperledger.fabric.protos.orderer.Configuration$BatchSizeOrBuilder]
    (.
@@ -7265,7 +7473,8 @@
 (defn
  set-msp-identifier
  ([msp-principal-organization-unit-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-organization-unit-builder arg0])
    [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
     java.lang.String]
@@ -7288,7 +7497,8 @@
 (defn
  set-type
  ([chaincode-shim-chaincode-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
     org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Type]
@@ -7366,7 +7576,8 @@
 (defn
  set-organizational-unit-identifiers
  ([msp-config-package-fabric-msp-config-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-builder arg0 arg1])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
     int
@@ -7406,7 +7617,8 @@
 (defn
  get-code-package
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -7470,7 +7682,8 @@
 (defn
  get-certificate
  ([msp-config-package-fabric-ou-identifier-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-ou-identifier-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifierOrBuilder]
    (.
@@ -7501,7 +7714,8 @@
 (defn
  get-payload-visibility
  ([proposal-package-chaincode-header-extension-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-header-extension-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtensionOrBuilder]
    (.
@@ -7523,7 +7737,8 @@
 (defn
  get-intermediate-certs
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -7554,7 +7769,8 @@
 (defn
  set-txid
  ([events-package-filtered-transaction-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
     java.lang.String]
@@ -7577,7 +7793,8 @@
 (defn
  get-admins-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -7599,7 +7816,8 @@
 (defn
  get-policy-ref
  ([resources-resource-or-builder]
-  (case
+  (condp
+   =
    (mapv type [resources-resource-or-builder])
    [org.hyperledger.fabric.protos.peer.Resources$ResourceOrBuilder]
    (.
@@ -7621,7 +7839,8 @@
 (defn
  get-tx-id
  ([chaincode-event-package-chaincode-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-event-package-chaincode-event-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder]
    (.
@@ -7658,7 +7877,8 @@
 (defn
  set-signature
  ([transaction-package-signed-transaction-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-signed-transaction-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
     com.google.protobuf.ByteString]
@@ -7721,7 +7941,8 @@
 (defn
  get-chaincodes
  ([query-chaincode-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponseOrBuilder
     int]
@@ -7752,7 +7973,8 @@
 (defn
  get-role
  ([identities-serialized-idemix-identity-or-builder]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-idemix-identity-or-builder])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentityOrBuilder]
    (.
@@ -7789,7 +8011,8 @@
 (defn
  get-rules-or-builder-list
  ([policies-signature-policy-n-out-of-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder]
    (.
@@ -7811,7 +8034,8 @@
 (defn
  set-connect
  ([kafka-kafka-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
     org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder]
@@ -7843,7 +8067,8 @@
 (defn
  get-n-out-of
  ([policies-signature-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyOrBuilder]
    (.
@@ -7865,7 +8090,8 @@
 (defn
  set-creator
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     com.google.protobuf.ByteString]
@@ -7888,7 +8114,8 @@
 (defn
  get-channels-or-builder
  ([query-channel-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponseOrBuilder
     int]
@@ -7918,7 +8145,8 @@
 (defn
  get-regular-or-builder
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -7940,7 +8168,8 @@
 (defn
  get-header-or-builder
  ([common-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-payload-or-builder])
    [org.hyperledger.fabric.protos.common.Common$PayloadOrBuilder]
    (.
@@ -7988,7 +8217,8 @@
 (defn
  get-channels-or-builder-list
  ([query-channel-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponseOrBuilder]
    (.
@@ -8010,7 +8240,8 @@
 (defn
  get-message
  ([proposal-response-package-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ResponseOrBuilder]
    (.
@@ -8032,7 +8263,8 @@
 (defn
  get-chaincode-id-builder
  ([proposal-package-chaincode-header-extension-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-header-extension-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder]
    (.
@@ -8054,7553 +8286,7555 @@
 (defn
  parse-from
  ([class arg0 arg1]
-  (case
-   (mapv type [class arg0 arg1])
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+  (condp
+   =
+   (conj (mapv type [arg0 arg1]) class)
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    "[B"
-    com.google.protobuf.ExtensionRegistryLite]
+   ["[B"
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^bytes
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    com.google.protobuf.ByteString
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.ByteString
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^com.google.protobuf.ByteString
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    com.google.protobuf.CodedInputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [com.google.protobuf.CodedInputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    java.nio.ByteBuffer
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.nio.ByteBuffer
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^java.nio.ByteBuffer
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    java.io.InputStream
-    com.google.protobuf.ExtensionRegistryLite]
+   [java.io.InputStream
+    com.google.protobuf.ExtensionRegistryLite
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^java.io.InputStream
     class
     ^com.google.protobuf.ExtensionRegistryLite
     arg0)))
  ([class arg0]
-  (case
-   (mapv type [class arg0])
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    com.google.protobuf.CodedInputStream]
+  (condp
+   =
+   (conj (mapv type [arg0]) class)
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Resources$Resource]
    (org.hyperledger.fabric.protos.peer.Resources$Resource/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID java.nio.ByteBuffer]
+   [java.nio.ByteBuffer org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID java.io.InputStream]
+   [java.io.InputStream org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Peer$PeerID]
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Register]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.EventsPackage$Event]
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus "[B"]
+   ["[B" org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse "[B"]
+   ["[B" org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig "[B"]
+   ["[B" org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$Policy "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Policies$Policy
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Policies$Policy]
    (org.hyperledger.fabric.protos.common.Policies$Policy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$Consortium]
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$Capabilities]
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configuration$Capability]
    (org.hyperledger.fabric.protos.common.Configuration$Capability/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$Config "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$Config
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$Config]
    (org.hyperledger.fabric.protos.common.Configtx$Config/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    "[B"]
+   ["[B"
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$LastConfig]
    (org.hyperledger.fabric.protos.common.Common$LastConfig/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Metadata "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Metadata
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$Metadata]
    (org.hyperledger.fabric.protos.common.Common$Metadata/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Header "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$Header
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$Header]
    (org.hyperledger.fabric.protos.common.Common$Header/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$ChannelHeader]
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$SignatureHeader]
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$Payload "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Payload
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$Payload]
    (org.hyperledger.fabric.protos.common.Common$Payload/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Envelope
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Envelope "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$Envelope]
    (org.hyperledger.fabric.protos.common.Common$Envelope/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$Block "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$Block
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$Block]
    (org.hyperledger.fabric.protos.common.Common$Block/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$BlockHeader]
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockData "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^bytes
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockData
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$BlockData]
    (org.hyperledger.fabric.protos.common.Common$BlockData/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    com.google.protobuf.ByteString]
+   [com.google.protobuf.ByteString
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^com.google.protobuf.ByteString
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    java.io.InputStream]
+   [java.io.InputStream
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^java.io.InputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    java.nio.ByteBuffer]
+   [java.nio.ByteBuffer
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^java.nio.ByteBuffer
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata
-    com.google.protobuf.CodedInputStream]
+   [com.google.protobuf.CodedInputStream
+    org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^com.google.protobuf.CodedInputStream
     class)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata "[B"]
+   ["[B" org.hyperledger.fabric.protos.common.Common$BlockMetadata]
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/parseFrom
     ^bytes
     class))))
@@ -15620,7 +15854,8 @@
 (defn
  get-chaincode-reg-info
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -15642,7 +15877,8 @@
 (defn
  set-signatures
  ([configtx-config-update-envelope-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
     int
@@ -15693,7 +15929,8 @@
 (defn
  get-current-block-hash
  ([ledger-blockchain-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ledger-blockchain-info-or-builder])
    [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfoOrBuilder]
    (.
@@ -15715,7 +15952,8 @@
 (defn
  get-cc-event-or-builder
  ([events-package-filtered-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
    (.
@@ -15746,7 +15984,8 @@
 (defn
  get-anchor-peers-or-builder
  ([configuration-anchor-peers-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeersOrBuilder
     int]
@@ -15776,7 +16015,8 @@
 (defn
  get-addresses-list
  ([configuration-orderer-addresses-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-orderer-addresses-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$OrdererAddressesOrBuilder]
    (.
@@ -15798,7 +16038,8 @@
 (defn
  get-id-generation-alg
  ([chaincode-chaincode-invocation-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-invocation-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpecOrBuilder]
    (.
@@ -15820,7 +16061,8 @@
 (defn
  get-chaincode-reg-info-or-builder
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -15851,7 +16093,8 @@
 (defn
  get-mod-policy
  ([configtx-config-group-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder]
    (.
@@ -15903,7 +16146,8 @@
 (defn
  get-transient-map-or-throw
  ([proposal-package-chaincode-proposal-payload-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-package-chaincode-proposal-payload-or-builder arg0])
@@ -15936,7 +16180,8 @@
 (defn
  get-time-to-cut
  ([kafka-kafka-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageOrBuilder]
    (.
@@ -15958,7 +16203,8 @@
 (defn
  get-cred
  ([msp-config-package-idemix-msp-signer-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-signer-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder]
    (.
@@ -15980,7 +16226,8 @@
 (defn
  get-effective-date
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -16002,7 +16249,8 @@
 (defn
  get-nym-y
  ([identities-serialized-idemix-identity-or-builder]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-idemix-identity-or-builder])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentityOrBuilder]
    (.
@@ -16024,7 +16272,8 @@
 (defn
  get-class_
  ([kafka-kafka-message-regular-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-regular-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegularOrBuilder]
    (.
@@ -16046,7 +16295,8 @@
 (defn
  get-transient-map-map
  ([proposal-package-chaincode-proposal-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-proposal-payload-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayloadOrBuilder]
    (.
@@ -16068,7 +16318,8 @@
 (defn
  set-data
  ([common-payload-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [common-payload-builder arg0])
    [org.hyperledger.fabric.protos.common.Common$Payload$Builder
     com.google.protobuf.ByteString]
@@ -16108,7 +16359,8 @@
 (defn
  get-args-count
  ([chaincode-chaincode-input-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder]
    (.
@@ -16130,7 +16382,8 @@
 (defn
  get-vscc
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -16161,7 +16414,8 @@
 (defn
  get-read-set-or-builder
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -16192,7 +16446,8 @@
 (defn
  set-id
  ([peer-peer-endpoint-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [peer-peer-endpoint-builder arg0])
    [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
     org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder]
@@ -16239,7 +16494,8 @@
 (defn
  set-extension
  ([proposal-response-package-proposal-response-payload-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-payload-builder arg0])
@@ -16290,7 +16546,8 @@
 (defn
  get-register-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -16312,7 +16569,8 @@
 (defn
  set-read-set
  ([configtx-config-update-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
     org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
@@ -16357,7 +16615,8 @@
 (defn
  get-root-certs-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -16379,7 +16638,8 @@
 (defn
  get-rejection
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -16401,7 +16661,8 @@
 (defn
  set-cc-event
  ([events-package-filtered-transaction-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
     org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
@@ -16424,7 +16685,8 @@
 (defn
  get-isolated-data-or-throw
  ([configtx-config-update-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder
     java.lang.String]
@@ -16455,7 +16717,8 @@
 (defn
  get-read-set
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -16477,7 +16740,8 @@
 (defn
  get-start-key
  ([chaincode-shim-get-state-by-range-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-get-state-by-range-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder]
    (.
@@ -16530,7 +16794,8 @@
 (defn
  get-is-admin
  ([msp-config-package-idemix-msp-signer-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-signer-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder]
    (.
@@ -16552,7 +16817,8 @@
 (defn
  set-value
  ([chaincode-shim-put-state-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-put-state-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
     com.google.protobuf.ByteString]
@@ -16591,7 +16857,8 @@
 (defn
  get-path
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -16628,7 +16895,8 @@
 (defn
  get-exec-env-value
  ([chaincode-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpecOrBuilder]
    (.
@@ -16650,7 +16918,8 @@
 (defn
  get-filtered-block
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -16672,7 +16941,8 @@
 (defn
  set-filtered-block
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
@@ -16706,7 +16976,8 @@
 (defn
  get-values-or-default
  ([configtx-config-group-schema-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String
@@ -16788,7 +17059,8 @@
 (defn
  set-timeout
  ([chaincode-chaincode-spec-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-spec-builder arg0])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
     int]
@@ -16811,7 +17083,8 @@
 (defn
  set-anchor-peers
  ([configuration-anchor-peers-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
     int
@@ -16840,7 +17113,8 @@
 (defn
  get-newest
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -16862,7 +17136,8 @@
 (defn
  set-register
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder]
@@ -16885,7 +17160,8 @@
 (defn
  set-write-set
  ([configtx-config-update-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
     org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
@@ -16908,7 +17184,8 @@
 (defn
  get-isolated-data-count
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -16930,7 +17207,8 @@
 (defn
  get-width
  ([configuration-block-data-hashing-structure-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-block-data-hashing-structure-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructureOrBuilder]
    (.
@@ -16952,7 +17230,8 @@
 (defn
  get-endorsements-list
  ([transaction-package-chaincode-endorsed-action-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder])
@@ -16976,7 +17255,8 @@
 (defn
  set-chaincode-reg-info
  ([events-package-interest-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
     org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
@@ -16999,7 +17279,8 @@
 (defn
  get-signer
  ([msp-config-package-idemix-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfigOrBuilder]
    (.
@@ -17030,7 +17311,8 @@
 (defn
  get-signatures-or-builder
  ([configtx-config-update-envelope-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder
     int]
@@ -17082,7 +17364,8 @@
 (defn
  get-max-count
  ([configuration-channel-restrictions-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-channel-restrictions-or-builder])
    [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictionsOrBuilder]
    (.
@@ -17104,7 +17387,8 @@
 (defn
  get-chaincodes-or-builder
  ([query-chaincode-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponseOrBuilder
     int]
@@ -17135,7 +17419,8 @@
 (defn
  get-behavior-value
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -17168,7 +17453,8 @@
 (defn
  get-policy
  ([configtx-config-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicyOrBuilder]
    (.
@@ -17199,7 +17485,8 @@
 (defn
  get-groups-map
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -17247,7 +17534,8 @@
 (defn
  get-epoch
  ([common-channel-header-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-channel-header-or-builder])
    [org.hyperledger.fabric.protos.common.Common$ChannelHeaderOrBuilder]
    (.
@@ -17269,7 +17557,8 @@
 (defn
  set-signer
  ([msp-config-package-idemix-msp-config-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-idemix-msp-config-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
     org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder]
@@ -17301,7 +17590,8 @@
 (defn
  get-channels-count
  ([query-channel-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponseOrBuilder]
    (.
@@ -17343,7 +17633,8 @@
 (defn
  get-revocation-list
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -17374,7 +17665,8 @@
 (defn
  get-endorsement
  ([proposal-response-package-proposal-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponseOrBuilder]
    (.
@@ -17396,7 +17688,8 @@
 (defn
  get-event-case
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -17418,7 +17711,8 @@
 (defn
  get-metadata-or-builder
  ([common-block-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockOrBuilder]
    (.
@@ -17440,7 +17734,8 @@
 (defn
  get-groups-or-throw
  ([configtx-config-group-schema-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String]
@@ -17515,7 +17810,8 @@
 (defn
  get-actions-count
  ([transaction-package-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionOrBuilder]
    (.
@@ -17537,7 +17833,8 @@
 (defn
  get-mutable-policies
  ([configtx-config-group-schema-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
    (.
@@ -17554,7 +17851,8 @@
 (defn
  set-role
  ([identities-serialized-idemix-identity-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-idemix-identity-builder arg0])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
     com.google.protobuf.ByteString]
@@ -17577,7 +17875,8 @@
 (defn
  get-header
  ([transaction-package-transaction-action-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-action-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionActionOrBuilder]
    (.
@@ -17657,7 +17956,8 @@
 (defn
  get-rule-or-builder
  ([policies-signature-policy-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder]
    (.
@@ -17679,7 +17979,8 @@
 (defn
  get-actions-or-builder-list
  ([transaction-package-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionOrBuilder]
    (.
@@ -17701,7 +18002,8 @@
 (defn
  get-number
  ([transaction-package-tx-validation-code]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-tx-validation-code])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TxValidationCode]
    (.
@@ -17890,7 +18192,8 @@
 (defn
  get-actions-or-builder
  ([transaction-package-transaction-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionOrBuilder
     int]
@@ -17930,7 +18233,8 @@
 (defn
  set-number
  ([events-package-filtered-block-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
     long]
@@ -17961,7 +18265,8 @@
 (defn
  get-ou
  ([identities-serialized-idemix-identity-or-builder]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-idemix-identity-or-builder])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentityOrBuilder]
    (.
@@ -17983,7 +18288,8 @@
 (defn
  set-rejection
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder]
@@ -18006,7 +18312,8 @@
 (defn
  get-role-value
  ([msp-principal-msp-role-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-msp-role-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRoleOrBuilder]
    (.
@@ -18028,7 +18335,8 @@
 (defn
  get-chaincodes-count
  ([query-chaincode-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponseOrBuilder]
    (.
@@ -18050,7 +18358,8 @@
 (defn
  get-anchor-peers-list
  ([configuration-anchor-peers-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-or-builder])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeersOrBuilder]
    (.
@@ -18072,7 +18381,8 @@
 (defn
  get-config
  ([msp-config-package-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfigOrBuilder]
    (.
@@ -18109,7 +18419,8 @@
 (defn
  get-id
  ([peer-peer-endpoint-or-builder]
-  (case
+  (condp
+   =
    (mapv type [peer-peer-endpoint-or-builder])
    [org.hyperledger.fabric.protos.peer.Peer$PeerEndpointOrBuilder]
    (.
@@ -18176,7 +18487,8 @@
 (defn
  get-register
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -18209,7 +18521,8 @@
 (defn
  get-previous-block-hash
  ([ledger-blockchain-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ledger-blockchain-info-or-builder])
    [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfoOrBuilder]
    (.
@@ -18253,7 +18566,8 @@
 (defn
  get-signature-hash-family
  ([msp-config-package-fabric-crypto-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-crypto-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder]
    (.
@@ -18275,7 +18589,8 @@
 (defn
  get-chaincode-deployment-spec
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder])
@@ -18299,7 +18614,8 @@
 (defn
  get-start
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -18332,7 +18648,8 @@
 (defn
  get-data
  ([common-payload-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-payload-or-builder])
    [org.hyperledger.fabric.protos.common.Common$PayloadOrBuilder]
    (.
@@ -18365,7 +18682,8 @@
     common-payload-or-builder
     getData)))
  ([common-block-data-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [common-block-data-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Common$BlockDataOrBuilder int]
    (.
@@ -18393,7 +18711,8 @@
 (defn
  get-behavior
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -18415,7 +18734,8 @@
 (defn
  get-anchor-peers-count
  ([configuration-anchor-peers-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-or-builder])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeersOrBuilder]
    (.
@@ -18437,7 +18757,8 @@
 (defn
  get-signatures-builder
  ([configtx-config-update-envelope-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
     int]
@@ -18470,7 +18791,8 @@
 (defn
  get-mspid
  ([identities-serialized-identity-or-builder]
-  (case
+  (condp
+   =
    (mapv type [identities-serialized-identity-or-builder])
    [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentityOrBuilder]
    (.
@@ -18503,7 +18825,8 @@
 (defn
  get-data-count
  ([common-block-data-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-data-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockDataOrBuilder]
    (.
@@ -18525,7 +18848,8 @@
 (defn
  get-oldest-or-builder
  ([ab-seek-position-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPositionOrBuilder]
    (.
@@ -18582,7 +18906,8 @@
 (defn
  get-isolated-data-or-default
  ([configtx-config-update-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder
     java.lang.String
@@ -18622,7 +18947,8 @@
 (defn
  get-groups-or-default
  ([configtx-config-group-schema-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String
@@ -18706,7 +19032,8 @@
 (defn
  set-channels
  ([query-channel-query-response-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
     int
@@ -18735,7 +19062,8 @@
 (defn
  get-filtered-tx-or-builder
  ([events-package-filtered-block-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder
     int]
@@ -18765,7 +19093,8 @@
 (defn
  set-log-module
  ([admin-package-log-level-request-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [admin-package-log-level-request-builder arg0])
    [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
     java.lang.String]
@@ -18788,7 +19117,8 @@
 (defn
  get-signing-identity
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -18821,7 +19151,8 @@
 (defn
  get-nonce
  ([common-signature-header-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-signature-header-or-builder])
    [org.hyperledger.fabric.protos.common.Common$SignatureHeaderOrBuilder]
    (.
@@ -18843,7 +19174,8 @@
 (defn
  get-events-count
  ([events-package-register-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RegisterOrBuilder]
    (.
@@ -18880,7 +19212,8 @@
 (defn
  get-identities-count
  ([policies-signature-policy-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder]
    (.
@@ -18913,7 +19246,8 @@
 (defn
  set-type-value
  ([chaincode-shim-chaincode-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
     int]
@@ -18936,7 +19270,8 @@
 (defn
  get-owner-endorsements-count
  ([signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder])
@@ -18960,7 +19295,8 @@
 (defn
  get-query
  ([chaincode-shim-get-query-result-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-get-query-result-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResultOrBuilder]
    (.
@@ -18982,7 +19318,8 @@
 (defn
  get-channels-list
  ([query-channel-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-channel-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponseOrBuilder]
    (.
@@ -19004,7 +19341,8 @@
 (defn
  set-unregister
  ([events-package-event-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
     org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
@@ -19027,7 +19365,8 @@
 (defn
  set-endorsement
  ([proposal-response-package-proposal-response-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [proposal-response-package-proposal-response-builder arg0])
@@ -19063,7 +19402,8 @@
 (defn
  get-decorations-or-default
  ([chaincode-chaincode-input-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder
     java.lang.String
@@ -19103,7 +19443,8 @@
 (defn
  get-tls-root-certs-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -19125,7 +19466,8 @@
 (defn
  get-policy-or-builder
  ([configtx-config-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicyOrBuilder]
    (.
@@ -19147,7 +19489,8 @@
 (defn
  get-config-update
  ([configtx-config-update-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder]
    (.
@@ -19169,7 +19512,8 @@
 (defn
  get-end-key
  ([chaincode-shim-get-state-by-range-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-get-state-by-range-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder]
    (.
@@ -19191,7 +19535,8 @@
 (defn
  get-cc-event
  ([events-package-filtered-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
    (.
@@ -19213,7 +19558,8 @@
 (defn
  set-event-name
  ([events-package-chaincode-reg-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-chaincode-reg-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
     java.lang.String]
@@ -19236,7 +19582,8 @@
 (defn
  get-addresses
  ([configuration-orderer-addresses-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configuration-orderer-addresses-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configuration$OrdererAddressesOrBuilder
     int]
@@ -19267,7 +19614,8 @@
 (defn
  set-specified
  ([ab-seek-position-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-position-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
     org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder]
@@ -19290,7 +19638,8 @@
 (defn
  get-creator
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -19327,7 +19676,8 @@
 (defn
  get-certifiers-identifier
  ([msp-principal-organization-unit-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-organization-unit-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder]
    (.
@@ -19349,7 +19699,8 @@
 (defn
  get-identities-list
  ([policies-signature-policy-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder]
    (.
@@ -19371,7 +19722,8 @@
 (defn
  get-events-or-builder
  ([events-package-register-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RegisterOrBuilder
     int]
@@ -19424,7 +19776,8 @@
 (defn
  get-values-or-throw
  ([configtx-config-group-schema-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String]
@@ -19501,7 +19854,8 @@
 (defn
  get-principal-classification-value
  ([msp-principal-msp-principal-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-principal-msp-principal-or-builder])
    [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipalOrBuilder]
    (.
@@ -19523,7 +19877,8 @@
 (defn
  get-rule
  ([policies-signature-policy-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelopeOrBuilder]
    (.
@@ -19560,7 +19915,8 @@
 (defn
  get-port
  ([configuration-anchor-peer-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peer-or-builder])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeerOrBuilder]
    (.
@@ -19582,7 +19938,8 @@
 (defn
  get-signatures-list
  ([configtx-config-update-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder]
    (.
@@ -19619,7 +19976,8 @@
 (defn
  get-index
  ([common-last-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-last-config-or-builder])
    [org.hyperledger.fabric.protos.common.Common$LastConfigOrBuilder]
    (.
@@ -19641,7 +19999,8 @@
 (defn
  get-proposal
  ([chaincode-shim-chaincode-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder]
    (.
@@ -19674,7 +20033,8 @@
 (defn
  set-name
  ([query-chaincode-info-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-builder arg0])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
     java.lang.String]
@@ -19737,7 +20097,8 @@
 (defn
  get-data-list
  ([common-block-data-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-data-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockDataOrBuilder]
    (.
@@ -19759,7 +20120,8 @@
 (defn
  get-rules
  ([policies-signature-policy-n-out-of-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder
     int]
@@ -19790,7 +20152,8 @@
 (defn
  get-id-or-builder
  ([peer-peer-endpoint-or-builder]
-  (case
+  (condp
+   =
    (mapv type [peer-peer-endpoint-or-builder])
    [org.hyperledger.fabric.protos.peer.Peer$PeerEndpointOrBuilder]
    (.
@@ -19812,7 +20175,8 @@
 (defn
  get-proposal-or-builder
  ([chaincode-shim-chaincode-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder]
    (.
@@ -19834,7 +20198,8 @@
 (defn
  get-tls-intermediate-certs-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -19856,7 +20221,8 @@
 (defn
  get-class_-value
  ([kafka-kafka-message-regular-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-regular-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegularOrBuilder]
    (.
@@ -19878,7 +20244,8 @@
 (defn
  get-host
  ([configuration-anchor-peer-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peer-or-builder])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeerOrBuilder]
    (.
@@ -19911,7 +20278,8 @@
 (defn
  get-input
  ([query-chaincode-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [query-chaincode-info-or-builder])
    [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
    (.
@@ -19963,7 +20331,8 @@
 (defn
  get-timestamp-builder
  ([proposal-response-package-proposal-response-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-response-package-proposal-response-builder])
    [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
    (.
@@ -19985,7 +20354,8 @@
 (defn
  get-last-offset-persisted
  ([kafka-kafka-metadata-or-builder]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-metadata-or-builder])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadataOrBuilder]
    (.
@@ -20007,7 +20377,8 @@
 (defn
  get-endorsements-or-builder
  ([transaction-package-chaincode-endorsed-action-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder arg0])
@@ -20049,7 +20420,8 @@
 (defn
  get-addresses-count
  ([configuration-orderer-addresses-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-orderer-addresses-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$OrdererAddressesOrBuilder]
    (.
@@ -20071,7 +20443,8 @@
 (defn
  get-actions-list
  ([transaction-package-transaction-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionOrBuilder]
    (.
@@ -20093,7 +20466,8 @@
 (defn
  get-events-builder-list
  ([events-package-register-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder]
    (.
@@ -20121,7 +20495,8 @@
 (defn
  get-capabilities-count
  ([configuration-capabilities-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-capabilities-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder]
    (.
@@ -20143,7 +20518,8 @@
 (defn
  get-endorsements-or-builder-list
  ([transaction-package-chaincode-endorsed-action-or-builder]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder])
@@ -20176,7 +20552,8 @@
 (defn
  get-timeout
  ([chaincode-chaincode-spec-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-spec-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpecOrBuilder]
    (.
@@ -20213,7 +20590,8 @@
 (defn
  get-key-material
  ([msp-config-package-key-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-key-info-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfoOrBuilder]
    (.
@@ -20235,7 +20613,8 @@
 (defn
  get-isolated-data
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -20257,7 +20636,8 @@
 (defn
  set-rule
  ([policies-signature-policy-envelope-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-envelope-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
     org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
@@ -20299,7 +20679,8 @@
 (defn
  get-organizational-unit-identifiers-or-builder-list
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -20321,7 +20702,8 @@
 (defn
  get-header-builder
  ([common-payload-builder]
-  (case
+  (condp
+   =
    (mapv type [common-payload-builder])
    [org.hyperledger.fabric.protos.common.Common$Payload$Builder]
    (.
@@ -20338,7 +20720,8 @@
 (defn
  get-chaincode-id
  ([proposal-package-chaincode-header-extension-or-builder]
-  (case
+  (condp
+   =
    (mapv type [proposal-package-chaincode-header-extension-or-builder])
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtensionOrBuilder]
    (.
@@ -20431,7 +20814,8 @@
 (defn
  get-chaincode-event
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -20468,7 +20852,8 @@
 (defn
  get-policies-or-throw
  ([configtx-config-group-schema-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
     java.lang.String]
@@ -20523,245 +20908,247 @@
 (defn
  new-builder
  ([class]
-  (case
-   (mapv type [class])
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
+  (condp
+   =
+   class
+   org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/newBuilder)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
+   org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource]
+   org.hyperledger.fabric.protos.peer.Resources$Resource
    (org.hyperledger.fabric.protos.peer.Resources$Resource/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
+   org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
+   org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
+   org.hyperledger.fabric.protos.peer.Query$ChannelInfo
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID]
+   org.hyperledger.fabric.protos.peer.Peer$PeerID
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
+   org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
+   org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Interest
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Register
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
+   org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
+   org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
+   org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/newBuilder)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Event
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
+   org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
+   org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/newBuilder)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
+   org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/newBuilder)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/newBuilder)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
+   org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/newBuilder)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
+   org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/newBuilder)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
+   org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
+   org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
+   org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
+   org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
+   org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
+   org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
+   org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/newBuilder)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
+   org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/newBuilder)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/newBuilder)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
+   org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/newBuilder)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
+   org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/newBuilder)
-   [org.hyperledger.fabric.protos.common.Policies$Policy]
+   org.hyperledger.fabric.protos.common.Policies$Policy
    (org.hyperledger.fabric.protos.common.Policies$Policy/newBuilder)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/newBuilder)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/newBuilder)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/newBuilder)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
+   org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/newBuilder)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
+   org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/newBuilder)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
+   org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/newBuilder)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
+   org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/newBuilder)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
+   org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
+   org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
+   org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
+   org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium]
+   org.hyperledger.fabric.protos.common.Configuration$Consortium
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities]
+   org.hyperledger.fabric.protos.common.Configuration$Capabilities
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability]
+   org.hyperledger.fabric.protos.common.Configuration$Capability
    (org.hyperledger.fabric.protos.common.Configuration$Capability/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$Config]
+   org.hyperledger.fabric.protos.common.Configtx$Config
    (org.hyperledger.fabric.protos.common.Configtx$Config/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigValue
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/newBuilder)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig]
+   org.hyperledger.fabric.protos.common.Common$LastConfig
    (org.hyperledger.fabric.protos.common.Common$LastConfig/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$Metadata]
+   org.hyperledger.fabric.protos.common.Common$Metadata
    (org.hyperledger.fabric.protos.common.Common$Metadata/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature]
+   org.hyperledger.fabric.protos.common.Common$MetadataSignature
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$Header]
+   org.hyperledger.fabric.protos.common.Common$Header
    (org.hyperledger.fabric.protos.common.Common$Header/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader]
+   org.hyperledger.fabric.protos.common.Common$ChannelHeader
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader]
+   org.hyperledger.fabric.protos.common.Common$SignatureHeader
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$Payload]
+   org.hyperledger.fabric.protos.common.Common$Payload
    (org.hyperledger.fabric.protos.common.Common$Payload/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$Envelope]
+   org.hyperledger.fabric.protos.common.Common$Envelope
    (org.hyperledger.fabric.protos.common.Common$Envelope/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$Block]
+   org.hyperledger.fabric.protos.common.Common$Block
    (org.hyperledger.fabric.protos.common.Common$Block/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader]
+   org.hyperledger.fabric.protos.common.Common$BlockHeader
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$BlockData]
+   org.hyperledger.fabric.protos.common.Common$BlockData
    (org.hyperledger.fabric.protos.common.Common$BlockData/newBuilder)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata]
+   org.hyperledger.fabric.protos.common.Common$BlockMetadata
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/newBuilder)))
  ([class arg0]
-  (case
-   (mapv type [class arg0])
+  (condp
+   =
+   (conj (mapv type [arg0]) class)
    [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
     org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/newBuilder
@@ -21352,7 +21739,8 @@
 (defn
  get-block-or-builder
  ([events-package-event-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-event-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$EventOrBuilder]
    (.
@@ -21389,7 +21777,8 @@
 (defn
  get-event-type-value
  ([events-package-interest-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-interest-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
    (.
@@ -21422,7 +21811,8 @@
 (defn
  set-n-out-of
  ([policies-signature-policy-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-builder arg0])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
     org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
@@ -21445,7 +21835,8 @@
 (defn
  get-capabilities-or-default
  ([configuration-capabilities-or-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [configuration-capabilities-or-builder arg0 arg1])
    [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder
     java.lang.String
@@ -21485,248 +21876,250 @@
 (defn
  get-default-instance
  ([class]
-  (case
-   (mapv type [class])
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
+  (condp
+   =
+   class
+   org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction]
+   org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
    (org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec]
+   org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
    (org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Resources$Resource]
+   org.hyperledger.fabric.protos.peer.Resources$Resource
    (org.hyperledger.fabric.protos.peer.Resources$Resource/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse]
+   org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
    (org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse]
+   org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
    (org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
+   org.hyperledger.fabric.protos.peer.Query$ChannelInfo
    (org.hyperledger.fabric.protos.peer.Query$ChannelInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
    (org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
    (org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal
    (org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction]
+   org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction
    (org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerID]
+   org.hyperledger.fabric.protos.peer.Peer$PeerID
    (org.hyperledger.fabric.protos.peer.Peer$PeerID/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
+   org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
    (org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
+   org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
    (org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Interest
    (org.hyperledger.fabric.protos.peer.EventsPackage$Interest/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Register]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Register
    (org.hyperledger.fabric.protos.peer.EventsPackage$Register/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
    (org.hyperledger.fabric.protos.peer.EventsPackage$Rejection/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
    (org.hyperledger.fabric.protos.peer.EventsPackage$Unregister/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
+   org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
+   org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
    (org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
+   org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
    (org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.EventsPackage$Event]
+   org.hyperledger.fabric.protos.peer.EventsPackage$Event
    (org.hyperledger.fabric.protos.peer.EventsPackage$Event/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers]
+   org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
+   org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
    (org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
+   org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
    (org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
+   org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
    (org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
+   org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
    (org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus]
+   org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus
    (org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
+   org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest/getDefaultInstance)
-   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
+   org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
    (org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata]
+   org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata
    (org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
+   org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
    (org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
+   org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchSize/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
+   org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
    (org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers]
+   org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
    (org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions]
+   org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions
    (org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
+   org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
    (org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekNewest
    (org.hyperledger.fabric.protos.orderer.Ab$SeekNewest/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekOldest
    (org.hyperledger.fabric.protos.orderer.Ab$SeekOldest/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified
    (org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
    (org.hyperledger.fabric.protos.orderer.Ab$SeekPosition/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo]
+   org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
    (org.hyperledger.fabric.protos.orderer.Ab$SeekInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse]
+   org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
    (org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
+   org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
    (org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
+   org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity/getDefaultInstance)
-   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity]
+   org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity
    (org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Policies$Policy]
+   org.hyperledger.fabric.protos.common.Policies$Policy
    (org.hyperledger.fabric.protos.common.Policies$Policy/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
+   org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
    (org.hyperledger.fabric.protos.common.Policies$SignaturePolicy/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
+   org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
    (org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
+   org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
+   org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
    (org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
+   org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
    (org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo]
+   org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo
    (org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
+   org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
    (org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure]
+   org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure
    (org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses]
+   org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
    (org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$Consortium]
+   org.hyperledger.fabric.protos.common.Configuration$Consortium
    (org.hyperledger.fabric.protos.common.Configuration$Consortium/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$Capabilities]
+   org.hyperledger.fabric.protos.common.Configuration$Capabilities
    (org.hyperledger.fabric.protos.common.Configuration$Capabilities/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configuration$Capability]
+   org.hyperledger.fabric.protos.common.Configuration$Capability
    (org.hyperledger.fabric.protos.common.Configuration$Capability/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
    (org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$Config]
+   org.hyperledger.fabric.protos.common.Configtx$Config
    (org.hyperledger.fabric.protos.common.Configtx$Config/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
    (org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
    (org.hyperledger.fabric.protos.common.Configtx$ConfigGroup/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigValue
    (org.hyperledger.fabric.protos.common.Configtx$ConfigValue/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
    (org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
+   org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
    (org.hyperledger.fabric.protos.common.Configtx$ConfigSignature/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$LastConfig]
+   org.hyperledger.fabric.protos.common.Common$LastConfig
    (org.hyperledger.fabric.protos.common.Common$LastConfig/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$Metadata]
+   org.hyperledger.fabric.protos.common.Common$Metadata
    (org.hyperledger.fabric.protos.common.Common$Metadata/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$MetadataSignature]
+   org.hyperledger.fabric.protos.common.Common$MetadataSignature
    (org.hyperledger.fabric.protos.common.Common$MetadataSignature/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$Header]
+   org.hyperledger.fabric.protos.common.Common$Header
    (org.hyperledger.fabric.protos.common.Common$Header/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$ChannelHeader]
+   org.hyperledger.fabric.protos.common.Common$ChannelHeader
    (org.hyperledger.fabric.protos.common.Common$ChannelHeader/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$SignatureHeader]
+   org.hyperledger.fabric.protos.common.Common$SignatureHeader
    (org.hyperledger.fabric.protos.common.Common$SignatureHeader/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$Payload]
+   org.hyperledger.fabric.protos.common.Common$Payload
    (org.hyperledger.fabric.protos.common.Common$Payload/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$Envelope]
+   org.hyperledger.fabric.protos.common.Common$Envelope
    (org.hyperledger.fabric.protos.common.Common$Envelope/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$Block]
+   org.hyperledger.fabric.protos.common.Common$Block
    (org.hyperledger.fabric.protos.common.Common$Block/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$BlockHeader]
+   org.hyperledger.fabric.protos.common.Common$BlockHeader
    (org.hyperledger.fabric.protos.common.Common$BlockHeader/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$BlockData]
+   org.hyperledger.fabric.protos.common.Common$BlockData
    (org.hyperledger.fabric.protos.common.Common$BlockData/getDefaultInstance)
-   [org.hyperledger.fabric.protos.common.Common$BlockMetadata]
+   org.hyperledger.fabric.protos.common.Common$BlockMetadata
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/getDefaultInstance))))
 
 ;;;  getEventsOrBuilderList
 (defn
  get-events-or-builder-list
  ([events-package-register-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RegisterOrBuilder]
    (.
@@ -21763,7 +22156,8 @@
 (defn
  get-signatures-or-builder-list
  ([configtx-config-update-envelope-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-envelope-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelopeOrBuilder]
    (.
@@ -21800,7 +22194,8 @@
 (defn
  set-chaincode-spec
  ([chaincode-chaincode-deployment-spec-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-deployment-spec-builder arg0])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
     org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder]
@@ -21839,7 +22234,8 @@
 (defn
  get-channel-header
  ([common-header-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-header-or-builder])
    [org.hyperledger.fabric.protos.common.Common$HeaderOrBuilder]
    (.
@@ -21861,7 +22257,8 @@
 (defn
  get-crypto-config-or-builder
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -21903,7 +22300,8 @@
 (defn
  get-endorsements
  ([transaction-package-chaincode-endorsed-action-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv
     type
     [transaction-package-chaincode-endorsed-action-or-builder arg0])
@@ -21947,7 +22345,8 @@
 (defn
  get-payload
  ([transaction-package-transaction-action-or-builder]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-action-or-builder])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionActionOrBuilder]
    (.
@@ -22100,7 +22499,8 @@
 (defn
  get-anchor-peers
  ([configuration-anchor-peers-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configuration-anchor-peers-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeersOrBuilder
     int]
@@ -22154,7 +22554,8 @@
 (defn
  get-start-or-builder
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -22176,7 +22577,8 @@
 (defn
  get-results-count
  ([chaincode-shim-query-response-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder]
    (.
@@ -22209,7 +22611,8 @@
 (defn
  set-filtered-tx
  ([events-package-filtered-block-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [events-package-filtered-block-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
     int
@@ -22238,7 +22641,8 @@
 (defn
  get-results-or-builder
  ([chaincode-shim-query-response-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-query-response-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder
     int]
@@ -22268,7 +22672,8 @@
 (defn
  get-decorations-map
  ([chaincode-chaincode-input-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder]
    (.
@@ -22299,7 +22704,8 @@
 (defn
  get-isolated-data-map
  ([configtx-config-update-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-update-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
    (.
@@ -22321,7 +22727,8 @@
 (defn
  get-mutable-groups
  ([configtx-config-group-schema-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
    (.
@@ -22338,7 +22745,8 @@
 (defn
  get-decorations-count
  ([chaincode-chaincode-input-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder]
    (.
@@ -22360,7 +22768,8 @@
 (defn
  get-tls-root-certs
  ([msp-config-package-fabric-msp-config-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder arg0])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
     int]
@@ -22391,7 +22800,8 @@
 (defn
  get-tls-intermediate-certs-count
  ([msp-config-package-fabric-msp-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [msp-config-package-fabric-msp-config-or-builder])
    [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
    (.
@@ -22435,7 +22845,8 @@
 (defn
  set-mod-policy
  ([configtx-config-group-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
     java.lang.String]
@@ -22488,7 +22899,8 @@
 (defn
  get-events-list
  ([events-package-register-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-register-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RegisterOrBuilder]
    (.
@@ -22525,7 +22937,8 @@
 (defn
  get-data-hash
  ([common-block-header-or-builder]
-  (case
+  (condp
+   =
    (mapv type [common-block-header-or-builder])
    [org.hyperledger.fabric.protos.common.Common$BlockHeaderOrBuilder]
    (.
@@ -22547,7 +22960,8 @@
 (defn
  set-regular
  ([kafka-kafka-message-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [kafka-kafka-message-builder arg0])
    [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
     org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular]
@@ -22570,7 +22984,8 @@
 (defn
  get-n
  ([policies-signature-policy-n-out-of-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-n-out-of-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOfOrBuilder]
    (.
@@ -22592,7 +23007,8 @@
 (defn
  get-values
  ([configtx-config-group-schema-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-group-schema-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder]
    (.
@@ -22629,7 +23045,8 @@
 (defn
  get-capabilities-map
  ([configuration-capabilities-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configuration-capabilities-or-builder])
    [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder]
    (.
@@ -22651,7 +23068,8 @@
 (defn
  get-type-value
  ([chaincode-shim-chaincode-message-or-builder]
-  (case
+  (condp
+   =
    (mapv type [chaincode-shim-chaincode-message-or-builder])
    [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder]
    (.
@@ -22688,7 +23106,8 @@
 (defn
  get-channel-group-or-builder
  ([configtx-config-or-builder]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-or-builder])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigOrBuilder]
    (.
@@ -22710,7 +23129,8 @@
 (defn
  get-tx
  ([events-package-rejection-or-builder]
-  (case
+  (condp
+   =
    (mapv type [events-package-rejection-or-builder])
    [org.hyperledger.fabric.protos.peer.EventsPackage$RejectionOrBuilder]
    (.
@@ -22732,7 +23152,8 @@
 (defn
  get-stop-or-builder
  ([ab-seek-info-or-builder]
-  (case
+  (condp
+   =
    (mapv type [ab-seek-info-or-builder])
    [org.hyperledger.fabric.protos.orderer.Ab$SeekInfoOrBuilder]
    (.
@@ -22763,7 +23184,8 @@
 (defn
  get-n-out-of-or-builder
  ([policies-signature-policy-or-builder]
-  (case
+  (condp
+   =
    (mapv type [policies-signature-policy-or-builder])
    [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyOrBuilder]
    (.
@@ -22785,7 +23207,8 @@
 (defn
  get-address
  ([peer-peer-endpoint-or-builder]
-  (case
+  (condp
+   =
    (mapv type [peer-peer-endpoint-or-builder])
    [org.hyperledger.fabric.protos.peer.Peer$PeerEndpointOrBuilder]
    (.
@@ -22807,7 +23230,8 @@
 (defn
  set-actions
  ([transaction-package-transaction-builder arg0 arg1]
-  (case
+  (condp
+   =
    (mapv type [transaction-package-transaction-builder arg0 arg1])
    [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
     int
@@ -22847,7 +23271,8 @@
 (defn
  set-last-update
  ([configtx-config-envelope-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [configtx-config-envelope-builder arg0])
    [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
     org.hyperledger.fabric.protos.common.Common$Envelope]
@@ -22870,7 +23295,8 @@
 (defn
  get-decorations-or-throw
  ([chaincode-chaincode-input-or-builder arg0]
-  (case
+  (condp
+   =
    (mapv type [chaincode-chaincode-input-or-builder arg0])
    [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder
     java.lang.String]
