@@ -45,6 +45,44 @@
     proposal-response-package-proposal-response-or-builder
     getEndorsementOrBuilder))))
 
+;;;  addOwnerEndorsementsBuilder
+(defn
+ add-owner-endorsements-builder
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   addOwnerEndorsementsBuilder))
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   addOwnerEndorsementsBuilder
+   ^int
+   arg0)))
+
+;;;  putAllTransientMap
+(defn
+ put-all-transient-map
+ ([proposal-package-chaincode-proposal-payload-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   proposal-package-chaincode-proposal-payload-builder
+   putAllTransientMap
+   ^java.util.Map
+   arg0)))
+
+;;;  addAllAddresses
+(defn
+ add-all-addresses
+ ([configuration-orderer-addresses-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+   configuration-orderer-addresses-builder
+   addAllAddresses
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getResponseOrBuilder
 (defn
  get-response-or-builder
@@ -83,6 +121,17 @@
     proposal-response-package-proposal-response-or-builder
     getResponseOrBuilder))))
 
+;;;  removeCapabilities
+(defn
+ remove-capabilities
+ ([configuration-capabilities-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+   configuration-capabilities-builder
+   removeCapabilities
+   ^java.lang.String
+   arg0)))
+
 ;;;  getChaincodesOrBuilderList
 (defn
  get-chaincodes-or-builder-list
@@ -105,6 +154,39 @@
     ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse
     query-chaincode-query-response-or-builder
     getChaincodesOrBuilderList))))
+
+;;;  clearChaincodeId
+(defn
+ clear-chaincode-id
+ ([proposal-package-chaincode-header-extension-builder]
+  (condp
+   =
+   (mapv type [proposal-package-chaincode-header-extension-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    proposal-package-chaincode-header-extension-builder
+    clearChaincodeId)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    proposal-package-chaincode-header-extension-builder
+    clearChaincodeId)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    proposal-package-chaincode-header-extension-builder
+    clearChaincodeId)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    proposal-package-chaincode-header-extension-builder
+    clearChaincodeId)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    proposal-package-chaincode-header-extension-builder
+    clearChaincodeId))))
 
 ;;;  getExtension
 (defn
@@ -160,6 +242,17 @@
     ^org.hyperledger.fabric.protos.common.Common$ChannelHeader
     proposal-response-package-proposal-response-payload-or-builder
     getExtension))))
+
+;;;  addAllData
+(defn
+ add-all-data
+ ([common-block-data-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+   common-block-data-builder
+   addAllData
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getResults
 (defn
@@ -243,6 +336,29 @@
     ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
     arg1))))
 
+;;;  clearNumber
+(defn
+ clear-number
+ ([events-package-filtered-block-builder]
+  (condp
+   =
+   (mapv type [events-package-filtered-block-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    events-package-filtered-block-builder
+    clearNumber)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    events-package-filtered-block-builder
+    clearNumber)
+   [org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    events-package-filtered-block-builder
+    clearNumber))))
+
 ;;;  getTimestampOrBuilder
 (defn
  get-timestamp-or-builder
@@ -306,6 +422,34 @@
    setEndorser
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  clearValue
+(defn
+ clear-value
+ ([chaincode-shim-put-state-info-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-put-state-info-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    chaincode-shim-put-state-info-builder
+    clearValue)
+   [org.hyperledger.fabric.protos.common.Policies$Policy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    chaincode-shim-put-state-info-builder
+    clearValue)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    chaincode-shim-put-state-info-builder
+    clearValue)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    chaincode-shim-put-state-info-builder
+    clearValue))))
 
 ;;;  getRulesCount
 (defn
@@ -387,6 +531,34 @@
    ^long
    arg0)))
 
+;;;  clearChannelId
+(defn
+ clear-channel-id
+ ([query-channel-info-builder]
+  (condp
+   =
+   (mapv type [query-channel-info-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    query-channel-info-builder
+    clearChannelId)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    query-channel-info-builder
+    clearChannelId)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    query-channel-info-builder
+    clearChannelId)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    query-channel-info-builder
+    clearChannelId))))
+
 ;;;  getDataBuilder
 (defn
  get-data-builder
@@ -437,6 +609,37 @@
     setResponse
     ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
     arg0))))
+
+;;;  clearTimeout
+(defn
+ clear-timeout
+ ([chaincode-chaincode-spec-builder]
+  (condp
+   =
+   (mapv type [chaincode-chaincode-spec-builder])
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    chaincode-chaincode-spec-builder
+    clearTimeout)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    chaincode-chaincode-spec-builder
+    clearTimeout))))
+
+;;;  putTransientMap
+(defn
+ put-transient-map
+ ([proposal-package-chaincode-proposal-payload-builder arg0 arg1]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   proposal-package-chaincode-proposal-payload-builder
+   putTransientMap
+   ^java.lang.String
+   arg0
+   ^com.google.protobuf.ByteString
+   arg1)))
 
 ;;;  getValuesMap
 (defn
@@ -512,6 +715,38 @@
    ^com.google.protobuf.ByteString
    arg1)))
 
+;;;  clearOwnerEndorsements
+(defn
+ clear-owner-endorsements
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   clearOwnerEndorsements)))
+
+;;;  clearSignatureHeader
+(defn
+ clear-signature-header
+ ([configtx-config-signature-builder]
+  (condp
+   =
+   (mapv type [configtx-config-signature-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    configtx-config-signature-builder
+    clearSignatureHeader)
+   [org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    configtx-config-signature-builder
+    clearSignatureHeader)
+   [org.hyperledger.fabric.protos.common.Common$Header$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Header$Builder
+    configtx-config-signature-builder
+    clearSignatureHeader))))
+
 ;;;  getCryptoConfig
 (defn
  get-crypto-config
@@ -534,6 +769,53 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
     msp-config-package-fabric-msp-config-or-builder
     getCryptoConfig))))
+
+;;;  addAdmins
+(defn
+ add-admins
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAdmins
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  clearEpoch
+(defn
+ clear-epoch
+ ([common-channel-header-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+   common-channel-header-builder
+   clearEpoch)))
+
+;;;  addMetadata
+(defn
+ add-metadata
+ ([common-block-metadata-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+   common-block-metadata-builder
+   addMetadata
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  addIdentitiesBuilder
+(defn
+ add-identities-builder
+ ([policies-signature-policy-envelope-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+   policies-signature-policy-envelope-builder
+   addIdentitiesBuilder
+   ^int
+   arg0))
+ ([policies-signature-policy-envelope-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+   policies-signature-policy-envelope-builder
+   addIdentitiesBuilder)))
 
 ;;;  getRegularBuilder
 (defn
@@ -578,6 +860,33 @@
     chaincode-shim-query-response-or-builder
     getResultsOrBuilderList))))
 
+;;;  clearEscc
+(defn
+ clear-escc
+ ([query-chaincode-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+   query-chaincode-info-builder
+   clearEscc)))
+
+;;;  clearPayloadVisibility
+(defn
+ clear-payload-visibility
+ ([proposal-package-chaincode-header-extension-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+   proposal-package-chaincode-header-extension-builder
+   clearPayloadVisibility)))
+
+;;;  clearTxValidationCode
+(defn
+ clear-tx-validation-code
+ ([events-package-filtered-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+   events-package-filtered-transaction-builder
+   clearTxValidationCode)))
+
 ;;;  setPayloadVisibility
 (defn
  set-payload-visibility
@@ -589,6 +898,24 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  clearPort
+(defn
+ clear-port
+ ([configuration-anchor-peer-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+   configuration-anchor-peer-builder
+   clearPort)))
+
+;;;  clearPolicyRef
+(defn
+ clear-policy-ref
+ ([resources-resource-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+   resources-resource-builder
+   clearPolicyRef)))
+
 ;;;  getOldestBuilder
 (defn
  get-oldest-builder
@@ -597,6 +924,38 @@
    ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
    ab-seek-position-builder
    getOldestBuilder)))
+
+;;;  clearIndex
+(defn
+ clear-index
+ ([common-last-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+   common-last-config-builder
+   clearIndex)))
+
+;;;  clearData
+(defn
+ clear-data
+ ([common-payload-builder]
+  (condp
+   =
+   (mapv type [common-payload-builder])
+   [org.hyperledger.fabric.protos.common.Common$Payload$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    common-payload-builder
+    clearData)
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    common-payload-builder
+    clearData)
+   [org.hyperledger.fabric.protos.common.Common$BlockData$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    common-payload-builder
+    clearData))))
 
 ;;;  getRulesBuilder
 (defn
@@ -608,6 +967,64 @@
    getRulesBuilder
    ^int
    arg0)))
+
+;;;  addOwnerEndorsements
+(defn
+ add-owner-endorsements
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder arg0]
+  (condp
+   =
+   (mapv
+    type
+    [signed-cc-dep-spec-signed-chaincode-deployment-spec-builder arg0])
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+    addOwnerEndorsements
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
+    arg0)
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+    addOwnerEndorsements
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    arg0)))
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   arg0
+   arg1]
+  (condp
+   =
+   (mapv
+    type
+    [signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+     arg0
+     arg1])
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+    addOwnerEndorsements
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
+    arg1)
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+    addOwnerEndorsements
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    arg1))))
 
 ;;;  setRuleValue
 (defn
@@ -667,6 +1084,24 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
     events-package-interest-or-builder
     getEventType))))
+
+;;;  clearPolicies
+(defn
+ clear-policies
+ ([configtx-config-group-schema-builder]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    clearPolicies)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    clearPolicies))))
 
 ;;;  getSignature
 (defn
@@ -781,6 +1216,15 @@
     transaction-package-signed-transaction-or-builder
     getSignature))))
 
+;;;  clearChainID
+(defn
+ clear-chain-id
+ ([events-package-interest-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+   events-package-interest-builder
+   clearChainID)))
+
 ;;;  getPublicSigner
 (defn
  get-public-signer
@@ -842,6 +1286,17 @@
     configtx-config-group-schema-or-builder
     getPoliciesMap))))
 
+;;;  addAllResults
+(defn
+ add-all-results
+ ([chaincode-shim-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+   chaincode-shim-query-response-builder
+   addAllResults
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getConnect
 (defn
  get-connect
@@ -884,6 +1339,22 @@
    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
    configuration-anchor-peers-builder
    getAnchorPeersBuilderList)))
+
+;;;  addActionsBuilder
+(defn
+ add-actions-builder
+ ([transaction-package-transaction-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+   transaction-package-transaction-builder
+   addActionsBuilder
+   ^int
+   arg0))
+ ([transaction-package-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+   transaction-package-transaction-builder
+   addActionsBuilder)))
 
 ;;;  getConfigOrBuilder
 (defn
@@ -975,6 +1446,34 @@
    setPreviousBlockHash
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  clearHeader
+(defn
+ clear-header
+ ([transaction-package-transaction-action-builder]
+  (condp
+   =
+   (mapv type [transaction-package-transaction-action-builder])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    transaction-package-transaction-action-builder
+    clearHeader)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    transaction-package-transaction-action-builder
+    clearHeader)
+   [org.hyperledger.fabric.protos.common.Common$Payload$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    transaction-package-transaction-action-builder
+    clearHeader)
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    transaction-package-transaction-action-builder
+    clearHeader))))
 
 ;;;  getPoliciesCount
 (defn
@@ -1071,6 +1570,17 @@
    ^long
    arg0)))
 
+;;;  addAllAnchorPeers
+(defn
+ add-all-anchor-peers
+ ([configuration-anchor-peers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+   configuration-anchor-peers-builder
+   addAllAnchorPeers
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getLogLevel
 (defn
  get-log-level
@@ -1108,6 +1618,15 @@
     ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
     admin-package-log-level-request-or-builder
     getLogLevel))))
+
+;;;  clearClass_
+(defn
+ clear-class_
+ ([kafka-kafka-message-regular-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+   kafka-kafka-message-regular-builder
+   clearClass_)))
 
 ;;;  getUnregisterBuilder
 (defn
@@ -1165,6 +1684,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
     arg0))))
 
+;;;  removeAnchorPeers
+(defn
+ remove-anchor-peers
+ ([configuration-anchor-peers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+   configuration-anchor-peers-builder
+   removeAnchorPeers
+   ^int
+   arg0)))
+
 ;;;  setChainID
 (defn
  set-chain-id
@@ -1175,6 +1705,36 @@
    setChainID
    ^java.lang.String
    arg0)))
+
+;;;  putPolicies
+(defn
+ put-policies
+ ([configtx-config-group-schema-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putPolicies
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putPolicies
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
+    arg1))))
 
 ;;;  setN
 (defn
@@ -1232,6 +1792,15 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
     msp-config-package-fabric-msp-config-or-builder
     getSigningIdentityOrBuilder))))
+
+;;;  clearTransientMap
+(defn
+ clear-transient-map
+ ([proposal-package-chaincode-proposal-payload-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   proposal-package-chaincode-proposal-payload-builder
+   clearTransientMap)))
 
 ;;;  setEvents
 (defn
@@ -1383,6 +1952,49 @@
     chaincode-shim-query-response-or-builder
     getResultsList))))
 
+;;;  addFilteredTxBuilder
+(defn
+ add-filtered-tx-builder
+ ([events-package-filtered-block-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+   events-package-filtered-block-builder
+   addFilteredTxBuilder))
+ ([events-package-filtered-block-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+   events-package-filtered-block-builder
+   addFilteredTxBuilder
+   ^int
+   arg0)))
+
+;;;  clearOU
+(defn
+ clear-ou
+ ([identities-serialized-idemix-identity-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+   identities-serialized-idemix-identity-builder
+   clearOU)))
+
+;;;  clearChannels
+(defn
+ clear-channels
+ ([query-channel-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+   query-channel-query-response-builder
+   clearChannels)))
+
+;;;  clearIntermediateCerts
+(defn
+ clear-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearIntermediateCerts)))
+
 ;;;  getAnchorPeersOrBuilderList
 (defn
  get-anchor-peers-or-builder-list
@@ -1405,6 +2017,24 @@
     ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
     configuration-anchor-peers-or-builder
     getAnchorPeersOrBuilderList))))
+
+;;;  clearBlock
+(defn
+ clear-block
+ ([events-package-event-builder]
+  (condp
+   =
+   (mapv type [events-package-event-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    events-package-event-builder
+    clearBlock)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    events-package-event-builder
+    clearBlock))))
 
 ;;;  getErrorMsg
 (defn
@@ -1696,6 +2326,51 @@
     chaincode-shim-chaincode-message-or-builder
     getType))))
 
+;;;  clearConfig
+(defn
+ clear-config
+ ([msp-config-package-msp-config-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-msp-config-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    msp-config-package-msp-config-builder
+    clearConfig)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    msp-config-package-msp-config-builder
+    clearConfig))))
+
+;;;  clearSigner
+(defn
+ clear-signer
+ ([msp-config-package-idemix-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+   msp-config-package-idemix-msp-config-builder
+   clearSigner)))
+
+;;;  clearDataHash
+(defn
+ clear-data-hash
+ ([common-block-header-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+   common-block-header-builder
+   clearDataHash)))
+
+;;;  clearEvent
+(defn
+ clear-event
+ ([events-package-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+   events-package-event-builder
+   clearEvent)))
+
 ;;;  setMetadata
 (defn
  set-metadata
@@ -1827,6 +2502,15 @@
     ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
     arg1))))
 
+;;;  clearEventBytes
+(defn
+ clear-event-bytes
+ ([events-package-signed-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+   events-package-signed-event-builder
+   clearEventBytes)))
+
 ;;;  getTransactionEnvelope
 (defn
  get-transaction-envelope
@@ -1849,6 +2533,33 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction
     transaction-package-processed-transaction-or-builder
     getTransactionEnvelope))))
+
+;;;  clearChaincodeProposalPayload
+(defn
+ clear-chaincode-proposal-payload
+ ([transaction-package-chaincode-action-payload-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+   transaction-package-chaincode-action-payload-builder
+   clearChaincodeProposalPayload)))
+
+;;;  clearNymX
+(defn
+ clear-nym-x
+ ([identities-serialized-idemix-identity-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+   identities-serialized-idemix-identity-builder
+   clearNymX)))
+
+;;;  clearRegister
+(defn
+ clear-register
+ ([events-package-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+   events-package-event-builder
+   clearRegister)))
 
 ;;;  getAdmins
 (defn
@@ -1984,6 +2695,17 @@
     configtx-config-or-builder
     getSequence))))
 
+;;;  removeChaincodes
+(defn
+ remove-chaincodes
+ ([query-chaincode-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+   query-chaincode-query-response-builder
+   removeChaincodes
+   ^int
+   arg0)))
+
 ;;;  getValidationCode
 (defn
  get-validation-code
@@ -2089,6 +2811,17 @@
    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
    query-channel-query-response-builder
    getChannelsBuilderList)))
+
+;;;  addRootCerts
+(defn
+ add-root-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addRootCerts
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getChannelId
 (defn
@@ -2247,6 +2980,100 @@
    setIsAdmin
    ^boolean
    arg0)))
+
+;;;  clearPayload
+(defn
+ clear-payload
+ ([transaction-package-transaction-action-builder]
+  (condp
+   =
+   (mapv type [transaction-package-transaction-action-builder])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    transaction-package-transaction-action-builder
+    clearPayload)
+   [org.hyperledger.fabric.protos.common.Common$Envelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    transaction-package-transaction-action-builder
+    clearPayload))))
+
+;;;  clearResultBytes
+(defn
+ clear-result-bytes
+ ([chaincode-shim-query-result-bytes-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+   chaincode-shim-query-result-bytes-builder
+   clearResultBytes)))
+
+;;;  containsDecorations
+(defn
+ contains-decorations
+ ([chaincode-chaincode-input-or-builder arg0]
+  (condp
+   =
+   (mapv type [chaincode-chaincode-input-or-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInputOrBuilder
+    chaincode-chaincode-input-or-builder
+    containsDecorations
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    chaincode-chaincode-input-or-builder
+    containsDecorations
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput
+    chaincode-chaincode-input-or-builder
+    containsDecorations
+    ^java.lang.String
+    arg0))))
 
 ;;;  getOrganizationalUnitIdentifiers
 (defn
@@ -2423,6 +3250,124 @@
     ^java.lang.String
     arg0))))
 
+;;;  removeResults
+(defn
+ remove-results
+ ([chaincode-shim-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+   chaincode-shim-query-response-builder
+   removeResults
+   ^int
+   arg0)))
+
+;;;  addAllSignatures
+(defn
+ add-all-signatures
+ ([configtx-config-update-envelope-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    java.lang.Iterable]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addAllSignatures
+    ^java.lang.Iterable
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    java.lang.Iterable]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addAllSignatures
+    ^java.lang.Iterable
+    arg0))))
+
+;;;  putGroups
+(defn
+ put-groups
+ ([configtx-config-group-schema-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putGroups
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putGroups
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    arg1))))
+
+;;;  clearLogLevel
+(defn
+ clear-log-level
+ ([admin-package-log-level-request-builder]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-builder])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-builder
+    clearLogLevel)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-builder
+    clearLogLevel))))
+
+;;;  addAllOrganizationalUnitIdentifiers
+(defn
+ add-all-organizational-unit-identifiers
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllOrganizationalUnitIdentifiers
+   ^java.lang.Iterable
+   arg0)))
+
+;;;  putAllPolicies
+(defn
+ put-all-policies
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putAllPolicies
+    ^java.util.Map
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putAllPolicies
+    ^java.util.Map
+    arg0))))
+
 ;;;  getChaincodeSpecBuilder
 (defn
  get-chaincode-spec-builder
@@ -2472,6 +3417,15 @@
     getOrganizationalUnitIdentifiersOrBuilder
     ^int
     arg0))))
+
+;;;  clearTlsRootCerts
+(defn
+ clear-tls-root-certs
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearTlsRootCerts)))
 
 ;;;  getNymX
 (defn
@@ -2531,6 +3485,1006 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
     transaction-package-chaincode-endorsed-action-or-builder
     getEndorsementsCount))))
+
+;;;  putAllValues
+(defn
+ put-all-values
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putAllValues
+    ^java.util.Map
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putAllValues
+    ^java.util.Map
+    arg0))))
+
+;;;  clearLastUpdate
+(defn
+ clear-last-update
+ ([configtx-config-envelope-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+   configtx-config-envelope-builder
+   clearLastUpdate)))
+
+;;;  clearOneof
+(defn
+ clear-oneof
+ ([transaction-package-signed-transaction-builder arg0]
+  (condp
+   =
+   (mapv type [transaction-package-signed-transaction-builder arg0])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Header$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Header$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    com.google.protobuf.Descriptors$OneofDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    transaction-package-signed-transaction-builder
+    clearOneof
+    ^com.google.protobuf.Descriptors$OneofDescriptor
+    arg0))))
+
+;;;  clearInput
+(defn
+ clear-input
+ ([query-chaincode-info-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    clearInput)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    query-chaincode-info-builder
+    clearInput)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    query-chaincode-info-builder
+    clearInput))))
 
 ;;;  getChaincodeEventBuilder
 (defn
@@ -2709,6 +4663,15 @@
     ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
     events-package-chaincode-reg-or-builder
     getEventName))))
+
+;;;  clearNOutOf
+(defn
+ clear-n-out-of
+ ([policies-signature-policy-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+   policies-signature-policy-builder
+   clearNOutOf)))
 
 ;;;  getTimestamp
 (defn
@@ -3004,6 +4967,60 @@
    kafka-kafka-message-builder
    getConnectBuilder)))
 
+;;;  addEndorsements
+(defn
+ add-endorsements
+ ([transaction-package-chaincode-endorsed-action-builder arg0 arg1]
+  (condp
+   =
+   (mapv
+    type
+    [transaction-package-chaincode-endorsed-action-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-chaincode-endorsed-action-builder
+    addEndorsements
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-chaincode-endorsed-action-builder
+    addEndorsements
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    arg1)))
+ ([transaction-package-chaincode-endorsed-action-builder arg0]
+  (condp
+   =
+   (mapv
+    type
+    [transaction-package-chaincode-endorsed-action-builder arg0])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-chaincode-endorsed-action-builder
+    addEndorsements
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-chaincode-endorsed-action-builder
+    addEndorsements
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    arg0))))
+
 ;;;  setTransactionEnvelope
 (defn
  set-transaction-envelope
@@ -3026,6 +5043,40 @@
     transaction-package-processed-transaction-builder
     setTransactionEnvelope
     ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    arg0))))
+
+;;;  containsTransientMap
+(defn
+ contains-transient-map
+ ([proposal-package-chaincode-proposal-payload-or-builder arg0]
+  (condp
+   =
+   (mapv
+    type
+    [proposal-package-chaincode-proposal-payload-or-builder arg0])
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayloadOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayloadOrBuilder
+    proposal-package-chaincode-proposal-payload-or-builder
+    containsTransientMap
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    proposal-package-chaincode-proposal-payload-or-builder
+    containsTransientMap
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload
+    proposal-package-chaincode-proposal-payload-or-builder
+    containsTransientMap
+    ^java.lang.String
     arg0))))
 
 ;;;  getRulesOrBuilder
@@ -3253,6 +5304,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
     msp-config-package-idemix-msp-config-or-builder
     getIPk))))
+
+;;;  addAllIdentities
+(defn
+ add-all-identities
+ ([policies-signature-policy-envelope-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+   policies-signature-policy-envelope-builder
+   addAllIdentities
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  setIdentities
 (defn
@@ -3503,6 +5565,24 @@
    configtx-config-policy-builder
    getPolicyBuilder)))
 
+;;;  clearSignatures
+(defn
+ clear-signatures
+ ([configtx-config-update-envelope-builder]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    clearSignatures)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    clearSignatures))))
+
 ;;;  getFilteredBlockBuilder
 (defn
  get-filtered-block-builder
@@ -3593,6 +5673,17 @@
     ^org.hyperledger.fabric.protos.common.Common$Block
     common-block-or-builder
     getDataOrBuilder))))
+
+;;;  addAllIntermediateCerts
+(defn
+ add-all-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllIntermediateCerts
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  setOldest
 (defn
@@ -3714,6 +5805,15 @@
     chaincode-chaincode-deployment-spec-or-builder
     getChaincodeSpecOrBuilder))))
 
+;;;  clearArgs
+(defn
+ clear-args
+ ([chaincode-chaincode-input-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   clearArgs)))
+
 ;;;  getTlsIntermediateCerts
 (defn
  get-tls-intermediate-certs
@@ -3745,6 +5845,49 @@
     getTlsIntermediateCerts
     ^int
     arg0))))
+
+;;;  clearModPolicy
+(defn
+ clear-mod-policy
+ ([configtx-config-group-builder]
+  (condp
+   =
+   (mapv type [configtx-config-group-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-builder
+    clearModPolicy)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    configtx-config-group-builder
+    clearModPolicy)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    configtx-config-group-builder
+    clearModPolicy))))
+
+;;;  clearSequence
+(defn
+ clear-sequence
+ ([configtx-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+   configtx-config-builder
+   clearSequence)))
+
+;;;  addData
+(defn
+ add-data
+ ([common-block-data-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+   common-block-data-builder
+   addData
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getTlsRootCertsCount
 (defn
@@ -3792,6 +5935,15 @@
     policies-signature-policy-n-out-of-or-builder
     getRulesList))))
 
+;;;  clearSignedBy
+(defn
+ clear-signed-by
+ ([policies-signature-policy-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+   policies-signature-policy-builder
+   clearSignedBy)))
+
 ;;;  setChannelHeader
 (defn
  set-channel-header
@@ -3802,6 +5954,15 @@
    setChannelHeader
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  clearPrincipal
+(defn
+ clear-principal
+ ([msp-principal-msp-principal-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+   msp-principal-msp-principal-builder
+   clearPrincipal)))
 
 ;;;  getIdentityIdentifierHashFunction
 (defn
@@ -3825,6 +5986,15 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
     msp-config-package-fabric-crypto-config-or-builder
     getIdentityIdentifierHashFunction))))
+
+;;;  clearSigningIdentity
+(defn
+ clear-signing-identity
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearSigningIdentity)))
 
 ;;;  getActionsBuilderList
 (defn
@@ -3881,6 +6051,49 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope
     configtx-config-envelope-or-builder
     getLastUpdate))))
+
+;;;  addOrganizationalUnitIdentifiersBuilder
+(defn
+ add-organizational-unit-identifiers-builder
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addOrganizationalUnitIdentifiersBuilder))
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addOrganizationalUnitIdentifiersBuilder
+   ^int
+   arg0)))
+
+;;;  addEndorsementsBuilder
+(defn
+ add-endorsements-builder
+ ([transaction-package-chaincode-endorsed-action-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   addEndorsementsBuilder))
+ ([transaction-package-chaincode-endorsed-action-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   addEndorsementsBuilder
+   ^int
+   arg0)))
+
+;;;  addAllArgs
+(defn
+ add-all-args
+ ([chaincode-chaincode-input-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   addAllArgs
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getAdminsCount
 (defn
@@ -4187,6 +6400,968 @@
     ^org.hyperledger.fabric.protos.common.Common$Block
     arg0))))
 
+;;;  clearField
+(defn
+ clear-field
+ ([transaction-package-signed-transaction-builder arg0]
+  (condp
+   =
+   (mapv type [transaction-package-signed-transaction-builder arg0])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Header$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Header$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    transaction-package-signed-transaction-builder
+    clearField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0))))
+
+;;;  clearChaincodeSpec
+(defn
+ clear-chaincode-spec
+ ([chaincode-chaincode-deployment-spec-builder]
+  (condp
+   =
+   (mapv type [chaincode-chaincode-deployment-spec-builder])
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    chaincode-chaincode-deployment-spec-builder
+    clearChaincodeSpec)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    chaincode-chaincode-deployment-spec-builder
+    clearChaincodeSpec))))
+
 ;;;  getMutableValues
 (defn
  get-mutable-values
@@ -4308,6 +7483,33 @@
     proposal-package-chaincode-header-extension-or-builder
     getChaincodeIdOrBuilder))))
 
+;;;  clearKey
+(defn
+ clear-key
+ ([chaincode-shim-put-state-info-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-put-state-info-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    chaincode-shim-put-state-info-builder
+    clearKey)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    chaincode-shim-put-state-info-builder
+    clearKey))))
+
+;;;  clearWidth
+(defn
+ clear-width
+ ([configuration-block-data-hashing-structure-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+   configuration-block-data-hashing-structure-builder
+   clearWidth)))
+
 ;;;  setChaincodes
 (defn
  set-chaincodes
@@ -4337,6 +7539,15 @@
     arg0
     ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
     arg1))))
+
+;;;  clearPreferredMaxBytes
+(defn
+ clear-preferred-max-bytes
+ ([configuration-batch-size-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+   configuration-batch-size-builder
+   clearPreferredMaxBytes)))
 
 ;;;  setCryptoConfig
 (defn
@@ -4408,6 +7619,69 @@
     msp-principal-msp-principal-or-builder
     getPrincipalClassification))))
 
+;;;  clearSignature
+(defn
+ clear-signature
+ ([transaction-package-signed-transaction-builder]
+  (condp
+   =
+   (mapv type [transaction-package-signed-transaction-builder])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature)
+   [org.hyperledger.fabric.protos.common.Common$Envelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    transaction-package-signed-transaction-builder
+    clearSignature))))
+
+;;;  putAllCapabilities
+(defn
+ put-all-capabilities
+ ([configuration-capabilities-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+   configuration-capabilities-builder
+   putAllCapabilities
+   ^java.util.Map
+   arg0)))
+
+;;;  clearActions
+(defn
+ clear-actions
+ ([transaction-package-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+   transaction-package-transaction-builder
+   clearActions)))
+
 ;;;  getInfo
 (defn
  get-info
@@ -4430,6 +7704,15 @@
     ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
     ab-broadcast-response-or-builder
     getInfo))))
+
+;;;  clearInfo
+(defn
+ clear-info
+ ([ab-broadcast-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+   ab-broadcast-response-builder
+   clearInfo)))
 
 ;;;  getIdentitiesBuilderList
 (defn
@@ -4502,6 +7785,39 @@
     ^int
     arg0))))
 
+;;;  putAllGroups
+(defn
+ put-all-groups
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putAllGroups
+    ^java.util.Map
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.util.Map]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putAllGroups
+    ^java.util.Map
+    arg0))))
+
+;;;  clearNewest
+(defn
+ clear-newest
+ ([ab-seek-position-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+   ab-seek-position-builder
+   clearNewest)))
+
 ;;;  setTx
 (defn
  set-tx
@@ -4548,6 +7864,24 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
     events-package-filtered-transaction-or-builder
     getTxValidationCode))))
+
+;;;  clearRejection
+(defn
+ clear-rejection
+ ([events-package-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+   events-package-event-builder
+   clearRejection)))
+
+;;;  clearConfigUpdate
+(defn
+ clear-config-update
+ ([configtx-config-update-envelope-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+   configtx-config-update-envelope-builder
+   clearConfigUpdate)))
 
 ;;;  getSignatures
 (defn
@@ -4602,6 +7936,15 @@
     ^int
     arg0))))
 
+;;;  clearChaincodeRegInfo
+(defn
+ clear-chaincode-reg-info
+ ([events-package-interest-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+   events-package-interest-builder
+   clearChaincodeRegInfo)))
+
 ;;;  getUnregister
 (defn
  get-unregister
@@ -4624,6 +7967,19 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Event
     events-package-event-or-builder
     getUnregister))))
+
+;;;  putCapabilities
+(defn
+ put-capabilities
+ ([configuration-capabilities-builder arg0 arg1]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+   configuration-capabilities-builder
+   putCapabilities
+   ^java.lang.String
+   arg0
+   ^org.hyperledger.fabric.protos.common.Configuration$Capability
+   arg1)))
 
 ;;;  getSubPolicy
 (defn
@@ -4738,6 +8094,39 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  clearProposalHash
+(defn
+ clear-proposal-hash
+ ([proposal-response-package-proposal-response-payload-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+   proposal-response-package-proposal-response-payload-builder
+   clearProposalHash)))
+
+;;;  removePolicies
+(defn
+ remove-policies
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    removePolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    removePolicies
+    ^java.lang.String
+    arg0))))
+
 ;;;  getWriteSetBuilder
 (defn
  get-write-set-builder
@@ -4746,6 +8135,24 @@
    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
    configtx-config-update-builder
    getWriteSetBuilder)))
+
+;;;  clearGroups
+(defn
+ clear-groups
+ ([configtx-config-group-schema-builder]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    clearGroups)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    clearGroups))))
 
 ;;;  getNewestOrBuilder
 (defn
@@ -4910,6 +8317,24 @@
    ^com.google.protobuf.ByteString
    arg1)))
 
+;;;  clearPrivateSigner
+(defn
+ clear-private-signer
+ ([msp-config-package-signing-identity-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+   msp-config-package-signing-identity-info-builder
+   clearPrivateSigner)))
+
+;;;  clearCcEvent
+(defn
+ clear-cc-event
+ ([events-package-filtered-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+   events-package-filtered-transaction-builder
+   clearCcEvent)))
+
 ;;;  getIntermediateCertsList
 (defn
  get-intermediate-certs-list
@@ -4932,6 +8357,15 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
     msp-config-package-fabric-msp-config-or-builder
     getIntermediateCertsList))))
+
+;;;  clearEventType
+(defn
+ clear-event-type
+ ([events-package-interest-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+   events-package-interest-builder
+   clearEventType)))
 
 ;;;  getInstantiationPolicy
 (defn
@@ -4957,6 +8391,37 @@
     ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec
     signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder
     getInstantiationPolicy))))
+
+;;;  clearIdBytes
+(defn
+ clear-id-bytes
+ ([identities-serialized-identity-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+   identities-serialized-identity-builder
+   clearIdBytes)))
+
+;;;  addAllMetadata
+(defn
+ add-all-metadata
+ ([common-block-metadata-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+   common-block-metadata-builder
+   addAllMetadata
+   ^java.lang.Iterable
+   arg0)))
+
+;;;  addAllTlsRootCerts
+(defn
+ add-all-tls-root-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllTlsRootCerts
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getBrokers
 (defn
@@ -5027,6 +8492,24 @@
     ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
     chaincode-shim-put-state-info-or-builder
     getKey))))
+
+;;;  clearMaxCount
+(defn
+ clear-max-count
+ ([configuration-channel-restrictions-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+   configuration-channel-restrictions-builder
+   clearMaxCount)))
+
+;;;  clearVscc
+(defn
+ clear-vscc
+ ([query-chaincode-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+   query-chaincode-info-builder
+   clearVscc)))
 
 ;;;  getAction
 (defn
@@ -5105,6 +8588,15 @@
     configtx-config-update-envelope-builder
     getSignaturesBuilderList))))
 
+;;;  clearTlsIntermediateCerts
+(defn
+ clear-tls-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearTlsIntermediateCerts)))
+
 ;;;  getRegular
 (defn
  get-regular
@@ -5173,6 +8665,24 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
     events-package-rejection-or-builder
     getTxOrBuilder))))
+
+;;;  clearEndorsements
+(defn
+ clear-endorsements
+ ([transaction-package-chaincode-endorsed-action-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   clearEndorsements)))
+
+;;;  clearOldest
+(defn
+ clear-oldest
+ ([ab-seek-position-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+   ab-seek-position-builder
+   clearOldest)))
 
 ;;;  getOwnerEndorsementsOrBuilder
 (defn
@@ -5406,6 +8916,24 @@
     signed-cc-dep-spec-signed-chaincode-deployment-spec-or-builder
     getOwnerEndorsementsOrBuilderList))))
 
+;;;  clearAdmins
+(defn
+ clear-admins
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearAdmins)))
+
+;;;  clearEndorser
+(defn
+ clear-endorser
+ ([proposal-response-package-endorsement-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+   proposal-response-package-endorsement-builder
+   clearEndorser)))
+
 ;;;  getOrganizationalUnitIdentifiersBuilder
 (defn
  get-organizational-unit-identifiers-builder
@@ -5427,6 +8955,36 @@
    setNymY
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  putValues
+(defn
+ put-values
+ ([configtx-config-group-schema-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    putValues
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String
+    org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    putValues
+    ^java.lang.String
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
+    arg1))))
 
 ;;;  getGroupsCount
 (defn
@@ -5540,6 +9098,17 @@
     msp-config-package-fabric-msp-config-or-builder
     getOrganizationalUnitIdentifiersCount))))
 
+;;;  addAllChannels
+(defn
+ add-all-channels
+ ([query-channel-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+   query-channel-query-response-builder
+   addAllChannels
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getConfigBuilder
 (defn
  get-config-builder
@@ -5571,6 +9140,29 @@
     ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
     policies-implicit-meta-policy-or-builder
     getRuleValue))))
+
+;;;  removeSignatures
+(defn
+ remove-signatures
+ ([configtx-config-update-envelope-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    removeSignatures
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    removeSignatures
+    ^int
+    arg0))))
 
 ;;;  getStop
 (defn
@@ -5766,6 +9358,35 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  addBrokers
+(defn
+ add-brokers
+ ([configuration-kafka-brokers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+   configuration-kafka-brokers-builder
+   addBrokers
+   ^java.lang.String
+   arg0)))
+
+;;;  clearPrincipalClassification
+(defn
+ clear-principal-classification
+ ([msp-principal-msp-principal-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+   msp-principal-msp-principal-builder
+   clearPrincipalClassification)))
+
+;;;  clearIdentityIdentifierHashFunction
+(defn
+ clear-identity-identifier-hash-function
+ ([msp-config-package-fabric-crypto-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+   msp-config-package-fabric-crypto-config-builder
+   clearIdentityIdentifierHashFunction)))
+
 ;;;  getMutableCapabilities
 (defn
  get-mutable-capabilities
@@ -5798,6 +9419,15 @@
     msp-config-package-idemix-msp-signer-config-or-builder
     getSk))))
 
+;;;  clearFilteredTx
+(defn
+ clear-filtered-tx
+ ([events-package-filtered-block-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+   events-package-filtered-block-builder
+   clearFilteredTx)))
+
 ;;;  getActionOrBuilder
 (defn
  get-action-or-builder
@@ -5822,6 +9452,15 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload
     transaction-package-chaincode-action-payload-or-builder
     getActionOrBuilder))))
+
+;;;  clearAbsoluteMaxBytes
+(defn
+ clear-absolute-max-bytes
+ ([configuration-batch-size-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+   configuration-batch-size-builder
+   clearAbsoluteMaxBytes)))
 
 ;;;  getEscc
 (defn
@@ -6008,6 +9647,15 @@
     ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
     arg0))))
 
+;;;  clearN
+(defn
+ clear-n
+ ([policies-signature-policy-n-out-of-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   clearN)))
+
 ;;;  getEffectiveDateOrBuilder
 (defn
  get-effective-date-or-builder
@@ -6030,6 +9678,24 @@
     ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
     chaincode-chaincode-deployment-spec-or-builder
     getEffectiveDateOrBuilder))))
+
+;;;  clearPath
+(defn
+ clear-path
+ ([query-chaincode-info-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    clearPath)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    clearPath))))
 
 ;;;  getBrokersCount
 (defn
@@ -6199,6 +9865,17 @@
    ^int
    arg0)))
 
+;;;  addAddresses
+(defn
+ add-addresses
+ ([configuration-orderer-addresses-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+   configuration-orderer-addresses-builder
+   addAddresses
+   ^java.lang.String
+   arg0)))
+
 ;;;  getPrivateSigner
 (defn
  get-private-signer
@@ -6314,6 +9991,15 @@
     ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
     events-package-filtered-transaction-or-builder
     getTxid))))
+
+;;;  clearPreviousBlockHash
+(defn
+ clear-previous-block-hash
+ ([ledger-blockchain-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+   ledger-blockchain-info-builder
+   clearPreviousBlockHash)))
 
 ;;;  setSigningIdentity
 (defn
@@ -6535,6 +10221,38 @@
    ^java.lang.String
    arg0)))
 
+;;;  containsIsolatedData
+(defn
+ contains-isolated-data
+ ([configtx-config-update-or-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-update-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder
+    configtx-config-update-or-builder
+    containsIsolatedData
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    configtx-config-update-or-builder
+    containsIsolatedData
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
+    configtx-config-update-or-builder
+    containsIsolatedData
+    ^java.lang.String
+    arg0))))
+
 ;;;  getFilteredTxCount
 (defn
  get-filtered-tx-count
@@ -6625,6 +10343,24 @@
     ^org.hyperledger.fabric.protos.common.Common$Metadata
     chaincode-shim-put-state-info-or-builder
     getValue))))
+
+;;;  clearResponse
+(defn
+ clear-response
+ ([proposal-response-package-proposal-response-builder]
+  (condp
+   =
+   (mapv type [proposal-response-package-proposal-response-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    proposal-response-package-proposal-response-builder
+    clearResponse)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    proposal-response-package-proposal-response-builder
+    clearResponse))))
 
 ;;;  getTransientMapCount
 (defn
@@ -6776,6 +10512,17 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  putAllIsolatedData
+(defn
+ put-all-isolated-data
+ ([configtx-config-update-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   putAllIsolatedData
+   ^java.util.Map
+   arg0)))
+
 ;;;  getChaincodeProposalPayload
 (defn
  get-chaincode-proposal-payload
@@ -6866,6 +10613,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
     msp-config-package-fabric-msp-config-or-builder
     getRevocationListCount))))
+
+;;;  addAllActions
+(defn
+ add-all-actions
+ ([transaction-package-transaction-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+   transaction-package-transaction-builder
+   addAllActions
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  setOwnerEndorsements
 (defn
@@ -6976,6 +10734,17 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction
     arg0))))
 
+;;;  removeActions
+(defn
+ remove-actions
+ ([transaction-package-transaction-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+   transaction-package-transaction-builder
+   removeActions
+   ^int
+   arg0)))
+
 ;;;  getActions
 (defn
  get-actions
@@ -7053,6 +10822,15 @@
    ^com.google.protobuf.ByteString
    arg1)))
 
+;;;  clearWriteSet
+(defn
+ clear-write-set
+ ([configtx-config-update-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   clearWriteSet)))
+
 ;;;  getPreviousHash
 (defn
  get-previous-hash
@@ -7075,6 +10853,17 @@
     ^org.hyperledger.fabric.protos.common.Common$BlockHeader
     common-block-header-or-builder
     getPreviousHash))))
+
+;;;  addIntermediateCerts
+(defn
+ add-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addIntermediateCerts
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getEvents
 (defn
@@ -7256,6 +11045,83 @@
     events-package-event-or-builder
     getBlock))))
 
+;;;  clearProposal
+(defn
+ clear-proposal
+ ([chaincode-shim-chaincode-message-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+   chaincode-shim-chaincode-message-builder
+   clearProposal)))
+
+;;;  clearType
+(defn
+ clear-type
+ ([chaincode-shim-chaincode-message-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-chaincode-message-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.common.Policies$Policy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.common.Configtx$Config$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    chaincode-shim-chaincode-message-builder
+    clearType))))
+
 ;;;  getOwnerEndorsementsBuilderList
 (defn
  get-owner-endorsements-builder-list
@@ -7264,6 +11130,56 @@
    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
    signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
    getOwnerEndorsementsBuilderList)))
+
+;;;  addChannels
+(defn
+ add-channels
+ ([query-channel-query-response-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [query-channel-query-response-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    query-channel-query-response-builder
+    addChannels
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    query-channel-query-response-builder
+    addChannels
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    arg1)))
+ ([query-channel-query-response-builder arg0]
+  (condp
+   =
+   (mapv type [query-channel-query-response-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    query-channel-query-response-builder
+    addChannels
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    query-channel-query-response-builder
+    addChannels
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    arg0))))
 
 ;;;  getKeyIdentifier
 (defn
@@ -7334,6 +11250,40 @@
     configuration-capabilities-or-builder
     getCapabilities))))
 
+;;;  clearTimestamp
+(defn
+ clear-timestamp
+ ([proposal-response-package-proposal-response-builder]
+  (condp
+   =
+   (mapv type [proposal-response-package-proposal-response-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    proposal-response-package-proposal-response-builder
+    clearTimestamp)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    proposal-response-package-proposal-response-builder
+    clearTimestamp)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    proposal-response-package-proposal-response-builder
+    clearTimestamp))))
+
+;;;  removeIsolatedData
+(defn
+ remove-isolated-data
+ ([configtx-config-update-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   removeIsolatedData
+   ^java.lang.String
+   arg0)))
+
 ;;;  setEffectiveDate
 (defn
  set-effective-date
@@ -7357,6 +11307,33 @@
     setEffectiveDate
     ^com.google.protobuf.Timestamp
     arg0))))
+
+;;;  clearResults
+(defn
+ clear-results
+ ([proposal-package-chaincode-action-builder]
+  (condp
+   =
+   (mapv type [proposal-package-chaincode-action-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    proposal-package-chaincode-action-builder
+    clearResults)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    proposal-package-chaincode-action-builder
+    clearResults))))
+
+;;;  clearChaincodes
+(defn
+ clear-chaincodes
+ ([query-chaincode-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+   query-chaincode-query-response-builder
+   clearChaincodes)))
 
 ;;;  getInputBuilder
 (defn
@@ -7389,6 +11366,24 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Event
     events-package-event-or-builder
     getUnregisterOrBuilder))))
+
+;;;  clearValues
+(defn
+ clear-values
+ ([configtx-config-group-schema-builder]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    clearValues)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    clearValues))))
 
 ;;;  getIdentitiesBuilder
 (defn
@@ -7434,6 +11429,43 @@
     ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition
     ab-seek-position-or-builder
     getSpecified))))
+
+;;;  addSignaturesBuilder
+(defn
+ add-signatures-builder
+ ([configtx-config-update-envelope-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignaturesBuilder
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignaturesBuilder
+    ^int
+    arg0)))
+ ([configtx-config-update-envelope-builder]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignaturesBuilder)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignaturesBuilder))))
 
 ;;;  getMaxMessageCount
 (defn
@@ -7602,6 +11634,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
     arg1))))
 
+;;;  addRevocationList
+(defn
+ add-revocation-list
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addRevocationList
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  setClass_Value
 (defn
  set-class_-value
@@ -7612,6 +11655,65 @@
    setClass_Value
    ^int
    arg0)))
+
+;;;  addRules
+(defn
+ add-rules
+ ([policies-signature-policy-n-out-of-builder arg0]
+  (condp
+   =
+   (mapv type [policies-signature-policy-n-out-of-builder arg0])
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    policies-signature-policy-n-out-of-builder
+    addRules
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    policies-signature-policy-n-out-of-builder
+    addRules
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
+    arg0)))
+ ([policies-signature-policy-n-out-of-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [policies-signature-policy-n-out-of-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    int
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    policies-signature-policy-n-out-of-builder
+    addRules
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    int
+    org.hyperledger.fabric.protos.common.Policies$SignaturePolicy]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    policies-signature-policy-n-out-of-builder
+    addRules
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
+    arg1))))
+
+;;;  clearPolicy
+(defn
+ clear-policy
+ ([configtx-config-policy-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+   configtx-config-policy-builder
+   clearPolicy)))
 
 ;;;  getCodePackage
 (defn
@@ -7635,6 +11737,26 @@
     ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec
     chaincode-chaincode-deployment-spec-or-builder
     getCodePackage))))
+
+;;;  clearExecEnv
+(defn
+ clear-exec-env
+ ([chaincode-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+   chaincode-chaincode-deployment-spec-builder
+   clearExecEnv)))
+
+;;;  removeIdentities
+(defn
+ remove-identities
+ ([policies-signature-policy-envelope-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+   policies-signature-policy-envelope-builder
+   removeIdentities
+   ^int
+   arg0)))
 
 ;;;  setLastOffsetPersisted
 (defn
@@ -7710,6 +11832,49 @@
    ab-seek-info-builder
    getStartBuilder)))
 
+;;;  clearName
+(defn
+ clear-name
+ ([query-chaincode-info-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    query-chaincode-info-builder
+    clearName)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    query-chaincode-info-builder
+    clearName))))
+
 ;;;  getPayloadVisibility
 (defn
  get-payload-visibility
@@ -7732,6 +11897,83 @@
     ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension
     proposal-package-chaincode-header-extension-or-builder
     getPayloadVisibility))))
+
+;;;  clearValidationCode
+(defn
+ clear-validation-code
+ ([transaction-package-processed-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+   transaction-package-processed-transaction-builder
+   clearValidationCode)))
+
+;;;  clearLogModule
+(defn
+ clear-log-module
+ ([admin-package-log-level-request-builder]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-builder])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-builder
+    clearLogModule)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-builder
+    clearLogModule))))
+
+;;;  addActions
+(defn
+ add-actions
+ ([transaction-package-transaction-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [transaction-package-transaction-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    int
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-transaction-builder
+    addActions
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    int
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-transaction-builder
+    addActions
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
+    arg1)))
+ ([transaction-package-transaction-builder arg0]
+  (condp
+   =
+   (mapv type [transaction-package-transaction-builder arg0])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-transaction-builder
+    addActions
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-transaction-builder
+    addActions
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction
+    arg0))))
 
 ;;;  getIntermediateCerts
 (defn
@@ -7765,6 +12007,15 @@
     ^int
     arg0))))
 
+;;;  clearHasMore
+(defn
+ clear-has-more
+ ([chaincode-shim-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+   chaincode-shim-query-response-builder
+   clearHasMore)))
+
 ;;;  setTxid
 (defn
  set-txid
@@ -7789,6 +12040,15 @@
     ^java.lang.String
     arg0))))
 
+;;;  clearChaincodeDeploymentSpec
+(defn
+ clear-chaincode-deployment-spec
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   clearChaincodeDeploymentSpec)))
+
 ;;;  getAdminsList
 (defn
  get-admins-list
@@ -7812,6 +12072,17 @@
     msp-config-package-fabric-msp-config-or-builder
     getAdminsList))))
 
+;;;  addAllRootCerts
+(defn
+ add-all-root-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllRootCerts
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getPolicyRef
 (defn
  get-policy-ref
@@ -7834,6 +12105,17 @@
     ^org.hyperledger.fabric.protos.peer.Resources$Resource
     resources-resource-or-builder
     getPolicyRef))))
+
+;;;  addAllTlsIntermediateCerts
+(defn
+ add-all-tls-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllTlsIntermediateCerts
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getTxId
 (defn
@@ -8030,6 +12312,26 @@
     policies-signature-policy-n-out-of-or-builder
     getRulesOrBuilderList))))
 
+;;;  addTlsRootCerts
+(defn
+ add-tls-root-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addTlsRootCerts
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  clearPreviousHash
+(defn
+ clear-previous-hash
+ ([common-block-header-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+   common-block-header-builder
+   clearPreviousHash)))
+
 ;;;  setConnect
 (defn
  set-connect
@@ -8053,6 +12355,15 @@
     setConnect
     ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect
     arg0))))
+
+;;;  clearRules
+(defn
+ clear-rules
+ ([policies-signature-policy-n-out-of-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   clearRules)))
 
 ;;;  getEndorsementsBuilderList
 (defn
@@ -8110,6 +12421,24 @@
     ^com.google.protobuf.ByteString
     arg0))))
 
+;;;  clearCreator
+(defn
+ clear-creator
+ ([events-package-event-builder]
+  (condp
+   =
+   (mapv type [events-package-event-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    events-package-event-builder
+    clearCreator)
+   [org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    events-package-event-builder
+    clearCreator))))
+
 ;;;  getChannelsOrBuilder
 (defn
  get-channels-or-builder
@@ -8141,6 +12470,35 @@
     ^int
     arg0))))
 
+;;;  clearCertificate
+(defn
+ clear-certificate
+ ([msp-config-package-fabric-ou-identifier-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+   msp-config-package-fabric-ou-identifier-builder
+   clearCertificate)))
+
+;;;  clearChannelGroup
+(defn
+ clear-channel-group
+ ([configtx-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+   configtx-config-builder
+   clearChannelGroup)))
+
+;;;  addAllOwnerEndorsements
+(defn
+ add-all-owner-endorsements
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   addAllOwnerEndorsements
+   ^java.lang.Iterable
+   arg0)))
+
 ;;;  getRegularOrBuilder
 (defn
  get-regular-or-builder
@@ -8163,6 +12521,26 @@
     ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage
     kafka-kafka-message-or-builder
     getRegularOrBuilder))))
+
+;;;  addBrokersBytes
+(defn
+ add-brokers-bytes
+ ([configuration-kafka-brokers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+   configuration-kafka-brokers-builder
+   addBrokersBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  clearPublicSigner
+(defn
+ clear-public-signer
+ ([msp-config-package-signing-identity-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+   msp-config-package-signing-identity-info-builder
+   clearPublicSigner)))
 
 ;;;  getHeaderOrBuilder
 (defn
@@ -8212,6 +12590,15 @@
    setProposalResponsePayload
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  clearEffectiveDate
+(defn
+ clear-effective-date
+ ([chaincode-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+   chaincode-chaincode-deployment-spec-builder
+   clearEffectiveDate)))
 
 ;;;  getChannelsOrBuilderList
 (defn
@@ -15925,6 +20312,15 @@
     ^org.hyperledger.fabric.protos.common.Common$MetadataSignature
     arg1))))
 
+;;;  clearKeyIdentifier
+(defn
+ clear-key-identifier
+ ([msp-config-package-key-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+   msp-config-package-key-info-builder
+   clearKeyIdentifier)))
+
 ;;;  getCurrentBlockHash
 (defn
  get-current-block-hash
@@ -16057,6 +20453,15 @@
     chaincode-chaincode-invocation-spec-or-builder
     getIdGenerationAlg))))
 
+;;;  clearIPk
+(defn
+ clear-i-pk
+ ([msp-config-package-idemix-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+   msp-config-package-idemix-msp-config-builder
+   clearIPk)))
+
 ;;;  getChaincodeRegInfoOrBuilder
 (defn
  get-chaincode-reg-info-or-builder
@@ -16088,6 +20493,24 @@
    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
    events-package-filtered-transaction-builder
    getCcEventBuilder)))
+
+;;;  clearMetadata
+(defn
+ clear-metadata
+ ([common-block-builder]
+  (condp
+   =
+   (mapv type [common-block-builder])
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    common-block-builder
+    clearMetadata)
+   [org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    common-block-builder
+    clearMetadata))))
 
 ;;;  getModPolicy
 (defn
@@ -16141,6 +20564,15 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
     configtx-config-group-or-builder
     getModPolicy))))
+
+;;;  clearRegInfo
+(defn
+ clear-reg-info
+ ([events-package-interest-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+   events-package-interest-builder
+   clearRegInfo)))
 
 ;;;  getTransientMapOrThrow
 (defn
@@ -16221,6 +20653,56 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
     msp-config-package-idemix-msp-signer-config-or-builder
     getCred))))
+
+;;;  addChaincodes
+(defn
+ add-chaincodes
+ ([query-chaincode-query-response-builder arg0]
+  (condp
+   =
+   (mapv type [query-chaincode-query-response-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    query-chaincode-query-response-builder
+    addChaincodes
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    query-chaincode-query-response-builder
+    addChaincodes
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    arg0)))
+ ([query-chaincode-query-response-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [query-chaincode-query-response-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    query-chaincode-query-response-builder
+    addChaincodes
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    query-chaincode-query-response-builder
+    addChaincodes
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    arg1))))
 
 ;;;  getEffectiveDate
 (defn
@@ -16314,6 +20796,62 @@
     proposal-package-chaincode-proposal-payload-or-builder
     getTransientMapMap))))
 
+;;;  containsGroups
+(defn
+ contains-groups
+ ([configtx-config-group-schema-or-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    configtx-config-group-schema-or-builder
+    containsGroups
+    ^java.lang.String
+    arg0))))
+
 ;;;  setData
 (defn
  set-data
@@ -16354,6 +20892,45 @@
    arg0
    ^com.google.protobuf.ByteString
    arg1)))
+
+;;;  clearStatus
+(defn
+ clear-status
+ ([proposal-response-package-response-builder]
+  (condp
+   =
+   (mapv type [proposal-response-package-response-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    proposal-response-package-response-builder
+    clearStatus)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    proposal-response-package-response-builder
+    clearStatus)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    proposal-response-package-response-builder
+    clearStatus)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    proposal-response-package-response-builder
+    clearStatus))))
+
+;;;  addAllFilteredTx
+(defn
+ add-all-filtered-tx
+ ([events-package-filtered-block-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+   events-package-filtered-block-builder
+   addAllFilteredTx
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getArgsCount
 (defn
@@ -16401,6 +20978,62 @@
     query-chaincode-info-or-builder
     getVscc))))
 
+;;;  containsValues
+(defn
+ contains-values
+ ([configtx-config-group-schema-or-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    configtx-config-group-schema-or-builder
+    containsValues
+    ^java.lang.String
+    arg0))))
+
 ;;;  getEndorsementBuilder
 (defn
  get-endorsement-builder
@@ -16409,6 +21042,1341 @@
    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
    proposal-response-package-proposal-response-builder
    getEndorsementBuilder)))
+
+;;;  addRepeatedField
+(defn
+ add-repeated-field
+ ([transaction-package-signed-transaction-builder arg0 arg1]
+  (condp
+   =
+   (mapv
+    type
+    [transaction-package-signed-transaction-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeHeaderExtension$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeSpec$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$ServerStatus$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageConnect$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ChannelRestrictions$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekNewest$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekOldest$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekSpecified$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$MSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$SigningIdentityInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$Policy$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$BlockDataHashingStructure$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capability$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValueSchema$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicySchema$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$Config$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$LastConfig$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Header$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Header$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Payload$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Block$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Block$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockHeader$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockData$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    com.google.protobuf.Descriptors$FieldDescriptor
+    java.lang.Object]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$BlockMetadata$Builder
+    transaction-package-signed-transaction-builder
+    addRepeatedField
+    ^com.google.protobuf.Descriptors$FieldDescriptor
+    arg0
+    ^java.lang.Object
+    arg1))))
+
+;;;  addEventsBuilder
+(defn
+ add-events-builder
+ ([events-package-register-builder]
+  (condp
+   =
+   (mapv type [events-package-register-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEventsBuilder)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEventsBuilder)))
+ ([events-package-register-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-register-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEventsBuilder
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEventsBuilder
+    ^int
+    arg0))))
 
 ;;;  getReadSetOrBuilder
 (defn
@@ -16533,6 +22501,112 @@
    policies-signature-policy-envelope-builder
    getRuleBuilder)))
 
+;;;  clearMspIdentifier
+(defn
+ clear-msp-identifier
+ ([msp-principal-organization-unit-builder]
+  (condp
+   =
+   (mapv type [msp-principal-organization-unit-builder])
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-principal-organization-unit-builder
+    clearMspIdentifier)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    msp-principal-organization-unit-builder
+    clearMspIdentifier))))
+
+;;;  addEvents
+(defn
+ add-events
+ ([events-package-register-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [events-package-register-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEvents
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEvents
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEvents
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEvents
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
+    arg1)))
+ ([events-package-register-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-register-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEvents
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addEvents
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEvents
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addEvents
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
+    arg0))))
+
 ;;;  getOrganizationalUnitIdentifiersBuilderList
 (defn
  get-organizational-unit-identifiers-builder-list
@@ -16565,6 +22639,67 @@
     events-package-event-or-builder
     getRegisterOrBuilder))))
 
+;;;  addFilteredTx
+(defn
+ add-filtered-tx
+ ([events-package-filtered-block-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [events-package-filtered-block-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    events-package-filtered-block-builder
+    addFilteredTx
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
+    arg1)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    int
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    events-package-filtered-block-builder
+    addFilteredTx
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    arg1)))
+ ([events-package-filtered-block-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-filtered-block-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    events-package-filtered-block-builder
+    addFilteredTx
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    events-package-filtered-block-builder
+    addFilteredTx
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    arg0))))
+
+;;;  removeEndorsements
+(defn
+ remove-endorsements
+ ([transaction-package-chaincode-endorsed-action-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   removeEndorsements
+   ^int
+   arg0)))
+
 ;;;  setReadSet
 (defn
  set-read-set
@@ -16589,6 +22724,33 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
     arg0))))
 
+;;;  clearEndKey
+(defn
+ clear-end-key
+ ([chaincode-shim-get-state-by-range-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+   chaincode-shim-get-state-by-range-builder
+   clearEndKey)))
+
+;;;  clearRule
+(defn
+ clear-rule
+ ([policies-signature-policy-envelope-builder]
+  (condp
+   =
+   (mapv type [policies-signature-policy-envelope-builder])
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    policies-signature-policy-envelope-builder
+    clearRule)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    policies-signature-policy-envelope-builder
+    clearRule))))
+
 ;;;  setEscc
 (defn
  set-escc
@@ -16599,6 +22761,35 @@
    setEscc
    ^java.lang.String
    arg0)))
+
+;;;  addAllBrokers
+(defn
+ add-all-brokers
+ ([configuration-kafka-brokers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+   configuration-kafka-brokers-builder
+   addAllBrokers
+   ^java.lang.Iterable
+   arg0)))
+
+;;;  clearNymY
+(defn
+ clear-nym-y
+ ([identities-serialized-idemix-identity-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+   identities-serialized-idemix-identity-builder
+   clearNymY)))
+
+;;;  clearAnchorPeers
+(defn
+ clear-anchor-peers
+ ([configuration-anchor-peers-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+   configuration-anchor-peers-builder
+   clearAnchorPeers)))
 
 ;;;  setPrincipalClassificationValue
 (defn
@@ -16633,6 +22824,29 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
     msp-config-package-fabric-msp-config-or-builder
     getRootCertsCount))))
+
+;;;  clearOrganizationalUnitIdentifier
+(defn
+ clear-organizational-unit-identifier
+ ([msp-config-package-idemix-msp-signer-config-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-idemix-msp-signer-config-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    clearOrganizationalUnitIdentifier)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    clearOrganizationalUnitIdentifier)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    clearOrganizationalUnitIdentifier))))
 
 ;;;  getRejection
 (defn
@@ -16713,6 +22927,15 @@
     ^java.lang.String
     arg0))))
 
+;;;  clearMspid
+(defn
+ clear-mspid
+ ([identities-serialized-identity-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+   identities-serialized-identity-builder
+   clearMspid)))
+
 ;;;  getReadSet
 (defn
  get-read-set
@@ -16735,6 +22958,17 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
     configtx-config-update-or-builder
     getReadSet))))
+
+;;;  addAllAdmins
+(defn
+ add-all-admins
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllAdmins
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getStartKey
 (defn
@@ -16812,6 +23046,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
     msp-config-package-idemix-msp-signer-config-or-builder
     getIsAdmin))))
+
+;;;  removeDecorations
+(defn
+ remove-decorations
+ ([chaincode-chaincode-input-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   removeDecorations
+   ^java.lang.String
+   arg0)))
 
 ;;;  setValue
 (defn
@@ -16914,6 +23159,40 @@
     chaincode-chaincode-deployment-spec-or-builder
     getExecEnvValue))))
 
+;;;  clearCred
+(defn
+ clear-cred
+ ([msp-config-package-idemix-msp-signer-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+   msp-config-package-idemix-msp-signer-config-builder
+   clearCred)))
+
+;;;  clearExtension
+(defn
+ clear-extension
+ ([proposal-response-package-proposal-response-payload-builder]
+  (condp
+   =
+   (mapv
+    type
+    [proposal-response-package-proposal-response-payload-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponsePayload$Builder
+    proposal-response-package-proposal-response-payload-builder
+    clearExtension)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$Proposal$Builder
+    proposal-response-package-proposal-response-payload-builder
+    clearExtension)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    proposal-response-package-proposal-response-payload-builder
+    clearExtension))))
+
 ;;;  getFilteredBlock
 (defn
  get-filtered-block
@@ -16970,6 +23249,35 @@
    query-chaincode-info-builder
    setVscc
    ^java.lang.String
+   arg0)))
+
+;;;  clearLastOffsetPersisted
+(defn
+ clear-last-offset-persisted
+ ([kafka-kafka-metadata-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMetadata$Builder
+   kafka-kafka-metadata-builder
+   clearLastOffsetPersisted)))
+
+;;;  clearCapabilities
+(defn
+ clear-capabilities
+ ([configuration-capabilities-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+   configuration-capabilities-builder
+   clearCapabilities)))
+
+;;;  addAllChaincodes
+(defn
+ add-all-chaincodes
+ ([query-chaincode-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+   query-chaincode-query-response-builder
+   addAllChaincodes
+   ^java.lang.Iterable
    arg0)))
 
 ;;;  getValuesOrDefault
@@ -17045,6 +23353,24 @@
     arg0
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
     arg1))))
+
+;;;  clearTxid
+(defn
+ clear-txid
+ ([events-package-filtered-transaction-builder]
+  (condp
+   =
+   (mapv type [events-package-filtered-transaction-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    events-package-filtered-transaction-builder
+    clearTxid)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    events-package-filtered-transaction-builder
+    clearTxid))))
 
 ;;;  getCryptoConfigBuilder
 (defn
@@ -17298,6 +23624,19 @@
     msp-config-package-idemix-msp-config-or-builder
     getSigner))))
 
+;;;  putDecorations
+(defn
+ put-decorations
+ ([chaincode-chaincode-input-builder arg0 arg1]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   putDecorations
+   ^java.lang.String
+   arg0
+   ^com.google.protobuf.ByteString
+   arg1)))
+
 ;;;  getRegisterBuilder
 (defn
  get-register-builder
@@ -17359,6 +23698,24 @@
     getSignaturesOrBuilder
     ^int
     arg0))))
+
+;;;  clearRole
+(defn
+ clear-role
+ ([identities-serialized-idemix-identity-builder]
+  (condp
+   =
+   (mapv type [identities-serialized-idemix-identity-builder])
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdemixIdentity$Builder
+    identities-serialized-idemix-identity-builder
+    clearRole)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    identities-serialized-idemix-identity-builder
+    clearRole))))
 
 ;;;  getMaxCount
 (defn
@@ -17449,6 +23806,24 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  clearBehavior
+(defn
+ clear-behavior
+ ([ab-seek-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+   ab-seek-info-builder
+   clearBehavior)))
+
+;;;  clearChannelHeader
+(defn
+ clear-channel-header
+ ([common-header-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$Header$Builder
+   common-header-builder
+   clearChannelHeader)))
+
 ;;;  getPolicy
 (defn
  get-policy
@@ -17471,6 +23846,22 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
     configtx-config-policy-or-builder
     getPolicy))))
+
+;;;  addAnchorPeersBuilder
+(defn
+ add-anchor-peers-builder
+ ([configuration-anchor-peers-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+   configuration-anchor-peers-builder
+   addAnchorPeersBuilder))
+ ([configuration-anchor-peers-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+   configuration-anchor-peers-builder
+   addAnchorPeersBuilder
+   ^int
+   arg0)))
 
 ;;;  getReadSetBuilder
 (defn
@@ -17518,6 +23909,22 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
     configtx-config-group-schema-or-builder
     getGroupsMap))))
+
+;;;  addResultsBuilder
+(defn
+ add-results-builder
+ ([chaincode-shim-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+   chaincode-shim-query-response-builder
+   addResultsBuilder
+   ^int
+   arg0))
+ ([chaincode-shim-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+   chaincode-shim-query-response-builder
+   addResultsBuilder)))
 
 ;;;  setHasMore
 (defn
@@ -17618,6 +24025,24 @@
    policies-signature-policy-n-out-of-builder
    getRulesBuilderList)))
 
+;;;  clearChaincodeEvent
+(defn
+ clear-chaincode-event
+ ([events-package-event-builder]
+  (condp
+   =
+   (mapv type [events-package-event-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+    events-package-event-builder
+    clearChaincodeEvent)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    events-package-event-builder
+    clearChaincodeEvent))))
+
 ;;;  setMspid
 (defn
  set-mspid
@@ -17628,6 +24053,67 @@
    setMspid
    ^java.lang.String
    arg0)))
+
+;;;  addArgs
+(defn
+ add-args
+ ([chaincode-chaincode-input-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   addArgs
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  addResults
+(defn
+ add-results
+ ([chaincode-shim-query-response-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [chaincode-shim-query-response-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-response-builder
+    addResults
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    int
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-response-builder
+    addResults
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
+    arg1)))
+ ([chaincode-shim-query-response-builder arg0]
+  (condp
+   =
+   (mapv type [chaincode-shim-query-response-builder arg0])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-response-builder
+    addResults
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-response-builder
+    addResults
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
+    arg0))))
 
 ;;;  getRevocationList
 (defn
@@ -17660,6 +24146,56 @@
     getRevocationList
     ^int
     arg0))))
+
+;;;  addAnchorPeers
+(defn
+ add-anchor-peers
+ ([configuration-anchor-peers-builder arg0]
+  (condp
+   =
+   (mapv type [configuration-anchor-peers-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    configuration-anchor-peers-builder
+    addAnchorPeers
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    configuration-anchor-peers-builder
+    addAnchorPeers
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    arg0)))
+ ([configuration-anchor-peers-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [configuration-anchor-peers-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    configuration-anchor-peers-builder
+    addAnchorPeers
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
+    arg1)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    int
+    org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers$Builder
+    configuration-anchor-peers-builder
+    addAnchorPeers
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    arg1))))
 
 ;;;  getEndorsement
 (defn
@@ -17730,6 +24266,34 @@
     common-block-or-builder
     getMetadataOrBuilder))))
 
+;;;  clearId
+(defn
+ clear-id
+ ([peer-peer-endpoint-builder]
+  (condp
+   =
+   (mapv type [peer-peer-endpoint-builder])
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    peer-peer-endpoint-builder
+    clearId)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    peer-peer-endpoint-builder
+    clearId)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    peer-peer-endpoint-builder
+    clearId)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    peer-peer-endpoint-builder
+    clearId))))
+
 ;;;  getGroupsOrThrow
 (defn
  get-groups-or-throw
@@ -17786,6 +24350,15 @@
     ^java.lang.String
     arg0))))
 
+;;;  clearTransactionBytes
+(defn
+ clear-transaction-bytes
+ ([transaction-package-signed-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+   transaction-package-signed-transaction-builder
+   clearTransactionBytes)))
+
 ;;;  setCertificate
 (defn
  set-certificate
@@ -17797,6 +24370,73 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  containsPolicies
+(defn
+ contains-policies
+ ([configtx-config-group-schema-or-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchemaOrBuilder
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    configtx-config-group-schema-or-builder
+    containsPolicies
+    ^java.lang.String
+    arg0))))
+
+;;;  putAllDecorations
+(defn
+ put-all-decorations
+ ([chaincode-chaincode-input-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   putAllDecorations
+   ^java.util.Map
+   arg0)))
+
 ;;;  getFilteredTxBuilderList
 (defn
  get-filtered-tx-builder-list
@@ -17805,6 +24445,29 @@
    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
    events-package-filtered-block-builder
    getFilteredTxBuilderList)))
+
+;;;  clearEvents
+(defn
+ clear-events
+ ([proposal-package-chaincode-action-builder]
+  (condp
+   =
+   (mapv type [proposal-package-chaincode-action-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeAction$Builder
+    proposal-package-chaincode-action-builder
+    clearEvents)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    proposal-package-chaincode-action-builder
+    clearEvents)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    proposal-package-chaincode-action-builder
+    clearEvents))))
 
 ;;;  getActionsCount
 (defn
@@ -17829,6 +24492,15 @@
     transaction-package-transaction-or-builder
     getActionsCount))))
 
+;;;  clearDecorations
+(defn
+ clear-decorations
+ ([chaincode-chaincode-input-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInput$Builder
+   chaincode-chaincode-input-builder
+   clearDecorations)))
+
 ;;;  getMutablePolicies
 (defn
  get-mutable-policies
@@ -17846,6 +24518,24 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
     configtx-config-group-schema-builder
     getMutablePolicies))))
+
+;;;  clearEventName
+(defn
+ clear-event-name
+ ([events-package-chaincode-reg-builder]
+  (condp
+   =
+   (mapv type [events-package-chaincode-reg-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    events-package-chaincode-reg-builder
+    clearEventName)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    events-package-chaincode-reg-builder
+    clearEventName))))
 
 ;;;  setRole
 (defn
@@ -17975,6 +24665,17 @@
     policies-signature-policy-envelope-or-builder
     getRuleOrBuilder))))
 
+;;;  removeFilteredTx
+(defn
+ remove-filtered-tx
+ ([events-package-filtered-block-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+   events-package-filtered-block-builder
+   removeFilteredTx
+   ^int
+   arg0)))
+
 ;;;  getActionsOrBuilderList
 (defn
  get-actions-or-builder-list
@@ -17997,6 +24698,15 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$Transaction
     transaction-package-transaction-or-builder
     getActionsOrBuilderList))))
+
+;;;  clearBlockNumber
+(defn
+ clear-block-number
+ ([kafka-kafka-message-time-to-cut-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageTimeToCut$Builder
+   kafka-kafka-message-time-to-cut-builder
+   clearBlockNumber)))
 
 ;;;  getNumber
 (defn
@@ -18177,6 +24887,15 @@
    ^int
    arg0)))
 
+;;;  clearKeyMaterial
+(defn
+ clear-key-material
+ ([msp-config-package-key-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+   msp-config-package-key-info-builder
+   clearKeyMaterial)))
+
 ;;;  setEpoch
 (defn
  set-epoch
@@ -18186,6 +24905,17 @@
    common-channel-header-builder
    setEpoch
    ^long
+   arg0)))
+
+;;;  removeOrganizationalUnitIdentifiers
+(defn
+ remove-organizational-unit-identifiers
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   removeOrganizationalUnitIdentifiers
+   ^int
    arg0)))
 
 ;;;  getActionsOrBuilder
@@ -18331,6 +25061,15 @@
     msp-principal-msp-role-or-builder
     getRoleValue))))
 
+;;;  clearConfigSeq
+(defn
+ clear-config-seq
+ ([kafka-kafka-message-regular-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
+   kafka-kafka-message-regular-builder
+   clearConfigSeq)))
+
 ;;;  getChaincodesCount
 (defn
  get-chaincodes-count
@@ -18415,6 +25154,22 @@
     msp-config-package-msp-config-or-builder
     getConfig))))
 
+;;;  addChaincodesBuilder
+(defn
+ add-chaincodes-builder
+ ([query-chaincode-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+   query-chaincode-query-response-builder
+   addChaincodesBuilder))
+ ([query-chaincode-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeQueryResponse$Builder
+   query-chaincode-query-response-builder
+   addChaincodesBuilder
+   ^int
+   arg0)))
+
 ;;;  getId
 (defn
  get-id
@@ -18483,6 +25238,15 @@
     peer-peer-endpoint-or-builder
     getId))))
 
+;;;  clearEndorsement
+(defn
+ clear-endorsement
+ ([proposal-response-package-proposal-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+   proposal-response-package-proposal-response-builder
+   clearEndorsement)))
+
 ;;;  getRegister
 (defn
  get-register
@@ -18505,6 +25269,15 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Event
     events-package-event-or-builder
     getRegister))))
+
+;;;  clearTx
+(defn
+ clear-tx
+ ([events-package-rejection-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+   events-package-rejection-builder
+   clearTx)))
 
 ;;;  setExecEnvValue
 (defn
@@ -18585,6 +25358,30 @@
     msp-config-package-fabric-crypto-config-or-builder
     getSignatureHashFamily))))
 
+;;;  removeValues
+(defn
+ remove-values
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    removeValues
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    removeValues
+    ^java.lang.String
+    arg0))))
+
 ;;;  getChaincodeDeploymentSpec
 (defn
  get-chaincode-deployment-spec
@@ -18632,6 +25429,35 @@
     ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo
     ab-seek-info-or-builder
     getStart))))
+
+;;;  clearMessage
+(defn
+ clear-message
+ ([proposal-response-package-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+   proposal-response-package-response-builder
+   clearMessage)))
+
+;;;  clearStartKey
+(defn
+ clear-start-key
+ ([chaincode-shim-get-state-by-range-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+   chaincode-shim-get-state-by-range-builder
+   clearStartKey)))
+
+;;;  removeTransientMap
+(defn
+ remove-transient-map
+ ([proposal-package-chaincode-proposal-payload-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   proposal-package-chaincode-proposal-payload-builder
+   removeTransientMap
+   ^java.lang.String
+   arg0)))
 
 ;;;  getAnchorPeersBuilder
 (defn
@@ -18821,6 +25647,24 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  clearHeight
+(defn
+ clear-height
+ ([ledger-blockchain-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+   ledger-blockchain-info-builder
+   clearHeight)))
+
+;;;  clearOrganizationalUnitIdentifiers
+(defn
+ clear-organizational-unit-identifiers
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearOrganizationalUnitIdentifiers)))
+
 ;;;  getDataCount
 (defn
  get-data-count
@@ -18902,6 +25746,24 @@
    ^java.lang.String
    arg1)))
 
+;;;  clearSk
+(defn
+ clear-sk
+ ([msp-config-package-idemix-msp-signer-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+   msp-config-package-idemix-msp-signer-config-builder
+   clearSk)))
+
+;;;  clearAddress
+(defn
+ clear-address
+ ([peer-peer-endpoint-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+   peer-peer-endpoint-builder
+   clearAddress)))
+
 ;;;  getIsolatedDataOrDefault
 (defn
  get-isolated-data-or-default
@@ -18942,6 +25804,15 @@
     arg0
     ^com.google.protobuf.ByteString
     arg1))))
+
+;;;  clearInstantiationPolicy
+(defn
+ clear-instantiation-policy
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   clearInstantiationPolicy)))
 
 ;;;  getGroupsOrDefault
 (defn
@@ -19242,6 +26113,24 @@
    ^int
    arg0)))
 
+;;;  clearConnect
+(defn
+ clear-connect
+ ([kafka-kafka-message-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+   kafka-kafka-message-builder
+   clearConnect)))
+
+;;;  clearProposalResponsePayload
+(defn
+ clear-proposal-response-payload
+ ([transaction-package-chaincode-endorsed-action-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   clearProposalResponsePayload)))
+
 ;;;  setTypeValue
 (defn
  set-type-value
@@ -19265,6 +26154,15 @@
     setTypeValue
     ^int
     arg0))))
+
+;;;  clearStart
+(defn
+ clear-start
+ ([ab-seek-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+   ab-seek-info-builder
+   clearStart)))
 
 ;;;  getOwnerEndorsementsCount
 (defn
@@ -19385,6 +26283,38 @@
     proposal-response-package-proposal-response-builder
     setEndorsement
     ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Endorsement
+    arg0))))
+
+;;;  containsCapabilities
+(defn
+ contains-capabilities
+ ([configuration-capabilities-or-builder arg0]
+  (condp
+   =
+   (mapv type [configuration-capabilities-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$CapabilitiesOrBuilder
+    configuration-capabilities-or-builder
+    containsCapabilities
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+    configuration-capabilities-or-builder
+    containsCapabilities
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Capabilities
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Capabilities
+    configuration-capabilities-or-builder
+    containsCapabilities
+    ^java.lang.String
     arg0))))
 
 ;;;  build
@@ -20055,6 +26985,15 @@
     msp-config-package-fabric-msp-config-or-builder
     getTlsRootCertsList))))
 
+;;;  clearSpecified
+(defn
+ clear-specified
+ ([ab-seek-position-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekPosition$Builder
+   ab-seek-position-builder
+   clearSpecified)))
+
 ;;;  getPolicyOrBuilder
 (defn
  get-policy-or-builder
@@ -20124,6 +27063,15 @@
     chaincode-shim-get-state-by-range-or-builder
     getEndKey))))
 
+;;;  clearRootCerts
+(defn
+ clear-root-certs
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearRootCerts)))
+
 ;;;  getCcEvent
 (defn
  get-cc-event
@@ -20146,6 +27094,56 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
     events-package-filtered-transaction-or-builder
     getCcEvent))))
+
+;;;  addIdentities
+(defn
+ add-identities
+ ([policies-signature-policy-envelope-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [policies-signature-policy-envelope-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    int
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    policies-signature-policy-envelope-builder
+    addIdentities
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    int
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    policies-signature-policy-envelope-builder
+    addIdentities
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
+    arg1)))
+ ([policies-signature-policy-envelope-builder arg0]
+  (condp
+   =
+   (mapv type [policies-signature-policy-envelope-builder arg0])
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    policies-signature-policy-envelope-builder
+    addIdentities
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
+    arg0)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    policies-signature-policy-envelope-builder
+    addIdentities
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal$Builder
+    arg0))))
 
 ;;;  setEventName
 (defn
@@ -20170,6 +27168,50 @@
     setEventName
     ^java.lang.String
     arg0))))
+
+;;;  addAllRevocationList
+(defn
+ add-all-revocation-list
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addAllRevocationList
+   ^java.lang.Iterable
+   arg0)))
+
+;;;  clearRevocationList
+(defn
+ clear-revocation-list
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearRevocationList)))
+
+;;;  putIsolatedData
+(defn
+ put-isolated-data
+ ([configtx-config-update-builder arg0 arg1]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   putIsolatedData
+   ^java.lang.String
+   arg0
+   ^com.google.protobuf.ByteString
+   arg1)))
+
+;;;  removeChannels
+(defn
+ remove-channels
+ ([query-channel-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+   query-channel-query-response-builder
+   removeChannels
+   ^int
+   arg0)))
 
 ;;;  getAddresses
 (defn
@@ -20365,6 +27407,65 @@
     ^int
     arg0))))
 
+;;;  clearReadSet
+(defn
+ clear-read-set
+ ([configtx-config-update-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   clearReadSet)))
+
+;;;  addOrganizationalUnitIdentifiers
+(defn
+ add-organizational-unit-identifiers
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (condp
+   =
+   (mapv type [msp-config-package-fabric-msp-config-builder arg0])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    msp-config-package-fabric-msp-config-builder
+    addOrganizationalUnitIdentifiers
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    msp-config-package-fabric-msp-config-builder
+    addOrganizationalUnitIdentifiers
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    arg0)))
+ ([msp-config-package-fabric-msp-config-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [msp-config-package-fabric-msp-config-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    int
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    msp-config-package-fabric-msp-config-builder
+    addOrganizationalUnitIdentifiers
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
+    arg1)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    int
+    org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    msp-config-package-fabric-msp-config-builder
+    addOrganizationalUnitIdentifiers
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    arg1))))
+
 ;;;  getValuesOrThrow
 (defn
  get-values-or-throw
@@ -20432,6 +27533,15 @@
    ^com.google.protobuf.ByteString
    arg0)))
 
+;;;  clearAddresses
+(defn
+ clear-addresses
+ ([configuration-orderer-addresses-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+   configuration-orderer-addresses-builder
+   clearAddresses)))
+
 ;;;  setPrincipalClassification
 (defn
  set-principal-classification
@@ -20465,6 +27575,24 @@
     ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPPrincipal
     msp-principal-msp-principal-or-builder
     getPrincipalClassificationValue))))
+
+;;;  clearSubPolicy
+(defn
+ clear-sub-policy
+ ([policies-implicit-meta-policy-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+   policies-implicit-meta-policy-builder
+   clearSubPolicy)))
+
+;;;  clearUnregister
+(defn
+ clear-unregister
+ ([events-package-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+   events-package-event-builder
+   clearUnregister)))
 
 ;;;  getRule
 (defn
@@ -20564,6 +27692,15 @@
     ^org.hyperledger.fabric.protos.common.Common$Metadata
     configtx-config-update-envelope-or-builder
     getSignaturesList))))
+
+;;;  clearNonce
+(defn
+ clear-nonce
+ ([common-signature-header-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Common$SignatureHeader$Builder
+   common-signature-header-builder
+   clearNonce)))
 
 ;;;  getIndex
 (defn
@@ -20686,6 +27823,22 @@
     ^java.lang.String
     arg0))))
 
+;;;  addRulesBuilder
+(defn
+ add-rules-builder
+ ([policies-signature-policy-n-out-of-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   addRulesBuilder
+   ^int
+   arg0))
+ ([policies-signature-policy-n-out-of-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   addRulesBuilder)))
+
 ;;;  getDataList
 (defn
  get-data-list
@@ -20708,6 +27861,24 @@
     ^org.hyperledger.fabric.protos.common.Common$BlockData
     common-block-data-or-builder
     getDataList))))
+
+;;;  clearTimeToCut
+(defn
+ clear-time-to-cut
+ ([kafka-kafka-message-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+   kafka-kafka-message-builder
+   clearTimeToCut)))
+
+;;;  clearAction
+(defn
+ clear-action
+ ([transaction-package-chaincode-action-payload-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeActionPayload$Builder
+   transaction-package-chaincode-action-payload-builder
+   clearAction)))
 
 ;;;  getRules
 (defn
@@ -20943,6 +28114,31 @@
     proposal-response-package-proposal-response-builder
     getTimestampBuilder))))
 
+;;;  addChannelsBuilder
+(defn
+ add-channels-builder
+ ([query-channel-query-response-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+   query-channel-query-response-builder
+   addChannelsBuilder))
+ ([query-channel-query-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse$Builder
+   query-channel-query-response-builder
+   addChannelsBuilder
+   ^int
+   arg0)))
+
+;;;  clearSignatureHashFamily
+(defn
+ clear-signature-hash-family
+ ([msp-config-package-fabric-crypto-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+   msp-config-package-fabric-crypto-config-builder
+   clearSignatureHashFamily)))
+
 ;;;  getLastOffsetPersisted
 (defn
  get-last-offset-persisted
@@ -21032,6 +28228,15 @@
     configuration-orderer-addresses-or-builder
     getAddressesCount))))
 
+;;;  clearIsolatedData
+(defn
+ clear-isolated-data
+ ([configtx-config-update-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+   configtx-config-update-builder
+   clearIsolatedData)))
+
 ;;;  getActionsList
 (defn
  get-actions-list
@@ -21055,6 +28260,17 @@
     transaction-package-transaction-or-builder
     getActionsList))))
 
+;;;  removeOwnerEndorsements
+(defn
+ remove-owner-endorsements
+ ([signed-cc-dep-spec-signed-chaincode-deployment-spec-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.SignedCcDepSpec$SignedChaincodeDeploymentSpec$Builder
+   signed-cc-dep-spec-signed-chaincode-deployment-spec-builder
+   removeOwnerEndorsements
+   ^int
+   arg0)))
+
 ;;;  getEventsBuilderList
 (defn
  get-events-builder-list
@@ -21073,6 +28289,15 @@
     events-package-register-builder
     getEventsBuilderList))))
 
+;;;  clearHost
+(defn
+ clear-host
+ ([configuration-anchor-peer-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+   configuration-anchor-peer-builder
+   clearHost)))
+
 ;;;  setPort
 (defn
  set-port
@@ -21083,6 +28308,15 @@
    setPort
    ^int
    arg0)))
+
+;;;  clearCryptoConfig
+(defn
+ clear-crypto-config
+ ([msp-config-package-fabric-msp-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   clearCryptoConfig)))
 
 ;;;  getCapabilitiesCount
 (defn
@@ -21106,6 +28340,17 @@
     ^org.hyperledger.fabric.protos.common.Configuration$Capabilities
     configuration-capabilities-or-builder
     getCapabilitiesCount))))
+
+;;;  addTlsIntermediateCerts
+(defn
+ add-tls-intermediate-certs
+ ([msp-config-package-fabric-msp-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+   msp-config-package-fabric-msp-config-builder
+   addTlsIntermediateCerts
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getEndorsementsOrBuilderList
 (defn
@@ -21401,6 +28646,17 @@
    query-chaincode-query-response-builder
    getChaincodesBuilder
    ^int
+   arg0)))
+
+;;;  addAllEndorsements
+(defn
+ add-all-endorsements
+ ([transaction-package-chaincode-endorsed-action-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ChaincodeEndorsedAction$Builder
+   transaction-package-chaincode-endorsed-action-builder
+   addAllEndorsements
+   ^java.lang.Iterable
    arg0)))
 
 ;;;  getChaincodeEvent
@@ -22389,6 +29645,15 @@
     events-package-interest-or-builder
     getEventTypeValue))))
 
+;;;  clearIdGenerationAlg
+(defn
+ clear-id-generation-alg
+ ([chaincode-chaincode-invocation-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+   chaincode-chaincode-invocation-spec-builder
+   clearIdGenerationAlg)))
+
 ;;;  setMessage
 (defn
  set-message
@@ -22423,6 +29688,57 @@
     setNOutOf
     ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
     arg0))))
+
+;;;  clearTxId
+(defn
+ clear-tx-id
+ ([chaincode-event-package-chaincode-event-builder]
+  (condp
+   =
+   (mapv type [chaincode-event-package-chaincode-event-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    chaincode-event-package-chaincode-event-builder
+    clearTxId)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    chaincode-event-package-chaincode-event-builder
+    clearTxId))))
+
+;;;  addAllEvents
+(defn
+ add-all-events
+ ([events-package-register-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-register-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    java.lang.Iterable]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    addAllEvents
+    ^java.lang.Iterable
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    java.lang.Iterable]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    addAllEvents
+    ^java.lang.Iterable
+    arg0))))
+
+;;;  clearMaxMessageCount
+(defn
+ clear-max-message-count
+ ([configuration-batch-size-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+   configuration-batch-size-builder
+   clearMaxMessageCount)))
 
 ;;;  getCapabilitiesOrDefault
 (defn
@@ -22707,6 +30023,15 @@
    org.hyperledger.fabric.protos.common.Common$BlockMetadata
    (org.hyperledger.fabric.protos.common.Common$BlockMetadata/getDefaultInstance))))
 
+;;;  clearErrorMsg
+(defn
+ clear-error-msg
+ ([events-package-rejection-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+   events-package-rejection-builder
+   clearErrorMsg)))
+
 ;;;  getEventsOrBuilderList
 (defn
  get-events-or-builder-list
@@ -22744,6 +30069,15 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister
     events-package-register-or-builder
     getEventsOrBuilderList))))
+
+;;;  clearFilteredBlock
+(defn
+ clear-filtered-block
+ ([events-package-event-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Event$Builder
+   events-package-event-builder
+   clearFilteredBlock)))
 
 ;;;  getSignaturesOrBuilderList
 (defn
@@ -23130,6 +30464,39 @@
    ^int
    arg0)))
 
+;;;  removeEvents
+(defn
+ remove-events
+ ([events-package-register-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-register-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Register$Builder
+    events-package-register-builder
+    removeEvents
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
+    events-package-register-builder
+    removeEvents
+    ^int
+    arg0))))
+
+;;;  clearProposalBytes
+(defn
+ clear-proposal-bytes
+ ([proposal-package-signed-proposal-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+   proposal-package-signed-proposal-builder
+   clearProposalBytes)))
+
 ;;;  setTlsRootCerts
 (defn
  set-tls-root-certs
@@ -23199,6 +30566,15 @@
    setPrincipal
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  clearRegular
+(defn
+ clear-regular
+ ([kafka-kafka-message-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessage$Builder
+   kafka-kafka-message-builder
+   clearRegular)))
 
 ;;;  setFilteredTx
 (defn
@@ -23316,6 +30692,54 @@
     configtx-config-update-or-builder
     getIsolatedDataMap))))
 
+;;;  clearVersion
+(defn
+ clear-version
+ ([query-chaincode-info-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    query-chaincode-info-builder
+    clearVersion)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    query-chaincode-info-builder
+    clearVersion))))
+
 ;;;  getMutableGroups
 (defn
  get-mutable-groups
@@ -23357,6 +30781,17 @@
     chaincode-chaincode-input-or-builder
     getDecorationsCount))))
 
+;;;  removeRules
+(defn
+ remove-rules
+ ([policies-signature-policy-n-out-of-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   removeRules
+   ^int
+   arg0)))
+
 ;;;  getTlsRootCerts
 (defn
  get-tls-root-certs
@@ -23389,6 +30824,24 @@
     ^int
     arg0))))
 
+;;;  clearIsAdmin
+(defn
+ clear-is-admin
+ ([msp-config-package-idemix-msp-signer-config-builder]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+   msp-config-package-idemix-msp-signer-config-builder
+   clearIsAdmin)))
+
+;;;  clearCurrentBlockHash
+(defn
+ clear-current-block-hash
+ ([ledger-blockchain-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Ledger$BlockchainInfo$Builder
+   ledger-blockchain-info-builder
+   clearCurrentBlockHash)))
+
 ;;;  getTlsIntermediateCertsCount
 (defn
  get-tls-intermediate-certs-count
@@ -23412,6 +30865,15 @@
     msp-config-package-fabric-msp-config-or-builder
     getTlsIntermediateCertsCount))))
 
+;;;  clearCertifiersIdentifier
+(defn
+ clear-certifiers-identifier
+ ([msp-principal-organization-unit-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+   msp-principal-organization-unit-builder
+   clearCertifiersIdentifier)))
+
 ;;;  setCred
 (defn
  set-cred
@@ -23422,6 +30884,94 @@
    setCred
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  addSignatures
+(defn
+ add-signatures
+ ([configtx-config-update-envelope-builder arg0 arg1]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder arg0 arg1])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    int
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    int
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    int
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    arg1)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    int
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^int
+    arg0
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature
+    arg1)))
+ ([configtx-config-update-envelope-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-update-envelope-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature$Builder
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    org.hyperledger.fabric.protos.common.Configtx$ConfigSignature]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateEnvelope$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigSignature
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
+    configtx-config-update-envelope-builder
+    addSignatures
+    ^org.hyperledger.fabric.protos.common.Common$MetadataSignature$Builder
+    arg0))))
 
 ;;;  setKeyMaterial
 (defn
@@ -23548,6 +31098,24 @@
     ^org.hyperledger.fabric.protos.common.Common$BlockHeader
     common-block-header-or-builder
     getDataHash))))
+
+;;;  clearStop
+(defn
+ clear-stop
+ ([ab-seek-info-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$SeekInfo$Builder
+   ab-seek-info-builder
+   clearStop)))
+
+;;;  clearCodePackage
+(defn
+ clear-code-package
+ ([chaincode-chaincode-deployment-spec-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
+   chaincode-chaincode-deployment-spec-builder
+   clearCodePackage)))
 
 ;;;  setRegular
 (defn
@@ -23764,6 +31332,30 @@
     ab-seek-info-or-builder
     getStopOrBuilder))))
 
+;;;  removeGroups
+(defn
+ remove-groups
+ ([configtx-config-group-schema-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-schema-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupSchema$Builder
+    configtx-config-group-schema-builder
+    removeGroups
+    ^java.lang.String
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    java.lang.String]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-schema-builder
+    removeGroups
+    ^java.lang.String
+    arg0))))
+
 ;;;  getNOutOfBuilder
 (defn
  get-n-out-of-builder
@@ -23772,6 +31364,15 @@
    ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$Builder
    policies-signature-policy-builder
    getNOutOfBuilder)))
+
+;;;  clearIdentities
+(defn
+ clear-identities
+ ([policies-signature-policy-envelope-builder]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicyEnvelope$Builder
+   policies-signature-policy-envelope-builder
+   clearIdentities)))
 
 ;;;  getNOutOfOrBuilder
 (defn
@@ -23795,6 +31396,15 @@
     ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy
     policies-signature-policy-or-builder
     getNOutOfOrBuilder))))
+
+;;;  clearQuery
+(defn
+ clear-query
+ ([chaincode-shim-get-query-result-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+   chaincode-shim-get-query-result-builder
+   clearQuery)))
 
 ;;;  getAddress
 (defn
@@ -23849,6 +31459,26 @@
     ^org.hyperledger.fabric.protos.peer.TransactionPackage$TransactionAction$Builder
     arg1))))
 
+;;;  clearTransactionEnvelope
+(defn
+ clear-transaction-envelope
+ ([transaction-package-processed-transaction-builder]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$ProcessedTransaction$Builder
+   transaction-package-processed-transaction-builder
+   clearTransactionEnvelope)))
+
+;;;  addAddressesBytes
+(defn
+ add-addresses-bytes
+ ([configuration-orderer-addresses-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+   configuration-orderer-addresses-builder
+   addAddressesBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  setIndex
 (defn
  set-index
@@ -23859,6 +31489,15 @@
    setIndex
    ^long
    arg0)))
+
+;;;  clearBrokers
+(defn
+ clear-brokers
+ ([configuration-kafka-brokers-builder]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+   configuration-kafka-brokers-builder
+   clearBrokers)))
 
 ;;;  setLastUpdate
 (defn
@@ -23883,6 +31522,17 @@
     setLastUpdate
     ^org.hyperledger.fabric.protos.common.Common$Envelope$Builder
     arg0))))
+
+;;;  addAllRules
+(defn
+ add-all-rules
+ ([policies-signature-policy-n-out-of-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$SignaturePolicy$NOutOf$Builder
+   policies-signature-policy-n-out-of-builder
+   addAllRules
+   ^java.lang.Iterable
+   arg0)))
 
 ;;;  getDecorationsOrThrow
 (defn
