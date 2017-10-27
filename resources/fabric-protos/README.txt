@@ -25,3 +25,5 @@ keytool -import -alias org2 -file fixture/balance-transfer/artifacts/channel/cry
 keytool -import -alias order1 -file fixture/balance-transfer/artifacts/channel/crypto-config/ordererOrganizations/example.com/ca/ca.example.com-cert.pem -keystore SSL/clojure-fabric.store
 keytool -list -keystore SSL/clojure-fabric.store
 
+--------------
+https://lists.hyperledger.org/pipermail/hyperledger-fabric/2017-October/001934.html
