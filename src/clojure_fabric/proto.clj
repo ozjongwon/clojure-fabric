@@ -18,9 +18,13 @@
 ;;
 (ns clojure-fabric.proto
   (:import [com.google.protobuf ByteString Timestamp]
-           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$SignatureHeader]
+           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$SignatureHeader
+            Common$Header]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type ProposalPackage$ChaincodeHeaderExtension]))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeInput
+            Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type
+            ProposalPackage$ChaincodeHeaderExtension ProposalPackage$Proposal
+            ProposalPackage$ChaincodeProposalPayload ProposalPackage$SignedProposal]))
 
 ;;;
 ;;;
@@ -29,7 +33,6 @@
 
 (defprotocol IProtoToClj
   (proto->clj [this]))
-
 
 ;;;
 ;;; Records are one to one relationship with proto message definitions
