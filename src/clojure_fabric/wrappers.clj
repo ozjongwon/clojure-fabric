@@ -124,13 +124,38 @@
 ;;;  removeCapabilities
 (defn
  remove-capabilities
- ([configuration-capabilities-builder arg0]
-  (.
-   ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
-   configuration-capabilities-builder
-   removeCapabilities
-   ^java.lang.String
-   arg0)))
+  ([configuration-capabilities-builder arg0]
+   (case (.isAssignableFrom java.lang.String (type arg0))
+     true
+     (.
+      ^org.hyperledger.fabric.protos.common.Configuration$Capabilities$Builder
+      configuration-capabilities-builder
+      removeCapabilities
+      ^java.lang.String
+      arg0))))
+
+;;;  getProposalBytes
+(defn
+ get-proposal-bytes
+ ([proposal-package-signed-proposal-or-builder]
+  (condp
+   =
+   (mapv type [proposal-package-signed-proposal-or-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposalOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposalOrBuilder
+    proposal-package-signed-proposal-or-builder
+    getProposalBytes)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+    proposal-package-signed-proposal-or-builder
+    getProposalBytes)
+   [org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal
+    proposal-package-signed-proposal-or-builder
+    getProposalBytes))))
 
 ;;;  getChaincodesOrBuilderList
 (defn
@@ -411,6 +436,29 @@
     ^org.hyperledger.fabric.protos.common.Common$ChannelHeader
     proposal-response-package-proposal-response-or-builder
     getTimestampOrBuilder))))
+
+;;;  getSubPolicyBytes
+(defn
+ get-sub-policy-bytes
+ ([policies-implicit-meta-policy-or-builder]
+  (condp
+   =
+   (mapv type [policies-implicit-meta-policy-or-builder])
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicyOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicyOrBuilder
+    policies-implicit-meta-policy-or-builder
+    getSubPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+    policies-implicit-meta-policy-or-builder
+    getSubPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy]
+   (.
+    ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
+    policies-implicit-meta-policy-or-builder
+    getSubPolicyBytes))))
 
 ;;;  setEndorser
 (defn
@@ -2036,6 +2084,30 @@
     events-package-event-builder
     clearBlock))))
 
+;;;  setEventNameBytes
+(defn
+ set-event-name-bytes
+ ([events-package-chaincode-reg-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-chaincode-reg-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    events-package-chaincode-reg-builder
+    setEventNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    events-package-chaincode-reg-builder
+    setEventNameBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  getErrorMsg
 (defn
  get-error-msg
@@ -2343,6 +2415,17 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigEnvelope$Builder
     msp-config-package-msp-config-builder
     clearConfig))))
+
+;;;  setStartKeyBytes
+(defn
+ set-start-key-bytes
+ ([chaincode-shim-get-state-by-range-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+   chaincode-shim-get-state-by-range-builder
+   setStartKeyBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  clearSigner
 (defn
@@ -3250,6 +3333,17 @@
     ^java.lang.String
     arg0))))
 
+;;;  setAddressBytes
+(defn
+ set-address-bytes
+ ([peer-peer-endpoint-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+   peer-peer-endpoint-builder
+   setAddressBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  removeResults
 (defn
  remove-results
@@ -3417,6 +3511,82 @@
     getOrganizationalUnitIdentifiersOrBuilder
     ^int
     arg0))))
+
+;;;  getTxidBytes
+(defn
+ get-txid-bytes
+ ([events-package-filtered-transaction-or-builder]
+  (condp
+   =
+   (mapv type [events-package-filtered-transaction-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransactionOrBuilder
+    events-package-filtered-transaction-or-builder
+    getTxidBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    events-package-filtered-transaction-or-builder
+    getTxidBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction
+    events-package-filtered-transaction-or-builder
+    getTxidBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessageOrBuilder
+    events-package-filtered-transaction-or-builder
+    getTxidBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    events-package-filtered-transaction-or-builder
+    getTxidBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage
+    events-package-filtered-transaction-or-builder
+    getTxidBytes))))
+
+;;;  getKeyBytes
+(defn
+ get-key-bytes
+ ([chaincode-shim-put-state-info-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-put-state-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfoOrBuilder
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKeyOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKeyOrBuilder
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey
+    chaincode-shim-put-state-info-or-builder
+    getKeyBytes))))
 
 ;;;  clearTlsRootCerts
 (defn
@@ -4626,6 +4796,38 @@
    ^com.google.protobuf.ByteString
    arg1)))
 
+;;;  getAddressesBytes
+(defn
+ get-addresses-bytes
+ ([configuration-orderer-addresses-or-builder arg0]
+  (condp
+   =
+   (mapv type [configuration-orderer-addresses-or-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddressesOrBuilder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddressesOrBuilder
+    configuration-orderer-addresses-or-builder
+    getAddressesBytes
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
+    configuration-orderer-addresses-or-builder
+    getAddressesBytes
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses
+    configuration-orderer-addresses-or-builder
+    getAddressesBytes
+    ^int
+    arg0))))
+
 ;;;  getEventName
 (defn
  get-event-name
@@ -4762,6 +4964,53 @@
     getEventsBuilder
     ^int
     arg0))))
+
+;;;  setVersionBytes
+(defn
+ set-version-bytes
+ ([query-chaincode-info-builder arg0]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    setVersionBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    setVersionBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
+;;;  getIdentityIdentifierHashFunctionBytes
+(defn
+ get-identity-identifier-hash-function-bytes
+ ([msp-config-package-fabric-crypto-config-or-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-fabric-crypto-config-or-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder
+    msp-config-package-fabric-crypto-config-or-builder
+    getIdentityIdentifierHashFunctionBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    msp-config-package-fabric-crypto-config-or-builder
+    getIdentityIdentifierHashFunctionBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
+    msp-config-package-fabric-crypto-config-or-builder
+    getIdentityIdentifierHashFunctionBytes))))
 
 ;;;  getMetadataCount
 (defn
@@ -5079,6 +5328,29 @@
     ^java.lang.String
     arg0))))
 
+;;;  getPreferredMaxBytes
+(defn
+ get-preferred-max-bytes
+ ([configuration-batch-size-or-builder]
+  (condp
+   =
+   (mapv type [configuration-batch-size-or-builder])
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSizeOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSizeOrBuilder
+    configuration-batch-size-or-builder
+    getPreferredMaxBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    configuration-batch-size-or-builder
+    getPreferredMaxBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
+    configuration-batch-size-or-builder
+    getPreferredMaxBytes))))
+
 ;;;  getRulesOrBuilder
 (defn
  get-rules-or-builder
@@ -5168,6 +5440,29 @@
    getResultsBuilder
    ^int
    arg0)))
+
+;;;  getEventBytes
+(defn
+ get-event-bytes
+ ([events-package-signed-event-or-builder]
+  (condp
+   =
+   (mapv type [events-package-signed-event-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEventOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEventOrBuilder
+    events-package-signed-event-or-builder
+    getEventBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+    events-package-signed-event-or-builder
+    getEventBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent
+    events-package-signed-event-or-builder
+    getEventBytes))))
 
 ;;;  getName
 (defn
@@ -5315,6 +5610,29 @@
    addAllIdentities
    ^java.lang.Iterable
    arg0)))
+
+;;;  getQueryBytes
+(defn
+ get-query-bytes
+ ([chaincode-shim-get-query-result-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-get-query-result-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResultOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResultOrBuilder
+    chaincode-shim-get-query-result-or-builder
+    getQueryBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+    chaincode-shim-get-query-result-or-builder
+    getQueryBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult
+    chaincode-shim-get-query-result-or-builder
+    getQueryBytes))))
 
 ;;;  setIdentities
 (defn
@@ -5515,6 +5833,74 @@
     setVersion
     ^int
     arg0))))
+
+;;;  getIdBytes
+(defn
+ get-id-bytes
+ ([chaincode-shim-query-state-next-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-query-state-next-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNextOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNextOrBuilder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateCloseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateCloseOrBuilder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponseOrBuilder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentityOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentityOrBuilder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
+    chaincode-shim-query-state-next-or-builder
+    getIdBytes))))
 
 ;;;  setChaincodeEvent
 (defn
@@ -6095,6 +6481,38 @@
    ^java.lang.Iterable
    arg0)))
 
+;;;  getBrokersBytes
+(defn
+ get-brokers-bytes
+ ([configuration-kafka-brokers-or-builder arg0]
+  (condp
+   =
+   (mapv type [configuration-kafka-brokers-or-builder arg0])
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokersOrBuilder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokersOrBuilder
+    configuration-kafka-brokers-or-builder
+    getBrokersBytes
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers$Builder
+    configuration-kafka-brokers-or-builder
+    getBrokersBytes
+    ^int
+    arg0)
+   [org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
+    int]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$KafkaBrokers
+    configuration-kafka-brokers-or-builder
+    getBrokersBytes
+    ^int
+    arg0))))
+
 ;;;  getAdminsCount
 (defn
  get-admins-count
@@ -6181,6 +6599,44 @@
    setEventType
    ^org.hyperledger.fabric.protos.peer.EventsPackage$EventType
    arg0)))
+
+;;;  getPathBytes
+(defn
+ get-path-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getPathBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getPathBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getPathBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder
+    query-chaincode-info-or-builder
+    getPathBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-or-builder
+    getPathBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
+    query-chaincode-info-or-builder
+    getPathBytes))))
 
 ;;;  getChainID
 (defn
@@ -6310,6 +6766,29 @@
    getEndorsementsBuilder
    ^int
    arg0)))
+
+;;;  getHostBytes
+(defn
+ get-host-bytes
+ ([configuration-anchor-peer-or-builder]
+  (condp
+   =
+   (mapv type [configuration-anchor-peer-or-builder])
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeerOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeerOrBuilder
+    configuration-anchor-peer-or-builder
+    getHostBytes)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+    configuration-anchor-peer-or-builder
+    getHostBytes)
+   [org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer
+    configuration-anchor-peer-or-builder
+    getHostBytes))))
 
 ;;;  setMaxCount
 (defn
@@ -7380,6 +7859,30 @@
     configtx-config-group-schema-builder
     getMutableValues))))
 
+;;;  setLogModuleBytes
+(defn
+ set-log-module-bytes
+ ([admin-package-log-level-request-builder arg0]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-builder arg0])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-builder
+    setLogModuleBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-builder
+    setLogModuleBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  getMetadata
 (defn
  get-metadata
@@ -7596,6 +8099,52 @@
     configtx-config-envelope-or-builder
     getLastUpdateOrBuilder))))
 
+;;;  getAddressBytes
+(defn
+ get-address-bytes
+ ([peer-peer-endpoint-or-builder]
+  (condp
+   =
+   (mapv type [peer-peer-endpoint-or-builder])
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpointOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpointOrBuilder
+    peer-peer-endpoint-or-builder
+    getAddressBytes)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
+    peer-peer-endpoint-or-builder
+    getAddressBytes)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint
+    peer-peer-endpoint-or-builder
+    getAddressBytes))))
+
+;;;  getIdGenerationAlgBytes
+(defn
+ get-id-generation-alg-bytes
+ ([chaincode-chaincode-invocation-spec-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-chaincode-invocation-spec-or-builder])
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpecOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpecOrBuilder
+    chaincode-chaincode-invocation-spec-or-builder
+    getIdGenerationAlgBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+    chaincode-chaincode-invocation-spec-or-builder
+    getIdGenerationAlgBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec
+    chaincode-chaincode-invocation-spec-or-builder
+    getIdGenerationAlgBytes))))
+
 ;;;  getPrincipalClassification
 (defn
  get-principal-classification
@@ -7713,6 +8262,17 @@
    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
    ab-broadcast-response-builder
    clearInfo)))
+
+;;;  setMspidBytes
+(defn
+ set-mspid-bytes
+ ([identities-serialized-identity-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+   identities-serialized-identity-builder
+   setMspidBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getIdentitiesBuilderList
 (defn
@@ -8177,6 +8737,29 @@
     ab-seek-position-or-builder
     getNewestOrBuilder))))
 
+;;;  getEndKeyBytes
+(defn
+ get-end-key-bytes
+ ([chaincode-shim-get-state-by-range-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-get-state-by-range-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder
+    chaincode-shim-get-state-by-range-or-builder
+    getEndKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    chaincode-shim-get-state-by-range-or-builder
+    getEndKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
+    chaincode-shim-get-state-by-range-or-builder
+    getEndKeyBytes))))
+
 ;;;  getChannelGroupBuilder
 (defn
  get-channel-group-builder
@@ -8423,6 +9006,17 @@
    ^java.lang.Iterable
    arg0)))
 
+;;;  setResultBytes
+(defn
+ set-result-bytes
+ ([chaincode-shim-query-result-bytes-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+   chaincode-shim-query-result-bytes-builder
+   setResultBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getBrokers
 (defn
  get-brokers
@@ -8454,6 +9048,17 @@
     getBrokers
     ^int
     arg0))))
+
+;;;  setQueryBytes
+(defn
+ set-query-bytes
+ ([chaincode-shim-get-query-result-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetQueryResult$Builder
+   chaincode-shim-get-query-result-builder
+   setQueryBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getKey
 (defn
@@ -8587,6 +9192,30 @@
     ^org.hyperledger.fabric.protos.common.Common$Metadata$Builder
     configtx-config-update-envelope-builder
     getSignaturesBuilderList))))
+
+;;;  setTxidBytes
+(defn
+ set-txid-bytes
+ ([events-package-filtered-transaction-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-filtered-transaction-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredTransaction$Builder
+    events-package-filtered-transaction-builder
+    setTxidBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$ChaincodeMessage$Builder
+    events-package-filtered-transaction-builder
+    setTxidBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
 
 ;;;  clearTlsIntermediateCerts
 (defn
@@ -8986,6 +9615,29 @@
     ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
     arg1))))
 
+;;;  getKeyIdentifierBytes
+(defn
+ get-key-identifier-bytes
+ ([msp-config-package-key-info-or-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-key-info-or-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfoOrBuilder
+    msp-config-package-key-info-or-builder
+    getKeyIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+    msp-config-package-key-info-or-builder
+    getKeyIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo
+    msp-config-package-key-info-or-builder
+    getKeyIdentifierBytes))))
+
 ;;;  getGroupsCount
 (defn
  get-groups-count
@@ -9039,6 +9691,15 @@
     setInput
     ^java.lang.String
     arg0)
+   ;;; Arghhhhhhhhhhhhhhhhh!
+   ;; [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   ;;  com.google.protobuf.ByteString$LiteralByteString]
+   ;; (.
+   ;;  ^org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
+   ;;  query-chaincode-info-builder
+   ;;  setInput
+   ;;  ^com.google.protobuf.ByteString
+   ;;  arg0)
    [org.hyperledger.fabric.protos.peer.ProposalPackage$ChaincodeProposalPayload$Builder
     com.google.protobuf.ByteString]
    (.
@@ -9140,6 +9801,29 @@
     ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy
     policies-implicit-meta-policy-or-builder
     getRuleValue))))
+
+;;;  getAbsoluteMaxBytes
+(defn
+ get-absolute-max-bytes
+ ([configuration-batch-size-or-builder]
+  (condp
+   =
+   (mapv type [configuration-batch-size-or-builder])
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSizeOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSizeOrBuilder
+    configuration-batch-size-or-builder
+    getAbsoluteMaxBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+    configuration-batch-size-or-builder
+    getAbsoluteMaxBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchSize]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize
+    configuration-batch-size-or-builder
+    getAbsoluteMaxBytes))))
 
 ;;;  removeSignatures
 (defn
@@ -9720,6 +10404,29 @@
     configuration-kafka-brokers-or-builder
     getBrokersCount))))
 
+;;;  getMessageBytes
+(defn
+ get-message-bytes
+ ([proposal-response-package-response-or-builder]
+  (condp
+   =
+   (mapv type [proposal-response-package-response-or-builder])
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ResponseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ResponseOrBuilder
+    proposal-response-package-response-or-builder
+    getMessageBytes)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+    proposal-response-package-response-or-builder
+    getMessageBytes)
+   [org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response
+    proposal-response-package-response-or-builder
+    getMessageBytes))))
+
 ;;;  setTimestamp
 (defn
  set-timestamp
@@ -9827,6 +10534,70 @@
     ^org.hyperledger.fabric.protos.common.Common$Header$Builder
     configtx-config-signature-builder
     setSignatureHeader
+    ^com.google.protobuf.ByteString
+    arg0))))
+
+;;;  setNameBytes
+(defn
+ set-name-bytes
+ ([query-chaincode-info-builder arg0]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    query-chaincode-info-builder
+    setNameBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    query-chaincode-info-builder
+    setNameBytes
     ^com.google.protobuf.ByteString
     arg0))))
 
@@ -9954,6 +10725,29 @@
     msp-principal-msp-principal-or-builder
     getPrincipal))))
 
+;;;  getSignatureHashFamilyBytes
+(defn
+ get-signature-hash-family-bytes
+ ([msp-config-package-fabric-crypto-config-or-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-fabric-crypto-config-or-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfigOrBuilder
+    msp-config-package-fabric-crypto-config-or-builder
+    getSignatureHashFamilyBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+    msp-config-package-fabric-crypto-config-or-builder
+    getSignatureHashFamilyBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig
+    msp-config-package-fabric-crypto-config-or-builder
+    getSignatureHashFamilyBytes))))
+
 ;;;  getTxid
 (defn
  get-txid
@@ -10058,6 +10852,29 @@
    getActionsBuilder
    ^int
    arg0)))
+
+;;;  getInputBytes
+(defn
+ get-input-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getInputBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getInputBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getInputBytes))))
 
 ;;;  getVersion
 (defn
@@ -10251,6 +11068,30 @@
     configtx-config-update-or-builder
     containsIsolatedData
     ^java.lang.String
+    arg0))))
+
+;;;  setChaincodeIdBytes
+(defn
+ set-chaincode-id-bytes
+ ([events-package-chaincode-reg-builder arg0]
+  (condp
+   =
+   (mapv type [events-package-chaincode-reg-builder arg0])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    events-package-chaincode-reg-builder
+    setChaincodeIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    events-package-chaincode-reg-builder
+    setChaincodeIdBytes
+    ^com.google.protobuf.ByteString
     arg0))))
 
 ;;;  getFilteredTxCount
@@ -10591,6 +11432,17 @@
     ^com.google.protobuf.ByteString
     arg1))))
 
+;;;  setSubPolicyBytes
+(defn
+ set-sub-policy-bytes
+ ([policies-implicit-meta-policy-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.common.Policies$ImplicitMetaPolicy$Builder
+   policies-implicit-meta-policy-builder
+   setSubPolicyBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getRevocationListCount
 (defn
  get-revocation-list-count
@@ -10862,6 +11714,17 @@
    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
    msp-config-package-fabric-msp-config-builder
    addIntermediateCerts
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  setTypeBytes
+(defn
+ set-type-bytes
+ ([configuration-consensus-type-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+   configuration-consensus-type-builder
+   setTypeBytes
    ^com.google.protobuf.ByteString
    arg0)))
 
@@ -11407,6 +12270,29 @@
    ^int
    arg0)))
 
+;;;  getEsccBytes
+(defn
+ get-escc-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getEsccBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getEsccBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getEsccBytes))))
+
 ;;;  getSpecified
 (defn
  get-specified
@@ -11778,6 +12664,44 @@
    ab-seek-position-builder
    getNewestBuilder)))
 
+;;;  getMspIdentifierBytes
+(defn
+ get-msp-identifier-bytes
+ ([msp-principal-organization-unit-or-builder]
+  (condp
+   =
+   (mapv type [msp-principal-organization-unit-or-builder])
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRoleOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRoleOrBuilder
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole
+    msp-principal-organization-unit-or-builder
+    getMspIdentifierBytes))))
+
 ;;;  setPreviousHash
 (defn
  set-previous-hash
@@ -12039,6 +12963,17 @@
     setTxid
     ^java.lang.String
     arg0))))
+
+;;;  setEventBytes
+(defn
+ set-event-bytes
+ ([events-package-signed-event-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$SignedEvent$Builder
+   events-package-signed-event-builder
+   setEventBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  clearChaincodeDeploymentSpec
 (defn
@@ -12374,6 +13309,123 @@
    transaction-package-chaincode-endorsed-action-builder
    getEndorsementsBuilderList)))
 
+;;;  getLogModuleBytes
+(defn
+ get-log-module-bytes
+ ([admin-package-log-level-request-or-builder]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-or-builder])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponseOrBuilder
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
+    admin-package-log-level-request-or-builder
+    getLogModuleBytes))))
+
+;;;  setIdGenerationAlgBytes
+(defn
+ set-id-generation-alg-bytes
+ ([chaincode-chaincode-invocation-spec-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeInvocationSpec$Builder
+   chaincode-chaincode-invocation-spec-builder
+   setIdGenerationAlgBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  getChannelIdBytes
+(defn
+ get-channel-id-bytes
+ ([query-channel-info-or-builder]
+  (condp
+   =
+   (mapv type [query-channel-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfoOrBuilder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlockOrBuilder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdateOrBuilder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeaderOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeaderOrBuilder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    query-channel-info-or-builder
+    getChannelIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader
+    query-channel-info-or-builder
+    getChannelIdBytes))))
+
 ;;;  getNOutOf
 (defn
  get-n-out-of
@@ -12580,6 +13632,29 @@
     common-payload-or-builder
     getHeaderOrBuilder))))
 
+;;;  getStartKeyBytes
+(defn
+ get-start-key-bytes
+ ([chaincode-shim-get-state-by-range-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-get-state-by-range-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRangeOrBuilder
+    chaincode-shim-get-state-by-range-or-builder
+    getStartKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+    chaincode-shim-get-state-by-range-or-builder
+    getStartKeyBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange
+    chaincode-shim-get-state-by-range-or-builder
+    getStartKeyBytes))))
+
 ;;;  setProposalResponsePayload
 (defn
  set-proposal-response-payload
@@ -12599,6 +13674,30 @@
    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeDeploymentSpec$Builder
    chaincode-chaincode-deployment-spec-builder
    clearEffectiveDate)))
+
+;;;  setKeyBytes
+(defn
+ set-key-bytes
+ ([chaincode-shim-put-state-info-builder arg0]
+  (condp
+   =
+   (mapv type [chaincode-shim-put-state-info-builder arg0])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$PutStateInfo$Builder
+    chaincode-shim-put-state-info-builder
+    setKeyBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetHistoryForKey$Builder
+    chaincode-shim-put-state-info-builder
+    setKeyBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
 
 ;;;  getChannelsOrBuilderList
 (defn
@@ -20631,6 +21730,17 @@
     kafka-kafka-message-or-builder
     getTimeToCut))))
 
+;;;  setMessageBytes
+(defn
+ set-message-bytes
+ ([proposal-response-package-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalResponsePackage$Response$Builder
+   proposal-response-package-response-builder
+   setMessageBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getCred
 (defn
  get-cred
@@ -22791,6 +23901,29 @@
    configuration-anchor-peers-builder
    clearAnchorPeers)))
 
+;;;  getResultBytes
+(defn
+ get-result-bytes
+ ([chaincode-shim-query-result-bytes-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-shim-query-result-bytes-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytesOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytesOrBuilder
+    chaincode-shim-query-result-bytes-or-builder
+    getResultBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes$Builder
+    chaincode-shim-query-result-bytes-or-builder
+    getResultBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResultBytes
+    chaincode-shim-query-result-bytes-or-builder
+    getResultBytes))))
+
 ;;;  setPrincipalClassificationValue
 (defn
  set-principal-classification-value
@@ -22800,6 +23933,17 @@
    msp-principal-msp-principal-builder
    setPrincipalClassificationValue
    ^int
+   arg0)))
+
+;;;  setErrorMsgBytes
+(defn
+ set-error-msg-bytes
+ ([events-package-rejection-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+   events-package-rejection-builder
+   setErrorMsgBytes
+   ^com.google.protobuf.ByteString
    arg0)))
 
 ;;;  getRootCertsCount
@@ -23482,6 +24626,46 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Register
     arg0))))
 
+;;;  setChannelIdBytes
+(defn
+ set-channel-id-bytes
+ ([query-channel-info-builder arg0]
+  (condp
+   =
+   (mapv type [query-channel-info-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChannelInfo$Builder
+    query-channel-info-builder
+    setChannelIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$FilteredBlock$Builder
+    query-channel-info-builder
+    setChannelIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigUpdate$Builder
+    query-channel-info-builder
+    setChannelIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    query-channel-info-builder
+    setChannelIdBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  setWriteSet
 (defn
  set-write-set
@@ -23601,6 +24785,30 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
     arg0))))
 
+;;;  setPathBytes
+(defn
+ set-path-bytes
+ ([query-chaincode-info-builder arg0]
+  (condp
+   =
+   (mapv type [query-chaincode-info-builder arg0])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-builder
+    setPathBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-builder
+    setPathBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  getSigner
 (defn
  get-signer
@@ -23698,6 +24906,44 @@
     getSignaturesOrBuilder
     ^int
     arg0))))
+
+;;;  getEventNameBytes
+(defn
+ get-event-name-bytes
+ ([events-package-chaincode-reg-or-builder]
+  (condp
+   =
+   (mapv type [events-package-chaincode-reg-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeRegOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeRegOrBuilder
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
+    events-package-chaincode-reg-or-builder
+    getEventNameBytes))))
 
 ;;;  clearRole
 (defn
@@ -23984,6 +25230,17 @@
     ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
     arg0))))
 
+;;;  setInputBytes
+(defn
+ set-input-bytes
+ ([query-chaincode-info-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+   query-chaincode-info-builder
+   setInputBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getIdBuilder
 (defn
  get-id-builder
@@ -23992,6 +25249,29 @@
    ^org.hyperledger.fabric.protos.peer.Peer$PeerEndpoint$Builder
    peer-peer-endpoint-builder
    getIdBuilder)))
+
+;;;  getChainIDBytes
+(defn
+ get-chain-id-bytes
+ ([events-package-interest-or-builder]
+  (condp
+   =
+   (mapv type [events-package-interest-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$InterestOrBuilder
+    events-package-interest-or-builder
+    getChainIDBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+    events-package-interest-or-builder
+    getChainIDBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Interest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest
+    events-package-interest-or-builder
+    getChainIDBytes))))
 
 ;;;  getChannelsCount
 (defn
@@ -24266,6 +25546,30 @@
     common-block-or-builder
     getMetadataOrBuilder))))
 
+;;;  setMspIdentifierBytes
+(defn
+ set-msp-identifier-bytes
+ ([msp-principal-organization-unit-builder arg0]
+  (condp
+   =
+   (mapv type [msp-principal-organization-unit-builder arg0])
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-principal-organization-unit-builder
+    setMspIdentifierBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$MSPRole$Builder
+    msp-principal-organization-unit-builder
+    setMspIdentifierBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  clearId
 (defn
  clear-id
@@ -24492,6 +25796,44 @@
     transaction-package-transaction-or-builder
     getActionsCount))))
 
+;;;  getLogLevelBytes
+(defn
+ get-log-level-bytes
+ ([admin-package-log-level-request-or-builder]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-or-builder])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequestOrBuilder
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponseOrBuilder
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse
+    admin-package-log-level-request-or-builder
+    getLogLevelBytes))))
+
 ;;;  clearDecorations
 (defn
  clear-decorations
@@ -24536,6 +25878,29 @@
     ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
     events-package-chaincode-reg-builder
     clearEventName))))
+
+;;;  getTypeBytes
+(defn
+ get-type-bytes
+ ([configuration-consensus-type-or-builder]
+  (condp
+   =
+   (mapv type [configuration-consensus-type-or-builder])
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusTypeOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusTypeOrBuilder
+    configuration-consensus-type-or-builder
+    getTypeBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType$Builder
+    configuration-consensus-type-or-builder
+    getTypeBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$ConsensusType
+    configuration-consensus-type-or-builder
+    getTypeBytes))))
 
 ;;;  setRole
 (defn
@@ -24641,6 +26006,17 @@
    arg0
    ^java.lang.String
    arg1)))
+
+;;;  setPolicyRefBytes
+(defn
+ set-policy-ref-bytes
+ ([resources-resource-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+   resources-resource-builder
+   setPolicyRefBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getRuleOrBuilder
 (defn
@@ -25093,6 +26469,17 @@
     query-chaincode-query-response-or-builder
     getChaincodesCount))))
 
+;;;  setEndKeyBytes
+(defn
+ set-end-key-bytes
+ ([chaincode-shim-get-state-by-range-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ChaincodeShim$GetStateByRange$Builder
+   chaincode-shim-get-state-by-range-builder
+   setEndKeyBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getAnchorPeersList
 (defn
  get-anchor-peers-list
@@ -25115,6 +26502,40 @@
     ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeers
     configuration-anchor-peers-or-builder
     getAnchorPeersList))))
+
+;;;  setOrganizationalUnitIdentifierBytes
+(defn
+ set-organizational-unit-identifier-bytes
+ ([msp-config-package-idemix-msp-signer-config-builder arg0]
+  (condp
+   =
+   (mapv
+    type
+    [msp-config-package-idemix-msp-signer-config-builder arg0])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    setOrganizationalUnitIdentifierBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    setOrganizationalUnitIdentifierBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-config-package-idemix-msp-signer-config-builder
+    setOrganizationalUnitIdentifierBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
 
 ;;;  getConfig
 (defn
@@ -25247,6 +26668,29 @@
    proposal-response-package-proposal-response-builder
    clearEndorsement)))
 
+;;;  getTimeoutBytes
+(defn
+ get-timeout-bytes
+ ([configuration-batch-timeout-or-builder]
+  (condp
+   =
+   (mapv type [configuration-batch-timeout-or-builder])
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeoutOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeoutOrBuilder
+    configuration-batch-timeout-or-builder
+    getTimeoutBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+    configuration-batch-timeout-or-builder
+    getTimeoutBytes)
+   [org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
+    configuration-batch-timeout-or-builder
+    getTimeoutBytes))))
+
 ;;;  getRegister
 (defn
  get-register
@@ -25288,6 +26732,17 @@
    chaincode-chaincode-deployment-spec-builder
    setExecEnvValue
    ^int
+   arg0)))
+
+;;;  setTransactionBytes
+(defn
+ set-transaction-bytes
+ ([transaction-package-signed-transaction-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+   transaction-package-signed-transaction-builder
+   setTransactionBytes
+   ^com.google.protobuf.ByteString
    arg0)))
 
 ;;;  getPreviousBlockHash
@@ -25470,6 +26925,17 @@
    ^int
    arg0)))
 
+;;;  setKeyIdentifierBytes
+(defn
+ set-key-identifier-bytes
+ ([msp-config-package-key-info-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$KeyInfo$Builder
+   msp-config-package-key-info-builder
+   setKeyIdentifierBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getData
 (defn
  get-data
@@ -25579,6 +27045,17 @@
     configuration-anchor-peers-or-builder
     getAnchorPeersCount))))
 
+;;;  setAbsoluteMaxBytes
+(defn
+ set-absolute-max-bytes
+ ([configuration-batch-size-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+   configuration-batch-size-builder
+   setAbsoluteMaxBytes
+   ^int
+   arg0)))
+
 ;;;  getSignaturesBuilder
 (defn
  get-signatures-builder
@@ -25636,6 +27113,59 @@
     identities-serialized-identity-or-builder
     getMspid))))
 
+;;;  getModPolicyBytes
+(defn
+ get-mod-policy-bytes
+ ([configtx-config-group-or-builder]
+  (condp
+   =
+   (mapv type [configtx-config-group-or-builder])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroupOrBuilder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValueOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValueOrBuilder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicyOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicyOrBuilder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    configtx-config-group-or-builder
+    getModPolicyBytes)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy
+    configtx-config-group-or-builder
+    getModPolicyBytes))))
+
 ;;;  setNymX
 (defn
  set-nym-x
@@ -25646,6 +27176,29 @@
    setNymX
    ^com.google.protobuf.ByteString
    arg0)))
+
+;;;  getInfoBytes
+(defn
+ get-info-bytes
+ ([ab-broadcast-response-or-builder]
+  (condp
+   =
+   (mapv type [ab-broadcast-response-or-builder])
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponseOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponseOrBuilder
+    ab-broadcast-response-or-builder
+    getInfoBytes)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+    ab-broadcast-response-or-builder
+    getInfoBytes)
+   [org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse]
+   (.
+    ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse
+    ab-broadcast-response-or-builder
+    getInfoBytes))))
 
 ;;;  clearHeight
 (defn
@@ -25721,6 +27274,44 @@
    setErrorMsg
    ^java.lang.String
    arg0)))
+
+;;;  getTxIdBytes
+(defn
+ get-tx-id-bytes
+ ([chaincode-event-package-chaincode-event-or-builder]
+  (condp
+   =
+   (mapv type [chaincode-event-package-chaincode-event-or-builder])
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeaderOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeaderOrBuilder
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader
+    chaincode-event-package-chaincode-event-or-builder
+    getTxIdBytes))))
 
 ;;;  setBehaviorValue
 (defn
@@ -26122,6 +27713,17 @@
    kafka-kafka-message-builder
    clearConnect)))
 
+;;;  setPreferredMaxBytes
+(defn
+ set-preferred-max-bytes
+ ([configuration-batch-size-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
+   configuration-batch-size-builder
+   setPreferredMaxBytes
+   ^int
+   arg0)))
+
 ;;;  clearProposalResponsePayload
 (defn
  clear-proposal-response-payload
@@ -26234,6 +27836,44 @@
     ^org.hyperledger.fabric.protos.peer.Query$ChannelQueryResponse
     query-channel-query-response-or-builder
     getChannelsList))))
+
+;;;  getChaincodeIdBytes
+(defn
+ get-chaincode-id-bytes
+ ([events-package-chaincode-reg-or-builder]
+  (condp
+   =
+   (mapv type [events-package-chaincode-reg-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeRegOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeRegOrBuilder
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg$Builder
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$ChaincodeReg
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEventOrBuilder
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes)
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent
+    events-package-chaincode-reg-or-builder
+    getChaincodeIdBytes))))
 
 ;;;  setUnregister
 (defn
@@ -27040,6 +28680,38 @@
     configtx-config-update-envelope-or-builder
     getConfigUpdate))))
 
+;;;  setModPolicyBytes
+(defn
+ set-mod-policy-bytes
+ ([configtx-config-group-builder arg0]
+  (condp
+   =
+   (mapv type [configtx-config-group-builder arg0])
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigGroup$Builder
+    configtx-config-group-builder
+    setModPolicyBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigValue$Builder
+    configtx-config-group-builder
+    setModPolicyBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configtx$ConfigPolicy$Builder
+    configtx-config-group-builder
+    setModPolicyBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  getEndKey
 (defn
  get-end-key
@@ -27071,6 +28743,17 @@
    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
    msp-config-package-fabric-msp-config-builder
    clearRootCerts)))
+
+;;;  setSignatureHashFamilyBytes
+(defn
+ set-signature-hash-family-bytes
+ ([msp-config-package-fabric-crypto-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+   msp-config-package-fabric-crypto-config-builder
+   setSignatureHashFamilyBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  getCcEvent
 (defn
@@ -27406,6 +29089,17 @@
     getEventsOrBuilder
     ^int
     arg0))))
+
+;;;  setEsccBytes
+(defn
+ set-escc-bytes
+ ([query-chaincode-info-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+   query-chaincode-info-builder
+   setEsccBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
 
 ;;;  clearReadSet
 (defn
@@ -27880,6 +29574,30 @@
    transaction-package-chaincode-action-payload-builder
    clearAction)))
 
+;;;  setLogLevelBytes
+(defn
+ set-log-level-bytes
+ ([admin-package-log-level-request-builder arg0]
+  (condp
+   =
+   (mapv type [admin-package-log-level-request-builder arg0])
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelRequest$Builder
+    admin-package-log-level-request-builder
+    setLogLevelBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.AdminPackage$LogLevelResponse$Builder
+    admin-package-log-level-request-builder
+    setLogLevelBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  getRules
 (defn
  get-rules
@@ -27911,6 +29629,29 @@
     getRules
     ^int
     arg0))))
+
+;;;  getVsccBytes
+(defn
+ get-vscc-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getVsccBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getVsccBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getVsccBytes))))
 
 ;;;  getIdOrBuilder
 (defn
@@ -28260,6 +30001,29 @@
     transaction-package-transaction-or-builder
     getActionsList))))
 
+;;;  getErrorMsgBytes
+(defn
+ get-error-msg-bytes
+ ([events-package-rejection-or-builder]
+  (condp
+   =
+   (mapv type [events-package-rejection-or-builder])
+   [org.hyperledger.fabric.protos.peer.EventsPackage$RejectionOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$RejectionOrBuilder
+    events-package-rejection-or-builder
+    getErrorMsgBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection$Builder
+    events-package-rejection-or-builder
+    getErrorMsgBytes)
+   [org.hyperledger.fabric.protos.peer.EventsPackage$Rejection]
+   (.
+    ^org.hyperledger.fabric.protos.peer.EventsPackage$Rejection
+    events-package-rejection-or-builder
+    getErrorMsgBytes))))
+
 ;;;  removeOwnerEndorsements
 (defn
  remove-owner-endorsements
@@ -28288,6 +30052,46 @@
     ^org.hyperledger.fabric.protos.peer.EventsPackage$Unregister$Builder
     events-package-register-builder
     getEventsBuilderList))))
+
+;;;  setIdBytes
+(defn
+ set-id-bytes
+ ([chaincode-shim-query-state-next-builder arg0]
+  (condp
+   =
+   (mapv type [chaincode-shim-query-state-next-builder arg0])
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateNext$Builder
+    chaincode-shim-query-state-next-builder
+    setIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryStateClose$Builder
+    chaincode-shim-query-state-next-builder
+    setIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeShim$QueryResponse$Builder
+    chaincode-shim-query-state-next-builder
+    setIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    chaincode-shim-query-state-next-builder
+    setIdBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
 
 ;;;  clearHost
 (defn
@@ -28423,6 +30227,29 @@
     ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout
     chaincode-chaincode-spec-or-builder
     getTimeout))))
+
+;;;  getMspidBytes
+(defn
+ get-mspid-bytes
+ ([identities-serialized-identity-or-builder]
+  (condp
+   =
+   (mapv type [identities-serialized-identity-or-builder])
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentityOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentityOrBuilder
+    identities-serialized-identity-or-builder
+    getMspidBytes)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity$Builder
+    identities-serialized-identity-or-builder
+    getMspidBytes)
+   [org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity]
+   (.
+    ^org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
+    identities-serialized-identity-or-builder
+    getMspidBytes))))
 
 ;;;  getKeyMaterial
 (defn
@@ -29707,6 +31534,17 @@
     chaincode-event-package-chaincode-event-builder
     clearTxId))))
 
+;;;  setHostBytes
+(defn
+ set-host-bytes
+ ([configuration-anchor-peer-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Configuration$AnchorPeer$Builder
+   configuration-anchor-peer-builder
+   setHostBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  addAllEvents
 (defn
  add-all-events
@@ -29739,6 +31577,44 @@
    ^org.hyperledger.fabric.protos.orderer.Configuration$BatchSize$Builder
    configuration-batch-size-builder
    clearMaxMessageCount)))
+
+;;;  getVersionBytes
+(defn
+ get-version-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getVersionBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getVersionBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getVersionBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder
+    query-chaincode-info-or-builder
+    getVersionBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-or-builder
+    getVersionBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
+    query-chaincode-info-or-builder
+    getVersionBytes))))
 
 ;;;  getCapabilitiesOrDefault
 (defn
@@ -30411,6 +32287,17 @@
     transaction-package-transaction-action-or-builder
     getPayload))))
 
+;;;  setChainIDBytes
+(defn
+ set-chain-id-bytes
+ ([events-package-interest-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.EventsPackage$Interest$Builder
+   events-package-interest-builder
+   setChainIDBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  setCertifiersIdentifier
 (defn
  set-certifiers-identifier
@@ -30419,6 +32306,17 @@
    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
    msp-principal-organization-unit-builder
    setCertifiersIdentifier
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  setIdentityIdentifierHashFunctionBytes
+(defn
+ set-identity-identifier-hash-function-bytes
+ ([msp-config-package-fabric-crypto-config-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricCryptoConfig$Builder
+   msp-config-package-fabric-crypto-config-builder
+   setIdentityIdentifierHashFunctionBytes
    ^com.google.protobuf.ByteString
    arg0)))
 
@@ -30660,6 +32558,17 @@
     chaincode-chaincode-input-or-builder
     getDecorationsMap))))
 
+;;;  setVsccBytes
+(defn
+ set-vscc-bytes
+ ([query-chaincode-info-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+   query-chaincode-info-builder
+   setVsccBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  getStopBuilder
 (defn
  get-stop-builder
@@ -30792,6 +32701,29 @@
    ^int
    arg0)))
 
+;;;  getPolicyRefBytes
+(defn
+ get-policy-ref-bytes
+ ([resources-resource-or-builder]
+  (condp
+   =
+   (mapv type [resources-resource-or-builder])
+   [org.hyperledger.fabric.protos.peer.Resources$ResourceOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$ResourceOrBuilder
+    resources-resource-or-builder
+    getPolicyRefBytes)
+   [org.hyperledger.fabric.protos.peer.Resources$Resource$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$Resource$Builder
+    resources-resource-or-builder
+    getPolicyRefBytes)
+   [org.hyperledger.fabric.protos.peer.Resources$Resource]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Resources$Resource
+    resources-resource-or-builder
+    getPolicyRefBytes))))
+
 ;;;  getTlsRootCerts
 (defn
  get-tls-root-certs
@@ -30823,6 +32755,119 @@
     getTlsRootCerts
     ^int
     arg0))))
+
+;;;  getNameBytes
+(defn
+ get-name-bytes
+ ([query-chaincode-info-or-builder]
+  (condp
+   =
+   (mapv type [query-chaincode-info-or-builder])
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfoOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Query$ChaincodeInfo
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerIDOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerIDOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Peer$PeerID]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Peer$PeerID
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeIDOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID]
+   (.
+    ^org.hyperledger.fabric.protos.peer.Chaincode$ChaincodeID
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfigOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricMSPConfig
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfigOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfigOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPConfig
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithmOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithmOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$HashingAlgorithm
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$ConsortiumOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$ConsortiumOrBuilder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium$Builder
+    query-chaincode-info-or-builder
+    getNameBytes)
+   [org.hyperledger.fabric.protos.common.Configuration$Consortium]
+   (.
+    ^org.hyperledger.fabric.protos.common.Configuration$Consortium
+    query-chaincode-info-or-builder
+    getNameBytes))))
 
 ;;;  clearIsAdmin
 (defn
@@ -31141,6 +33186,93 @@
     ^org.hyperledger.fabric.protos.orderer.Kafka$KafkaMessageRegular$Builder
     arg0))))
 
+;;;  getTransactionBytes
+(defn
+ get-transaction-bytes
+ ([transaction-package-signed-transaction-or-builder]
+  (condp
+   =
+   (mapv type [transaction-package-signed-transaction-or-builder])
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransactionOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransactionOrBuilder
+    transaction-package-signed-transaction-or-builder
+    getTransactionBytes)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction$Builder
+    transaction-package-signed-transaction-or-builder
+    getTransactionBytes)
+   [org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction]
+   (.
+    ^org.hyperledger.fabric.protos.peer.TransactionPackage$SignedTransaction
+    transaction-package-signed-transaction-or-builder
+    getTransactionBytes))))
+
+;;;  setInfoBytes
+(defn
+ set-info-bytes
+ ([ab-broadcast-response-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Ab$BroadcastResponse$Builder
+   ab-broadcast-response-builder
+   setInfoBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  getOrganizationalUnitIdentifierBytes
+(defn
+ get-organizational-unit-identifier-bytes
+ ([msp-config-package-idemix-msp-signer-config-or-builder]
+  (condp
+   =
+   (mapv type [msp-config-package-idemix-msp-signer-config-or-builder])
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfigOrBuilder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig$Builder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$IdemixMSPSignerConfig
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifierOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifierOrBuilder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier$Builder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier]
+   (.
+    ^org.hyperledger.fabric.protos.msp.MspConfigPackage$FabricOUIdentifier
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnitOrBuilder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit$Builder
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes)
+   [org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit]
+   (.
+    ^org.hyperledger.fabric.protos.common.MspPrincipal$OrganizationUnit
+    msp-config-package-idemix-msp-signer-config-or-builder
+    getOrganizationalUnitIdentifierBytes))))
+
 ;;;  getN
 (defn
  get-n
@@ -31332,6 +33464,17 @@
     ab-seek-info-or-builder
     getStopOrBuilder))))
 
+;;;  setProposalBytes
+(defn
+ set-proposal-bytes
+ ([proposal-package-signed-proposal-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.peer.ProposalPackage$SignedProposal$Builder
+   proposal-package-signed-proposal-builder
+   setProposalBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
 ;;;  removeGroups
 (defn
  remove-groups
@@ -31429,6 +33572,30 @@
     peer-peer-endpoint-or-builder
     getAddress))))
 
+;;;  setTxIdBytes
+(defn
+ set-tx-id-bytes
+ ([chaincode-event-package-chaincode-event-builder arg0]
+  (condp
+   =
+   (mapv type [chaincode-event-package-chaincode-event-builder arg0])
+   [org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.peer.ChaincodeEventPackage$ChaincodeEvent$Builder
+    chaincode-event-package-chaincode-event-builder
+    setTxIdBytes
+    ^com.google.protobuf.ByteString
+    arg0)
+   [org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    com.google.protobuf.ByteString]
+   (.
+    ^org.hyperledger.fabric.protos.common.Common$ChannelHeader$Builder
+    chaincode-event-package-chaincode-event-builder
+    setTxIdBytes
+    ^com.google.protobuf.ByteString
+    arg0))))
+
 ;;;  setActions
 (defn
  set-actions
@@ -31476,6 +33643,17 @@
    ^org.hyperledger.fabric.protos.common.Configuration$OrdererAddresses$Builder
    configuration-orderer-addresses-builder
    addAddressesBytes
+   ^com.google.protobuf.ByteString
+   arg0)))
+
+;;;  setTimeoutBytes
+(defn
+ set-timeout-bytes
+ ([configuration-batch-timeout-builder arg0]
+  (.
+   ^org.hyperledger.fabric.protos.orderer.Configuration$BatchTimeout$Builder
+   configuration-batch-timeout-builder
+   setTimeoutBytes
    ^com.google.protobuf.ByteString
    arg0)))
 
