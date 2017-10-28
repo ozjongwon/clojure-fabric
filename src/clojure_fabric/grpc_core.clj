@@ -29,7 +29,7 @@
 (ns clojure-fabric.grpc-core
   (:require [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.utils :as utils]
-            [clojure-fabric.wrappers :as proto]
+            [clojure-fabric.proto :as proto]
             [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp]
            io.grpc.ManagedChannel
@@ -41,7 +41,8 @@
            org.bouncycastle.util.encoders.Hex
            [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$Header Common$HeaderType Common$SignatureHeader]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal]))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal]
+           ))
 
 (defonce ^:dynamic *grpc-configuration*
   ;; From Java SDK
@@ -62,34 +63,13 @@
   [k]
   (*grpc-configuration* k))
 
-(defn make-chaincode-id
-  ([name]
-   (make-chaincode-id name {}))
-  ([name {:keys [version path] :or {version "" path ""}}]
-   (-> (Chaincode$ChaincodeID/newBuilder)
-       (.setName name)
-       (.setVersion version)
-       (.setPath path)
-       (.build))))
-
-(defn make-chaincode-input
-  ([args]
-   (-> (Chaincode$ChaincodeInput/newBuilder)
-       (.addAllArgs args)
-       (.build)))
-  ;; FIXME: can't find deatails on decorations
-  #_
-  ([args decorations]
-   (-> (Chaincode$ChaincodeInput/newBuilder)
-       (.addAllArgs args))))
-
 (defn make-chaincode-spec
   ([chaincode-id input]
-   (-> (Chaincode$ChaincodeSpec/newBuilder)
-       (.setType Chaincode$ChaincodeSpec$Type/GOLANG)
-       (.setChaincodeId ^Chaincode$ChaincodeID chaincode-id)
-       (.setInput ^Chaincode$ChaincodeInput input)
-       (.build)))
+   (-> (proto/new-builder Chaincode$ChaincodeSpec)
+       (proto/set-type Chaincode$ChaincodeSpec$Type/GOLANG)
+       (proto/set-chaincode-id ^Chaincode$ChaincodeID chaincode-id)
+       (proto/set-input ^Chaincode$ChaincodeInput input)
+       (proto/build)))
   ;; FIXME: use of timeout
   #_
   ([type chaincode-id input timeout]
@@ -101,10 +81,10 @@
        (.build))))
 
 (defn make-chaincode-invocation-spec
-  ([^Chaincode$ChaincodeSpec chaincode-spec]
-   (-> (Chaincode$ChaincodeInvocationSpec/newBuilder)
-       (.setChaincodeSpec chaincode-spec)
-       (.build)))
+  ([chaincode-spec]
+   (-> (proto/new-builder Chaincode$ChaincodeInvocationSpec)
+       (proto/set-chaincode-spec chaincode-spec)
+       (proto/build)))
   ;; FIXME: setIdGenerationAlg
   #_
   ([^Chaincode$ChaincodeSpec chaincode-spec id-generation-alg]
@@ -115,14 +95,16 @@
 (defn make-chaincode-header-extention
   ([chaincode-id]
    (make-chaincode-header-extention chaincode-id ByteString/EMPTY))
-  ([^Chaincode$ChaincodeID chaincode-id payload-visibility]
-   (-> (ProposalPackage$ChaincodeHeaderExtension/newBuilder)
-       (.setChaincodeId chaincode-id)
+  ([chaincode-id payload-visibility]
+   (-> (proto/new-builder ProposalPackage$ChaincodeHeaderExtension)
+       (proto/set-chaincode-id chaincode-id)
        ;; NOTE: payload-visibility is ByteString
        ;; Currently only full visibility
-       (.setPayloadVisibility payload-visibility)
-       (.build))))
+       (proto/set-payload-visibility payload-visibility)
+       (proto/build))))
 
+;; FIXME: Timestamp is primitive of com.google.protobuf
+;;      No idea yet how to make it nice
 (defn make-current-grpc-timestamp
   []
   (let [now (System/currentTimeMillis)]
@@ -134,23 +116,24 @@
 (defn make-channel-header
   ([type version channel-id tx-id epoch]
    (make-channel-header type version channel-id tx-id epoch ByteString/EMPTY))
-  ([^Common$HeaderType type version channel-id tx-id epoch extension]
+  ([type version channel-id tx-id epoch extension]
    (let [now (System/currentTimeMillis)]
-    (-> (Common$ChannelHeader/newBuilder)
-        (.setType (.getNumber type))
-        (.setVersion version)
-        (.setTimestamp ^Timestamp (make-current-grpc-timestamp))
-        (.setChannelId ^Chaincode$ChaincodeID channel-id)
-        (.setTxId tx-id)
-        (.setEpoch epoch)
-        (.setExtension (.toByteString ^ProposalPackage$ChaincodeHeaderExtension extension))
-        (.build)))))
+    (-> (proto/new-builder Common$ChannelHeader)
+        (proto/set-type type)
+        (proto/set-version version)
+        (proto/set-timestamp (make-current-grpc-timestamp))
+        (proto/set-channel-id channel-id)
+        (proto/set-tx-id tx-id)
+        (proto/set-epoch epoch)
+        (proto/set-extension #_ extension
+          (.toByteString ^ProposalPackage$ChaincodeHeaderExtension extension))
+        (proto/build)))))
 
 (defn make-serialized-identity [user]   ; i.e. user-context
-  (-> (Identities$SerializedIdentity/newBuilder)
-      (.setIdBytes (ByteString/copyFromUtf8 (:certificate user)))
-      (.setMspid (:msp-id user))
-      (.build)))
+  (-> (proto/new-builder Identities$SerializedIdentity)
+      (proto/set-id-bytes (ByteString/copyFromUtf8 (:certificate user)))
+      (proto/set-mspid (:msp-id user))
+      (proto/build)))
 
 (defn make-identity-byte-string [user]
   (.toByteString ^Identities$SerializedIdentity (make-serialized-identity user)))
@@ -174,8 +157,8 @@
   default-epoch)
 
 (defn make-chaincode-header
-  [^Chaincode$ChaincodeID chaincode-id channel-id tx-id epoch]
-  (make-channel-header Common$HeaderType/ENDORSER_TRANSACTION ; type
+  [chaincode-id channel-id tx-id epoch]
+  (make-channel-header (proto/get-number Common$HeaderType/ENDORSER_TRANSACTION) ; type
                        1                ; version
                        channel-id
                        tx-id
@@ -186,27 +169,27 @@
 
 (defn make-signature-header
   [creator nonce]
-  (-> (Common$SignatureHeader/newBuilder)
-      (.setCreator creator)
-      (.setNonce nonce)
-      (.build)))
+  (-> (proto/new-builder Common$SignatureHeader)
+      (proto/set-creator creator)
+      (proto/set-nonce nonce)
+      (proto/build)))
 
 (defn make-header
   [^Common$ChannelHeader channel-header ^Common$SignatureHeader signature-header]
-  (-> (Common$Header/newBuilder)
-      (.setChannelHeader (.toByteString channel-header))
-      (.setSignatureHeader (.toByteString signature-header))
-      (.build)))
+  (-> (proto/new-builder Common$Header)
+      (proto/set-channel-header (.toByteString channel-header))
+      (proto/set-signature-header (.toByteString signature-header))
+      (proto/build)))
 
 (defn make-proposal
   ([header payload]
    (make-proposal header payload ByteString/EMPTY))
-  ([header payload extension]
-   (-> (ProposalPackage$Proposal/newBuilder)
-       (.setHeader (.toByteString ^Common$Header header))
-       (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload payload))
-       (.setExtension extension)
-       (.build))))
+  ([^Common$Header header ^ProposalPackage$ChaincodeProposalPayload payload extension]
+   (-> (proto/new-builder ProposalPackage$Proposal)
+       (proto/set-header (.toByteString header))
+       (proto/set-payload (.toByteString payload))
+       (proto/set-extension extension)
+       (proto/build))))
 
 (defn make-chaincode-proposal-payload
   ([chaincode-id fcn args]
@@ -222,21 +205,21 @@
               (make-chaincode-spec chaincode-id)
               (make-chaincode-invocation-spec))]
      
-     (-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
-         (.setInput (.toByteString chaincode-invocation-spec))
-         (.putAllTransientMap transient-map)
-         (.build)))))
+     (-> (proto/new-builder ProposalPackage$ChaincodeProposalPayload)
+         (proto/set-input (.toByteString chaincode-invocation-spec))
+         (proto/put-all-transient-map transient-map)
+         (proto/build)))))
 
 (defn make-signed-proposal
   [^ProposalPackage$Proposal proposal user]
-  (-> (ProposalPackage$SignedProposal/newBuilder)
-      (.setProposalBytes (.toByteString proposal))
-      (.setSignature (-> (.toByteArray proposal)
-                         #^bytes (crypto-suite/sign
-                                  (:private-key user)
-                                  {:algorithm (:key-algorithm (:crypto-suite user))})
-                         (ByteString/copyFrom)))
-      (.build)))
+  (-> (proto/new-builder ProposalPackage$SignedProposal)
+      (proto/set-proposal-bytes (.toByteString proposal))
+      (proto/set-signature (-> (.toByteArray proposal)
+                               #^bytes (crypto-suite/sign
+                                        (:private-key user)
+                                        {:algorithm (:key-algorithm (:crypto-suite user))})
+                               (ByteString/copyFrom)))
+      (proto/build)))
 
 
 ;;;
