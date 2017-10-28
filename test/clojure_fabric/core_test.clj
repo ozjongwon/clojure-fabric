@@ -6,7 +6,7 @@
             [clojure-fabric.channel :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
             ;;[expectations.clojure.test :refer [defexpect]] ;; available on 2.2.0
-            [clojure-fabric.grpc-core :as grpc]
+            [clojure-fabric.proto :as proto]
             [clojure-fabric.core :as core])
   (:import [org.bouncycastle.util.encoders Hex]))
 
@@ -106,11 +106,11 @@
                                  {:name "peer1" :url "grpcs://localhost:8056"}]
               :orderers         [{:name "orderer" :url "grpcs://localhost:7050" :domain-name "example.com"}]}})
 
-(defonce chaincode-id-v1 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v1 :name])
-                                                 (get chaincode-id-defs :v1)))
+(defonce chaincode-id-v1 (proto/make-chaincode-id :name (get-in chaincode-id-defs [:v1 :name])
+                                                  :version (get chaincode-id-defs :v1)))
 
-(defonce chaincode-id-v11 (grpc/make-chaincode-id (get-in chaincode-id-defs [:v11 :name])
-                                                  (get chaincode-id-defs :v11)))
+(defonce chaincode-id-v11 (proto/make-chaincode-id :name (get-in chaincode-id-defs [:v11 :name])
+                                                   :version (get chaincode-id-defs :v11)))
 
 
 ;;
