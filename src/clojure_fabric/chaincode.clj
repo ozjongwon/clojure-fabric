@@ -201,18 +201,18 @@
     (proto/make-proposal :header
                          (proto/make-header :channel-header
                                             (proto/make-channel-header :type header-type
-                                                                         :version header-version
-                                                                         :channel-id channel-name
-                                                                         :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
-                                                                         :epoch (get-epoch channel-name)
-                                                                         :extension
-                                                                         (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
+                                                                       :version header-version
+                                                                       :channel-id channel-name
+                                                                       :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
+                                                                       :epoch (get-epoch channel-name)
+                                                                       :extension
+                                                                       (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
                                             :signature-header (proto/make-signature-header :creator identity :nonce nonce))
                          
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal
-  [chaincode-key channel-name user & all-args]
+  [chaincode-key channel-name user all-args]
   (let [proposal (apply make-chaincode-proposal chaincode-key channel-name user all-args)
         signatures (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
                                       (:private-key user)
@@ -220,9 +220,23 @@
     (proto/make-signed-proposal :proposal-bytes  proposal
                                 :signature signatures)))
 
+(defn verify-response
+  [^ProposalResponsePackage$ProposalResponse raw-response user]
+  (let [endorsement (.getEndorsement raw-response)
+        signature (.getSignature endorsement)
+        endorser (.getEndorser endorsement)
+        cert (Identities$SerializedIdentity/parseFrom endorser)
+        text (.concat (.getPayload raw-response) endorser)]
+    ;;(:crypto-suite user)
+    (crypto-suite/verify (-> cert .getIdBytes .toByteArray)
+                         (.toByteArray signature)
+                         (.toByteArray text)
+                         (:crypto-suite user))))
 
 (defn send-chaincode-request
-  [chaincode-key channel-name peers user & all-args]
+  [chaincode-key channel-name peers user & {:keys [verify?]
+                                            :or {verify? false}
+                                            :as all-args}]
   (let [peers (utils/ensure-vector peers)]
     (let [signed-proposal (apply make-chaincode-signed-proposal chaincode-key channel-name user
                                  all-args)
@@ -232,9 +246,12 @@
            (mapv #(let [[peer raw-response] (async/<!! %)]
                     (if (instance? Exception raw-response)
                       raw-response
-                      (->> (.getPayload ^ProposalResponsePackage$Response raw-response)
-                           (->response)
-                           (proto/proto->clj)))))))))
+                      (if (and verify? (not (verify-response raw-response user)))
+                        (Exception. "Verification failed!")
+                        (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
+                         (->> (.getPayload ^ProposalResponsePackage$Response response)
+                              (->response)
+                              (proto/proto->clj)))))))))))
 
 ;; Responses -
 ;;

@@ -25,6 +25,7 @@
            [java.security KeyPairGenerator MessageDigest PublicKey SecureRandom Security Signature]
            javax.crypto.Cipher
            javax.crypto.spec.SecretKeySpec
+           javax.security.cert.X509Certificate
            [org.bouncycastle.asn1 ASN1InputStream ASN1Integer DERSequence ASN1Sequence]
            org.bouncycastle.asn1.pkcs.PrivateKeyInfo
            org.bouncycastle.cert.X509CertificateHolder
@@ -267,8 +268,9 @@
     (.subtract curve-n s)
     s))
 
-(defonce key+hash-algorithm-map
-  {[:ecdsa :sha256] "SHA256withECDSA"})
+(defonce x509-algorithm-map
+  ;;  http://www.bouncycastle.org/wiki/display/JA1/X.509+Public+Key+Certificate+and+Certification+Request+Generation
+  {:sha256-ecdsa "SHA256withECDSA"})
 
 ;;;sign
 (defn sign
@@ -279,10 +281,11 @@
         opts (function) hashing function to use
   Returns
         Result(Object):Signature object"
-  ;; https://crypto.stackexchange.com/questions/1795/how-can-i-convert-a-der-ecdsa-signature-to-asn-1
+  ;;http://www.bouncycastle.org/wiki/display/JA1/BC+Version+2+APIs
   [^bytes digest priv-key {:keys [algorithm curve hash-algorithm security-provider]
-                           :or {algorithm :ecdsa curve :secp256r1 hash-algorithm :sha256 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
-  (let [signer (doto (Signature/getInstance ^String (key+hash-algorithm-map [algorithm hash-algorithm]) ^String security-provider)
+                           :or {algorithm :sha256-ecdsa curve :secp256r1 security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+  (let [signer (doto (Signature/getInstance ^String (x509-algorithm-map algorithm)
+                                            ^String security-provider)
                  (.initSign priv-key)
                  (.update digest))
         ;;Type hint hack to speed up
@@ -306,10 +309,12 @@
         digest (byte[]) original digest that was signed
   Returns
         (bool): verification successful or not"
-  [^PublicKey pub-key signature ^bytes digest
-   {:keys [algorithm curve security-provider] :as opts
-    :or {algorithm :ecdsa}}]
-  (let [signer (Signature/getInstance (name algorithm))]
+  [^bytes pem-bytes ^bytes signature ^bytes digest
+   {:keys [algorithm security-provider] :as opts
+    :or {algorithm :sha256-ecdsa security-provider BouncyCastleProvider/PROVIDER_NAME}}]
+  (let [signer (Signature/getInstance ^String (x509-algorithm-map algorithm)
+                                      ^String security-provider)
+        pub-key (.getPublicKey (X509Certificate/getInstance pem-bytes))]
     (.initVerify signer pub-key)
     (.update signer digest)
     (.verify signer signature)))
