@@ -125,7 +125,8 @@
                              (chaincode/send-chaincode-request :query-channels
                                                                system-channel-name
                                                                target-peers
-                                                               user)))))
+                                                               user
+                                                               :header-type :endorser-transaction)))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -232,29 +233,30 @@
 ;;; Not in spec, but in some SDKs
 ;;;
 
-(defn known-channel-peer?
-  [channel {target-name :name target-url :url target-pem :pem}]
-  (loop [[[_ {:keys [name url pem]}] & more-peer] (seq (:peers channel))]
+(defn known-channel-node?
+  [channel {target-name :name target-url :url target-pem :pem} plural-type-key]
+  (loop [[[_ {:keys [name url pem]}] & more-peer] (seq (plural-type-key channel))]
     (cond (nil? name) false
           (and (= target-name name) (= target-url url) (= target-pem pem)) true
           :else (recur more-peer))))
 
-(defn known-user-peer?
-  [user peer]
+(defn known-user-node?
+  [user node plural-type-key]
   (loop [[[_ c] & more-c] (seq (:channels user))]
     (cond (nil? c) false
-          (known-channel-peer? c peer) true
+          (known-channel-node? c node plural-type-key) true
           :else (recur more-c))))
 
 (defn query-installed-chaincodes
   ([peer]
    (query-installed-chaincodes core/*user* peer))
   ([user peer]
-   (if (known-user-peer? user peer)
+   (if (known-user-node? user peer :peers)
      (chaincode/send-chaincode-request :query-installed-chaincodes
                                        system-channel-name
                                        peer
-                                       user)
+                                       user
+                                       :header-type :endorser-transaction)
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
@@ -292,6 +294,23 @@
    (get-enrollment-certificate core/*user*))
   ([user]
    (:certificate user)))
+
+#_
+(defn create-channel
+  ([orderer]
+   (create-channel core/*user* orderer))
+  ([user orderer]
+   (if (known-user-node? user orderer :orderers)
+     (chaincode/send-chaincode-request :query-installed-chaincodes
+                                       system-channel-name
+                                       peer
+                                       user
+                                       :header-type :endorser-transaction)
+     (throw (Exception. "The target Peer does not know anything about the channel"))))
+  ;; get channel from orderer
+  ;; header - :config-update
+  ;; 
+  )
 
 ;;; set_name
 ;;; Immutable

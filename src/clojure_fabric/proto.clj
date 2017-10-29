@@ -33,7 +33,8 @@
             ProposalPackage$ChaincodeHeaderExtension ProposalPackage$Proposal
             ProposalPackage$ChaincodeProposalPayload ProposalPackage$SignedProposal
             Query$ChaincodeQueryResponse Query$ChannelQueryResponse Query$ChaincodeInfo
-            Query$ChannelInfo TransactionPackage$ProcessedTransaction]
+            Query$ChannelInfo TransactionPackage$ProcessedTransaction
+            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response]
            ))
 
 ;;;
@@ -408,7 +409,9 @@
   (reify StreamObserver
     (onNext [this proposal-response]
       ;;(async/put! ch [k proposal-response])
-      (async/put! ch [k proposal-response]))
+      (let [^ProposalResponsePackage$Response response (.getResponse ^ProposalResponsePackage$ProposalResponse proposal-response)]
+        (println "***** STATUS " (.getStatus response))
+        (async/put! ch [k response])))
     (onError [this err]
       (async/put! ch [k err]))
     (onCompleted [this])))

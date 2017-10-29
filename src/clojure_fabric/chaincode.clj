@@ -58,7 +58,7 @@
            
            [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse Query$ChannelQueryResponse
             TransactionPackage$ProcessedTransaction ProposalPackage$SignedProposal
-            ProposalResponsePackage$ProposalResponse]))
+            ProposalResponsePackage$Response]))
 
 ;;; System Chaincodes
 (defonce lifecycle-system-chaincode (proto/make-chaincode-id :name "lscc"))
@@ -161,9 +161,9 @@
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
 
-(defn make-chaincode-header
-  [chaincode-id channel-id tx-id epoch]
-  (proto/make-channel-header :type :endorser-transaction
+(defn make-chaincode-header [{:keys [chaincode-id channel-id tx-id epoch type]
+                              :or {type :endorser-transaction}}]
+  (proto/make-channel-header :type type
                              :version 1
                              :channel-id channel-id
                              :tx-id tx-id
@@ -192,23 +192,28 @@
       (Hex/toHexString)))
 
 (defn make-chaincode-proposal
-  [chaincode-key channel-name user & {:keys [args]}]
+  [chaincode-key channel-name user & {:keys [args header-type header-version]
+                                      :or {header-version 1}}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
         identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
         nonce (make-nonce)]
     (proto/make-proposal :header
-                         (proto/make-header :channel-header (make-chaincode-header chaincode-id
-                                                                                   channel-name
-                                                                                   (identity-nonce->tx-id identity nonce (:crypto-suite user))
-                                                                                   (get-epoch channel-name))
+                         (proto/make-header :channel-header
+                                            (proto/make-channel-header :type header-type
+                                                                         :version header-version
+                                                                         :channel-id channel-name
+                                                                         :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
+                                                                         :epoch (get-epoch channel-name)
+                                                                         :extension
+                                                                         (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
                                             :signature-header (proto/make-signature-header :creator identity :nonce nonce))
                          
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal
-  [chaincode-key channel-name user & {:keys [args]}]
-  (let [proposal (make-chaincode-proposal chaincode-key channel-name user :args args)
+  [chaincode-key channel-name user & all-args]
+  (let [proposal (apply make-chaincode-proposal chaincode-key channel-name user all-args)
         signatures (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
                                       (:private-key user)
                                       {:algorithm (:key-algorithm (:crypto-suite user))})]
@@ -217,17 +222,17 @@
 
 
 (defn send-chaincode-request
-  [chaincode-key channel-name peers user & {:keys [args]}]
+  [chaincode-key channel-name peers user & all-args]
   (let [peers (utils/ensure-vector peers)]
-    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user :args args)
+    (let [signed-proposal (apply make-chaincode-signed-proposal chaincode-key channel-name user
+                                 all-args)
           ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
       (->> peers
            (mapv #(proto/send-chaincode-request-to-peer % signed-proposal))
-           (mapv #(let [[peer return] (async/<!! %)]
-                    (if (instance? Exception return)
-                      return
-                      (->> (.getResponse ^ProposalResponsePackage$ProposalResponse return)
-                           (.getPayload)
+           (mapv #(let [[peer raw-response] (async/<!! %)]
+                    (if (instance? Exception raw-response)
+                      raw-response
+                      (->> (.getPayload ^ProposalResponsePackage$Response raw-response)
                            (->response)
                            (proto/proto->clj)))))))))
 
