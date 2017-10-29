@@ -102,7 +102,7 @@
      :proposal-payload (make-chaincode-proposal-payload lifecycle-system-chaincode
                                                         "getinstalledchaincodes"
                                                         [])
-     :response-fn #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %)})
+     :->response #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %)})
 
    :query-channels
    (map->SystemChaincodeRequestParts
@@ -111,7 +111,7 @@
      :proposal-payload (make-chaincode-proposal-payload configuration-system-chaincode
                                                         "GetChannels"
                                                         [])
-     :response-fn #(Query$ChannelQueryResponse/parseFrom ^ByteString %)})
+     :->response #(Query$ChannelQueryResponse/parseFrom ^ByteString %)})
 
    :query-blockchain-info
    (map->SystemChaincodeRequestParts
@@ -119,7 +119,7 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'make-chaincode-proposal-payload
                                 lifecycle-system-chaincode "GetChainInfo")
-     :response-fn #(Ledger$BlockchainInfo/parseFrom ^ByteString %)})
+     :->response #(Ledger$BlockchainInfo/parseFrom ^ByteString %)})
    
    :query-block-by-hash
    (map->SystemChaincodeRequestParts
@@ -127,7 +127,7 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByHash")
-     :response-fn #(Common$Block/parseFrom ^ByteString %)})
+     :->response #(Common$Block/parseFrom ^ByteString %)})
 
    :query-block-by-number
    (map->SystemChaincodeRequestParts
@@ -135,7 +135,7 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByNumber")
-     :response-fn #(Common$Block/parseFrom ^ByteString %)})
+     :->response #(Common$Block/parseFrom ^ByteString %)})
 
    :query-block-by-tx-id
    (map->SystemChaincodeRequestParts
@@ -143,7 +143,7 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'make-chaincode-proposal-payload
                                 query-system-chaincode "GetBlockByTxID")
-     :response-fn #(Common$Block/parseFrom ^ByteString %)})
+     :->response #(Common$Block/parseFrom ^ByteString %)})
    
    :query-tx-by-id
    (map->SystemChaincodeRequestParts
@@ -151,7 +151,7 @@
      :header-extension qscc-chaincode-header-extension
      :proposal-payload (partial #'make-chaincode-proposal-payload
                                 query-system-chaincode "GetTransactionByID")
-     :response-fn #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)})})
+     :->response #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)})})
 
 (defn get-system-chaincode-request-parts
   [k & {:keys [args]}]
@@ -220,24 +220,16 @@
   [chaincode-key channel-name peers user & {:keys [args]}]
   (let [peers (utils/ensure-vector peers)]
     (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user :args args)
-          response-fn (get-in system-chaincode-request-parts [chaincode-key :response-fn])]
+          ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
       (->> peers
            (mapv #(proto/send-chaincode-request-to-peer % signed-proposal))
            (mapv #(let [[peer return] (async/<!! %)]
                     (if (instance? Exception return)
                       return
-                      
                       (->> (.getResponse ^ProposalResponsePackage$ProposalResponse return)
                            (.getPayload)
-                           (response-fn)
-                           (proto/proto->clj))
-
-                      
-                      #_
-                      (->> (.getResponse ^ProposalResponsePackage$ProposalResponse return)
-                             (.getPayload)
-                             (response-fn)
-                             (proto/proto->clj)))))))))
+                           (->response)
+                           (proto/proto->clj)))))))))
 
 ;; Responses -
 ;;

@@ -263,3 +263,23 @@
        (.setCertificateEntry key-store k x509)
        (.store key-store (FileOutputStream. "/tmp/trust-store") (char-array 0)))))
  )
+
+;;; Some ideas
+
+;; Scenario 2: If I use the following sequence I receive an error:
+
+;; Server1 - peer channel create
+;; Server1 - peer channel join
+;; Server1 - peer channel update (AnchorPeer.tx Server1 MSP)
+;; Server2 - peer channel fetch 0 (the channel's .block)
+;; Server2 - peer channel join
+;; ==>
+
+;; Scenatio 3: If I do not use AnchorPeers the following sequence works:
+;;
+;; Server1 - peer channel create
+;; Server1 - peer channel join
+;; Server2 - peer channel fetch (the channel's .block)
+;; Server2 - peer channel join
+;;
+
