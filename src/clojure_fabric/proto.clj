@@ -28,13 +28,14 @@
             Common$BlockData Common$BlockMetadata Common$Envelope]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            io.grpc.stub.StreamObserver
-           [org.hyperledger.fabric.protos.peer EndorserGrpc Chaincode$ChaincodeID Chaincode$ChaincodeInput
-            Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type
-            ProposalPackage$ChaincodeHeaderExtension ProposalPackage$Proposal
-            ProposalPackage$ChaincodeProposalPayload ProposalPackage$SignedProposal
-            Query$ChaincodeQueryResponse Query$ChannelQueryResponse Query$ChaincodeInfo
-            Query$ChannelInfo TransactionPackage$ProcessedTransaction
-            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response]
+           [org.hyperledger.fabric.protos.peer EndorserGrpc Chaincode$ChaincodeID
+            Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec
+            Chaincode$ChaincodeSpec$Type ProposalPackage$ChaincodeHeaderExtension
+            ProposalPackage$Proposal ProposalPackage$ChaincodeProposalPayload
+            ProposalPackage$SignedProposal Query$ChaincodeQueryResponse Query$ChannelQueryResponse
+            Query$ChaincodeInfo Query$ChannelInfo TransactionPackage$ProcessedTransaction
+            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response
+            Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment]
            ))
 
 ;;;
@@ -92,14 +93,12 @@
                           ^Long timeout]
   ICljToProto
   (clj->proto [this]
-    (let [^Chaincode$ChaincodeID p-chaincode-id (clj->proto chaincode-id)
-          ^Chaincode$ChaincodeInput p-chaincode-input (clj->proto chaincode-input)]
-     (-> (Chaincode$ChaincodeSpec/newBuilder)
-         (.setType (lang-types type))
-         (.setChaincodeId p-chaincode-id)
-         (.setInput p-chaincode-input)
-         (.setTimeout timeout)
-         (.build)))))
+    (-> (Chaincode$ChaincodeSpec/newBuilder)
+        (.setType (lang-types type))
+        (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
+        (.setInput ^Chaincode$ChaincodeInput (clj->proto chaincode-input))
+        (.setTimeout ^Timestamp timeout)
+        (.build))))
 
 (defn make-chaincode-spec
   [& {:keys [type chaincode-id chaincode-input timeout] :or {type :golang timeout 2000}}]
@@ -142,7 +141,6 @@
         (.setNanos nanos)
         (.build))))
 
-;; FIXME: this may not be required.
 (defn make-timestamp
   ([]
    (make-timestamp (System/currentTimeMillis)))
@@ -157,14 +155,14 @@
                        :deliver-seek-info       Common$HeaderType/DELIVER_SEEK_INFO
                        :chaincode-package       Common$HeaderType/CHAINCODE_PACKAGE})
 
-(defrecord ChannelHeader [^Long type ^Long version ^ProtoTimestamp timestamp ^String channel-id
+(defrecord ChannelHeader [^Long type ^Long version ^Long timestamp ^String channel-id
                           ^String tx-id ^Long epoch extension]
   ICljToProto
   (clj->proto [this]
     (-> (Common$ChannelHeader/newBuilder)
         (.setType (.getNumber ^Common$HeaderType (header-types type)))
         (.setVersion version)
-        (.setTimestamp ^Timestamp (clj->proto timestamp))
+        (.setTimestamp ^Timestamp (clj->proto (make-timestamp timestamp)))
         (.setChannelId channel-id)
         (.setTxId tx-id)
         (.setEpoch epoch)
@@ -175,7 +173,7 @@
 (defn make-channel-header
   [& {:keys [type version timestamp channel-id tx-id epoch extension]
       :or {type :endorser-transaction version 1 extension ByteString/EMPTY
-           timestamp (make-timestamp) epoch 0}}]
+           timestamp (System/currentTimeMillis) epoch 0}}]
   (map->ChannelHeader {:type type :version version :timestamp timestamp :epoch epoch
                        :channel-id channel-id :tx-id tx-id :extension extension}))
 
@@ -258,6 +256,26 @@
   [& {:keys [proposal-bytes signature]}]
   (map->SignedProposal {:proposal-bytes proposal-bytes :signature signature}))
 
+(defonce exec-env-map {:docker Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment/DOCKER
+                       :system Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment/SYSTEM})
+
+(defrecord ChaincodeDeploymentSpec [^ChaincodeSpec chaincode-spec ^Long effective-date
+                                    ^bytes code-package exec-env]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Chaincode$ChaincodeDeploymentSpec/newBuilder)
+        (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
+        (.setEffectiveDate ^Timestamp (clj->proto (make-timestamp effective-date)))
+        (.setCodePackage (ByteString/copyFrom code-package))
+        (.setExecEnv (exec-env-map exec-env))
+        (.build))))
+
+(defn make-chaincode-deployment-spec
+  [& {:keys [effective-date code-package exec-env]
+      :or {effective-date (System/currentTimeMillis) exec-env :docker}}]
+  (map->ChaincodeDeploymentSpec {:effective-date effective-date
+                                 :code-package code-package
+                                 :exec-env exec-env}))
 
 ;;;
 ;;; Responses
@@ -275,10 +293,10 @@
 
 (defrecord BlockchainInfo [^Long height current-block-hash previous-block-hash] ;; bytes
   )
+
 (defn make-blockchain-info
   [& {:keys [height current-block-hash previous-block-hash]}]
   (map->BlockchainInfo {:height height :current-block-hash current-block-hash :previous-block-hash previous-block-hash}))
-
 
 (defrecord BlockHeader [^Long number previous-hash data-hash]) ;; bytes
 (defn make-block-header
