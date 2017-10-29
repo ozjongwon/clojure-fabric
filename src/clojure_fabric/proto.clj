@@ -408,10 +408,7 @@
   [k ch]
   (reify StreamObserver
     (onNext [this proposal-response]
-      ;;(async/put! ch [k proposal-response])
-      (let [^ProposalResponsePackage$Response response (.getResponse ^ProposalResponsePackage$ProposalResponse proposal-response)]
-        (println "***** STATUS " (.getStatus response))
-        (async/put! ch [k response])))
+      (async/put! ch [k proposal-response]))
     (onError [this err]
       (async/put! ch [k err]))
     (onCompleted [this])))

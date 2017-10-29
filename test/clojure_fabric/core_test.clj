@@ -177,29 +177,37 @@
           (core/get-peers mychannel)))
 
 ;; This must be available with Admin user
-(expect (let [user (get-user "Org1MSP" "user1") ;; user == error!
+(expect [io.grpc.StatusRuntimeException]
+        (let [user (get-user "Org1MSP" "user1") ;; user == error!
+              mychannel (get-channel user "mychannel")]
+          (mapv type (query-installed-chaincodes user (get-random-peer mychannel)))))
+
+(expect [[]]
+        (let [user (get-user "Org1MSP" "admin")
               mychannel (get-channel user "mychannel")]
           (query-installed-chaincodes user (get-random-peer mychannel))))
 
-(expect (let [user (get-user "Org1MSP" "admin")
+(expect [io.grpc.StatusRuntimeException]
+        (let [user (get-user "Org2MSP" "user1") ;; user == error!
+              mychannel (get-channel user "mychannel")]
+          (mapv type (query-installed-chaincodes user (get-random-peer mychannel)))))
+
+(expect [[]]
+        (let [user (get-user "Org2MSP" "admin")
               mychannel (get-channel user "mychannel")]
           (query-installed-chaincodes user (get-random-peer mychannel))))
 
-(expect (let [user (get-user "Org2MSP" "admin")
-              mychannel (get-channel user "mychannel")]
-          (query-installed-chaincodes user (get-random-peer mychannel))))
+;; (expect (let [user (get-user "Org2MSP" "admin")
+;;               mychannel (get-channel user "mychannel")]
+;;           (query-channels user "mychannel" (core/get-peers mychannel))))
 
-(expect (let [user (get-user "Org2MSP" "admin")
-              mychannel (get-channel user "mychannel")]
-          (query-channels user "mychannel" (core/get-peers mychannel))))
+;; (expect (let [user (get-user "Org1MSP" "user1")
+;;               mychannel (get-channel user "mychannel")]
+;;           (query-channels user "mychannel" (core/get-peers mychannel))))
 
-(expect (let [user (get-user "Org1MSP" "user1")
-              mychannel (get-channel user "mychannel")]
-          (query-channels user "mychannel" (core/get-peers mychannel))))
-
-(expect (let [user (get-user "Org1MSP" "admin")
-              mychannel (get-channel user "mychannel")]
-          (query-channels user "mychannel" (core/get-peers mychannel))))
+;; (expect (let [user (get-user "Org1MSP" "admin")
+;;               mychannel (get-channel user "mychannel")]
+;;           (query-channels user "mychannel" (core/get-peers mychannel))))
 
 #_
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
