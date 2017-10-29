@@ -77,11 +77,6 @@
   ([channel]
    (core/get-peers channel)))
 
-(defn get-random-peer
-  ([]
-   (core/get-peers core/*channel*))
-  ([channel]
-   (second (rand-nth (seq (:peers channel))))))
 ;;;
 ;;;
 
@@ -181,7 +176,7 @@
   ([{:keys [user-key name] :as channel}]
    (chaincode/send-chaincode-request :query-blockchain-info
                                      name
-                                     (get-random-peer channel)
+                                     channel
                                      (apply core/get-user user-key)
                                      :args [name])))
 
@@ -197,7 +192,7 @@
   ([{:keys [user-key name] :as channel} block-number]
    (chaincode/send-chaincode-request :query-block-by-number
                                      name
-                                     (get-random-peer channel)
+                                     channel
                                      (apply core/get-user user-key)
                                      :args [name block-number])))
 

@@ -46,19 +46,21 @@
 ;; Implementation Note:
 ;;      Support only CSCC, QSCC, and LSCC (from Node.js)
 (ns clojure-fabric.chaincode
-  (:require [clojure-fabric.proto :as proto]
+  (:require [clojure-fabric.core :as core]
+            [clojure-fabric.proto :as proto]
             [clojure-fabric.crypto-suite :as crypto-suite] 
             [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
   
-  (:import [org.hyperledger.fabric.protos.common Common$Block Ledger$BlockchainInfo]
+  (:import [clojure_fabric.core Channel Peer Orderer]
+           [org.hyperledger.fabric.protos.common Common$Block Ledger$BlockchainInfo]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [com.google.protobuf ByteString Timestamp GeneratedMessageV3]
            org.bouncycastle.util.encoders.Hex
            
            [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse Query$ChannelQueryResponse
             TransactionPackage$ProcessedTransaction ProposalPackage$SignedProposal
-            ProposalResponsePackage$Response]))
+            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response]))
 
 ;;; System Chaincodes
 (defonce lifecycle-system-chaincode (proto/make-chaincode-id :name "lscc"))
@@ -233,15 +235,29 @@
                          (.toByteArray text)
                          (:crypto-suite user))))
 
+(defn get-random-peer
+  ([]
+   (core/get-peers core/*channel*))
+  ([channel]
+   (second (rand-nth (seq (:peers channel))))))
+
+(defn target->nodes [target]
+  (condp instance? target
+    Peer [target]
+    Orderer [target]
+    Channel [(get-random-peer target)]
+    clojure.lang.PersistentVector target))
+
 (defn send-chaincode-request
-  [chaincode-key channel-name peers user & {:keys [verify?]
-                                            :or {verify? false}
-                                            :as all-args}]
-  (let [peers (utils/ensure-vector peers)]
+  [chaincode-key channel-name target user & {:keys [verify?]
+                                             :or {verify? false}
+                                             :as all-args}]
+  ;; target==channel (get-random-peer channel)
+  (let [nodes (target->nodes target)]
     (let [signed-proposal (apply make-chaincode-signed-proposal chaincode-key channel-name user
                                  all-args)
           ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
-      (->> peers
+      (->> nodes
            (mapv #(proto/send-chaincode-request-to-peer % signed-proposal))
            (mapv #(let [[peer raw-response] (async/<!! %)]
                     (if (instance? Exception raw-response)
