@@ -235,11 +235,12 @@
    (second (rand-nth (seq (:peers channel))))))
 
 (defn target->nodes [target]
-  (condp instance? target
-    Peer [target]
-    Orderer [target]
-    Channel [(get-random-peer target)]
-    clojure.lang.PersistentVector target))
+  (if (sequential? target)
+    target
+    (condp instance? target
+      Peer [target]
+      Orderer [target]
+      Channel [(get-random-peer target)])))
 
 (defn send-chaincode-request
   [chaincode-key channel-name target user & {:keys [verify?]
