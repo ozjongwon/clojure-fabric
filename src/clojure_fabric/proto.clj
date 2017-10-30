@@ -39,6 +39,13 @@
            ))
 
 ;;;
+;;; Macros
+(defmacro with-default-empty-byte-string [[arg] & body]
+  `(if (nil? ~arg)
+     ByteString/EMPTY
+     ~@body))
+
+;;;
 ;;;
 (defprotocol ICljToProto
   (clj->proto [this]))
@@ -125,11 +132,12 @@
   (clj->proto [this]
     (-> (ProposalPackage$ChaincodeHeaderExtension/newBuilder)
         (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
-        (.setPayloadVisibility ByteString/EMPTY) ;; FIXME: payload-visibility
+        (.setPayloadVisibility (with-default-empty-byte-string [payload-visibility]
+                                 (throw (Exception. "Currently only supports default visibility 'all'"))))
         (.build))))
 
 (defn make-chaincode-header-extension
-  [& {:keys [payload-visibility chaincode-id] :or {payload-visibility "FIXME"}}]
+  [& {:keys [payload-visibility chaincode-id]}]
   (map->ChaincodeHeaderExtension {:payload-visibility payload-visibility
                                   :chaincode-id chaincode-id}))
 
@@ -166,14 +174,14 @@
         (.setChannelId channel-id)
         (.setTxId tx-id)
         (.setEpoch epoch)
-        (.setExtension (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
-                                      (clj->proto extension)))
+        (.setExtension (with-default-empty-byte-string [extension]
+                         (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
+                                        (clj->proto extension))))
         (.build))))
 
 (defn make-channel-header
   [& {:keys [type version timestamp channel-id tx-id epoch extension]
-      :or {type :endorser-transaction version 1 extension ByteString/EMPTY
-           timestamp (System/currentTimeMillis) epoch 0}}]
+      :or {type :endorser-transaction version 1 timestamp (System/currentTimeMillis) epoch 0}}]
   (map->ChannelHeader {:type type :version version :timestamp timestamp :epoch epoch
                        :channel-id channel-id :tx-id tx-id :extension extension}))
 
@@ -221,14 +229,13 @@
     (-> (ProposalPackage$Proposal/newBuilder)
         (.setHeader (.toByteString ^Common$Header (clj->proto header)))
         (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload (clj->proto payload)))
-        (.setExtension (if (= extension ByteString/EMPTY)
-                         extension
+        (.setExtension (with-default-empty-byte-string [extension]
                          (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
-                                        (clj->proto extension))))
+                                           (clj->proto extension))))
         (.build))))
 
 (defn make-proposal
-  [& {:keys [header payload extension] :or {extension ByteString/EMPTY}}]
+  [& {:keys [header payload extension]}]
   (map->Proposal {:header header :payload payload :extension extension}))
 
 ;; FIXME: input bytes
@@ -266,7 +273,8 @@
     (-> (Chaincode$ChaincodeDeploymentSpec/newBuilder)
         (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
         (.setEffectiveDate ^Timestamp (clj->proto (make-timestamp effective-date)))
-        (.setCodePackage (ByteString/copyFrom code-package))
+        (.setCodePackage (with-default-empty-byte-string [code-package]
+                           (ByteString/copyFrom code-package)))
         (.setExecEnv (exec-env-map exec-env))
         (.build))))
 
