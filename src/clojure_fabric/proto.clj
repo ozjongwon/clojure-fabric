@@ -70,16 +70,14 @@
   [& {:keys [name version path] :or {version "" path ""}}]
   (map->ChaincodeID {:name name :version version :path path}))
 
+(declare convert-args)
 (defrecord ChaincodeInput [^Iterable args ^java.util.Map decorations]
   ICljToProto
   (clj->proto [this]
     ;; Iterable - repeated
     ;; map has putAll* method
     (-> (Chaincode$ChaincodeInput/newBuilder)
-        (.addAllArgs (mapv #(cond (utils/bytes? %) (ByteString/copyFrom #^bytes %)
-                                  (instance? ChaincodeDeploymentSpec %) (.toByteString ^Chaincode$ChaincodeDeploymentSpec (clj->proto %))
-                                  :else (ByteString/copyFromUtf8 (str %)))
-                           args))
+        (.addAllArgs (convert-args args))
         (.putAllDecorations decorations)
         (.build))))
 
@@ -338,6 +336,13 @@
   [& {:keys [transaction-envelope validation-code]}]
   (map->ProcessedTransaction {:transaction-envelope transaction-envelope :validation-code validation-code}))
 
+
+(defn- convert-args
+  [args]
+  (mapv #(cond (utils/bytes? %) (ByteString/copyFrom #^bytes %)
+                                  (instance? ChaincodeDeploymentSpec %) (.toByteString ^Chaincode$ChaincodeDeploymentSpec (clj->proto %))
+                                  :else (ByteString/copyFromUtf8 (str %)))
+                           args))
 
 (extend-protocol IProtoToClj
 
