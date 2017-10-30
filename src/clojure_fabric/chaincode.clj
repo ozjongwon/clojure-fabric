@@ -62,98 +62,91 @@
             TransactionPackage$ProcessedTransaction ProposalPackage$SignedProposal
             ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response]))
 
-;;; System Chaincodes
-(defonce lifecycle-system-chaincode (proto/make-chaincode-id :name "lscc"))
-(defonce configuration-system-chaincode (proto/make-chaincode-id :name "cscc"))
-(defonce query-system-chaincode (proto/make-chaincode-id :name "qscc"))
+;;;
+;;; System Chaincode Definitions
+;;;
+(defn- make-system-chaincode-pair
+  [name]
+  (let [chaincode-id (proto/make-chaincode-id :name name)]
+    {:chaincode-id chaincode-id
+     :header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)}))
 
-;;; System header extensions
-(defonce lscc-chaincode-header-extension
-  (proto/make-chaincode-header-extension :chaincode-id lifecycle-system-chaincode))
-(defonce cscc-chaincode-header-extension
-  (proto/make-chaincode-header-extension :chaincode-id configuration-system-chaincode))
-(defonce qscc-chaincode-header-extension
-  (proto/make-chaincode-header-extension :chaincode-id query-system-chaincode))
+(defonce system-chaincode-map
+  {:lscc (make-system-chaincode-pair "lscc")
+   :cscc (make-system-chaincode-pair "cscc")
+   :qscc (make-system-chaincode-pair "qscc")})
 
-(defrecord SystemChaincodeRequestParts [chaincode-id header-extension proposal-payload])
+(defrecord SystemChaincodeRequestParts [chaincode-id header-extension
+                                        proposal-payload ->response])
+
+(defn- make-system-chaincode-request-parts
+  ([k proposal-payload]
+   (make-system-chaincode-request-parts k proposal-payload nil))
+  ([k proposal-payload ->response]
+   (assoc (system-chaincode-map k) :proposal-payload proposal-payload :->response ->response)))
 
 (defn make-chaincode-proposal-payload
-  ([chaincode-id fcn args]
-   (make-chaincode-proposal-payload chaincode-id fcn args {}))
-  ([chaincode-id fcn args transient-map]
+  ([k fcn args]
+   (make-chaincode-proposal-payload k fcn args {}))
+  ([k fcn args transient-map]
    (assert (vector? args))
    (let [^Chaincode$ChaincodeInvocationSpec
          chaincode-invocation-spec
          (->> (proto/make-chaincode-input :args `[~fcn ~@args])
-              (proto/make-chaincode-spec :chaincode-id chaincode-id :chaincode-input)
+              (proto/make-chaincode-spec :chaincode-id (get-in system-chaincode-map [k :chaincode-id])
+                                         :chaincode-input)
               (proto/make-chaincode-invocation-spec :chaincode-spec))]
      (proto/make-chaincode-proposal-payload :input chaincode-invocation-spec :transient-map transient-map))))
 
 (defonce system-chaincode-request-parts
-  {;; :install-chaincode
-   ;; (map->SystemChaincodeRequestParts
-   ;;  {:chaincode-id (proto/make-chaincode-id name :version 1 :path "/")
-   ;;   :header-extension lscc-chaincode-header-extension
-   ;;   :proposal-payload (make-chaincode-proposal-payload lifecycle-system-chaincode ??????
-   ;;                                                 "install"
-   ;;                                                 [])})
+  {:install-chaincode
+   (make-system-chaincode-request-parts :lscc
+                                        (make-chaincode-proposal-payload :lscc
+                                                                         "install"
+                                                                         []))
    :query-installed-chaincodes
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id lifecycle-system-chaincode
-     :header-extension lscc-chaincode-header-extension
-     :proposal-payload (make-chaincode-proposal-payload lifecycle-system-chaincode
-                                                        "getinstalledchaincodes"
-                                                        [])
-     :->response #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %)})
-
+   (make-system-chaincode-request-parts :lscc
+                                        (make-chaincode-proposal-payload :lscc
+                                                                         "getinstalledchaincodes"
+                                                                         [])
+                                        #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %))
    :query-channels
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id configuration-system-chaincode
-     :header-extension cscc-chaincode-header-extension
-     :proposal-payload (make-chaincode-proposal-payload configuration-system-chaincode
-                                                        "GetChannels"
-                                                        [])
-     :->response #(Query$ChannelQueryResponse/parseFrom ^ByteString %)})
+   (make-system-chaincode-request-parts :cscc
+                                        (make-chaincode-proposal-payload :cscc
+                                                                         "GetChannels"
+                                                                         [])
+                                        #(Query$ChannelQueryResponse/parseFrom ^ByteString %))
 
    :query-blockchain-info
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id query-system-chaincode
-     :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'make-chaincode-proposal-payload
-                                lifecycle-system-chaincode "GetChainInfo")
-     :->response #(Ledger$BlockchainInfo/parseFrom ^ByteString %)})
+   (make-system-chaincode-request-parts :qscc
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :qscc "GetChainInfo")
+                                        #(Ledger$BlockchainInfo/parseFrom ^ByteString %))
    
    :query-block-by-hash
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id query-system-chaincode
-     :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'make-chaincode-proposal-payload
-                                query-system-chaincode "GetBlockByHash")
-     :->response #(Common$Block/parseFrom ^ByteString %)})
+   (make-system-chaincode-request-parts :qscc
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :qscc "GetBlockByHash")
+                                        #(Common$Block/parseFrom ^ByteString %))
 
    :query-block-by-number
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id query-system-chaincode
-     :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'make-chaincode-proposal-payload
-                                query-system-chaincode "GetBlockByNumber")
-     :->response #(Common$Block/parseFrom ^ByteString %)})
+   (make-system-chaincode-request-parts :qscc
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :qscc "GetBlockByNumber")
+                                        #(Common$Block/parseFrom ^ByteString %))
 
    :query-block-by-tx-id
-   (map->SystemChaincodeRequestParts
-    {:chaincode-id query-system-chaincode
-     :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'make-chaincode-proposal-payload
-                                query-system-chaincode "GetBlockByTxID")
-     :->response #(Common$Block/parseFrom ^ByteString %)})
+   (make-system-chaincode-request-parts :qscc
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :qscc "GetBlockByTxID")
+                                        #(Common$Block/parseFrom ^ByteString %))
    
    :query-tx-by-id
    (map->SystemChaincodeRequestParts
-    {:chaincode-id query-system-chaincode
-     :header-extension qscc-chaincode-header-extension
-     :proposal-payload (partial #'make-chaincode-proposal-payload
-                                query-system-chaincode "GetTransactionByID")
-     :->response #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)})})
+    (make-system-chaincode-request-parts :qscc
+                                         (partial #'make-chaincode-proposal-payload
+                                                  :qscc "GetTransactionByID")
+                                         #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)))})
 
 (defn get-system-chaincode-request-parts
   [k & {:keys [args]}]
