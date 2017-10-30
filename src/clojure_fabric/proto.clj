@@ -76,9 +76,9 @@
     ;; Iterable - repeated
     ;; map has putAll* method
     (-> (Chaincode$ChaincodeInput/newBuilder)
-        (.addAllArgs (mapv #(if (utils/bytes? %)
-                              (ByteString/copyFrom #^bytes %)
-                              (ByteString/copyFromUtf8 (str %)))
+        (.addAllArgs (mapv #(cond (utils/bytes? %) (ByteString/copyFrom #^bytes %)
+                                  (instance? ChaincodeDeploymentSpec %) (.toByteString ^Chaincode$ChaincodeDeploymentSpec (clj->proto %))
+                                  :else (ByteString/copyFromUtf8 (str %)))
                            args))
         (.putAllDecorations decorations)
         (.build))))
