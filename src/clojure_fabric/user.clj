@@ -260,11 +260,11 @@
    (query-installed-chaincodes core/*user* peer))
   ([user peer]
    (if (known-user-node? user peer :peers)
-     (chaincode/send-chaincode-request :query-installed-chaincodes
-                                       system-channel-name
-                                       peer
-                                       user
-                                       {:header-type :endorser-transaction})
+     (first (chaincode/send-chaincode-request :query-installed-chaincodes
+                                              system-channel-name
+                                              peer
+                                              user
+                                              {:header-type :endorser-transaction}))
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
