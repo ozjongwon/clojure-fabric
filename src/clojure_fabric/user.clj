@@ -110,9 +110,8 @@
 (defonce system-channel-name "")
 
 ;;; query_chain-info
-#_
 (defn query-channels
-  "This is a network call to the designated Peer(s) to discover the chain information.
+    "This is a network call to the designated Peer(s) to discover the chain information.
   The target Peer(s) must be part of the chain in question to be able to return the requested
   information.
   Params:
@@ -122,9 +121,6 @@
         (Chain instance or None): the chain instance for the name.
   Error: 
         The target Peer(s) does not know anything about the chain"
-  )
-
-(defn query-channels
   ([channel-name peers]
    (query-channels core/*user* channel-name peers))
   ([user channel-name target-peers]
@@ -347,7 +343,7 @@
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)
 ;;   )
 
-(defonce default-tgz-size 500000)       ;500kb
+(defonce default-tgz-size 500000)       ;500kb, from Java SDK
 
 (defonce type->file-extensions {:golang #{"go"} :java #{"java"} :node #{"js"}})
 

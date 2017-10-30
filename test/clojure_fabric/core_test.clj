@@ -181,7 +181,7 @@
 (expect io.grpc.StatusRuntimeException
         (let [user (get-user "Org1MSP" "user1") ;; user == error!
               mychannel (get-channel user "mychannel")]
-          (mapv type (query-installed-chaincodes user (get-random-peer mychannel)))))
+          (query-installed-chaincodes user (get-random-peer mychannel))))
 
 (expect true
         (let [user (get-user "Org1MSP" "admin")
@@ -196,7 +196,7 @@
 (expect io.grpc.StatusRuntimeException
         (let [user (get-user "Org2MSP" "user1") ;; user == error!
               mychannel (get-channel user "mychannel")]
-          (mapv type (query-installed-chaincodes user (get-random-peer mychannel)))))
+          (query-installed-chaincodes user (get-random-peer mychannel))))
 
 (expect true
         (let [user (get-user "Org2MSP" "admin")
