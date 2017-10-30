@@ -101,9 +101,8 @@
 (defonce system-chaincode-request-parts
   {:install-chaincode
    (make-system-chaincode-request-parts :lscc
-                                        (make-chaincode-proposal-payload :lscc
-                                                                         "install"
-                                                                         []))
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :lscc "install"))
    :query-installed-chaincodes
    (make-system-chaincode-request-parts :lscc
                                         (make-chaincode-proposal-payload :lscc
@@ -187,8 +186,8 @@
       (Hex/toHexString)))
 
 (defn make-chaincode-proposal
-  [chaincode-key channel-name user & {:keys [args header-type header-version]
-                                      :or {header-version 1}}]
+  [chaincode-key channel-name user {:keys [args header-type header-version]
+                                    :or {header-version 1}}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
         identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
@@ -207,8 +206,8 @@
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal
-  [chaincode-key channel-name user all-args]
-  (let [proposal (apply make-chaincode-proposal chaincode-key channel-name user all-args)
+  [chaincode-key channel-name user opts]
+  (let [proposal (make-chaincode-proposal chaincode-key channel-name user opts)
         signatures (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
                                       (:private-key user)
                                       {:algorithm (:key-algorithm (:crypto-suite user))})]
@@ -243,13 +242,12 @@
       Channel [(get-random-peer target)])))
 
 (defn send-chaincode-request
-  [chaincode-key channel-name target user & {:keys [verify?]
-                                             :or {verify? false}
-                                             :as all-args}]
+  [chaincode-key channel-name target user {:keys [verify?]
+                                           :or {verify? false}
+                                           :as opts}]
   ;; target==channel (get-random-peer channel)
   (let [nodes (target->nodes target)]
-    (let [signed-proposal (apply make-chaincode-signed-proposal chaincode-key channel-name user
-                                 all-args)
+    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user opts)
           ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
       (->> nodes
            (mapv #(proto/send-chaincode-request-to-peer % signed-proposal))
@@ -258,10 +256,12 @@
                       raw-response
                       (if (and verify? (not (verify-response raw-response user)))
                         (Exception. "Verification failed!")
-                        (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
-                         (->> (.getPayload ^ProposalResponsePackage$Response response)
-                              (->response)
-                              (proto/proto->clj)))))))))))
+                        (if ->response
+                          (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
+                            (->> (.getPayload ^ProposalResponsePackage$Response response)
+                                 (->response)
+                                 (proto/proto->clj)))
+                          raw-response)))))))))
 
 ;; Responses -
 ;;

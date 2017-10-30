@@ -188,6 +188,14 @@
               mychannel (get-channel user "mychannel")]
           (query-installed-chaincodes user (get-random-peer mychannel))))
 
+(expect [[]]
+        (let [user (get-user "Org1MSP" "admin")
+              mychannel (get-channel user "mychannel")]
+          (install-chaincode user "test1" "github.com/example_cc" "v1"
+                             "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
+                             :golang (core/get-peers mychannel))))
+
+
 (expect [io.grpc.StatusRuntimeException]
         (let [user (get-user "Org2MSP" "user1") ;; user == error!
               mychannel (get-channel user "mychannel")]
