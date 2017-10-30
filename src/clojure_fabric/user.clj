@@ -134,7 +134,7 @@
                                                                system-channel-name
                                                                target-peers
                                                                user
-                                                               :header-type :endorser-transaction)))))
+                                                               {:header-type :endorser-transaction})))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -264,7 +264,7 @@
                                        system-channel-name
                                        peer
                                        user
-                                       :header-type :endorser-transaction)
+                                       {:header-type :endorser-transaction})
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
@@ -313,7 +313,7 @@
                                        system-channel-name
                                        peer
                                        user
-                                       :header-type :endorser-transaction)
+                                       {:header-type :endorser-transaction})
      (throw (Exception. "The target Peer does not know anything about the channel"))))
   ;; get channel from orderer
   ;; header - :config-update
@@ -349,7 +349,7 @@
 
 (defonce default-tgz-size 500000)       ;500kb
 
-(defonce type->file-extensions {:go #{"go"} :java #{"java"} :node #{"js"}})
+(defonce type->file-extensions {:golang #{"go"} :java #{"java"} :node #{"js"}})
 
 (defn make-tgz-package
   [type path filename]
@@ -385,7 +385,7 @@
         (with-open [w (clojure.java.io/output-stream "/tmp/test.tgz")]
           (.write w (.toByteArray byte-ostream)))))))
 
-;; (make-tgz-package :go "github.com/example_cc" "/home/jc/Work/clojure-fabric/resources/gocc")
+;; (make-tgz-package :golang "github.com/example_cc" "/home/jc/Work/clojure-fabric/resources/gocc")
 
 
 (defn install-chaincode
@@ -403,10 +403,9 @@
            tgz-package (make-tgz-package type path package-filename)
            deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec
                                                                  :code-package tgz-package)]
-       
        (chaincode/send-chaincode-request :install-chaincode
                                          system-channel-name
                                          target-peers
                                          user
-                                         :args [deployment-spec]
-                                         :header-type :endorser-transaction)))))
+                                         {:args [deployment-spec]
+                                          :header-type :endorser-transaction})))))
