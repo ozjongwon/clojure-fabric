@@ -230,8 +230,9 @@
         (.setHeader (.toByteString ^Common$Header (clj->proto header)))
         (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload (clj->proto payload)))
         (.setExtension (with-default-empty-byte-string [extension]
-                         (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
-                                           (clj->proto extension))))
+                         (.toByteString
+                          ;; FIXME: not sure 'type' yet and can't give type
+                          (clj->proto extension))))
         (.build))))
 
 (defn make-proposal
