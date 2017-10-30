@@ -274,15 +274,16 @@
     (-> (Chaincode$ChaincodeDeploymentSpec/newBuilder)
         (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
         (.setEffectiveDate ^Timestamp (clj->proto (make-timestamp effective-date)))
-        (.setCodePackage (with-default-empty-byte-string [code-package]
-                           (ByteString/copyFrom code-package)))
+        ;; code-package must exist at this point
+        (.setCodePackage (ByteString/copyFrom code-package))
         (.setExecEnv (exec-env-map exec-env))
         (.build))))
 
 (defn make-chaincode-deployment-spec
-  [& {:keys [effective-date code-package exec-env]
+  [& {:keys [chaincode-spec effective-date code-package exec-env]
       :or {effective-date (System/currentTimeMillis) exec-env :docker}}]
-  (map->ChaincodeDeploymentSpec {:effective-date effective-date
+  (map->ChaincodeDeploymentSpec {:chaincode-spec chaincode-spec
+                                 :effective-date effective-date
                                  :code-package code-package
                                  :exec-env exec-env}))
 

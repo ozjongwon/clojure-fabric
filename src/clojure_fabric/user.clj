@@ -35,7 +35,15 @@
 (ns clojure-fabric.user
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.channel :as channel]
-            [clojure-fabric.core :as core]))
+            [clojure-fabric.core :as core]
+            [clojure-fabric.proto :as proto]
+            [clojure.java.io :as io])
+  (:import [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveInputStream
+            TarArchiveOutputStream]
+           [java.io File FileInputStream]
+           [org.apache.commons.io IOUtils]
+           org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
+           java.io.ByteArrayOutputStream))
 
 (defn ca-user?
   [user]
@@ -339,19 +347,66 @@
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)
 ;;   )
 
+(defonce default-tgz-size 500000)       ;500kb
+
+(defonce type->file-extensions {:go #{"go"} :java #{"java"} :node #{"js"}})
+
+(defn make-tgz-package
+  [type path filename]
+  (let [target-extensions (type->file-extensions type)
+        file-size-pairs (for [^File f (file-seq (io/as-file filename))
+                              :let [name (.getName f)
+                                    idx (inc (.lastIndexOf name "."))]
+                              :when (and (pos? idx) 
+                                         (contains? target-extensions (subs name idx)))]
+                          [f (.length f)])
+        total-size (reduce #(+ %1 (second %2)) 0 file-size-pairs)]
+    (when-not (empty? file-size-pairs)
+      (let [tgz-path (str "src/" (if (->> path count dec (get path) (= \/))
+                                   path
+                                   (str path "/")))
+            byte-ostream (ByteArrayOutputStream. (min total-size default-tgz-size))
+            tgz-ostream (doto (TarArchiveOutputStream. (GzipCompressorOutputStream. byte-ostream))
+                          (.setLongFileMode TarArchiveOutputStream/LONGFILE_GNU))]
+        (try 
+          (doseq [[^File f s] file-size-pairs]
+            (let [archive-entry (TarArchiveEntry. f
+                                                  (str tgz-path (.getName ^java.io.File f)))
+                  istream (FileInputStream. f)]
+              (try (.putArchiveEntry tgz-ostream archive-entry)
+                   (IOUtils/copy istream tgz-ostream)
+                   (finally (IOUtils/closeQuietly istream)
+                            (.closeArchiveEntry tgz-ostream)))))
+          (finally
+            (IOUtils/closeQuietly tgz-ostream)))
+        (.toByteArray byte-ostream)
+        ;; test
+        #_
+        (with-open [w (clojure.java.io/output-stream "/tmp/test.tgz")]
+          (.write w (.toByteArray byte-ostream)))))))
+
+;; (make-tgz-package :go "github.com/example_cc" "/home/jc/Work/clojure-fabric/resources/gocc")
+
+
 (defn install-chaincode
-  ([name path version package target-peers]
-   (install-chaincode core/*user* name path version package target-peers))
-  ([user name path version package target-peers]
+  ([name path version package-filename type target-peers]
+   (install-chaincode core/*user* name path version package-filename target-peers))
+  ([user name path version package-filename type target-peers]
+   ;; path 'mycompany.com/myproject/mypackage/mychaincode'
+   ;; package 'src/mycompany.com/myproject/mypackage/mychaincode'
    (with-validating-peers [user target-peers]
-     (chaincode/send-chaincode-request :install-chaincode
-                                       system-channel-name
-                                       target-peers
-                                       user
-                                       :header-type ???
-;;;
-;;;chaincodeID = chaincode-name::chaincode-path::chaincode-version
-;;;
- upload via stream
-                                       
-                                       ))))
+     (let [chaincode-id (proto/make-chaincode-id :name name :version version :path path)
+           chaincode-input (proto/make-chaincode-input) ;; no args and decorations
+           spec (proto/make-chaincode-spec :type type
+                                           :chaincode-id chaincode-id
+                                           :chaincode-input chaincode-input)
+           tgz-package (make-tgz-package type path package-filename)
+           deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec
+                                                                 :code-package tgz-package)]
+       
+       (chaincode/send-chaincode-request :install-chaincode
+                                         system-channel-name
+                                         target-peers
+                                         user
+                                         :args [deployment-spec]
+                                         :header-type :endorser-transaction)))))

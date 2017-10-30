@@ -25,6 +25,8 @@
                  [medley "1.0.0"]
                  [buddy/buddy-core "1.4.0"] ;; for test
                  [org.bouncycastle/bcprov-jdk15on "1.58"]
+                 [org.apache.commons/commons-compress "1.15"]
+                 [commons-io/commons-io "2.6"]
                  [joda-time "2.9.9"]
 
                  [io.grpc/grpc-core "1.7.0" ]
