@@ -186,34 +186,13 @@
       (crypto-suite/hash :algorithm algorithm)
       (Hex/toHexString)))
 
-#_
-(defn make-chaincode-proposal
-  [chaincode-key channel-name user {:keys [args channel-header-type header-version]
-                                    :or {header-version 1}}]
-  (let [{:keys [chaincode-id header-extension proposal-payload]}
-        (get-system-chaincode-request-parts chaincode-key :args args)
-        identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
-        nonce (make-nonce)]
-    (proto/make-proposal :header
-                         (proto/make-header :channel-header
-                                            (proto/make-channel-header :type channel-header-type
-                                                                       :version header-version
-                                                                       :channel-id channel-name
-                                                                       :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
-                                                                       :epoch (get-epoch channel-name)
-                                                                       :extension
-                                                                       (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
-                                            :signature-header (proto/make-signature-header :creator identity :nonce nonce))
-                         
-                         :payload proposal-payload)))
-
 (defn make-header
-  [chaincode-key channel-name user {:keys [header-type channel-header-type header-version
-                                           extension]
-                                    :or {header-version 1}}]
+  [channel-name user {:keys [channel-header-type header-version
+                             extension]
+                      :or {header-version 1}}]
   (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
         nonce (make-nonce)]
-   (proto/make-header header-type
+   (proto/make-header :channel-header
                       (proto/make-channel-header :type channel-header-type
                                                  :version header-version
                                                  :channel-id channel-name
@@ -222,14 +201,19 @@
                                                  :extension extension)
                       :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
 
+(defn make-config-update-envelope
+  [channel-name user orderer config signatures]
+  (let [header (make-header channel-name user {:channel-header-type :config-update})
+        payload ]))
+
+
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)]
     (proto/make-proposal :header
-                         (make-header chaincode-key channel-name user
+                         (make-header channel-name user
                                       (assoc opts
-                                             :header-type :channel-header
                                              :extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)))
                          :payload proposal-payload)))
 
