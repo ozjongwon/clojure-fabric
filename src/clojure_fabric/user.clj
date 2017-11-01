@@ -34,16 +34,14 @@
 
 (ns clojure-fabric.user
   (:require [clojure-fabric.chaincode :as chaincode]
-            [clojure-fabric.channel :as channel]
             [clojure-fabric.core :as core]
             [clojure-fabric.proto :as proto]
             [clojure.java.io :as io])
-  (:import [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveInputStream
-            TarArchiveOutputStream]
-           [java.io File FileInputStream]
-           [org.apache.commons.io IOUtils]
+  (:import [java.io ByteArrayOutputStream File FileInputStream]
+           [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
            org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
-           java.io.ByteArrayOutputStream))
+           org.apache.commons.io.IOUtils
+           org.hyperledger.fabric.protos.common.Common$Envelope))
 
 (defn ca-user?
   [user]
@@ -130,7 +128,7 @@
                                                                system-channel-name
                                                                target-peers
                                                                user
-                                                               {:header-type :endorser-transaction})))))
+                                                               {:channel-header-type :endorser-transaction})))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -260,7 +258,7 @@
                                               system-channel-name
                                               peer
                                               user
-                                              {:header-type :endorser-transaction}))
+                                              {:channel-header-type :endorser-transaction}))
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
@@ -299,17 +297,38 @@
   ([user]
    (:certificate user)))
 
-#_
+(defn create-or-update-channel
+  [user channel-name orderer {:keys [^bytes envelope config signatures]}]
+  (cond envelope
+        ;; envelope is byte array of Envelope, which is ready to be parsed in
+        ;; - *.tx file
+        (proto/send-update-channel-using-envelope (Common$Envelope/parseFrom envelope))
+
+        ;; config is byte array
+        ;; signature is a list of byte array
+        (and config signatures)
+        (let [channel-header (proto/make-channel-header :type :config-update
+                                                        :chainnel-id channel-name
+                                                        :tx-id :FIXME)
+
+              config-update-envelope (proto/make-config-update-envelope :config-update config
+                                                                        :signatures signatures)
+              ]
+          ;; config-update-envelope is a payload data, i.e.
+          ;; Payload = Header + Payload(config-update-envelope)
+          (proto/send-update-channel-using-envelope envelope))))
+
 (defn create-channel
-  ([orderer]
+  ([channel-name orderer opts]
    (create-channel core/*user* orderer))
-  ([user orderer]
+  ([user channel-name orderer opts]
+   #_
    (if (known-user-node? user orderer :orderers)
      (chaincode/send-chaincode-request :query-installed-chaincodes
                                        system-channel-name
                                        peer
                                        user
-                                       {:header-type :endorser-transaction})
+                                       {:channel-header-type :endorser-transaction})
      (throw (Exception. "The target Peer does not know anything about the channel"))))
   ;; get channel from orderer
   ;; header - :config-update
@@ -404,4 +423,4 @@
                                          target-peers
                                          user
                                          {:args [deployment-spec]
-                                          :header-type :endorser-transaction})))))
+                                          :channel-header-type :endorser-transaction})))))

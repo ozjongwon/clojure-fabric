@@ -155,6 +155,7 @@
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
 
+#_
 (defn make-chaincode-header [{:keys [chaincode-id channel-id tx-id epoch type]
                               :or {type :endorser-transaction}}]
   (proto/make-channel-header :type type
@@ -185,8 +186,9 @@
       (crypto-suite/hash :algorithm algorithm)
       (Hex/toHexString)))
 
+#_
 (defn make-chaincode-proposal
-  [chaincode-key channel-name user {:keys [args header-type header-version]
+  [chaincode-key channel-name user {:keys [args channel-header-type header-version]
                                     :or {header-version 1}}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)
@@ -194,7 +196,27 @@
         nonce (make-nonce)]
     (proto/make-proposal :header
                          (proto/make-header :channel-header
-                                            (proto/make-channel-header :type header-type
+                                            (proto/make-channel-header :type channel-header-type
+                                                                       :version header-version
+                                                                       :channel-id channel-name
+                                                                       :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
+                                                                       :epoch (get-epoch channel-name)
+                                                                       :extension
+                                                                       (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
+                                            :signature-header (proto/make-signature-header :creator identity :nonce nonce))
+                         
+                         :payload proposal-payload)))
+;;;; NEW????
+(defn make-chaincode-proposal
+  [chaincode-key channel-name user {:keys [args channel-header-type header-version]
+                                    :or {header-version 1}}]
+  (let [{:keys [chaincode-id header-extension proposal-payload]}
+        (get-system-chaincode-request-parts chaincode-key :args args)
+        identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
+        nonce (make-nonce)]
+    (proto/make-proposal :header
+                         (proto/make-header :channel-header ;; FIXME: new header type
+                                            (proto/make-channel-header :type channel-header-type
                                                                        :version header-version
                                                                        :channel-id channel-name
                                                                        :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
@@ -208,11 +230,11 @@
 (defn make-chaincode-signed-proposal
   [chaincode-key channel-name user opts]
   (let [proposal (make-chaincode-proposal chaincode-key channel-name user opts)
-        signatures (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
-                                      (:private-key user)
-                                      {:algorithm (:key-algorithm (:crypto-suite user))})]
+        signature (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
+                                     (:private-key user)
+                                     {:algorithm (:key-algorithm (:crypto-suite user))})]
     (proto/make-signed-proposal :proposal-bytes  proposal
-                                :signature signatures)))
+                                :signature signature)))
 
 (defn verify-response
   [^ProposalResponsePackage$ProposalResponse raw-response user]

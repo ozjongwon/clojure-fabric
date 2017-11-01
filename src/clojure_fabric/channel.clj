@@ -179,7 +179,7 @@
                                      channel
                                      (apply core/get-user user-key)
                                      {:args [name]
-                                      :header-type :endorser-transaction})))
+                                      :channel-header-type :endorser-transaction})))
 
 ;;;query_block
 (defn query-block-by-number
@@ -196,7 +196,7 @@
                                      channel
                                      (apply core/get-user user-key)
                                      {:args [name block-number]
-                                      :header-type :endorser-transaction})))
+                                      :channel-header-type :endorser-transaction})))
 
 (defn query-block-by-hash
   "Queries the ledger for Block by block hash
