@@ -206,25 +206,31 @@
                                             :signature-header (proto/make-signature-header :creator identity :nonce nonce))
                          
                          :payload proposal-payload)))
-;;;; NEW????
-(defn make-chaincode-proposal
-  [chaincode-key channel-name user {:keys [args channel-header-type header-version]
+
+(defn make-header
+  [chaincode-key channel-name user {:keys [header-type channel-header-type header-version
+                                           extension]
                                     :or {header-version 1}}]
-  (let [{:keys [chaincode-id header-extension proposal-payload]}
-        (get-system-chaincode-request-parts chaincode-key :args args)
-        identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
+  (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
         nonce (make-nonce)]
+   (proto/make-header header-type
+                      (proto/make-channel-header :type channel-header-type
+                                                 :version header-version
+                                                 :channel-id channel-name
+                                                 :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
+                                                 :epoch (get-epoch channel-name)
+                                                 :extension extension)
+                      :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
+
+(defn make-chaincode-proposal
+  [chaincode-key channel-name user {:keys [args] :as opts}]
+  (let [{:keys [chaincode-id header-extension proposal-payload]}
+        (get-system-chaincode-request-parts chaincode-key :args args)]
     (proto/make-proposal :header
-                         (proto/make-header :channel-header ;; FIXME: new header type
-                                            (proto/make-channel-header :type channel-header-type
-                                                                       :version header-version
-                                                                       :channel-id channel-name
-                                                                       :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
-                                                                       :epoch (get-epoch channel-name)
-                                                                       :extension
-                                                                       (proto/make-chaincode-header-extension :chaincode-id chaincode-id))
-                                            :signature-header (proto/make-signature-header :creator identity :nonce nonce))
-                         
+                         (make-header chaincode-key channel-name user
+                                      (assoc opts
+                                             :header-type :channel-header
+                                             :extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)))
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal
@@ -235,6 +241,7 @@
                                      {:algorithm (:key-algorithm (:crypto-suite user))})]
     (proto/make-signed-proposal :proposal-bytes  proposal
                                 :signature signature)))
+
 
 (defn verify-response
   [^ProposalResponsePackage$ProposalResponse raw-response user]

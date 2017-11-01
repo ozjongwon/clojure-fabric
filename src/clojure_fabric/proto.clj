@@ -18,25 +18,15 @@
 ;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
-             [clojure.core.async :as async])
+            [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp]
+           [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
+           io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
-           [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
-           [org.hyperledger.fabric.protos.common Common$ChannelHeader Common$SignatureHeader
-            Common$BlockHeader Common$Block Common$Header Common$HeaderType Ledger$BlockchainInfo
-            Common$BlockData Common$BlockMetadata Common$Envelope]
+           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigSignature Configtx$ConfigUpdateEnvelope Ledger$BlockchainInfo]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           io.grpc.stub.StreamObserver
-           [org.hyperledger.fabric.protos.peer EndorserGrpc Chaincode$ChaincodeID
-            Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec
-            Chaincode$ChaincodeSpec$Type ProposalPackage$ChaincodeHeaderExtension
-            ProposalPackage$Proposal ProposalPackage$ChaincodeProposalPayload
-            ProposalPackage$SignedProposal Query$ChaincodeQueryResponse Query$ChannelQueryResponse
-            Query$ChaincodeInfo Query$ChannelInfo TransactionPackage$ProcessedTransaction
-            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response
-            Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment]
-           ))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
 ;;;
 ;;; Macros
@@ -285,6 +275,26 @@
                                  :code-package code-package
                                  :exec-env exec-env}))
 
+(defrecord ConfigSignature [^bytes signature-header ^bytes signature]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigSignature/newBuilder)
+        (.setSignatureHeader (ByteString/copyFrom signature-header))
+        (.setSignature (Configtx$ConfigSignature/parseFrom signature))
+        (.build))))
+
+(defrecord ConfigUpdateEnvelope [^bytes config-update signatures]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigUpdateEnvelope/newBuilder)
+        (.setConfigUpdate (ByteString/copyFrom config-update))
+        (.addAllSignagures (mapv #(Configtx$ConfigSignature/parseFrom ^bytes %) signatures))
+        (.build))))
+
+(defn make-config-update-envelope
+  [& {:keys [config-update signatures]}]
+  (map->ConfigUpdateEnvelope {:config-update config-update :signatures signatures}))
+
 ;;;
 ;;; Responses
 ;;;
@@ -335,7 +345,6 @@
 (defn make-processed-transaction
   [& {:keys [transaction-envelope validation-code]}]
   (map->ProcessedTransaction {:transaction-envelope transaction-envelope :validation-code validation-code}))
-
 
 (defn- convert-args
   [args]
@@ -392,6 +401,19 @@
   )
 
 ;;;
+(defn send-update-channel-using-envelope
+  [channel-name ^bytes envelope]
+  (let [cc-envelope (Common$Envelope/parseFrom envelope)
+        cc-payload (Common$Payload/parseFrom (.getPayload cc-envelope))
+        cc-channel-header (Common$ChannelHeader/parseFrom (.getChannelHeader (.getHeader cc-payload)))]
+    (assert (= (.getNumber Common$HeaderType/CONFIG_UPDATE) (.getType cc-channel-header)))
+    (assert (= channel-name (.getChannelId cc-channel-header)))
+    (let [config-update-env (Configtx$ConfigUpdateEnvelope/parseFrom (.getData cc-payload))
+          config-update (.getConfigUpdate config-update-env)]
+      
+      #_
+      (send-dupate-channel (.toByteArray config-update singers orderer))
+      )))
 
 ;;;
 ;;; Async processing
