@@ -43,3 +43,9 @@
       (throw (Exception. "Invalid gRPC URL! Must be 'grpc|grpcs://<hostname>:<port>'")))
     (->gRpcUrl (clojure.string/lower-case protocol) host port)))
 
+(defn map-vals
+  [f m]
+  (reduce (fn [m [k v]]
+               (assoc m k (f v)))
+          {}
+          m))
