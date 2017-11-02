@@ -464,11 +464,18 @@
                                                channel-header)
                    :signature-header (when-not (.isEmpty raw-signature-header)
                                        (proto->clj raw-signature-header signature-header)))))
+
+  Configtx$ConfigGroup
+  (proto->clj [this ignore]
+    (make-config-group :version (.getVersion this) :groups (.getGroups this)
+                       :values (.getValues this) :poilices (.getPolicies this)
+                       :mod-policy (.getModPolicy this)))
+  
   Configtx$ConfigUpdate
-  (proto->clj [this {:keys [read-set write-set]}]
+  (proto->clj [this ignore]
     (make-config-update :channel-id (.getChannelId this)
-                        :read-set (maybe-applying-proto->clj-transform [read-set (.getReadSet this)])
-                        :write-set (maybe-applying-proto->clj-transform [write-set (.getWriteSet this)])
+                        :read-set (proto->clj (.getReadSet this) nil)
+                        :write-set (proto->clj (.getWriteSet this) nil)
                         :type (.getType this)
                         :isolated-data (.getIsolatedData this)))
   
