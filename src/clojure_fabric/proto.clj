@@ -24,7 +24,7 @@
            io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
-           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigSignature Configtx$ConfigUpdateEnvelope Ledger$BlockchainInfo]
+           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Ledger$BlockchainInfo]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
@@ -41,7 +41,7 @@
   (clj->proto [this]))
 
 (defprotocol IProtoToClj
-  (proto->clj [this]))
+  (proto->clj [this opts]))
 
 ;;;
 ;;; Records are one to one relationship with proto message definitions
@@ -280,16 +280,55 @@
   (clj->proto [this]
     (-> (Configtx$ConfigSignature/newBuilder)
         (.setSignatureHeader (ByteString/copyFrom signature-header))
-        (.setSignature (Configtx$ConfigSignature/parseFrom signature))
+        (.setSignature (ByteString/copyFrom signature))
         (.build))))
+
+(defn make-config-signature
+  [& {:keys [signature-header signature]}]
+  (map->ConfigSignature {:signature-header signature-header :signature signature}))
+
+
+(defrecord ConfigGroup [version groups values policies mod-policy]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigGroup/newBuilder)
+        (.setVersion version)
+        (.putAllGroups groups)
+        (.putAllValues values)
+        (.putAllPolicies policies)
+        (.setModPolicy mod-policy)
+        (.build))))
+
+(defn make-config-group
+  [& {:keys [version groups values poilices mod-policy]}]
+  (map->ConfigUpdate {:version version :groups groups :values values
+                      :poilices poilices :mod-policy mod-policy}))
+
+(defrecord ConfigUpdate [channel-id read-set write-set type isolated-data]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigUpdate/newBuilder)
+        (.setChannelId channel-id)
+        (.setReadSet ^Configtx$ConfigGroup (clj->proto read-set))
+        (.setWriteSet ^Configtx$ConfigGroup (clj->proto write-set))
+        (.setType type)
+        (.putAllIsolatedData isolated-data)
+        (.build))))
+
+(defn make-config-update
+  [& {:keys [channel-id read-set write-set type isolated-data]}]
+  (map->ConfigUpdate {:channel-id channel-id :read-set read-set
+                      :write-set write-set :type type
+                      :isolated-data isolated-data}))
 
 (defrecord ConfigUpdateEnvelope [^bytes config-update signatures]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigUpdateEnvelope/newBuilder)
-        (.setConfigUpdate (ByteString/copyFrom config-update))
-        (.addAllSignagures (mapv #(Configtx$ConfigSignature/parseFrom ^bytes %) signatures))
-        (.build))))
+    (let [config-update-envelope (doto (Configtx$ConfigUpdateEnvelope/newBuilder)
+                                   (.setConfigUpdate (ByteString/copyFrom config-update)))]
+      (doseq [s signatures]
+        (.addSignatures config-update-envelope ^Configtx$ConfigSignature (clj->proto s)))
+      (.build config-update-envelope))))
 
 (defn make-config-update-envelope
   [& {:keys [config-update signatures]}]
@@ -336,6 +375,11 @@
   [& {:keys [header data metadata]}]
   (map->Block {:header header :data data :metadata metadata}))
 
+(defrecord Payload [header data])
+(defn make-payload
+  [& {:keys [header data]}]
+  (map->Payload {:header header :data data}))
+
 (defrecord Envelope [payload signature]) ;; bytes
 (defn make-envelope
   [& {:keys [payload signature]}]
@@ -353,52 +397,104 @@
                                   :else (ByteString/copyFromUtf8 (str %)))
                            args))
 
+(defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
+  `(let [data# ~data-call]
+     (if-let [tx-fn# (:fn ~tx-map)]
+       (proto->clj (tx-fn# data#) (dissoc ~tx-map :fn))
+       data#)))
+
 (extend-protocol IProtoToClj
 
   Query$ChaincodeQueryResponse
-  (proto->clj [this]
+  (proto->clj [this opts]
     (mapv (fn [^Query$ChaincodeInfo ci]
             (make-chaincode-info :name (.getName ci) :version (.getVersion ci) :path (.getPath ci)
                                  :input (.getInput ci) :escc (.getEscc ci) :vscc (.getVscc ci)))
           (.getChaincodesList this)))
 
   Query$ChannelQueryResponse
-  (proto->clj [this]
+  (proto->clj [this opts]
     (mapv (fn [^Query$ChannelInfo ci] (make-channel-info :channel-id (.getChannelId ci)))
           (.getChannelsList this)))
   
   Ledger$BlockchainInfo
-  (proto->clj [this]
+  (proto->clj [this opts]
     (make-blockchain-info :height (.getHeight this)
                           :current-block-hash (.getCurrentBlockHash this) :previous-block-hash (.getPreviousBlockHash this)))
 
   Common$BlockHeader
-  (proto->clj [this]
+  (proto->clj [this opts]
     (make-block-header :number (.getNumber this) :previous-hash (.getPreviousHash this) :data-hash (.getDataHash this)))
   
   Common$BlockData
-  (proto->clj [this]
+  (proto->clj [this opts]
     (make-block-data :data (.getDataList this)))
   
   Common$BlockMetadata
-  (proto->clj [this]
+  (proto->clj [this opts]
     (make-block-metadata :metadata (.getMetadataList this)))
 
   Common$Block
-  (proto->clj [this]
-    (make-block :header         (proto->clj (.getHeader this))
-                :data           (proto->clj (.getData this))
-                :metadata       (proto->clj (.getMetadata this))))
+  (proto->clj [this opts]
+    (make-block :header         (proto->clj (.getHeader this) {})
+                :data           (proto->clj (.getData this) {})
+                :metadata       (proto->clj (.getMetadata this) {})))
 
   TransactionPackage$ProcessedTransaction
-  (proto->clj [this]
-    (make-processed-transaction :transaction-envelope (proto->clj (.getTransactionEnvelope this))
+  (proto->clj [this opts]
+    (make-processed-transaction :transaction-envelope (proto->clj (.getTransactionEnvelope this)
+                                                                  {})
                                 :validation-code (.getValidationCode this)))
+  ;; FIXME: fix all above proto->clj like this!
+
+  Common$ChannelHeader
+  (proto->clj [this ignore]
+    (let [extension (.getExtension this)]
+     (make-channel-header :type (.getType this) :version (.getVersion this)
+                          :timestamp (.getTimestamp this) :channel-id (.getChannelId this)
+                          :tx-id (.getTxId this) :epoch (.getEpoch this)
+                          :extesion (when-not (.isEmpty extension)
+                                      ;; FIXME: more specific type?
+                                      extension))))
+  
+  Common$Header
+  (proto->clj [this {:keys [channel-header signature-header]}]
+    (let [raw-signature-header (.getSignatureHeader this)]
+      (make-header :channel-header (proto->clj (Common$ChannelHeader/parseFrom (.getChannelHeader this))
+                                               channel-header)
+                   :signature-header (when-not (.isEmpty raw-signature-header)
+                                       (proto->clj raw-signature-header signature-header)))))
+  Configtx$ConfigUpdate
+  (proto->clj [this {:keys [read-set write-set]}]
+    (make-config-update :channel-id (.getChannelId this)
+                        :read-set (maybe-applying-proto->clj-transform [read-set (.getReadSet this)])
+                        :write-set (maybe-applying-proto->clj-transform [write-set (.getWriteSet this)])
+                        :type (.getType this)
+                        :isolated-data (.getIsolatedData this)))
+  
+  Configtx$ConfigUpdateEnvelope
+  ;; this will get call by
+  ;; (proto->clj Common$Payload :data-fn #(Configtx$ConfigUpdateEnvelope/parseFrom %))
+  (proto->clj [this {:keys [config-update]}]
+    (let [raw-config-update (.getConfigUpdate this)]
+      (make-config-update-envelope :config-update (if-let [transform-fn (:fn config-update)]
+                                                    (proto->clj (transform-fn raw-config-update)
+                                                                (dissoc config-update :fn))
+                                                    config-update)
+                                   :signatures (.getSignaturesList this))))
+
+  Common$Payload
+  (proto->clj [this {:keys [data header]}]
+    (make-payload :header (proto->clj (.getHeader this) header)
+                  :data (maybe-applying-proto->clj-transform [data (.getData this)])))
   
   Common$Envelope
-  (proto->clj [this]
-    (make-envelope :payload (.getPayload this) :signature (.getSignature this)))
-  )
+  (proto->clj [this {:keys [payload]}]
+    (let [signature (.getSignature this)]
+      (make-envelope :payload (proto->clj (Common$Payload/parseFrom (.getPayload this))
+                                          payload)
+                     :signature (when-not (.isEmpty signature)
+                                  (.toByteArray signature))))))
 
 ;;;
 (defn send-update-channel-using-envelope
