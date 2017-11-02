@@ -293,7 +293,8 @@
   (clj->proto [this]
     (-> (Configtx$ConfigValue/newBuilder)
         (.setVersion version)
-        (.setValue value)
+        (.setValue (with-default-empty-byte-string [value]
+                     value))
         (.setModPolicy mod-policy)
         (.build))))
 
@@ -331,16 +332,17 @@
   (clj->proto [this]
     (-> (Configtx$ConfigGroup/newBuilder)
         (.setVersion version)
-        (.putAllGroups groups)
-        (.putAllValues values)
-        (.putAllPolicies policies)
+        (.putAllGroups (utils/map-vals #(clj->proto %) groups))
+        (.putAllValues (utils/map-vals #(clj->proto %) values))
+        (.putAllPolicies (utils/map-vals #(clj->proto %) policies))
         (.setModPolicy mod-policy)
         (.build))))
 
 (defn make-config-group
-  [& {:keys [version groups values poilices mod-policy]}]
+  [& {:keys [version groups values policies mod-policy]
+      :or {groups {} values {} policies {}}}]
   (map->ConfigGroup {:version version :groups groups :values values
-                     :poilices poilices :mod-policy mod-policy}))
+                     :policies policies :mod-policy mod-policy}))
 
 (defrecord ConfigUpdate [channel-id read-set write-set type isolated-data]
   ICljToProto
@@ -354,7 +356,8 @@
         (.build))))
 
 (defn make-config-update
-  [& {:keys [channel-id read-set write-set type isolated-data]}]
+  [& {:keys [channel-id read-set write-set type isolated-data]
+      :or {isolated-data {}}}]
   (map->ConfigUpdate {:channel-id channel-id :read-set read-set
                       :write-set write-set :type type
                       :isolated-data isolated-data}))
@@ -522,7 +525,8 @@
     (make-config-group :version (.getVersion this)
                        :groups (utils/map-vals #(proto->clj % nil) (.getGroups this))
                        :values (utils/map-vals #(proto->clj % nil) (.getValues this))
-                       :poilices (utils/map-vals #(proto->clj % nil) (.getPolicies this))
+                       :policies (or (utils/map-vals #(proto->clj % nil) (.getPolicies this))
+                                     {})
                        :mod-policy (.getModPolicy this)))
   
   Configtx$ConfigUpdate
