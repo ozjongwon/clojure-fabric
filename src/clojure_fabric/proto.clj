@@ -24,7 +24,7 @@
            io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
-           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Ledger$BlockchainInfo]
+           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
@@ -287,6 +287,44 @@
   [& {:keys [signature-header signature]}]
   (map->ConfigSignature {:signature-header signature-header :signature signature}))
 
+(defrecord ConfigValue
+    [^Long version ^bytes value ^String mod-policy]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigValue/newBuilder)
+        (.setVersion version)
+        (.setValue value)
+        (.setModPolicy mod-policy)
+        (.build))))
+
+(defn make-config-value
+  [& {:keys [version value mod-policy]}]
+  (map->ConfigValue {:version version :value value :mod-policy mod-policy}))
+
+(defrecord Policy [^Long type ^bytes value]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Policies$Policy/newBuilder)
+        (.setType type)
+        (.setValue value)
+        (.build))))
+
+(defn make-policy
+  [& {:keys [type value]}]
+  (map->Policy {:type type :value value}))
+
+(defrecord ConfigPolicy [^Long version ^Policies$Policy policy ^String mod-policy]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Configtx$ConfigPolicy/newBuilder)
+        (.setVersion version)
+        (.setPolicy policy)
+        (.setModPolicy mod-policy)
+        (.build))))
+
+(defn make-config-policy
+  [& {:keys [version policy mod-policy]}]
+  (map->ConfigValue {:version version :policy policy :mod-policy mod-policy}))
 
 (defrecord ConfigGroup [version groups values policies mod-policy]
   ICljToProto
@@ -301,8 +339,8 @@
 
 (defn make-config-group
   [& {:keys [version groups values poilices mod-policy]}]
-  (map->ConfigUpdate {:version version :groups groups :values values
-                      :poilices poilices :mod-policy mod-policy}))
+  (map->ConfigGroup {:version version :groups groups :values values
+                     :poilices poilices :mod-policy mod-policy}))
 
 (defrecord ConfigUpdate [channel-id read-set write-set type isolated-data]
   ICljToProto
@@ -464,11 +502,27 @@
                                                channel-header)
                    :signature-header (when-not (.isEmpty raw-signature-header)
                                        (proto->clj raw-signature-header signature-header)))))
-
+  Configtx$ConfigValue
+  (proto->clj [this ignore]
+    (make-config-value :version (.getVersion this)
+                       :value (.getValue this)
+                       :mod-policy (.getModPolicy this)))
+  Policies$Policy
+  (proto->clj [this ignore]
+    (make-policy :type (.getType this) :value (.getValue this)))
+  
+  Configtx$ConfigPolicy
+  (proto->clj [this ignore]
+    (make-config-policy :version (.getVersion this)
+                        :policy ^Policies$Policy (proto->clj (.getPolicy this) nil)
+                        :mod-policy (.getModPolicy this)))
+  
   Configtx$ConfigGroup
   (proto->clj [this ignore]
-    (make-config-group :version (.getVersion this) :groups (.getGroups this)
-                       :values (.getValues this) :poilices (.getPolicies this)
+    (make-config-group :version (.getVersion this)
+                       :groups (utils/map-vals #(proto->clj % nil) (.getGroups this))
+                       :values (utils/map-vals #(proto->clj % nil) (.getValues this))
+                       :poilices (utils/map-vals #(proto->clj % nil) (.getPolicies this))
                        :mod-policy (.getModPolicy this)))
   
   Configtx$ConfigUpdate
