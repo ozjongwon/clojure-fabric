@@ -324,15 +324,12 @@
           (proto/send-update-channel-using-envelope envelope))))
 
 (defn create-or-update-channel
-  ([user channel-name orderer envelope]
-   envelope
-   )
+  ([orderer envelope]
+   (proto/broadcast-via-orderer orderer envelope))
   ([user channel-name orderer config signatures]
    (let [payload (proto/make-payload :header (chaincode/make-header channel-name user {:channel-header-type :config-update})
                                      :data (proto/make-config-update-envelope :config-update config :signatures signatures))]
-     (create-or-update-channel user
-                               channel-name
-                               orderer
+     (create-or-update-channel orderer
                                (proto/make-envelope :payload payload
                                                     :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
                                                                                   (:private-key user)

@@ -581,9 +581,8 @@
 ;;;
 ;;; Async processing
 ;;;
-(defn peer->channel
-  [{:keys [url pem hostname-override?]
-    :as peer}]
+(defn node->channel
+  [{:keys [url pem hostname-override?]}]
   ;; pem = byte of ASN.1 encoding 
   (let [{:keys [protocol host port]} (utils/parse-grpc-url url)
         channel-builder (NettyChannelBuilder/forAddress ^String host (Integer/parseInt port))]
@@ -640,7 +639,7 @@
 (defn send-chaincode-request-to-peer
   [peer proposal]
   (binding-grpc-waiting-auto-callback [peer callback]
-    (.processProposal (EndorserGrpc/newStub ^ManagedChannel (peer->channel peer))
+    (.processProposal (EndorserGrpc/newStub ^ManagedChannel (node->channel peer))
                       (clj->proto proposal)
                       callback)))
 
@@ -649,7 +648,8 @@
   (reify StreamObserver
     (onNext [this deliver-response]
       (async/put! ch deliver-response)
-      (when (= (.getTypeCase ^Ab$DeliverResponse deliver-response) Ab$DeliverResponse$TypeCase/STATUS)
+      (when (= (.getTypeCase ^Ab$DeliverResponse deliver-response)
+               Ab$DeliverResponse$TypeCase/STATUS)
         (async/put! ch :done)))
     (onError [this err]
       (async/put! ch err))
@@ -665,18 +665,18 @@
 
 (defonce timeouts {:orderer-wait-time 3000})
 
-(defn broadcase-via-orderer
+(defn broadcast-via-orderer
   [orderer envelope]
   (let [ch (async/chan 32)
         callback (envelope-broadcast-observer ch)
-        observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (peer->channel orderer))
+        observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
                               callback)]
     (.onNext observer ^Common$Envelope (clj->proto envelope))
     (async/go-loop [result []]
       (let [[v ch] (async/alts! [ch (async/timeout (:orderer-wait-time timeouts))])]
         (cond (= v :done) result
-              (nil? v) result ;; timeout, throw
-              (instance? Exception v) result ;; error throw
+              (nil? v) (throw (Exception. "Timeout to send Evelope using orderer"))
+              (instance? Exception v) (throw v)
               :else (recur (conj result v)))))
           (.onCompleted observer)))
 
