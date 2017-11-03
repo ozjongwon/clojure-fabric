@@ -44,7 +44,7 @@
            org.apache.commons.io.IOUtils
            [com.google.protobuf ByteString Timestamp GeneratedMessageV3]
            [org.hyperledger.fabric.protos.common Common$Envelope Configtx$ConfigUpdateEnvelope
-            Common$Payload Configtx$ConfigGroup Configtx$ConfigUpdate]))
+            Common$Payload Configtx$ConfigGroup Configtx$ConfigUpdate Common$SignatureHeader]))
 
 (defn ca-user?
   [user]
@@ -326,14 +326,44 @@
 (defn create-or-update-channel
   ([orderer envelope]
    (proto/broadcast-via-orderer orderer envelope))
-  ([user channel-name orderer config signatures]
-   (let [payload (proto/make-payload :header (chaincode/make-header channel-name user {:channel-header-type :config-update})
-                                     :data (proto/make-config-update-envelope :config-update config :signatures signatures))]
+  ([orderer config-update signatures]
+   (let [payload (proto/make-payload :header (chaincode/make-header system-channel-name
+                                                                    orderer
+                                                                    {:channel-header-type :config-update})
+                                     :data (proto/make-config-update-envelope :config-update config-update
+                                                                              :signatures signatures))]
      (create-or-update-channel orderer
                                (proto/make-envelope :payload payload
                                                     :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
-                                                                                  (:private-key user)
-                                                                                  {:algorithm (:key-algorithm (:crypto-suite user))}))))))
+                                                                                  (:private-key orderer)
+                                                                                  {:algorithm (:key-algorithm (:crypto-suite orderer))}))))))
+
+(defn make-config-signature
+  [user config-update {:keys [header-version] :or {header-version 1}}]
+  (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
+        nonce (chaincode/make-nonce)
+        signature-header (proto/make-signature-header :creator identity :nonce nonce)
+        signature-header-bytes (.toByteArray ^Common$SignatureHeader (proto/clj->proto signature-header))
+        signature-header-length (alength signature-header-bytes)
+        config-update-length (alength ^bytes config-update)
+        header+config-bytes (byte-array (+ signature-header-length config-update-length))]
+    (System/arraycopy signature-header-bytes 0 header+config-bytes 0 signature-header-length)
+    (System/arraycopy config-update 0 header+config-bytes signature-header-length config-update-length)
+    (->> (crypto-suite/sign header+config-bytes
+                            (:private-key user)
+                            {:algorithm (:key-algorithm (:crypto-suite user))})
+         (proto/make-config-signature :signature-header signature-header
+                                      :signature)
+         (proto/clj->proto))))
+
+(defn create-or-update-channel-from-nodes
+  [orderer peers config-update]
+  ;; participants = orderers + peers
+  (create-or-update-channel orderer
+                            config-update
+                            (mapv (fn [node]
+                                    (make-config-signature node config-update))
+                                  (conj peers orderer))))
 
 ;; (create-or-update-channel-using-tx-file u1 "" 1 1 "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
 (comment
@@ -477,3 +507,109 @@
 ;; (def e2 (Configtx$ConfigUpdateEnvelope/parseFrom d1))
 ;; (def c1 (.getConfigUpdate e2))
 ;; (def s1 (.getSignatures e2))
+
+
+;; Example Envelope
+;; 
+;; {:payload
+;;  {:header
+;;   {:channel-header
+;;    {:type 2,
+;;     :version 0,
+;;     :timestamp
+;;     #object[com.google.protobuf.Timestamp 0x2a83646 "seconds: 1504437450\n"],
+;;     :channel-id "mychannel",
+;;     :tx-id
+;;     "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+;;     :epoch 0,
+;;     :extension nil},
+;;    :signature-header nil},
+;;   :data
+;;   {:config-update
+;;    {:channel-id "mychannel",
+;;     :read-set
+;;     {:version 0,
+;;      :groups
+;;      {"Application"
+;;       {:version 0,
+;;        :groups
+;;        {"Org1MSP"
+;;         {:version 0,
+;;          :groups {},
+;;          :values {},
+;;          :policies {},
+;;          :mod-policy ""},
+;;         "Org2MSP"
+;;         {:version 0,
+;;          :groups {},
+;;          :values {},
+;;          :policies {},
+;;          :mod-policy ""}},
+;;        :values {},
+;;        :policies {},
+;;        :mod-policy ""}},
+;;      :values
+;;      {"Consortium"
+;;       {:version 0,
+;;        :value
+;;        #object[com.google.protobuf.ByteString$LiteralByteString 0x21fc45b8 "<ByteString@21fc45b8 size=18>"],
+;;        :mod-policy ""}},
+;;      :policies {},
+;;      :mod-policy ""},
+;;     :write-set
+;;     {:version 0,
+;;      :groups
+;;      {"Application"
+;;       {:version 1,
+;;        :groups
+;;        {"Org1MSP"
+;;         {:version 0,
+;;          :groups {},
+;;          :values {},
+;;          :policies {},
+;;          :mod-policy ""},
+;;         "Org2MSP"
+;;         {:version 0,
+;;          :groups {},
+;;          :values {},
+;;          :policies {},
+;;          :mod-policy ""}},
+;;        :values {},
+;;        :policies
+;;        {"Readers"
+;;         {:version 0,
+;;          :value nil,
+;;          :mod-policy "Admins",
+;;          :policy
+;;          {:type 3,
+;;           :value
+;;           #object[com.google.protobuf.ByteString$LiteralByteString 0xce868e0 "<ByteString@ce868e0 size=9>"]}},
+;;         "Admins"
+;;         {:version 0,
+;;          :value nil,
+;;          :mod-policy "Admins",
+;;          :policy
+;;          {:type 3,
+;;           :value
+;;           #object[com.google.protobuf.ByteString$LiteralByteString 0x6be90317 "<ByteString@6be90317 size=10>"]}},
+;;         "Writers"
+;;         {:version 0,
+;;          :value nil,
+;;          :mod-policy "Admins",
+;;          :policy
+;;          {:type 3,
+;;           :value
+;;           #object[com.google.protobuf.ByteString$LiteralByteString 0x2a69065e "<ByteString@2a69065e size=9>"]}}},
+;;        :mod-policy "Admins"}},
+;;      :values
+;;      {"Consortium"
+;;       {:version 0,
+;;        :value
+;;        #object[com.google.protobuf.ByteString$LiteralByteString 0x6b243e92 "<ByteString@6b243e92 size=18>"],
+;;        :mod-policy ""}},
+;;      :policies {},
+;;      :mod-policy ""},
+;;     :type 0,
+;;     :isolated-data {}},
+;;    :signatures []}},
+;;  :signature nil}
