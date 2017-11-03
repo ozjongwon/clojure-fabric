@@ -35,13 +35,16 @@
 (ns clojure-fabric.user
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.core :as core]
+            [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.proto :as proto]
             [clojure.java.io :as io])
   (:import [java.io ByteArrayOutputStream File FileInputStream]
            [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
            org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
            org.apache.commons.io.IOUtils
-           org.hyperledger.fabric.protos.common.Common$Envelope))
+           [com.google.protobuf ByteString Timestamp GeneratedMessageV3]
+           [org.hyperledger.fabric.protos.common Common$Envelope Configtx$ConfigUpdateEnvelope
+            Common$Payload Configtx$ConfigGroup Configtx$ConfigUpdate]))
 
 (defn ca-user?
   [user]
@@ -297,7 +300,9 @@
   ([user]
    (:certificate user)))
 
+#_
 (defn create-or-update-channel
+  ;; evelope - read from <channel-name>.tx file
   [user channel-name orderer {:keys [^bytes envelope config signatures]}]
   (cond envelope
         ;; envelope is byte array of Envelope, which is ready to be parsed in
@@ -317,6 +322,47 @@
           ;; config-update-envelope is a payload data, i.e.
           ;; Payload = Header + Payload(config-update-envelope)
           (proto/send-update-channel-using-envelope envelope))))
+
+(defn create-or-update-channel
+  ([user channel-name orderer envelope]
+   envelope
+   )
+  ([user channel-name orderer config signatures]
+   (let [payload (proto/make-payload :header (chaincode/make-header channel-name user {:channel-header-type :config-update})
+                                     :data (proto/make-config-update-envelope :config-update config :signatures signatures))]
+     (create-or-update-channel user
+                               channel-name
+                               orderer
+                               (proto/make-envelope :payload payload
+                                                    :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
+                                                                                  (:private-key user)
+                                                                                  {:algorithm (:key-algorithm (:crypto-suite user))}))))))
+
+;; (create-or-update-channel-using-tx-file u1 "" 1 1 "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
+(comment
+  ;; Test
+  (defn create-or-update-channel-using-envelope
+    [user channel-name orderer participating-peers proto-envelope]
+    (let [clj-envelope (proto/proto->clj proto-envelope
+                                         {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
+                                                           :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}})
+          clj-config-update (get-in clj-envelope [:payload :data :config-update])
+          proto-config-update (proto/clj->proto clj-config-update)]
+      
+      clj-envelope
+      ))
+  (defonce max-tx-file-size 1024)
+  (defn create-or-update-channel-using-tx-file
+    [user channel-name orderer participating-peers tx-filename]
+    (let [tx-file (io/as-file tx-filename)]
+      (assert (<= (.length tx-file) max-tx-file-size))
+      (->> (with-open [in (io/input-stream tx-file)
+                       out (java.io.ByteArrayOutputStream.)]
+             (io/copy in out)
+             (Common$Envelope/parseFrom (.toByteArray out)))
+           (create-or-update-channel-using-envelope user channel-name orderer participating-peers)))))
+
+;;(create-or-update-channel-using-file 1 1 1 "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
 
 (defn create-channel
   ([channel-name orderer opts]
@@ -424,3 +470,13 @@
                                          user
                                          {:args [deployment-spec]
                                           :channel-header-type :endorser-transaction})))))
+
+
+;; (def e1 (Common$Envelope/parseFrom buf))
+;; (def p0 (.getPayload e1))
+;; (def p1 (Common$Payload/parseFrom p0))
+;; (def h1 (.getHeader p1))
+;; (def d1 (.getData p1))
+;; (def e2 (Configtx$ConfigUpdateEnvelope/parseFrom d1))
+;; (def c1 (.getConfigUpdate e2))
+;; (def s1 (.getSignatures e2))
