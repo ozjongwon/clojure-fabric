@@ -18,7 +18,8 @@
 ;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
-            [clojure.core.async :as async])
+            [clojure.core.async :as async]
+            [clojure-fabric.core :as core])
   (:import [com.google.protobuf ByteString Timestamp]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
            io.grpc.stub.StreamObserver
@@ -26,7 +27,8 @@
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]
+           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$DeliverResponse$TypeCase Ab$DeliverResponse]))
 
 ;;;
 ;;; Macros
@@ -641,6 +643,42 @@
     (.processProposal (EndorserGrpc/newStub ^ManagedChannel (peer->channel peer))
                       (clj->proto proposal)
                       callback)))
+
+(defn envelope-broadcast-observer
+  [ch]
+  (reify StreamObserver
+    (onNext [this deliver-response]
+      (async/put! ch deliver-response)
+      (when (= (.getTypeCase ^Ab$DeliverResponse deliver-response) Ab$DeliverResponse$TypeCase/STATUS)
+        (async/put! ch :done)))
+    (onError [this err]
+      (async/put! ch err))
+    (onCompleted [this])))
+
+;; typeout values (from Java SDK)
+;; defaultProperty(PROPOSAL_WAIT_TIME, "20000");
+;; defaultProperty(CHANNEL_CONFIG_WAIT_TIME, "15000");
+;; defaultProperty(ORDERER_RETRY_WAIT_TIME, "200");
+;; defaultProperty(ORDERER_WAIT_TIME, "3000");
+;; defaultProperty(EVENTHUB_CONNECTION_WAIT_TIME, "1000");
+;; defaultProperty(GENESISBLOCK_WAIT_TIME, "5000");
+
+(defonce timeouts {:orderer-wait-time 3000})
+
+(defn broadcase-via-orderer
+  [orderer envelope]
+  (let [ch (async/chan 32)
+        callback (envelope-broadcast-observer ch)
+        observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (peer->channel orderer))
+                              callback)]
+    (.onNext observer ^Common$Envelope (clj->proto envelope))
+    (async/go-loop [result []]
+      (let [[v ch] (async/alts! [ch (async/timeout (:orderer-wait-time timeouts))])]
+        (cond (= v :done) result
+              (nil? v) result ;; timeout, throw
+              (instance? Exception v) result ;; error throw
+              :else (recur (conj result v)))))
+          (.onCompleted observer)))
 
 ;;;;
 (comment
