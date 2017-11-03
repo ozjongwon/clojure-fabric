@@ -90,7 +90,11 @@
               (Hex/toHexString))}))
 
 (defonce org-defs
-  {"Org1MSP" {:msp-id           "Org1MSP"
+  {"Orderer" {:msp-id           "Orderer"
+              :org-type         :orderer
+              :domain-name      "example.com"
+              :users            [{:name "admin" :roles #{}}]}  
+   "Org1MSP" {:msp-id           "Org1MSP"
               :org-type         :peer
               :domain-name      "org1.example.com"
               :users            [{:name "user1" :roles #{:client}}
