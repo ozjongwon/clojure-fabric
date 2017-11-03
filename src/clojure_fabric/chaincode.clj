@@ -201,12 +201,6 @@
                                                  :extension extension)
                       :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
 
-(defn make-config-update-envelope
-  [channel-name user orderer config signatures]
-  (let [header (make-header channel-name user {:channel-header-type :config-update})
-        payload ]))
-
-
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
@@ -271,9 +265,9 @@
                         (Exception. "Verification failed!")
                         (if ->response
                           (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
-                            (->> (.getPayload ^ProposalResponsePackage$Response response)
-                                 (->response)
-                                 (proto/proto->clj)))
+                            (-> (.getPayload ^ProposalResponsePackage$Response response)
+                                (->response)
+                                (proto/proto->clj nil)))
                           raw-response)))))))))
 
 ;; Responses -
