@@ -353,8 +353,7 @@
                             (:private-key user)
                             {:algorithm (:key-algorithm (:crypto-suite user))})
          (proto/make-config-signature :signature-header signature-header
-                                      :signature)
-         (proto/clj->proto))))
+                                      :signature))))
 
 (defn create-or-update-channel-from-nodes
   [orderer peers config-update]
@@ -362,34 +361,28 @@
   (create-or-update-channel orderer
                             config-update
                             (mapv (fn [node]
-                                    (make-config-signature node config-update))
+                                    (make-config-signature node config-update {}))
                                   (conj peers orderer))))
-
-;; (create-or-update-channel-using-tx-file u1 "" 1 1 "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
-(comment
-  ;; Test
-  (defn create-or-update-channel-using-envelope
-    [user channel-name orderer participating-peers proto-envelope]
-    (let [clj-envelope (proto/proto->clj proto-envelope
-                                         {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
-                                                           :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}})
-          clj-config-update (get-in clj-envelope [:payload :data :config-update])
-          proto-config-update (proto/clj->proto clj-config-update)]
-      
-      clj-envelope
-      ))
-  (defonce max-tx-file-size 1024)
-  (defn create-or-update-channel-using-tx-file
-    [user channel-name orderer participating-peers tx-filename]
+(defonce max-tx-file-size 1024)
+(defn tx-file->config-update
+    [tx-filename]
     (let [tx-file (io/as-file tx-filename)]
       (assert (<= (.length tx-file) max-tx-file-size))
-      (->> (with-open [in (io/input-stream tx-file)
-                       out (java.io.ByteArrayOutputStream.)]
-             (io/copy in out)
-             (Common$Envelope/parseFrom (.toByteArray out)))
-           (create-or-update-channel-using-envelope user channel-name orderer participating-peers)))))
+      (let [envelope (->> (with-open [in (io/input-stream tx-file)
+                                      out (java.io.ByteArrayOutputStream.)]
+                            (io/copy in out)
+                            (Common$Envelope/parseFrom (.toByteArray out))))]
+        (-> (proto/proto->clj envelope
+                              {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
+                                                :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}})
+            (get-in [:payload :data :config-update])
+            (proto/clj->proto)
+            (.toByteArray)))))
 
-;;(create-or-update-channel-using-file 1 1 1 "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
+;;(tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
+;; (create-or-update-channel-from-nodes (get @core/users  ["Orderer" "admin"])
+;;       [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])]
+;;      cu)
 
 (defn create-channel
   ([channel-name orderer opts]
