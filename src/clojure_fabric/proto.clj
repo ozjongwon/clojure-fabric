@@ -277,11 +277,11 @@
                                  :code-package code-package
                                  :exec-env exec-env}))
 
-(defrecord ConfigSignature [^bytes signature-header ^bytes signature]
+(defrecord ConfigSignature [^SignatureHeader signature-header ^bytes signature]
   ICljToProto
   (clj->proto [this]
     (-> (Configtx$ConfigSignature/newBuilder)
-        (.setSignatureHeader (ByteString/copyFrom signature-header))
+        (.setSignatureHeader (.toByteString ^Common$SignatureHeader (clj->proto signature-header)))
         (.setSignature (ByteString/copyFrom signature))
         (.build))))
 
@@ -418,7 +418,15 @@
   [& {:keys [header data metadata]}]
   (map->Block {:header header :data data :metadata metadata}))
 
-(defrecord Payload [header data])
+(defrecord Payload [^Header header ^bytes data]
+  ICljToProto
+  (clj->proto [this]
+    (-> (Common$Payload/newBuilder)
+        (.setHeader ^Common$Header (clj->proto header))
+        ;; Assume the clj->proto result is Configtx$ConfigUpdateEnvelope type
+        (.setData (.toByteString ^Configtx$ConfigUpdateEnvelope (clj->proto data)))
+        (.build))))
+
 (defn make-payload
   [& {:keys [header data]}]
   (map->Payload {:header header :data data}))
