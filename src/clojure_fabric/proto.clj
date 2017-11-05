@@ -514,6 +514,16 @@
                           :extesion (when-not (.isEmpty extension)
                                       ;; FIXME: more specific type?
                                       extension))))
+  Identities$SerializedIdentity
+  (proto->clj [this ignore]
+    (make-serialized-identity :mspid (.getMspid this)
+                              :id-bytes (.getIdBytes this)))
+  Common$SignatureHeader
+  (proto->clj [this ignore]
+    (make-signature-header :creator (-> (.getCreator this)
+                                        (Identities$SerializedIdentity/parseFrom)
+                                        (proto->clj ignore))
+                           :nonce (.getNonce this)))
   
   Common$Header
   (proto->clj [this {:keys [channel-header signature-header]}]
@@ -521,7 +531,8 @@
       (make-header :channel-header (proto->clj (Common$ChannelHeader/parseFrom (.getChannelHeader this))
                                                channel-header)
                    :signature-header (when-not (.isEmpty raw-signature-header)
-                                       (proto->clj raw-signature-header signature-header)))))
+                                       (proto->clj (Common$SignatureHeader/parseFrom raw-signature-header)
+                                                   signature-header)))))
   Configtx$ConfigValue
   (proto->clj [this ignore]
     (make-config-value :version (.getVersion this)
