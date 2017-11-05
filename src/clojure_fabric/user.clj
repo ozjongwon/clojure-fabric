@@ -103,7 +103,8 @@
 
 (defmacro with-validating-peers
   [[user-or-channel target-peers] & body]
-  `(let [unknown-peers# (clojure.set/difference (set ~target-peers) (core/get-peers ~user-or-channel))]
+  `(let [unknown-peers# (clojure.set/difference (set ~target-peers)
+                                                (core/get-nodes ~user-or-channel :peers))]
      (when-not (empty? unknown-peers#)
        (throw (Exception. "The target Peer(s) does not know anything about the channel")))
      ~@body))
@@ -326,8 +327,8 @@
 (defn create-or-update-channel
   ([orderer envelope]
    (proto/broadcast-via-orderer orderer envelope))
-  ([orderer config-update signatures]
-   (let [payload (proto/make-payload :header (chaincode/make-header system-channel-name
+  ([channel-id orderer config-update signatures]
+   (let [payload (proto/make-payload :header (chaincode/make-header channel-id
                                                                     orderer
                                                                     {:channel-header-type :config-update})
                                      :data (proto/make-config-update-envelope :config-update config-update
@@ -356,13 +357,15 @@
                                       :signature))))
 
 (defn create-or-update-channel-from-nodes
-  [orderer peers config-update]
+  [channel-id orderer nodes config-update]
   ;; participants = orderers + peers
-  (create-or-update-channel orderer
+  (create-or-update-channel channel-id
+                            orderer
                             config-update
                             (mapv (fn [node]
                                     (make-config-signature node config-update {}))
-                                  (conj peers orderer))))
+                                  nodes)))
+
 (defonce max-tx-file-size 1024)
 (defn tx-file->config-update
     [tx-filename]
@@ -380,9 +383,13 @@
             (.toByteArray)))))
 
 ;;(tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
-;; (create-or-update-channel-from-nodes (get @core/users  ["Orderer" "admin"])
-;;       [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])]
-;;      cu)
+;;
+;; (create-or-update-channel-from-nodes "mychannel"
+;; (merge (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
+;;                                                          (get @core/users  ["Orderer" "admin"]))
+;;                                                   [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])
+;;                                                    (get @core/users  ["Orderer" "admin"])]
+;;                                                   cu)
 
 (defn create-channel
   ([channel-name orderer opts]

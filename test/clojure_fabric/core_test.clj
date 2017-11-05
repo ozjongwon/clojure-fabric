@@ -89,11 +89,18 @@
               #_
               (Hex/toHexString))}))
 
+#_
+(defonce orderer {:org-type     :orderer
+                  :domain-name  "example.com"
+                  :name         "admin"
+                  :url          "grpcs://localhost:7050"})
+
 (defonce org-defs
   {"Orderer" {:msp-id           "Orderer"
               :org-type         :orderer
               :domain-name      "example.com"
-              :users            [{:name "admin" :roles #{}}]}  
+              :users            [{:name "admin" :url "grpcs://localhost:7050" :domain-name "example.com"}]}  
+
    "Org1MSP" {:msp-id           "Org1MSP"
               :org-type         :peer
               :domain-name      "org1.example.com"
@@ -179,7 +186,7 @@
 
 (expect (let [user (get-user "Org1MSP" "user1")
               mychannel (get-channel user "mychannel")]
-          (core/get-peers mychannel)))
+          (core/get-nodes mychannel :peers)))
 
 ;; This must be available with Admin user
 (expect io.grpc.StatusRuntimeException
@@ -193,7 +200,7 @@
               chaincodes1 (query-installed-chaincodes user (get-random-peer mychannel))]
           (install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                              "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
-                             :golang (core/get-peers mychannel))
+                             :golang (core/get-nodes mychannel  :peers))
           (= (inc (count chaincodes1))
              (count (query-installed-chaincodes user (get-random-peer mychannel))))))
 
@@ -208,21 +215,21 @@
               chaincodes1 (query-installed-chaincodes user (get-random-peer mychannel))]
           (install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                              "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
-                             :golang (core/get-peers mychannel))
+                             :golang (core/get-nodes mychannel :peers))
           (= (inc (count chaincodes1))
              (count (query-installed-chaincodes user (get-random-peer mychannel))))))
 
 ;; (expect (let [user (get-user "Org2MSP" "admin")
 ;;               mychannel (get-channel user "mychannel")]
-;;           (query-channels user "mychannel" (core/get-peers mychannel))))
+;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 ;; (expect (let [user (get-user "Org1MSP" "user1")
 ;;               mychannel (get-channel user "mychannel")]
-;;           (query-channels user "mychannel" (core/get-peers mychannel))))
+;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 ;; (expect (let [user (get-user "Org1MSP" "admin")
 ;;               mychannel (get-channel user "mychannel")]
-;;           (query-channels user "mychannel" (core/get-peers mychannel))))
+;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 #_
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
@@ -306,3 +313,6 @@
 ;; Server2 - peer channel join
 ;;
 
+;;(create-or-update-channel-from-nodes (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
+;; [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])]
+;; cu)

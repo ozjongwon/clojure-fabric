@@ -431,7 +431,14 @@
   [& {:keys [header data]}]
   (map->Payload {:header header :data data}))
 
-(defrecord Envelope [payload signature]) ;; bytes
+(defrecord Envelope [payload signature] ;; bytes
+  ICljToProto
+  (clj->proto [this]
+    (-> (Common$Envelope/newBuilder)
+        (.setPayload (.toByteString ^Common$Payload (clj->proto payload)))
+        (.setSignature (ByteString/copyFrom #^bytes signature))
+        (.build))))
+
 (defn make-envelope
   [& {:keys [payload signature]}]
   (map->Envelope {:payload payload :signature signature}))
