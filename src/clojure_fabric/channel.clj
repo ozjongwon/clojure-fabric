@@ -65,17 +65,7 @@
    (remove-channel-end! channel peer :peers)))
 
 ;;; get_peers
-#_
-(defn get-peers
-  "Get peers of a chain from local information.
-  Params
-        None
-  Returns
-        (Peer list): The peer list on the chain"
-  ([]
-   (get-peers core/*channel*))
-  ([channel]
-   (core/get-peers channel)))
+;; Use (get-nodes ... type), where type is one of :peers :orderers
 
 ;;;
 ;;;

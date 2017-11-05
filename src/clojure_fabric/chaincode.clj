@@ -236,7 +236,7 @@
 
 (defn get-random-peer
   ([]
-   (core/get-peers core/*channel*))
+   (core/get-nodes core/*channel* :peers))
   ([channel]
    (second (rand-nth (seq (:peers channel))))))
 
