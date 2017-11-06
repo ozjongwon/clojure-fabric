@@ -28,7 +28,9 @@
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]
-           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$BroadcastResponse]))
+           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$BroadcastResponse
+            Ab$SeekSpecified Ab$SeekPosition Ab$SeekOldest Ab$SeekNewest Ab$SeekInfo
+            Ab$SeekInfo$SeekBehavior]))
 
 ;;;
 ;;;
@@ -434,6 +436,66 @@
 (defn make-processed-transaction
   [& {:keys [transaction-envelope validation-code]}]
   (map->ProcessedTransaction {:transaction-envelope transaction-envelope :validation-code validation-code}))
+
+(defrecord SeekSpecified [^Long number]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Ab$SeekSpecified/newBuilder)
+      number (.setNumber number)
+      true (.build))))
+
+(defn make-seek-specified
+  [& {:keys [number]}]
+  (map->SeekSpecified {:number number}))
+
+(defrecord SeekOldest []
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Ab$SeekOldest/newBuilder)
+      true (.build))))
+
+(defn make-seek-oldest
+  []
+  (->SeekOldest))
+
+(defrecord SeekNewest []
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Ab$SeekNewest/newBuilder)
+      true (.build))))
+
+(defn make-seek-newest
+  []
+  (->SeekNewest))
+
+(defrecord SeekPosition [newest oldest specified]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Ab$SeekPosition/newBuilder)
+      newest (.setNewest ^Ab$SeekNewest (clj->proto newest))
+      oldest (.setOldest ^Ab$SeekOldest (clj->proto oldest))
+      specified (.setSpecified ^Ab$SeekSpecified (clj->proto specified))
+      true (.build))))
+
+(defn make-seek-position
+  [& {:keys [newest oldest specified]}]
+  (map->SeekSpecified {:newest newest :oldest oldest :specified specified}))
+
+(defonce seek-behavior-map {:block-until-ready Ab$SeekInfo$SeekBehavior/BLOCK_UNTIL_READY
+                            :fail-if-not-ready Ab$SeekInfo$SeekBehavior/FAIL_IF_NOT_READY})
+
+(defrecord SeekInfo [^SeekPosition start ^SeekPosition stop behavior];; behaviour keyword
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Ab$SeekInfo/newBuilder)
+      start (.setStart ^Ab$SeekPosition (clj->proto start))
+      stop (.setStop ^Ab$SeekPosition (clj->proto stop))
+      behavior (.setBehavior ^Ab$SeekBehavior (seek-behavior-map behavior))
+      true (.build))))
+
+(defn make-seek-info
+  [& {:keys [start stop behavior]}]
+  (map->SeekInfo {:start start :stop stop :behavior behavior}))
 
 (defn- convert-args
   [args]
