@@ -131,7 +131,7 @@
                                                                system-channel-name
                                                                target-peers
                                                                user
-                                                               {:channel-header-type :endorser-transaction})))))
+                                                               {})))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -261,7 +261,7 @@
                                               system-channel-name
                                               peer
                                               user
-                                              {:channel-header-type :endorser-transaction}))
+                                              {}))
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 ;;; get_name
@@ -447,8 +447,7 @@
                                          system-channel-name
                                          target-peers
                                          user
-                                         {:args [deployment-spec]
-                                          :channel-header-type :endorser-transaction})))))
+                                         {:args [deployment-spec]})))))
 
 
 ;; (def e1 (Common$Envelope/parseFrom buf))
