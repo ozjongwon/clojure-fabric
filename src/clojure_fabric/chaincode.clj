@@ -155,16 +155,6 @@
       (assoc parts :proposal-payload (proposal-payload args))
       parts)))
 
-#_
-(defn make-chaincode-header [{:keys [chaincode-id channel-id tx-id epoch type]
-                              :or {type :endorser-transaction}}]
-  (proto/make-channel-header :type type
-                             :version 1
-                             :channel-id channel-id
-                             :tx-id tx-id
-                             :epoch epoch
-                             :extension
-                             (proto/make-chaincode-header-extension :chaincode-id chaincode-id)))
 ;;;
 ;;; User level functions
 ;;;
@@ -201,6 +191,11 @@
                                                  :extension extension)
                       :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
 
+(defn make-payload
+  [channel-name user channel-header-type payload-data]
+  (proto/make-payload :header (make-header channel-name user {:channel-header-type channel-header-type})
+                      :data payload-data))
+
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
   (let [{:keys [chaincode-id header-extension proposal-payload]}
@@ -234,11 +229,11 @@
                          (.toByteArray text)
                          (:crypto-suite user))))
 
-(defn get-random-peer
-  ([]
-   (core/get-nodes core/*channel* :peers))
-  ([channel]
-   (second (rand-nth (seq (:peers channel))))))
+(defn get-random-node
+  ([nodes-access-key]
+   (core/get-nodes core/*channel* nodes-access-key))
+  ([channel nodes-access-key]
+   (second (rand-nth (seq (nodes-access-key channel))))))
 
 (defn target->nodes [target]
   (if (sequential? target)
@@ -246,13 +241,13 @@
     (condp instance? target
       Peer [target]
       Orderer [target]
-      Channel [(get-random-peer target)])))
+      Channel [(get-random-node target :peers)])))
 
 (defn send-chaincode-request
   [chaincode-key channel-name target user {:keys [verify?]
                                            :or {verify? false}
                                            :as opts}]
-  ;; target==channel (get-random-peer channel)
+  ;; target==channel (get-random-node channel :peers)
   (let [nodes (target->nodes target)]
     (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user opts)
           ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
