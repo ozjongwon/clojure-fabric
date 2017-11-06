@@ -28,8 +28,10 @@
 (ns clojure-fabric.channel
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.core :as core]
+            [clojure-fabric.proto :as proto]
             [clojure-fabric.utils :as utils])
-  (:import org.bouncycastle.util.encoders.Hex))
+  (:import org.bouncycastle.util.encoders.Hex
+           org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse))
 
 ;;;
 ;;; Functions
@@ -326,6 +328,29 @@
    ;;; TBD
    ))
 ;;; 
+
+
+(defn get-genesis-block
+  ([]
+   (get-genesis-block core/*channel* (chaincode/get-random-node core/*channel* :orderers)))
+  ([{:keys [user-key name] :as channel} orderer]
+   (let [seek-start-stop (proto/make-seek-position :specified (proto/make-seek-specified :number 0)) ]
+     (let [result (->> (proto/make-seek-info :start seek-start-stop :stop seek-start-stop :behavior :block-until-ready)
+                (chaincode/make-envelope name (apply core/get-user user-key) :deliver-seek-info)
+                (proto/broadcast-or-deliver-via-orderer :deliver orderer))]
+       (.getBlock ^Ab$DeliverResponse (first result))))))
+
+;; (def u1 (core/get-user "Org1MSP" "user1"))
+;; (def u2 (assoc-in u1 [:channels "testchan14"] (get-in u1 [:channels "mychannel"])))
+;; (def u3 (update-in u2 [:channels "testchan14" :name] (fn [_] "testchan14")))
+;; (binding [core/*channel* (get-in u3 [:channels "testchan14"] )]
+;;   (get-genesis-block))
+
+(defn join-channel
+  ([peers block]
+   (join-channel core/*channel* peers))
+  ([channel peers block]
+   ))
 
 ;;;;;;;;;
 
