@@ -751,10 +751,11 @@
                           (instance? Exception v) (throw v)
                           :else (recur (conj result v)))))
                 (finally (.onCompleted observer)))))]
-    (async/<!! (send-envelope-via-orderer-using-async (case call-type
-                                                        :deliver #(.deliver ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2)
-                                                        :broadcast #(.broadcast ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2))))))
-
+    (async/<!!
+     (send-envelope-via-orderer-using-async
+      (case call-type
+        :deliver #(.deliver ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2)
+        :broadcast #(.broadcast ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2))))))
 ;;;;
 (comment
   (def chaincode-id1 (map->ChaincodeID {:name "name" :version "version" :path "path"}))
