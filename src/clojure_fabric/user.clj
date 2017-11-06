@@ -38,13 +38,12 @@
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.proto :as proto]
             [clojure.java.io :as io])
-  (:import [java.io ByteArrayOutputStream File FileInputStream]
+  (:import com.google.protobuf.ByteString
+           [java.io ByteArrayOutputStream File FileInputStream]
            [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
            org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
            org.apache.commons.io.IOUtils
-           [com.google.protobuf ByteString Timestamp GeneratedMessageV3]
-           [org.hyperledger.fabric.protos.common Common$Envelope Configtx$ConfigUpdateEnvelope
-            Common$Payload Configtx$ConfigGroup Configtx$ConfigUpdate Common$SignatureHeader]))
+           [org.hyperledger.fabric.protos.common Common$Envelope Common$SignatureHeader Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope]))
 
 (defn ca-user?
   [user]
@@ -303,16 +302,11 @@
 
 (defn create-or-update-channel
   ([orderer envelope]
-   (proto/broadcast-via-orderer orderer envelope))
+   (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
   ([user channel-id orderer config-update signatures]
-   (let [payload (chaincode/make-payload channel-id orderer :config-update
-                                         (proto/make-config-update-envelope :config-update config-update
-                                                                            :signatures signatures))]
-     (create-or-update-channel orderer
-                               (proto/make-envelope :payload payload
-                                                    :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
-                                                                                  (:private-key user)
-                                                                                  {:algorithm (:key-algorithm (:crypto-suite orderer))}))))))
+   (->> (proto/make-config-update-envelope :config-update config-update :signatures signatures)
+        (chaincode/make-envelope channel-id user :config-update)
+        (create-or-update-channel orderer))))
 
 (defn make-config-signature
   [user config-update {:keys [header-version] :or {header-version 1}}]
@@ -360,13 +354,12 @@
 
 ;;(def cu (tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx"))
 ;;
-;; (create-or-update-channel-from-nodes "mychannel"
-;; (merge (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
-;;                                                          (get @core/users  ["Orderer" "admin"]))
-;;                                                   [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])
-;;                                                    (get @core/users  ["Orderer" "admin"])]
-;;                                                   cu)
-
+;; (create-or-update-channel-from-nodes (core/get-user "Org1MSP" "user1") "testchan14"
+;;                                      (merge (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
+;;                                             (get @core/users  ["Orderer" "admin"]))
+;;                                      [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])
+;;                                       (get @core/users  ["Orderer" "admin"])]
+;;                                      cu2)
 ;;; set_name
 ;;; Immutable
 

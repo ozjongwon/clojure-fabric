@@ -18,8 +18,7 @@
 ;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
-            [clojure.core.async :as async]
-            [clojure-fabric.core :as core])
+            [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
            io.grpc.stub.StreamObserver
@@ -27,10 +26,8 @@
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]
-           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$BroadcastResponse
-            Ab$SeekSpecified Ab$SeekPosition Ab$SeekOldest Ab$SeekNewest Ab$SeekInfo
-            Ab$SeekInfo$SeekBehavior]))
+           [org.hyperledger.fabric.protos.orderer Ab$SeekInfo Ab$SeekInfo$SeekBehavior Ab$SeekNewest Ab$SeekOldest Ab$SeekPosition Ab$SeekSpecified AtomicBroadcastGrpc AtomicBroadcastGrpc$AtomicBroadcastStub]
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
 ;;;
 ;;;
@@ -479,7 +476,7 @@
 
 (defn make-seek-position
   [& {:keys [newest oldest specified]}]
-  (map->SeekSpecified {:newest newest :oldest oldest :specified specified}))
+  (map->SeekPosition {:newest newest :oldest oldest :specified specified}))
 
 (defonce seek-behavior-map {:block-until-ready Ab$SeekInfo$SeekBehavior/BLOCK_UNTIL_READY
                             :fail-if-not-ready Ab$SeekInfo$SeekBehavior/FAIL_IF_NOT_READY})
@@ -737,13 +734,13 @@
 
 (defonce timeouts {:orderer-wait-time 3000})
 
-(defn broadcast-via-orderer
-  [orderer envelope]
-  (letfn [(broadcast-via-orderer-using-async []
+(defn broadcast-or-deliver-via-orderer
+  [call-type orderer envelope]
+  (letfn [(send-envelope-via-orderer-using-async [call-fn]
             (let [ch (async/chan 32)
                   callback (envelope-broadcast-observer ch)
-                  observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
-                                       callback)]
+                  ^StreamObserver observer (call-fn (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
+                                                    callback)]
               (.onNext observer ^Common$Envelope (clj->proto envelope))
               (try
                 (async/go-loop [result []]
@@ -753,7 +750,9 @@
                           (instance? Exception v) (throw v)
                           :else (recur (conj result v)))))
                 (finally (.onCompleted observer)))))]
-    (async/<!! (broadcast-via-orderer-using-async))))
+    (async/<!! (send-envelope-via-orderer-using-async (case call-type
+                                                        :deliver #(.deliver ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2)
+                                                        :broadcast #(.broadcast ^AtomicBroadcastGrpc$AtomicBroadcastStub %1 %2))))))
 
 ;;;;
 (comment
