@@ -28,7 +28,7 @@
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]
-           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$DeliverResponse$TypeCase Ab$DeliverResponse]))
+           [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$BroadcastResponse]))
 
 ;;;
 ;;;
@@ -310,7 +310,7 @@
   (clj->proto [this]
     (cond-> (Configtx$ConfigPolicy/newBuilder)
         version (.setVersion version)
-        policy (.setPolicy (clj->proto policy))
+        policy (.setPolicy ^Policies$Policy (clj->proto policy))
         mod-policy (.setModPolicy mod-policy)
         true (.build))))
 
@@ -658,14 +658,12 @@
 (defn envelope-broadcast-observer
   [ch]
   (reify StreamObserver
-    (onNext [this deliver-response]
-      (async/put! ch deliver-response)
-      (when (= (.getTypeCase ^Ab$DeliverResponse deliver-response)
-               Ab$DeliverResponse$TypeCase/STATUS)
-        (async/put! ch :done)))
+    (onNext [this boradcast-response]
+      (async/put! ch boradcast-response))
     (onError [this err]
       (async/put! ch err))
-    (onCompleted [this])))
+    (onCompleted [this]
+      (async/put! ch :done))))
 
 ;; typeout values (from Java SDK)
 ;; defaultProperty(PROPOSAL_WAIT_TIME, "20000");
@@ -679,18 +677,21 @@
 
 (defn broadcast-via-orderer
   [orderer envelope]
-  (let [ch (async/chan 32)
-        callback (envelope-broadcast-observer ch)
-        observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
-                              callback)]
-    (.onNext observer ^Common$Envelope (clj->proto envelope))
-    (async/go-loop [result []]
-      (let [[v ch] (async/alts! [ch (async/timeout (:orderer-wait-time timeouts))])]
-        (cond (= v :done) result
-              (nil? v) (throw (Exception. "Timeout to send Evelope using orderer"))
-              (instance? Exception v) (throw v)
-              :else (recur (conj result v)))))
-          (.onCompleted observer)))
+  (letfn [(broadcast-via-orderer-using-async []
+            (let [ch (async/chan 32)
+                  callback (envelope-broadcast-observer ch)
+                  observer (.broadcast (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
+                                       callback)]
+              (.onNext observer ^Common$Envelope (clj->proto envelope))
+              (try
+                (async/go-loop [result []]
+                  (let [[v ch] (async/alts! [ch (async/timeout (:orderer-wait-time timeouts))])]
+                    (cond (= v :done) result
+                          (nil? v) (throw (Exception. "Timeout to send Evelope using orderer"))
+                          (instance? Exception v) (throw v)
+                          :else (recur (conj result v)))))
+                (finally (.onCompleted observer)))))]
+    (async/<!! (broadcast-via-orderer-using-async))))
 
 ;;;;
 (comment
