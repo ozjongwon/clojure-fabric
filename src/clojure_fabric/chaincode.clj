@@ -47,20 +47,15 @@
 ;;      Support only CSCC, QSCC, and LSCC (from Node.js)
 (ns clojure-fabric.chaincode
   (:require [clojure-fabric.core :as core]
+            [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.proto :as proto]
-            [clojure-fabric.crypto-suite :as crypto-suite] 
-            [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
-  
-  (:import [clojure_fabric.core Channel Peer Orderer]
-           [org.hyperledger.fabric.protos.common Common$Block Ledger$BlockchainInfo]
-           org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [com.google.protobuf ByteString Timestamp GeneratedMessageV3]
+  (:import [clojure_fabric.core Channel Orderer Peer]
+           com.google.protobuf.ByteString
            org.bouncycastle.util.encoders.Hex
-           
-           [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse Query$ChannelQueryResponse
-            TransactionPackage$ProcessedTransaction ProposalPackage$SignedProposal
-            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response]))
+           [org.hyperledger.fabric.protos.common Common$Block Common$Payload Ledger$BlockchainInfo]
+           org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
+           [org.hyperledger.fabric.protos.peer ProposalPackage$SignedProposal ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response Query$ChaincodeQueryResponse Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
 ;;;
 ;;; System Chaincode Definitions
@@ -191,10 +186,14 @@
                                                  :extension extension)
                       :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
 
-(defn make-payload
+(defn make-envelope
   [channel-name user channel-header-type payload-data]
-  (proto/make-payload :header (make-header channel-name user {:channel-header-type channel-header-type})
-                      :data payload-data))
+  (let [payload (proto/make-payload :header (make-header channel-name user {:channel-header-type channel-header-type})
+                                    :data payload-data)]
+   (proto/make-envelope :payload payload 
+                        :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
+                                                      (:private-key user)
+                                                      {:algorithm (:key-algorithm (:crypto-suite user))}))))
 
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
