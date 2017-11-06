@@ -497,9 +497,10 @@
 (defn- convert-args
   [args]
   (mapv #(cond (utils/bytes? %) (ByteString/copyFrom #^bytes %)
-                                  (instance? ChaincodeDeploymentSpec %) (.toByteString ^Chaincode$ChaincodeDeploymentSpec (clj->proto %))
-                                  :else (ByteString/copyFromUtf8 (str %)))
-                           args))
+               (instance? ChaincodeDeploymentSpec %) (.toByteString ^Chaincode$ChaincodeDeploymentSpec (clj->proto %))
+               (instance? Common$Block %) (.toByteString ^Common$Block %)
+               :else (ByteString/copyFromUtf8 (str %)))
+        args))
 
 (defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
   `(let [data# ~data-call]
