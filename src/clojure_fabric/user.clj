@@ -382,7 +382,7 @@
             (proto/clj->proto)
             (.toByteArray)))))
 
-;;(tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")
+;;(def cu (tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx"))
 ;;
 ;; (create-or-update-channel-from-nodes "mychannel"
 ;; (merge (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
