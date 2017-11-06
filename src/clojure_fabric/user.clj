@@ -301,29 +301,6 @@
   ([user]
    (:certificate user)))
 
-#_
-(defn create-or-update-channel
-  ;; evelope - read from <channel-name>.tx file
-  [user channel-name orderer {:keys [^bytes envelope config signatures]}]
-  (cond envelope
-        ;; envelope is byte array of Envelope, which is ready to be parsed in
-        ;; - *.tx file
-        (proto/send-update-channel-using-envelope (Common$Envelope/parseFrom envelope))
-
-        ;; config is byte array
-        ;; signature is a list of byte array
-        (and config signatures)
-        (let [channel-header (proto/make-channel-header :type :config-update
-                                                        :chainnel-id channel-name
-                                                        :tx-id :FIXME)
-
-              config-update-envelope (proto/make-config-update-envelope :config-update config
-                                                                        :signatures signatures)
-              ]
-          ;; config-update-envelope is a payload data, i.e.
-          ;; Payload = Header + Payload(config-update-envelope)
-          (proto/send-update-channel-using-envelope envelope))))
-
 (defn create-or-update-channel
   ([orderer envelope]
    (proto/broadcast-via-orderer orderer envelope))
