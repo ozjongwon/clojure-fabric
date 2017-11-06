@@ -31,13 +31,6 @@
            [org.hyperledger.fabric.protos.orderer AtomicBroadcastGrpc Ab$DeliverResponse$TypeCase Ab$DeliverResponse]))
 
 ;;;
-;;; Macros
-(defmacro with-default-empty-byte-string [[arg] & body]
-  `(if (nil? ~arg)
-     ByteString/EMPTY
-     ~@body))
-
-;;;
 ;;;
 (defprotocol ICljToProto
   (clj->proto [this]))
@@ -52,14 +45,14 @@
 (defrecord ChaincodeID [^String name ^String version ^String path]
   ICljToProto
   (clj->proto [this]
-    (-> (Chaincode$ChaincodeID/newBuilder)
-        (.setName name)
-        (.setVersion version)
-        (.setPath path)
-        (.build))))
+    (cond-> (Chaincode$ChaincodeID/newBuilder)
+      name (.setName name)
+      version (.setVersion version)
+      path (.setPath path)
+      true (.build))))
 
 (defn make-chaincode-id
-  [& {:keys [name version path] :or {version "" path ""}}]
+  [& {:keys [name version path]}]
   (map->ChaincodeID {:name name :version version :path path}))
 
 (declare convert-args)
@@ -68,14 +61,14 @@
   (clj->proto [this]
     ;; Iterable - repeated
     ;; map has putAll* method
-    (-> (Chaincode$ChaincodeInput/newBuilder)
-        (.addAllArgs (convert-args args))
-        (.putAllDecorations decorations)
-        (.build))))
+    (cond-> (Chaincode$ChaincodeInput/newBuilder)
+      args (.addAllArgs (convert-args args))
+      decorations (.putAllDecorations decorations)
+      true (.build))))
 
 (defn make-chaincode-input
   ;; args = fn + fn-args
-  [& {:keys [args decorations] :or {args [] decorations {}}}]
+  [& {:keys [args decorations]}]
   (map->ChaincodeInput {:args args :decorations decorations}))
 
 (defonce lang-types {:undefined Chaincode$ChaincodeSpec$Type/UNDEFINED
@@ -90,12 +83,12 @@
                           ^Long timeout]
   ICljToProto
   (clj->proto [this]
-    (-> (Chaincode$ChaincodeSpec/newBuilder)
-        (.setType (lang-types type))
-        (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
-        (.setInput ^Chaincode$ChaincodeInput (clj->proto chaincode-input))
-        (.setTimeout ^Timestamp timeout)
-        (.build))))
+    (cond-> (Chaincode$ChaincodeSpec/newBuilder)
+      type (.setType (lang-types type))
+      chaincode-id (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
+      chaincode-input (.setInput ^Chaincode$ChaincodeInput (clj->proto chaincode-input))
+      timeout (.setTimeout ^Timestamp timeout)
+      true (.build))))
 
 (defn make-chaincode-spec
   [& {:keys [type chaincode-id chaincode-input timeout] :or {type :golang timeout 2000}}]
@@ -106,13 +99,13 @@
                                     ^String id-generation-alg]
   ICljToProto
   (clj->proto [this]
-    (-> (Chaincode$ChaincodeInvocationSpec/newBuilder)
-        (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
-        (.setIdGenerationAlg id-generation-alg)
-        (.build))))
+    (cond-> (Chaincode$ChaincodeInvocationSpec/newBuilder)
+       chaincode-spec (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
+       id-generation-alg (.setIdGenerationAlg id-generation-alg)
+       true (.build))))
 
 (defn make-chaincode-invocation-spec
-  [& {:keys [chaincode-spec id-generation-alg] :or {id-generation-alg ""}}]
+  [& {:keys [chaincode-spec id-generation-alg]}]
   (map->ChaincodeInvocationSpec {:chaincode-spec chaincode-spec
                                            :id-generation-alg id-generation-alg}))
 
@@ -120,11 +113,10 @@
                                      ^ChaincodeID chaincode-id]
   ICljToProto
   (clj->proto [this]
-    (-> (ProposalPackage$ChaincodeHeaderExtension/newBuilder)
-        (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
-        (.setPayloadVisibility (with-default-empty-byte-string [payload-visibility]
-                                 (throw (Exception. "Currently only supports default visibility 'all'"))))
-        (.build))))
+    (cond-> (ProposalPackage$ChaincodeHeaderExtension/newBuilder)
+      chaincode-id (.setChaincodeId ^Chaincode$ChaincodeID (clj->proto chaincode-id))
+      payload-visibility (.setPayloadVisibility payload-visibility)
+      true (.build))))
 
 (defn make-chaincode-header-extension
   [& {:keys [payload-visibility chaincode-id]}]
@@ -134,10 +126,10 @@
 (defrecord ProtoTimestamp [^Long seconds ^Long nanos]
   ICljToProto
   (clj->proto [this]
-    (-> (Timestamp/newBuilder)
-        (.setSeconds seconds)
-        (.setNanos nanos)
-        (.build))))
+    (cond-> (Timestamp/newBuilder)
+      seconds (.setSeconds seconds)
+      nanos (.setNanos nanos)
+      true (.build))))
 
 (defn make-timestamp
   ([]
@@ -157,17 +149,16 @@
                           ^String tx-id ^Long epoch extension]
   ICljToProto
   (clj->proto [this]
-    (-> (Common$ChannelHeader/newBuilder)
-        (.setType (.getNumber ^Common$HeaderType (header-types type)))
-        (.setVersion version)
-        (.setTimestamp ^Timestamp (clj->proto (make-timestamp timestamp)))
-        (.setChannelId channel-id)
-        (.setTxId tx-id)
-        (.setEpoch epoch)
-        (.setExtension (with-default-empty-byte-string [extension]
-                         (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
-                                        (clj->proto extension))))
-        (.build))))
+    (cond-> (Common$ChannelHeader/newBuilder)
+      type (.setType (.getNumber ^Common$HeaderType (header-types type)))
+      version (.setVersion version)
+      timestamp (.setTimestamp ^Timestamp (clj->proto (make-timestamp timestamp)))
+      channel-id (.setChannelId channel-id)
+      tx-id (.setTxId tx-id)
+      epoch (.setEpoch epoch)
+      extension (.setExtension (.toByteString ^ProposalPackage$ChaincodeHeaderExtension
+                                              (clj->proto extension)))
+      true (.build))))
 
 (defn make-channel-header
   [& {:keys [type version timestamp channel-id tx-id epoch extension]
@@ -179,10 +170,10 @@
 (defrecord SerializedIdentity [^String mspid ^String id-bytes] ;; mspid and certificate
   ICljToProto
   (clj->proto [this]
-    (-> (Identities$SerializedIdentity/newBuilder)
-        (.setMspid mspid)
-        (.setIdBytes (ByteString/copyFromUtf8 id-bytes))
-        (.build))))
+    (cond-> (Identities$SerializedIdentity/newBuilder)
+      mspid (.setMspid mspid)
+      id-bytes (.setIdBytes (ByteString/copyFromUtf8 id-bytes))
+      true (.build))))
 
 
 (defn make-serialized-identity
@@ -192,10 +183,10 @@
 (defrecord SignatureHeader [^SerializedIdentity creator ^bytes nonce]
   ICljToProto
   (clj->proto [this]
-    (-> (Common$SignatureHeader/newBuilder)
-        (.setCreator (.toByteString ^Identities$SerializedIdentity (clj->proto creator)))
-        (.setNonce (ByteString/copyFrom nonce))
-        (.build))))
+    (cond-> (Common$SignatureHeader/newBuilder)
+      creator (.setCreator (.toByteString ^Identities$SerializedIdentity (clj->proto creator)))
+      nonce (.setNonce (ByteString/copyFrom nonce))
+      true (.build))))
 
 (defn make-signature-header
   [& {:keys [creator nonce]}]
@@ -204,10 +195,10 @@
 (defrecord Header [channel-header signature-header] ;; both bytes
   ICljToProto
   (clj->proto [this]
-    (-> (Common$Header/newBuilder)
-        (.setChannelHeader (.toByteString ^Common$ChannelHeader (clj->proto channel-header)))
-        (.setSignatureHeader (.toByteString ^Common$SignatureHeader (clj->proto signature-header)))
-        (.build))))
+    (cond-> (Common$Header/newBuilder)
+      channel-header (.setChannelHeader (.toByteString ^Common$ChannelHeader (clj->proto channel-header)))
+      signature-header (.setSignatureHeader (.toByteString ^Common$SignatureHeader (clj->proto signature-header)))
+      true (.build))))
 
 (defn make-header
   [& {:keys [channel-header signature-header]}]
@@ -216,14 +207,13 @@
 (defrecord Proposal [header payload extension] ; all bytes
   ICljToProto
   (clj->proto [this]
-    (-> (ProposalPackage$Proposal/newBuilder)
-        (.setHeader (.toByteString ^Common$Header (clj->proto header)))
-        (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload (clj->proto payload)))
-        (.setExtension (with-default-empty-byte-string [extension]
-                         (.toByteString
-                          ;; FIXME: not sure 'type' yet and can't give type
-                          (clj->proto extension))))
-        (.build))))
+    (cond-> (ProposalPackage$Proposal/newBuilder)
+      header (.setHeader (.toByteString ^Common$Header (clj->proto header)))
+      payload (.setPayload (.toByteString ^ProposalPackage$ChaincodeProposalPayload (clj->proto payload)))
+      extension (.setExtension (.toByteString
+                                ;; FIXME: not sure 'type' yet and can't give type
+                                (clj->proto extension)))
+      true (.build))))
 
 (defn make-proposal
   [& {:keys [header payload extension]}]
@@ -233,22 +223,22 @@
 (defrecord ChaincodeProposalPayload [input ^java.util.Map transient-map]
   ICljToProto
   (clj->proto [this]
-    (-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
-        (.setInput (.toByteString ^Chaincode$ChaincodeInvocationSpec (clj->proto input)))
-        (.putAllTransientMap transient-map)
-        (.build))))
+    (cond-> (ProposalPackage$ChaincodeProposalPayload/newBuilder)
+      input (.setInput (.toByteString ^Chaincode$ChaincodeInvocationSpec (clj->proto input)))
+      transient-map (.putAllTransientMap transient-map)
+      true (.build))))
 
 (defn make-chaincode-proposal-payload
-  [& {:keys [input transient-map] :or {transient-map {}}}]
+  [& {:keys [input transient-map]}]
   (map->ChaincodeProposalPayload {:input input :transient-map transient-map}))
 
 (defrecord SignedProposal [^Proposal proposal-bytes ^bytes signature]
   ICljToProto
   (clj->proto [this]
-    (-> (ProposalPackage$SignedProposal/newBuilder)
-        (.setProposalBytes (.toByteString ^ProposalPackage$Proposal (clj->proto proposal-bytes)))
-        (.setSignature (ByteString/copyFrom signature))
-        (.build))))
+    (cond-> (ProposalPackage$SignedProposal/newBuilder)
+      proposal-bytes (.setProposalBytes (.toByteString ^ProposalPackage$Proposal (clj->proto proposal-bytes)))
+      signature (.setSignature (ByteString/copyFrom signature))
+      true (.build))))
 
 (defn make-signed-proposal
   [& {:keys [proposal-bytes signature]}]
@@ -261,13 +251,13 @@
                                     ^bytes code-package exec-env]
   ICljToProto
   (clj->proto [this]
-    (-> (Chaincode$ChaincodeDeploymentSpec/newBuilder)
-        (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
-        (.setEffectiveDate ^Timestamp (clj->proto (make-timestamp effective-date)))
-        ;; code-package must exist at this point
-        (.setCodePackage (ByteString/copyFrom code-package))
-        (.setExecEnv (exec-env-map exec-env))
-        (.build))))
+    (cond-> (Chaincode$ChaincodeDeploymentSpec/newBuilder)
+      chaincode-spec (.setChaincodeSpec ^Chaincode$ChaincodeSpec (clj->proto chaincode-spec))
+      effective-date (.setEffectiveDate ^Timestamp (clj->proto (make-timestamp effective-date)))
+      ;; code-package must exist at this point
+      code-package (.setCodePackage (ByteString/copyFrom code-package))
+      exec-env (.setExecEnv (exec-env-map exec-env))
+      true (.build))))
 
 (defn make-chaincode-deployment-spec
   [& {:keys [chaincode-spec effective-date code-package exec-env]
@@ -280,10 +270,10 @@
 (defrecord ConfigSignature [^SignatureHeader signature-header ^bytes signature]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigSignature/newBuilder)
-        (.setSignatureHeader (.toByteString ^Common$SignatureHeader (clj->proto signature-header)))
-        (.setSignature (ByteString/copyFrom signature))
-        (.build))))
+    (cond-> (Configtx$ConfigSignature/newBuilder)
+      signature-header (.setSignatureHeader (.toByteString ^Common$SignatureHeader (clj->proto signature-header)))
+      signature (.setSignature (ByteString/copyFrom signature))
+      true (.build))))
 
 (defn make-config-signature
   [& {:keys [signature-header signature]}]
@@ -293,12 +283,11 @@
     [^Long version ^bytes value ^String mod-policy]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigValue/newBuilder)
-        (.setVersion version)
-        (.setValue (with-default-empty-byte-string [value]
-                     value))
-        (.setModPolicy mod-policy)
-        (.build))))
+    (cond-> (Configtx$ConfigValue/newBuilder)
+      version (.setVersion version)
+      value (.setValue value)
+      mod-policy (.setModPolicy mod-policy)
+      true (.build))))
 
 (defn make-config-value
   [& {:keys [version value mod-policy]}]
@@ -307,10 +296,10 @@
 (defrecord Policy [^Long type ^bytes value]
   ICljToProto
   (clj->proto [this]
-    (-> (Policies$Policy/newBuilder)
-        (.setType type)
-        (.setValue value)
-        (.build))))
+    (cond-> (Policies$Policy/newBuilder)
+      type (.setType type)
+      value (.setValue value)
+      true (.build))))
 
 (defn make-policy
   [& {:keys [type value]}]
@@ -319,47 +308,45 @@
 (defrecord ConfigPolicy [^Long version ^Policies$Policy policy ^String mod-policy]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigPolicy/newBuilder)
-        (.setVersion version)
-        (.setPolicy policy)
-        (.setModPolicy mod-policy)
-        (.build))))
+    (cond-> (Configtx$ConfigPolicy/newBuilder)
+        version (.setVersion version)
+        policy (.setPolicy (clj->proto policy))
+        mod-policy (.setModPolicy mod-policy)
+        true (.build))))
 
 (defn make-config-policy
   [& {:keys [version policy mod-policy]}]
-  (map->ConfigValue {:version version :policy policy :mod-policy mod-policy}))
+  (map->ConfigPolicy {:version version :policy policy :mod-policy mod-policy}))
 
 (defrecord ConfigGroup [version groups values policies mod-policy]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigGroup/newBuilder)
-        (.setVersion version)
-        (.putAllGroups (utils/map-vals #(clj->proto %) groups))
-        (.putAllValues (utils/map-vals #(clj->proto %) values))
-        (.putAllPolicies (utils/map-vals #(clj->proto %) policies))
-        (.setModPolicy mod-policy)
-        (.build))))
+    (cond-> (Configtx$ConfigGroup/newBuilder)
+      version (.setVersion version)
+      groups (.putAllGroups (utils/map-vals #(clj->proto %) groups))
+      values (.putAllValues (utils/map-vals #(clj->proto %) values))
+      policies (.putAllPolicies (utils/map-vals #(clj->proto %) policies))
+      mod-policy (.setModPolicy mod-policy)
+      true (.build))))
 
 (defn make-config-group
-  [& {:keys [version groups values policies mod-policy]
-      :or {groups {} values {} policies {}}}]
+  [& {:keys [version groups values policies mod-policy]}]
   (map->ConfigGroup {:version version :groups groups :values values
                      :policies policies :mod-policy mod-policy}))
 
 (defrecord ConfigUpdate [channel-id read-set write-set type isolated-data]
   ICljToProto
   (clj->proto [this]
-    (-> (Configtx$ConfigUpdate/newBuilder)
-        (.setChannelId channel-id)
-        (.setReadSet ^Configtx$ConfigGroup (clj->proto read-set))
-        (.setWriteSet ^Configtx$ConfigGroup (clj->proto write-set))
-        (.setType type)
-        (.putAllIsolatedData isolated-data)
-        (.build))))
+    (cond-> (Configtx$ConfigUpdate/newBuilder)
+      channel-id (.setChannelId channel-id)
+      read-set (.setReadSet ^Configtx$ConfigGroup (clj->proto read-set))
+      write-set (.setWriteSet ^Configtx$ConfigGroup (clj->proto write-set))
+      type (.setType type)
+      isolated-data (.putAllIsolatedData isolated-data)
+      true (.build))))
 
 (defn make-config-update
-  [& {:keys [channel-id read-set write-set type isolated-data]
-      :or {isolated-data {}}}]
+  [& {:keys [channel-id read-set write-set type isolated-data]}]
   (map->ConfigUpdate {:channel-id channel-id :read-set read-set
                       :write-set write-set :type type
                       :isolated-data isolated-data}))
@@ -421,11 +408,11 @@
 (defrecord Payload [^Header header ^bytes data]
   ICljToProto
   (clj->proto [this]
-    (-> (Common$Payload/newBuilder)
-        (.setHeader ^Common$Header (clj->proto header))
-        ;; Assume the clj->proto result is Configtx$ConfigUpdateEnvelope type
-        (.setData (.toByteString ^Configtx$ConfigUpdateEnvelope (clj->proto data)))
-        (.build))))
+    (cond-> (Common$Payload/newBuilder)
+      header (.setHeader ^Common$Header (clj->proto header))
+      ;; Assume the clj->proto result is Configtx$ConfigUpdateEnvelope type
+      data (.setData (.toByteString ^Configtx$ConfigUpdateEnvelope (clj->proto data)))
+      true (.build))))
 
 (defn make-payload
   [& {:keys [header data]}]
@@ -434,10 +421,10 @@
 (defrecord Envelope [payload signature] ;; bytes
   ICljToProto
   (clj->proto [this]
-    (-> (Common$Envelope/newBuilder)
-        (.setPayload (.toByteString ^Common$Payload (clj->proto payload)))
-        (.setSignature (ByteString/copyFrom #^bytes signature))
-        (.build))))
+    (cond-> (Common$Envelope/newBuilder)
+      payload (.setPayload (.toByteString ^Common$Payload (clj->proto payload)))
+      signature (.setSignature (ByteString/copyFrom #^bytes signature))
+      true (.build))))
 
 (defn make-envelope
   [& {:keys [payload signature]}]
@@ -553,8 +540,7 @@
     (make-config-group :version (.getVersion this)
                        :groups (utils/map-vals #(proto->clj % nil) (.getGroups this))
                        :values (utils/map-vals #(proto->clj % nil) (.getValues this))
-                       :policies (or (utils/map-vals #(proto->clj % nil) (.getPolicies this))
-                                     {})
+                       :policies (utils/map-vals #(proto->clj % nil) (.getPolicies this))
                        :mod-policy (.getModPolicy this)))
   
   Configtx$ConfigUpdate
