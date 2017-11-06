@@ -304,16 +304,14 @@
 (defn create-or-update-channel
   ([orderer envelope]
    (proto/broadcast-via-orderer orderer envelope))
-  ([channel-id orderer config-update signatures]
-   (let [payload (proto/make-payload :header (chaincode/make-header channel-id
-                                                                    orderer
-                                                                    {:channel-header-type :config-update})
-                                     :data (proto/make-config-update-envelope :config-update config-update
-                                                                              :signatures signatures))]
+  ([user channel-id orderer config-update signatures]
+   (let [payload (chaincode/make-payload channel-id orderer :config-update
+                                         (proto/make-config-update-envelope :config-update config-update
+                                                                            :signatures signatures))]
      (create-or-update-channel orderer
                                (proto/make-envelope :payload payload
                                                     :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
-                                                                                  (:private-key orderer)
+                                                                                  (:private-key user)
                                                                                   {:algorithm (:key-algorithm (:crypto-suite orderer))}))))))
 
 (defn make-config-signature
@@ -334,9 +332,10 @@
                                       :signature))))
 
 (defn create-or-update-channel-from-nodes
-  [channel-id orderer nodes config-update]
+  [user channel-id orderer nodes config-update]
   ;; participants = orderers + peers
-  (create-or-update-channel channel-id
+  (create-or-update-channel user
+                            channel-id
                             orderer
                             config-update
                             (mapv (fn [node]
@@ -367,23 +366,6 @@
 ;;                                                   [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])
 ;;                                                    (get @core/users  ["Orderer" "admin"])]
 ;;                                                   cu)
-
-(defn create-channel
-  ([channel-name orderer opts]
-   (create-channel core/*user* orderer))
-  ([user channel-name orderer opts]
-   #_
-   (if (known-user-node? user orderer :orderers)
-     (chaincode/send-chaincode-request :query-installed-chaincodes
-                                       system-channel-name
-                                       peer
-                                       user
-                                       {:channel-header-type :endorser-transaction})
-     (throw (Exception. "The target Peer does not know anything about the channel"))))
-  ;; get channel from orderer
-  ;; header - :config-update
-  ;; 
-  )
 
 ;;; set_name
 ;;; Immutable
