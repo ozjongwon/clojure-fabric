@@ -140,7 +140,11 @@
     (make-system-chaincode-request-parts :qscc
                                          (partial #'make-chaincode-proposal-payload
                                                   :qscc "GetTransactionByID")
-                                         #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)))})
+                                         #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)))
+   :join-channel
+   (make-system-chaincode-request-parts :cscc
+                                        (partial #'make-chaincode-proposal-payload
+                                                 :cscc "JoinChain"))})
 
 (defn get-system-chaincode-request-parts
   [k & {:keys [args]}]
@@ -174,7 +178,7 @@
 (defn make-header
   [channel-name user {:keys [channel-header-type header-version
                              extension]
-                      :or {header-version 1}}]
+                      :or {header-version 1 channel-header-type :endorser-transaction}}]
   (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
         nonce (make-nonce)]
    (proto/make-header :channel-header

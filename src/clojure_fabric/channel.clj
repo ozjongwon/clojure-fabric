@@ -28,6 +28,7 @@
 (ns clojure-fabric.channel
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.core :as core]
+            [clojure-fabric.user :as user]
             [clojure-fabric.proto :as proto]
             [clojure-fabric.utils :as utils])
   (:import org.bouncycastle.util.encoders.Hex
@@ -170,8 +171,7 @@
                                      name
                                      channel
                                      (apply core/get-user user-key)
-                                     {:args [name]
-                                      :channel-header-type :endorser-transaction})))
+                                     {:args [name]})))
 
 ;;;query_block
 (defn query-block-by-number
@@ -187,8 +187,7 @@
                                      name
                                      channel
                                      (apply core/get-user user-key)
-                                     {:args [name block-number]
-                                      :channel-header-type :endorser-transaction})))
+                                     {:args [name block-number]})))
 
 (defn query-block-by-hash
   "Queries the ledger for Block by block hash
@@ -198,11 +197,14 @@
         Object containing the block"
   ([block-hash]
    (query-block-by-hash core/*channel* block-hash))
-  ([{:keys [user-key name]} block-hash]
-   (chaincode/make-chaincode-signed-proposal :query-block-by-hash (core/get-user user-key)
-                                             :args [name (if (utils/bytes? block-hash)
-                                                           block-hash
-                                                           (Hex/decode ^String block-hash))])))
+  ([{:keys [user-key name] :as channel} block-hash]
+   (chaincode/send-chaincode-request :query-block-by-hash
+                                     name
+                                     channel
+                                     (apply core/get-user user-key)
+                                     {:args [name (if (utils/bytes? block-hash)
+                                                    block-hash
+                                                    (Hex/decode ^String block-hash))]})))
 
 (defn query-block-by-tx-id
   "Queries the ledger for Transaction by number
@@ -212,9 +214,12 @@
         TransactionInfo containing the transaction"
   ([transaction-id]
    (query-block-by-tx-id core/*channel* transaction-id))
-  ([{:keys [user-key name]} transaction-id]
-   (chaincode/make-chaincode-signed-proposal :query-block-by-tx-id (core/get-user user-key)
-                                             :args [name transaction-id])))
+  ([{:keys [user-key name] :as channel} transaction-id]
+   (chaincode/send-chaincode-request :query-block-by-tx-id
+                                     name
+                                     channel
+                                     (apply core/get-user user-key)
+                                     {:args [name transaction-id]})))
 ;;; query_transaction
 (defn query-transaction
   "Queries the ledger for Transaction by number
@@ -224,9 +229,12 @@
         TransactionInfo containing the transaction"
   ([transaction-id]
    (query-transaction core/*channel* transaction-id))
-  ([{:keys [user-key name]} transaction-id]
-   (chaincode/make-chaincode-signed-proposal :query-tx-by-id (core/get-user user-key)
-                                             :args [name transaction-id])))
+  ([{:keys [user-key name] :as channel} transaction-id]
+   (chaincode/send-chaincode-request :query-tx-by-id
+                                     name
+                                     channel
+                                     (apply core/get-user user-key)
+                                     {:args [name transaction-id]})))
 
 ;;;create_deploy_proposal
 (defn create-deploy-proposal
@@ -338,6 +346,7 @@
      (let [result (->> (proto/make-seek-info :start seek-start-stop :stop seek-start-stop :behavior :block-until-ready)
                 (chaincode/make-envelope name (apply core/get-user user-key) :deliver-seek-info)
                 (proto/broadcast-or-deliver-via-orderer :deliver orderer))]
+       ;; This returns two elements; the second is status response.
        (.getBlock ^Ab$DeliverResponse (first result))))))
 
 ;; (def u1 (core/get-user "Org1MSP" "user1"))
@@ -347,10 +356,14 @@
 ;;   (get-genesis-block))
 
 (defn join-channel
-  ([peers block]
-   (join-channel core/*channel* peers))
-  ([channel peers block]
-   ))
+  ([peers genesis-block]
+   (join-channel core/*channel* peers genesis-block))
+  ([{:keys [user-key name] :as channel} peers genesis-block]
+   (chaincode/send-chaincode-request :join-channel
+                                     user/system-channel-name
+                                     peers
+                                     (apply core/get-user user-key)
+                                     {:args [genesis-block]})))
 
 ;;;;;;;;;
 
