@@ -316,3 +316,24 @@
 ;;(create-or-update-channel-from-nodes (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
 ;; [(get @core/users  ["Org1MSP" "admin"]) (get @core/users  ["Org2MSP" "admin"])]
 ;; cu)
+
+
+;; Below is a summary of the tuna catch scenario presented in this section:
+;;
+;; 1. Sarah catches a tuna and uses the supply chain application’s user interface to record all
+;;         the details about the catch to the ledger
+;; 1.1. Before it reaches the ledger, the transaction is passed to the endorsing peers on the network,
+;;         where it is then endorsed.
+;; 1.2. The endorsed transaction is sent to the ordering service, to be ordered into a block.
+;; 1.3. This block is then sent to the committing peers in the network, where it is committed
+;;         after being validated.
+;; 2. As the tuna is passed along the supply chain, regulators may use their own application to query
+;;         the ledger for details about specific catches (excluding price, since they do not have
+;;         access to the price-related chaincode).
+;; 3. Sarah may enter into an agreement with a restaurateur Carl, and agree on a price of $80 per pound.
+;; 3.1. They use the blue channel for the chaincode contract stipulating $80/lb. The blue channel's
+;;         ledger is updated with a block containing this transaction.
+;; 4. In a separate business agreement, Sarah and Miriam agree on a special price of $50 per pound.
+;;         They use the red channel's chaincode contract stipulating $50/lb. The red channel's ledger
+;;         is updated with a block containing this transaction.
+;;https://github.com/hyperledger/education/blob/master/LFS171x/fabric-material/chaincode/tuna-app/tuna-chaincode.go

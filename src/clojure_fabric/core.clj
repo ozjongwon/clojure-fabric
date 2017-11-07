@@ -17,6 +17,8 @@
 
 ;;;
 ;;; User(and Client)
+;;; Clients are applications that act on behalf of a person to propose transactions on the network.
+;;;
 ;;;
 
 (defprotocol INodes
@@ -72,7 +74,14 @@
 
 ;;;
 ;;; Peer
-;;;
+;;; Peers maintain the state of the network and a copy of the ledger.
+;;; There are two different types of peers: endorsing and committing peers.
+;;; However, there is an overlap between endorsing and committing peers, in that endorsing peers
+;;; are a special kind of committing peers. All peers commit blocks to the distributed ledger.
+;;; - Endorsers simulate and endorse transactions
+;;; - Committers verify endorsements and validate transaction results, prior to committing
+;;;     transactions to the blockchain.
+
 (defonce ^:dynamic *peer* nil)
 
 ;; an endorser, committer and/or submitter
@@ -86,6 +95,8 @@
 ;;;
 ;;; Orderer
 ;;;
+;;; The ordering service accepts endorsed transactions, orders them into a block, and delivers
+;;; the blocks to the committing peers.
 (defonce ^:dynamic *orderer* nil)
 
 (defrecord Orderer [name url pem hostname-override?])
