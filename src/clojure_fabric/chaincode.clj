@@ -179,7 +179,7 @@
   [channel-name user {:keys [channel-header-type header-version
                              extension]
                       :or {header-version 1 channel-header-type :endorser-transaction}}]
-  (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
+  (let [identity (proto/user->serialized-identity user)
         nonce (make-nonce)]
    (proto/make-header :channel-header
                       (proto/make-channel-header :type channel-header-type

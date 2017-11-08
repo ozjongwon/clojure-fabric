@@ -21,6 +21,7 @@
             [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
+           io.grpc.ManagedChannel
            io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
@@ -178,6 +179,10 @@
 (defn make-serialized-identity
   [& {:keys [mspid id-bytes]}]
   (map->SerializedIdentity {:mspid mspid :id-bytes id-bytes}))
+
+(defn user->serialized-identity
+  [user]
+  (make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user)))
 
 (defrecord SignatureHeader [^SerializedIdentity creator ^bytes nonce]
   ICljToProto

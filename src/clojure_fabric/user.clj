@@ -310,7 +310,7 @@
 
 (defn make-config-signature
   [user config-update {:keys [header-version] :or {header-version 1}}]
-  (let [identity (proto/make-serialized-identity :mspid (:msp-id user) :id-bytes (:certificate user))
+  (let [identity (proto/user->serialized-identity user)
         nonce (chaincode/make-nonce)
         signature-header (proto/make-signature-header :creator identity :nonce nonce)
         signature-header-bytes (.toByteArray ^Common$SignatureHeader (proto/clj->proto signature-header))
