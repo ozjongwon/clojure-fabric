@@ -24,7 +24,7 @@
             Common$Envelope]
            [org.hyperledger.fabric.protos.peer EventsGrpc EventsPackage$Event
             EventsPackage$Interest EventsPackage$Register EventsPackage$Event$EventCase
-            EventsPackage$SignedEvent]))
+            EventsPackage$SignedEvent TransactionPackage$TxValidationCode]))
 
 
 ;; From NodeJs SDK
@@ -117,7 +117,7 @@
 
 (defonce default-sliding-buffer-size 32)
 ;; Block event - any block events
-(defonce block-event-channels (atom []))
+(defonce event-channels (atom []))
 ;; Transaction event - matching tx-id
 (defonce tx-id-event-channels (atom {}))
 ;; Chaincode event - matching chaincode-id
@@ -128,21 +128,94 @@
           [Common$BlockMetadataIndex/SIGNATURES_VALUE Common$BlockMetadataIndex/LAST_CONFIG_VALUE
            Common$BlockMetadataIndex/TRANSACTIONS_FILTER_VALUE Common$BlockMetadataIndex/ORDERER_VALUE]))
 
-(defn deliver-block-to-channels
+(defonce tx-validation-code-map
+  (zipmap [TransactionPackage$TxValidationCode/VALID_VALUE
+           TransactionPackage$TxValidationCode/NIL_ENVELOPE_VALUE
+           TransactionPackage$TxValidationCode/BAD_PAYLOAD_VALUE
+           TransactionPackage$TxValidationCode/BAD_COMMON_HEADER_VALUE
+           TransactionPackage$TxValidationCode/BAD_CREATOR_SIGNATURE_VALUE
+           TransactionPackage$TxValidationCode/INVALID_ENDORSER_TRANSACTION_VALUE
+           TransactionPackage$TxValidationCode/INVALID_CONFIG_TRANSACTION_VALUE
+           TransactionPackage$TxValidationCode/UNSUPPORTED_TX_PAYLOAD_VALUE
+           TransactionPackage$TxValidationCode/BAD_PROPOSAL_TXID_VALUE
+           TransactionPackage$TxValidationCode/DUPLICATE_TXID_VALUE
+           TransactionPackage$TxValidationCode/ENDORSEMENT_POLICY_FAILURE_VALUE
+           TransactionPackage$TxValidationCode/MVCC_READ_CONFLICT_VALUE
+           TransactionPackage$TxValidationCode/PHANTOM_READ_CONFLICT_VALUE
+           TransactionPackage$TxValidationCode/UNKNOWN_TX_TYPE_VALUE
+           TransactionPackage$TxValidationCode/TARGET_CHAIN_NOT_FOUND_VALUE
+           TransactionPackage$TxValidationCode/MARSHAL_TX_ERROR_VALUE
+           TransactionPackage$TxValidationCode/NIL_TXACTION_VALUE
+           TransactionPackage$TxValidationCode/EXPIRED_CHAINCODE_VALUE
+           TransactionPackage$TxValidationCode/CHAINCODE_VERSION_CONFLICT_VALUE
+           TransactionPackage$TxValidationCode/BAD_HEADER_EXTENSION_VALUE
+           TransactionPackage$TxValidationCode/BAD_CHANNEL_HEADER_VALUE
+           TransactionPackage$TxValidationCode/BAD_RESPONSE_PAYLOAD_VALUE
+           TransactionPackage$TxValidationCode/BAD_RWSET_VALUE
+           TransactionPackage$TxValidationCode/ILLEGAL_WRITESET_VALUE
+           TransactionPackage$TxValidationCode/INVALID_OTHER_REASON_VALUE]
+          [:valid
+           :nil-envelope
+           :bad-payload
+           :bad-common-header
+           :bad-creator-signature
+           :invalid-endorser-transaction
+           :invalid-config-transaction
+           :unsupported-tx-payload
+           :bad-proposal-txid
+           :duplicate-txid
+           :endorsement-policy-failure
+           :mvcc-read-conflict
+           :phantom-read-conflict
+           :unknown-tx-type
+           :target-chain-not-found
+           :marshal-tx-error
+           :nil-txaction
+           :expired-chaincode
+           :chaincode-version-conflict
+           :bad-header-extension
+           :bad-channel-header
+           :bad-response-payload
+           :bad-rwset
+           :illegal-writeset
+           :invalid-other-reason]))
+
+;; Block event is proto/Block
+(defrecord TxEvent [tx-id status])
+
+(defn tx-id->channel [tx-id]
+  :fixme)
+
+(defn deliver-block-events-to-channels
   [^Common$Block proto-block]
   (let [clj-block (proto/proto->clj proto-block {})]
-   (async/put! block-channel clj-block)
-  
-   (let [tx-filter (-> (:metadata clj-block)
-                       (:metadata)
-                       (nth (block-metadata-index-map :transactions-filter)))]
-     (doseq [data (:data clj-block)]
-       (let [tx-id (-> (Common$Envelope/parseFrom ^bytes data)
-                       (proto/proto->clj {})
-                       (:payload)
-                       (:header)
-                       (:channel-header)
-                       (:tx-id))])))))
+    ;; 1. Block Event on all channels
+    (async/put! block-channel clj-block)
+    (doseq [[data code] (map list
+                             (:data clj-block)
+                             (-> (:metadata clj-block)
+                                 (:metadata)
+                                 (nth (block-metadata-index-map :transactions-filter))
+                                 (.toByteArray)))]
+      (let [payload (-> (Common$Envelope/parseFrom ^bytes data)
+                        (proto/proto->clj {})
+                        (:payload envelope))
+            channel-header (-> payload (:header) (:channel-header))]
+        ;; 2. Transaction Event with tx-id
+        (when-let [ch (tx-id->channel tx-id)]
+          (async/put! ch
+                      (make-TxEvent (:tx-id channel-header) code)))
+        ;; 3. Chaincode event
+        (when (= (:type channel-header) (proto/header-types :endorser-transaction))
+          (-> (:data payload)
+              ;; FIXME use toplevel prot->clj opts
+              ;; Add record for TransactionPackage$Transaction
+              (TransactionPackage$Transaction/parseFrom)
+              ;; YOU'RE HERE
+              ))
+        ))
+    
+    ))
 
       
 
