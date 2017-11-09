@@ -137,20 +137,20 @@
   ([ts]
    (map->ProtoTimestamp {:seconds (quot ts 1000) :nanos (-> (rem ts 1000) (* 1000000))})))
 
-(defonce header-types {:message                 Common$HeaderType/MESSAGE
-                       :config                  Common$HeaderType/CONFIG
-                       :config-update           Common$HeaderType/CONFIG_UPDATE
-                       :endorser-transaction    Common$HeaderType/ENDORSER_TRANSACTION
-                       :orderer-transaction     Common$HeaderType/ORDERER_TRANSACTION
-                       :deliver-seek-info       Common$HeaderType/DELIVER_SEEK_INFO
-                       :chaincode-package       Common$HeaderType/CHAINCODE_PACKAGE})
+(defonce header-types {:message                 Common$HeaderType/MESSAGE_VALUE
+                       :config                  Common$HeaderType/CONFIG_VALUE
+                       :config-update           Common$HeaderType/CONFIG_UPDATE_VALUE
+                       :endorser-transaction    Common$HeaderType/ENDORSER_TRANSACTION_VALUE
+                       :orderer-transaction     Common$HeaderType/ORDERER_TRANSACTION_VALUE
+                       :deliver-seek-info       Common$HeaderType/DELIVER_SEEK_INFO_VALUE
+                       :chaincode-package       Common$HeaderType/CHAINCODE_PACKAGE_VALUE})
 
 (defrecord ChannelHeader [^Long type ^Long version ^Long timestamp ^String channel-id
                           ^String tx-id ^Long epoch extension]
   ICljToProto
   (clj->proto [this]
     (cond-> (Common$ChannelHeader/newBuilder)
-      type (.setType (.getNumber ^Common$HeaderType (header-types type)))
+      type (.setType (header-types type))
       version (.setVersion version)
       timestamp (.setTimestamp ^Timestamp (clj->proto (make-timestamp timestamp)))
       channel-id (.setChannelId channel-id)
