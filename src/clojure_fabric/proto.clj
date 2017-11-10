@@ -453,6 +453,13 @@
   (map->ChaincodeAction {:results results :events events :response response
                          :chaincode-id chaincode-id}))
 
+
+(defrecord ChaincodeEvent [^String chaincode-id ^String tx-id ^String event-name ^bytes payload])
+(defn make-chaincode-event
+  [& {:keys [chaincode-id tx-id event-name payload]}]
+  (map->ChaincodeAction {:chaincode-id chaincode-id :tx-id tx-id :event-name event-name
+                         :payload payload}))
+
 (defrecord ProposalResponsePayload [^bytes proposal-hash ^bytes extension])
 (defn make-proposal-response-payload
   [& {:keys [proposal-hash extension]}]
@@ -633,6 +640,13 @@
   (proto->clj [this {:keys [extension]}]
     (make-proposal-response-payload :proposal-hash (.getProposalHash this)
                                     :extension (maybe-applying-proto->clj-transform [extension (.getExtension this)])))
+
+  ChaincodeEventPackage$ChaincodeEvent
+  (proto->clj [this ignore]
+    (make-chaincode-event :chaincode-id (.getChaincodeId this)
+                          :tx-id (.getTxId this)
+                          :event-name (.getEventName this)
+                          :payload (.getPayload this)))
   
   ProposalPackage$ChaincodeAction
   (proto->clj [this {:keys [events response chaincode-id]}]
