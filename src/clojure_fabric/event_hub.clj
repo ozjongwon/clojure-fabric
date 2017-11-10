@@ -15,8 +15,11 @@
 (ns clojure-fabric.event-hub
   (:require [clojure-fabric.proto :as proto]
             [clojure-fabric.crypto-suite :as crypto]
-            [clojure.core.async :as async])
+            [clojure-fabric.utils :as utils]
+            [clojure.core.async :as async]
+            [clojure-fabric.core :as core])
   (:import io.grpc.stub.StreamObserver
+           [clojure_fabric.proto Block ChaincodeEvent]
            [com.google.protobuf ByteString]
            io.grpc.ManagedChannel
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
@@ -94,9 +97,6 @@
 ;; disconnect
 ;; get-peer-address
 ;; connected?
-;; register-block-event
-;; register-chaincode-event
-;; register-tx-event
 ;; set-peer-address
 ;; unregister-block-event
 ;; unregister-chaincode-event
@@ -107,21 +107,6 @@
 ;; remove-chaincode-interest
 ;; get-interested-events
 ;; receive (i/f - block or chaincode)
-
-#_
-(defonce event-type {:register
-                     :block
-                     :chaincode
-                     :rejection
-                     :filtered-block})
-
-(defonce default-sliding-buffer-size 32)
-;; Block event - any block events
-(defonce event-channels (atom []))
-;; Transaction event - matching tx-id
-(defonce tx-id-event-channels (atom {}))
-;; Chaincode event - matching chaincode-id
-(defonce chaincode-channels (atom {}))
 
 (defonce block-metadata-index-map
   (zipmap [:signatures :last-config :transactions-filter :orderer]
@@ -180,33 +165,132 @@
            :illegal-writeset
            :invalid-other-reason]))
 
+#_
+(defonce event-type {:register
+                     :block
+                     :chaincode
+                     :rejection
+                     :filtered-block})
+
+(defonce default-sliding-buffer-size 32)
+(defonce command-ch (chan))
+;; Block event - any block events
+(defonce block-event-chan (async/sliding-buffer default-sliding-buffer-size))
+(defonce block-event-handlers (atom {}))
+;; Transaction event - matching tx-id
+(defonce tx-id->chan-fn-map (atom {}))
+;; Chaincode event - matching chaincode-id
+(defonce chaincode-id->chan-fn-map (atom {}))
+
+(defrecord ChanFun [ch fn])
+(defn make-chan-fun
+  [fn]
+  (->ChanFun (async/chan) fn))
+
+(defn register-block-event
+  [fn-name fn]
+  (swap! block-event-handlers assoc fn-name fn))
+
+(defn unregister-block-event
+  [fn-name]
+  (swap! block-event-handlers dissoc fn-name))
+
+(defn- %unregister-event
+  [id ref]
+  (when-let [existing (get (deref ref) id)]
+    (async/close! (:ch existing))
+    (swap! ref dissoc id))
+  (async/put! command-ch :refresh))
+
+(defn- %register-event
+  [id fn ref]
+  (when-let [existing (get (deref ref) id)]
+    (async/close! (:ch existing)))
+  (swap! ref assoc id (make-chan-fun fn))
+  (async/put! command-ch :refresh))
+
+(defn register-tx-event
+  [tx-id fn]
+  (%register-event tx-id fn tx-id->chan-fn-map))
+
+(defn unregister-tx-event
+  [tx-id]
+  (%unregister-event tx-id tx-id->chan-fn-map))
+
+(defn register-chaincode-event
+  [chaincode-id fn]
+  (%register-event chaincode-id fn chaincode-id->chan-fn-map))
+
+(defn unregister-chaincode-event
+  [chaincode-id]
+  (%unregister-event chaincode-id chaincode-id->chan-fn-map))
+
+(defn get-all-event-chans
+  []
+  (letfn [(%get-all-chans [ref]
+            (map :ch (vals (deref ref))))]
+    `[~command-ch
+      ~block-event-chans
+      ~@(%get-all-chans tx-id->chan-fn-map)
+      ~@(%get-all-chans chaincode-id->chan-fn-map)]))
+
 ;; Block event is proto/Block
+;; Chaincode event is proto/ChaincodeEvent
 (defrecord TxEvent [tx-id status])
 
-(defn tx-id->channel [tx-id]
-  :fixme)
+(defonce event-go-loop
+  (async/go-loop []
+    (let [[v ch] (async/alts! (get-all-event-chans))]
+      (cond (and (= ch command-ch) (= v :refresh))
+            :renew-get-all-event-chans
+
+            (instance? Block v)
+            (doseq [f @block-event-handlers]
+                  (utils/ignore-errors
+                   (f v)))
+
+            (instance? TxEvent v)
+            (utils/ignore-errors
+             ((:fn (get @tx-id->chan-fn-map (:tx-id v))) v))
+
+            (instance? ChaincodeEvent v)
+            (utils/ignore-errors
+             ((:fn (get @chaincode-id->chan-fn-map (:chaincode-id v))) v)))
+      (recur))))
+
+(defn- %id->ch
+  [id ref]
+  (-> (deref ref) (get id) (:ch)))
+
+(defn tx-id->chan
+  [tx-id]
+  (%id->ch tx-id tx-id->chan-fn-map))
+
+(defn chaincode-id->chan
+  [chaincode-id]
+  (%id->ch chaincode-id chaincode-id->chan-fn-map))
 
 (defn deliver-block-events-to-channels
   [^Common$Block proto-block]
   (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block))]
     ;; 1. Block Event on all channels
-    (async/put! block-channel clj-block)
+    (async/put! block-event-channel clj-block)
     (doseq [[data code] (map list
                              (:data clj-block)
                              (-> (:metadata clj-block)
                                  (:metadata)
                                  (nth (block-metadata-index-map :transactions-filter))
                                  (.toByteArray)))]
-      (let [payload (get data :payload)
+      (let [payload (:payload data)
             channel-header (get-in payload [:header :channel-header])]
         ;; 2. Transaction Event with tx-id
-        (when-let [ch (tx-id->channel tx-id)]
+        (when-let [ch (tx-id->chan tx-id)]
           (async/put! ch (make-TxEvent (:tx-id channel-header) code)))
         ;; 3. Chaincode event
         (when (= (:type channel-header) (proto/header-types :endorser-transaction))
           (let [chaincode-event (get-in payload [:data :actions 0 :payload :action
                                                  :proposal-response-payload :extension :events])]
-            (when-let [ch (chaincode-id->channel (:chaincode-id chaincode-event))]
+            (when-let [ch (chaincode-id->chan (:chaincode-id chaincode-event))]
               (async/put! ch chaincode-event))))))))
 
 (defn transaction-observer
