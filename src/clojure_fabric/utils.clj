@@ -49,3 +49,11 @@
                (assoc m k (f v)))
           {}
           m))
+
+(defmacro ignore-errors
+  "Execute BODY catching any exceptions.  Returns NIL if
+  body throws, otherwise the value of last for of BODY
+  [This is like the Common Lisp IGNORE-ERRORS.]"
+  [& body]
+  `(try (do ~@body)
+        (catch Throwable e#)))
