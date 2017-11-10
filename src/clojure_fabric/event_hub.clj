@@ -188,7 +188,7 @@
 
 (defn deliver-block-events-to-channels
   [^Common$Block proto-block]
-  (let [clj-block (proto/proto->clj proto-block {})]
+  (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block))]
     ;; 1. Block Event on all channels
     (async/put! block-channel clj-block)
     (doseq [[data code] (map list
@@ -197,27 +197,17 @@
                                  (:metadata)
                                  (nth (block-metadata-index-map :transactions-filter))
                                  (.toByteArray)))]
-      (let [payload (-> (Common$Envelope/parseFrom ^bytes data)
-                        (proto/proto->clj {})
-                        (:payload envelope))
-            channel-header (-> payload (:header) (:channel-header))]
+      (let [payload (get data :payload)
+            channel-header (get-in payload [:header :channel-header])]
         ;; 2. Transaction Event with tx-id
         (when-let [ch (tx-id->channel tx-id)]
-          (async/put! ch
-                      (make-TxEvent (:tx-id channel-header) code)))
+          (async/put! ch (make-TxEvent (:tx-id channel-header) code)))
         ;; 3. Chaincode event
         (when (= (:type channel-header) (proto/header-types :endorser-transaction))
-          (-> (:data payload)
-              ;; FIXME use toplevel prot->clj opts
-              ;; Add record for TransactionPackage$Transaction
-              (TransactionPackage$Transaction/parseFrom)
-              ;; YOU'RE HERE
-              ))
-        ))
-    
-    ))
-
-      
+          (let [chaincode-event (get-in payload [:data :actions 0 :payload :action
+                                                 :proposal-response-payload :extension :events])]
+            (when-let [ch (chaincode-id->channel (:chaincode-id chaincode-event))]
+              (async/put! ch chaincode-event))))))))
 
 (defn transaction-observer
   [ch]
