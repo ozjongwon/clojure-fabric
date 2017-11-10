@@ -28,7 +28,15 @@
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.orderer Ab$SeekInfo Ab$SeekInfo$SeekBehavior Ab$SeekNewest Ab$SeekOldest Ab$SeekPosition Ab$SeekSpecified AtomicBroadcastGrpc AtomicBroadcastGrpc$AtomicBroadcastStub]
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput
+            Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal
+            ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse
+            TransactionPackage$ProcessedTransaction TransactionPackage$ChaincodeActionPayload
+            ProposalResponsePackage$Response ProposalResponsePackage$ProposalResponsePayload
+            ProposalPackage$ChaincodeAction TransactionPackage$ChaincodeEndorsedAction
+            TransactionPackage$TransactionAction TransactionPackage$Transaction
+            ChaincodeEventPackage$ChaincodeEvent
+            ]))
 
 ;;;
 ;;;
@@ -384,7 +392,6 @@
 
 (defrecord BlockchainInfo [^Long height current-block-hash previous-block-hash] ;; bytes
   )
-
 (defn make-blockchain-info
   [& {:keys [height current-block-hash previous-block-hash]}]
   (map->BlockchainInfo {:height height :current-block-hash current-block-hash :previous-block-hash previous-block-hash}))
@@ -433,6 +440,45 @@
 (defn make-envelope
   [& {:keys [payload signature]}]
   (map->Envelope {:payload payload :signature signature}))
+
+(defrecord Response [^Long status ^String message ^bytes payload])
+(defn make-response
+  [& {:keys [status message payload]}]
+  (map->Response {:status status :message message :payload payload}))
+
+(defrecord ChaincodeAction [^bytes results ^bytes events ^Response response
+                            ^ChaincodeID chaincode-id])
+(defn make-chaincode-action
+  [& {:keys [results events response chaincode-id]}]
+  (map->ChaincodeAction {:results results :events events :response response
+                         :chaincode-id chaincode-id}))
+
+(defrecord ProposalResponsePayload [^bytes proposal-hash ^bytes extension])
+(defn make-proposal-response-payload
+  [& {:keys [proposal-hash extension]}]
+  (map->ProposalResponsePayload {:proposal-hash proposal-hash :extension extension}))
+
+(defrecord ChaincodeEndorsedAction [^bytes proposal-response-payload endorsements])
+(defn make-chaincode-endorsed-action
+  [& {:keys [proposal-response-payload endorsements]}]
+  (map->ChaincodeEndorsedAction {:proposal-response-payload proposal-response-payload
+                                 :endorsements endorsements}))
+
+(defrecord ChaincodeActionPayload [^bytes chaincode-proposal-payload ^ChaincodeEndorsedAction action])
+(defn make-chaincode-action-payload
+  [& {:keys [chaincode-proposal-payload action]}]
+  (map->ChaincodeActionPayload {:chaincode-proposal-payload chaincode-proposal-payload
+                                :action action}))
+
+(defrecord TransactionAction [^bytes header ^bytes payload])
+(defn make-transaction-action
+  [& {:keys [header payload]}]
+  (map->TransactionAction {:header header :payload payload}))
+
+(defrecord Transaction [actions])
+(defn make-transaction
+  [& {:keys [actions]}]
+  (map->Transaction {:actions actions}))
 
 (defrecord ProcessedTransaction [^Envelope transaction-envelope ^Long validation-code] )
 (defn make-processed-transaction
@@ -510,8 +556,34 @@
 (defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
   `(let [data# ~data-call]
      (if-let [tx-fn# (:fn ~tx-map)]
-       (proto->clj (tx-fn# data#) (dissoc ~tx-map :fn))
+       (proto->clj (tx-fn# data#) (:next ~tx-map))
        data#)))
+
+
+(defonce parse-trees
+  {:block
+   {:data
+    {:data
+     {:fn #(Common$Envelope/parseFrom ^ByteString %)
+      :next
+      {:payload
+       {:data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
+               :next {:actions
+                      {;;:header
+                       :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
+                                 :next {:chaincode-proposal-payload
+                                        {:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
+                                         :next {:extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
+                                                            ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
+                                                            :next {:events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
+                                                                            :next nil}}}}}
+                                        ;;:action ??
+                                        ;;{:proposal-response-payload }
+                                        }}}}}}}}}}
+
+   :envelope-for-config-update
+   {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
+                     :next {:config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}}})
 
 (extend-protocol IProtoToClj
 
@@ -534,22 +606,64 @@
 
   Common$BlockHeader
   (proto->clj [this opts]
-    (make-block-header :number (.getNumber this) :previous-hash (.getPreviousHash this) :data-hash (.getDataHash this)))
+    (make-block-header :number (.getNumber this) :previous-hash (.getPreviousHash this)
+                       :data-hash (.getDataHash this)))
   
   Common$BlockData
-  (proto->clj [this opts]
-    (make-block-data :data (.getDataList this)))
+  (proto->clj [this {:keys [data]}]
+    (make-block-data :data (map #(maybe-applying-proto->clj-transform [data %]) (.getDataList this))))
   
   Common$BlockMetadata
   (proto->clj [this opts]
     (make-block-metadata :metadata (.getMetadataList this)))
 
   Common$Block
-  (proto->clj [this opts]
-    (make-block :header         (proto->clj (.getHeader this) {})
-                :data           (proto->clj (.getData this) {})
-                :metadata       (proto->clj (.getMetadata this) {})))
+  (proto->clj [this {:keys [header data metadata]}]
+    (make-block :header         (proto->clj (.getHeader this) header)
+                :data           (proto->clj (.getData this) data)
+                :metadata       (proto->clj (.getMetadata this) metadata)))
 
+  ;; ProposalResponsePackage$Response
+  ;; (proto->clj [this opts]
+  ;;   (make-response :status (proto->clj)
+  ;;                  :message (proto->clj)
+  ;;                  :payload (proto->clj)))
+  
+  ProposalResponsePackage$ProposalResponsePayload
+  (proto->clj [this {:keys [extension]}]
+    (make-proposal-response-payload :proposal-hash (.getProposalHash this)
+                                    :extension (maybe-applying-proto->clj-transform [extension (.getExtension this)])))
+  
+  ProposalPackage$ChaincodeAction
+  (proto->clj [this {:keys [events response chaincode-id]}]
+    (make-chaincode-action :results (.getResults this)
+                           :events (maybe-applying-proto->clj-transform [events (.getEvents this)])
+                           :response (proto->clj (.getResponse this) response)
+                           :chaincode-id (proto->clj (.getChaincodeId this) chaincode-id)))
+  
+  TransactionPackage$ChaincodeEndorsedAction
+  (proto->clj [this {:keys [proposal-response-payload]}]
+    (make-chaincode-endorsed-action :proposal-response-payload (proto->clj (.getProposalResponsePayload this) proposal-response-payload)
+                                    :endorsements (.getEndorsementsList this)))
+
+  
+  TransactionPackage$ChaincodeActionPayload
+  (proto->clj [this {:keys [action chaincode-proposal-payload]}]
+    (make-chaincode-action-payload :chaincode-proposal-payload
+                                   (maybe-applying-proto->clj-transform [chaincode-proposal-payload (.getChaincodeProposalPayload this)])
+                                   
+                                   :action (proto->clj (.getAction this) action)))
+
+
+  TransactionPackage$TransactionAction
+  (proto->clj [this {:keys [payload]}]
+    (make-transaction-action :header (.getHeader this)
+                             :payload (maybe-applying-proto->clj-transform [payload (.getPayload this)])))
+
+  TransactionPackage$Transaction
+  (proto->clj [this {:keys [actions]}]
+    (make-transaction :actions (map #(proto->clj % actions) (.getActionsList this))))
+  
   TransactionPackage$ProcessedTransaction
   (proto->clj [this opts]
     (make-processed-transaction :transaction-envelope (proto->clj (.getTransactionEnvelope this)
@@ -621,6 +735,7 @@
   ;; (proto->clj Common$Payload :data-fn #(Configtx$ConfigUpdateEnvelope/parseFrom %))
   (proto->clj [this {:keys [config-update]}]
     (let [raw-config-update (.getConfigUpdate this)]
+      ;; FIXME: use maybe-applying-proto->clj-transform
       (make-config-update-envelope :config-update (if-let [transform-fn (:fn config-update)]
                                                     (proto->clj (transform-fn raw-config-update)
                                                                 (dissoc config-update :fn))
@@ -633,7 +748,7 @@
                   :data (maybe-applying-proto->clj-transform [data (.getData this)])))
   
   Common$Envelope
-  (proto->clj [this {:keys [payload]}]
+  (proto->clj [this {:keys [payload]}] ;; {:data {:payload {:data ...}}}
     (let [signature (.getSignature this)]
       (make-envelope :payload (proto->clj (Common$Payload/parseFrom (.getPayload this))
                                           payload)

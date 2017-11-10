@@ -346,6 +346,7 @@
                             (io/copy in out)
                             (Common$Envelope/parseFrom (.toByteArray out))))]
         (-> (proto/proto->clj envelope
+                              ;; FIXME: use parse-trees - :envelope-for-config-update
                               {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
                                                 :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}})
             (get-in [:payload :data :config-update])
