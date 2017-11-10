@@ -731,16 +731,9 @@
                         :isolated-data (.getIsolatedData this)))
   
   Configtx$ConfigUpdateEnvelope
-  ;; this will get call by
-  ;; (proto->clj Common$Payload :data-fn #(Configtx$ConfigUpdateEnvelope/parseFrom %))
   (proto->clj [this {:keys [config-update]}]
-    (let [raw-config-update (.getConfigUpdate this)]
-      ;; FIXME: use maybe-applying-proto->clj-transform
-      (make-config-update-envelope :config-update (if-let [transform-fn (:fn config-update)]
-                                                    (proto->clj (transform-fn raw-config-update)
-                                                                (dissoc config-update :fn))
-                                                    config-update)
-                                   :signatures (.getSignaturesList this))))
+    (make-config-update-envelope :config-update (maybe-applying-proto->clj-transform [config-update (.getConfigUpdate this)])
+                                 :signatures (.getSignaturesList this)))
 
   Common$Payload
   (proto->clj [this {:keys [data header]}]
