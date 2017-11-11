@@ -189,11 +189,13 @@
 
 (defn register-block-event
   [fn-name fn]
-  (swap! block-event-handlers assoc fn-name fn))
+  (swap! block-event-handlers assoc fn-name fn)
+  (async/put! command-ch :refresh))
 
 (defn unregister-block-event
   [fn-name]
-  (swap! block-event-handlers dissoc fn-name))
+  (swap! block-event-handlers dissoc fn-name)
+  (async/put! command-ch :refresh))
 
 (defn- %unregister-event
   [id ref]
@@ -246,8 +248,8 @@
 
             (instance? Block v)
             (doseq [f @block-event-handlers]
-                  (utils/ignore-errors
-                   (f v)))
+              (utils/ignore-errors
+               (f v)))
 
             (instance? TxEvent v)
             (utils/ignore-errors
