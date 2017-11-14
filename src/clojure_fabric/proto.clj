@@ -183,7 +183,6 @@
       id-bytes (.setIdBytes (ByteString/copyFromUtf8 id-bytes))
       true (.build))))
 
-
 (defn make-serialized-identity
   [& {:keys [mspid id-bytes]}]
   (map->SerializedIdentity {:mspid mspid :id-bytes id-bytes}))
@@ -457,8 +456,8 @@
 (defrecord ChaincodeEvent [^String chaincode-id ^String tx-id ^String event-name ^bytes payload])
 (defn make-chaincode-event
   [& {:keys [chaincode-id tx-id event-name payload]}]
-  (map->ChaincodeAction {:chaincode-id chaincode-id :tx-id tx-id :event-name event-name
-                         :payload payload}))
+  (map->ChaincodeEvent {:chaincode-id chaincode-id :tx-id tx-id :event-name event-name
+                        :payload payload}))
 
 (defrecord ProposalResponsePayload [^bytes proposal-hash ^bytes extension])
 (defn make-proposal-response-payload
@@ -563,7 +562,7 @@
 (defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
   `(let [data# ~data-call]
      (if-let [tx-fn# (:fn ~tx-map)]
-       (proto->clj (tx-fn# data#) (:next ~tx-map))
+       (proto->clj (tx-fn# data#) (dissoc ~tx-map :fn))
        data#)))
 
 
@@ -572,25 +571,35 @@
    {:data
     {:data
      {:fn #(Common$Envelope/parseFrom ^ByteString %)
-      :next
-      {:payload
-       {:data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
-               :next {:actions
-                      {;;:header
-                       :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
-                                 :next {:chaincode-proposal-payload
-                                        {:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
-                                         :next {:extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
-                                                            ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
-                                                            :next {:events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
-                                                                            :next nil}}}}}
-                                        ;;:action ??
-                                        ;;{:proposal-response-payload }
-                                        }}}}}}}}}}
+      :payload
+      {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
+              :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}
+
+      ;; This is here for future reference
+      ;; 
+      ;; {;;:fn #(Common$Payload/parseFrom ^ByteString %)
+      ;;  :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
+      ;;         :actions
+      ;;         { ;;:header
+      ;;          :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
+      ;;                    :chaincode-proposal-payload
+      ;;                    {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
+      ;;                     :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
+                         
+      ;;                    :action
+      ;;                    {:proposal-response-payload
+      ;;                     {;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
+      ;;                      :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
+      ;;                                  ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
+      ;;                                  :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
+      ;;                                           }}}}}}}}
+      }}}
 
    :envelope-for-config-update
-   {:payload {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
-                     :next {:config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}}})
+   {:payload
+    {;;:fn #(Common$Payload/parseFrom ^ByteString %)
+     :data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
+            :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}})
 
 (extend-protocol IProtoToClj
 
@@ -630,11 +639,17 @@
                 :data           (proto->clj (.getData this) data)
                 :metadata       (proto->clj (.getMetadata this) metadata)))
 
-  ;; ProposalResponsePackage$Response
-  ;; (proto->clj [this opts]
-  ;;   (make-response :status (proto->clj)
-  ;;                  :message (proto->clj)
-  ;;                  :payload (proto->clj)))
+  ProposalResponsePackage$Response
+  (proto->clj [this opts]
+    (make-response :status (.getStatus this)
+                   :message (.getMessage this)
+                   :payload (.getPayload this)))
+
+  Chaincode$ChaincodeID
+  (proto->clj [this opts]
+    (make-chaincode-id :path (.getPath this)
+                       :name (.getName this)
+                       :version (.getVersion this)))
   
   ProposalResponsePackage$ProposalResponsePayload
   (proto->clj [this {:keys [extension]}]
@@ -657,14 +672,41 @@
   
   TransactionPackage$ChaincodeEndorsedAction
   (proto->clj [this {:keys [proposal-response-payload]}]
-    (make-chaincode-endorsed-action :proposal-response-payload (proto->clj (.getProposalResponsePayload this) proposal-response-payload)
+    (make-chaincode-endorsed-action :proposal-response-payload
+                                    (maybe-applying-proto->clj-transform [proposal-response-payload
+                                                                          (.getProposalResponsePayload this)])
                                     :endorsements (.getEndorsementsList this)))
 
+  Chaincode$ChaincodeInput
+  (proto->clj [this ignore]
+    (make-chaincode-input :args (.getArgsList this)
+                          :decorations (utils/map-vals #(proto->clj % nil)
+                                                       (.getDecorations this))))
+  
+  Chaincode$ChaincodeSpec
+  (proto->clj [this ignore]
+    (make-chaincode-spec :type (.getTypeValue this)
+                         :chaincode-id (proto->clj (.getChaincodeId this) ignore)
+                         :chaincode-input (proto->clj (.getInput this) ignore)
+                         :timeout (.getTimeout this)))
+  
+  Chaincode$ChaincodeInvocationSpec
+  (proto->clj [this ignore]
+    (make-chaincode-invocation-spec :chaincode-spec (proto->clj (.getChaincodeSpec this) ignore)
+                                    :id-generation-alg (.getIdGenerationAlg this)))
+  
+  ProposalPackage$ChaincodeProposalPayload
+  (proto->clj [this {:keys [input]}]
+    (make-chaincode-proposal-payload :input
+                                     (maybe-applying-proto->clj-transform [input (.getInput this)])
+                                   
+                                     :transiten-map (utils/map-vals #(proto->clj % nil) (.getTransientMap this))))
   
   TransactionPackage$ChaincodeActionPayload
   (proto->clj [this {:keys [action chaincode-proposal-payload]}]
     (make-chaincode-action-payload :chaincode-proposal-payload
-                                   (maybe-applying-proto->clj-transform [chaincode-proposal-payload (.getChaincodeProposalPayload this)])
+                                   (maybe-applying-proto->clj-transform [chaincode-proposal-payload
+                                                                         (.getChaincodeProposalPayload this)])
                                    
                                    :action (proto->clj (.getAction this) action)))
 
