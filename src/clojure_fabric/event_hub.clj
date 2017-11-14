@@ -274,7 +274,7 @@
 
 (defn deliver-block-events-to-channels
   [^Common$Block proto-block]
-  (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block))]
+  (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block-configuration))]
     ;; 1. Block Event on all channels
     (async/put! block-event-channel clj-block)
     (doseq [[data code] (map list

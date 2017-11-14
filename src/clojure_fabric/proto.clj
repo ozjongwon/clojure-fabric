@@ -567,33 +567,35 @@
 
 
 (defonce parse-trees
-  {:block
+  {:block-configuration
    {:data
     {:data
      {:fn #(Common$Envelope/parseFrom ^ByteString %)
       :payload
       {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
-              :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}
+              :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}}}
 
-      ;; This is here for future reference
-      ;; 
-      ;; {;;:fn #(Common$Payload/parseFrom ^ByteString %)
-      ;;  :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
-      ;;         :actions
-      ;;         { ;;:header
-      ;;          :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
-      ;;                    :chaincode-proposal-payload
-      ;;                    {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
-      ;;                     :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
-                         
-      ;;                    :action
-      ;;                    {:proposal-response-payload
-      ;;                     {;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
-      ;;                      :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
-      ;;                                  ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
-      ;;                                  :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
-      ;;                                           }}}}}}}}
-      }}}
+   {:block-transaction
+    {:data
+     {:data
+      {:fn #(Common$Envelope/parseFrom ^ByteString %)
+       :payload
+       { ;;:fn #(Common$Payload/parseFrom ^ByteString %)
+        :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
+               :actions
+               { ;;:header
+                :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
+                          :chaincode-proposal-payload
+                          {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
+                           :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
+                          
+                          :action
+                          {:proposal-response-payload
+                           { ;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
+                            :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
+                                        ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
+                                        :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
+                                                 }}}}}}}}}}}}
 
    :envelope-for-config-update
    {:payload
