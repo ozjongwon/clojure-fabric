@@ -346,7 +346,7 @@
                             (io/copy in out)
                             (Common$Envelope/parseFrom (.toByteArray out))))]
         (-> (proto/proto->clj envelope
-                              (proto/parse-trees :envelope-for-config-update))
+                              (proto/parse-trees :block-config-update-envelope))
             (get-in [:payload :data :config-update])
             (proto/clj->proto)
             (.toByteArray)))))

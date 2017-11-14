@@ -559,49 +559,50 @@
                :else (ByteString/copyFromUtf8 (str %)))
         args))
 
-(defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
-  `(let [data# ~data-call]
-     (if-let [tx-fn# (:fn ~tx-map)]
-       (proto->clj (tx-fn# data#) (dissoc ~tx-map :fn))
-       data#)))
-
-
 (defonce parse-trees
   {:block-configuration
    {:data
     {:data
      {:fn #(Common$Envelope/parseFrom ^ByteString %)
-      :payload
-      {:data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
-              :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}}}
+      :use-parse-tree :block-config-update-envelope}}}
 
-   {:block-transaction
+   :block-transaction
+   {:data
     {:data
-     {:data
-      {:fn #(Common$Envelope/parseFrom ^ByteString %)
-       :payload
-       { ;;:fn #(Common$Payload/parseFrom ^ByteString %)
-        :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
-               :actions
-               { ;;:header
-                :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
-                          :chaincode-proposal-payload
-                          {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
-                           :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
-                          
-                          :action
-                          {:proposal-response-payload
-                           { ;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
-                            :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
-                                        ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
-                                        :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
-                                                 }}}}}}}}}}}}
+     {:fn #(Common$Envelope/parseFrom ^ByteString %)
+      :use-parse-tree :block-transaction-envelope}}}
 
-   :envelope-for-config-update
+   :block-transaction-envelope
+   {:payload
+    { ;;:fn #(Common$Payload/parseFrom ^ByteString %)
+     :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
+            :actions
+            { ;;:header
+             :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
+                       :chaincode-proposal-payload
+                       {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
+                        :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
+                       
+                       :action
+                       {:proposal-response-payload
+                        { ;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
+                         :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
+                                     ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
+                                     :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
+                                              }}}}}}}}}
+   :block-config-update-envelope
    {:payload
     {;;:fn #(Common$Payload/parseFrom ^ByteString %)
      :data {:fn #(Configtx$ConfigUpdateEnvelope/parseFrom ^ByteString %)
             :config-update {:fn #(Configtx$ConfigUpdate/parseFrom ^ByteString %)}}}}})
+
+(defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
+  `(let [data# ~data-call]
+     (if-let [tx-fn# (:fn ~tx-map)]
+       (proto->clj (tx-fn# data#) (if-let [use-parse-tree# (:use-parse-tree ~tx-map)]
+                                    (parse-trees use-parse-tree#)
+                                    (dissoc ~tx-map :fn)))
+       data#)))
 
 (extend-protocol IProtoToClj
 
