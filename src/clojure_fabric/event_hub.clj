@@ -70,43 +70,6 @@
 ;;      - Java: part of the Java SDK for Hyperledger Fabric. Source code can be found here
 ;;      - Golang: an example event listener client can be found here
 ;;
-(defrecord EventHub [peer-address peer-tls-certificate peer-tls-certificate-override
-                     tx-registrants
-                     connected
-                     mtx chaincode-registrants block-registrants  
-                     grpc-client
-                     interested-events
-                     event-client-factory client])
-
-(defn make-event-hub [m]
-  (map->EventHub m))
-
-(def ^:dynamic *event-hub* nil)
-
-(defn connect
-  ([]
-   (connect event-hub))
-  ([event-hub]
-   (when-not (:connected event-hub)
-     (if-not (:peer-address event-hub)
-       (throw (Exception. "Peer address is missing!"))
-       ))))
-
-
-;; connect
-;; disconnect
-;; get-peer-address
-;; connected?
-;; set-peer-address
-;; unregister-block-event
-;; unregister-chaincode-event
-;; unregister-tx-event
-
-;; set-interests
-;; add-chaincode-interest
-;; remove-chaincode-interest
-;; get-interested-events
-;; receive (i/f - block or chaincode)
 
 (defonce block-metadata-index-map
   (zipmap [:signatures :last-config :transactions-filter :orderer]
@@ -165,15 +128,14 @@
            :illegal-writeset
            :invalid-other-reason]))
 
-#_
-(defonce event-type {:register
-                     :block
-                     :chaincode
-                     :rejection
-                     :filtered-block})
+;; (defonce event-type {:register
+;;                      :block
+;;                      :chaincode
+;;                      :rejection
+;;                      :filtered-block})
 
 (defonce default-sliding-buffer-size 32)
-(defonce command-ch (chan))
+(defonce command-ch (async/chan))
 ;; Block event - any block events
 (defonce block-event-chan (async/sliding-buffer default-sliding-buffer-size))
 (defonce block-event-handlers (atom {}))
@@ -232,13 +194,16 @@
   (letfn [(%get-all-chans [ref]
             (map :ch (vals (deref ref))))]
     `[~command-ch
-      ~block-event-chans
+      ~block-event-chan
       ~@(%get-all-chans tx-id->chan-fn-map)
       ~@(%get-all-chans chaincode-id->chan-fn-map)]))
 
 ;; Block event is proto/Block
 ;; Chaincode event is proto/ChaincodeEvent
 (defrecord TxEvent [tx-id status])
+(defn make-TxEvent
+  [tx-id code]
+  (->TxEvent tx-id code))
 
 (defonce event-go-loop
   (async/go-loop []
@@ -276,7 +241,7 @@
   [^Common$Block proto-block]
   (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block-configuration))]
     ;; 1. Block Event on all channels
-    (async/put! block-event-channel clj-block)
+    (async/put! block-event-chan clj-block)
     (doseq [[data code] (map list
                              (:data clj-block)
                              (-> (:metadata clj-block)
@@ -284,10 +249,11 @@
                                  (nth (block-metadata-index-map :transactions-filter))
                                  (.toByteArray)))]
       (let [payload (:payload data)
-            channel-header (get-in payload [:header :channel-header])]
+            channel-header (get-in payload [:header :channel-header])
+            tx-id (:tx-id channel-header)]
         ;; 2. Transaction Event with tx-id
         (when-let [ch (tx-id->chan tx-id)]
-          (async/put! ch (make-TxEvent (:tx-id channel-header) code)))
+          (async/put! ch (make-TxEvent tx-id code)))
         ;; 3. Chaincode event
         (when (= (:type channel-header) (proto/header-types :endorser-transaction))
           (let [chaincode-event (get-in payload [:data :actions 0 :payload :action
@@ -300,7 +266,7 @@
   (reify StreamObserver
     (onNext [this event]
       (case (.getEventCase ^EventsPackage$Event event)
-        EventsPackage$Event$EventCase/BLOCK (deliver-block-to-channels (.getBlock event))
+        EventsPackage$Event$EventCase/BLOCK (deliver-block-events-to-channels (.getBlock event))
         EventsPackage$Event$EventCase/REGISTER nil ;; init
         ;; EventsPackage$Event$EventCase/CHAINCODE_EVENT ;; FIXME: not used??
         EventsPackage$Event$EventCase/UNREGISTER nil;; shutdown
@@ -311,9 +277,7 @@
     (onCompleted [this]
       (async/put! ch :done))))
 
-
-
-(defn make-event-hub???
+(defn make-event-hub
   [user peer]
   (let [ch (async/chan (async/sliding-buffer default-sliding-buffer-size))
         ^StreamObserver observer (transaction-observer ch)
@@ -338,17 +302,55 @@
                    (.build)))
       (try
         (async/go-loop []
-          (let [block (async/<!! ch)]
+          (let [block (async/<! ch)]
             (case (.getEventCase ^EventsPackage$Event event)
               EventsPackage$Event$EventCase/BLOCK (async/put! ch event) ;; ch is like eventQueue
               EventsPackage$Event$EventCase/REGISTER :FIXME ;; connected, connectedTime
-        )
+              )
             (cond= (type v)
                    
                    (instance? Exception v) (when-not (.isShutdown channel)
                                              (.shutdownNow channel))
-                  ;; FIXME: do something here!!
-                  :else (recur))))
+                   ;; FIXME: do something here!!
+                   :else (recur))))
         (finally (.onCompleted observer))))))
 
+
+(defrecord EventHub [peer-address peer-tls-certificate peer-tls-certificate-override
+                     tx-registrants
+                     connected
+                     mtx chaincode-registrants block-registrants  
+                     grpc-client
+                     interested-events
+                     event-client-factory client])
+
+(defn make-event-hub [m]
+  (map->EventHub m))
+
+(def ^:dynamic *event-hub* nil)
+
+(defn connect
+  ([]
+   (connect event-hub))
+  ([event-hub]
+   (when-not (:connected event-hub)
+     (if-not (:peer-address event-hub)
+       (throw (Exception. "Peer address is missing!"))
+       ))))
+
+
+;; connect
+;; disconnect
+;; get-peer-address
+;; connected?
+;; set-peer-address
+;; unregister-block-event
+;; unregister-chaincode-event
+;; unregister-tx-event
+
+;; set-interests
+;; add-chaincode-interest
+;; remove-chaincode-interest
+;; get-interested-events
+;; receive (i/f - block or chaincode)
 
