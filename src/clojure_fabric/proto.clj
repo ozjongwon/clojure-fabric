@@ -33,6 +33,7 @@
             ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse
             TransactionPackage$ProcessedTransaction TransactionPackage$ChaincodeActionPayload
             ProposalResponsePackage$Response ProposalResponsePackage$ProposalResponsePayload
+            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Endorsement
             ProposalPackage$ChaincodeAction TransactionPackage$ChaincodeEndorsedAction
             TransactionPackage$TransactionAction TransactionPackage$Transaction
             ChaincodeEventPackage$ChaincodeEvent
@@ -464,6 +465,19 @@
   [& {:keys [proposal-hash extension]}]
   (map->ProposalResponsePayload {:proposal-hash proposal-hash :extension extension}))
 
+
+(defrecord Endorsement [^bytes endorser ^bytes signature])
+(defn make-endorsement
+  [& {:keys [endorser signature]}]
+  (map->Endorsement {:endorser endorser :signature signature}))
+
+(defrecord ProposalResponse [^Long version ^Long timestamp ^Response response
+                             ^bytes payload ^Endorsement endorsement])
+(defn make-proposal-response
+  [& {:keys [version timestamp response payload endorsement]}]
+  (map->ProposalResponse {:version version :timestamp timestamp :response response
+                          :payload payload :endorsement endorsement}))
+
 (defrecord ChaincodeEndorsedAction [^bytes proposal-response-payload endorsements])
 (defn make-chaincode-endorsed-action
   [& {:keys [proposal-response-payload endorsements]}]
@@ -805,7 +819,20 @@
       (make-envelope :payload (proto->clj (Common$Payload/parseFrom (.getPayload this))
                                           payload)
                      :signature (when-not (.isEmpty signature)
-                                  (.toByteArray signature))))))
+                                  (.toByteArray signature)))))
+
+  ProposalResponsePackage$Endorsement
+  (proto->clj [this ignore]
+    (make-endorsement :endorser (.getEndorser this)
+                      :signature (.getSignature this)))
+  
+  ProposalResponsePackage$ProposalResponse
+  (proto->clj [this ignore]
+    (make-proposal-response :version (.getVersion this)
+                            :timestamp (.getTimestamp this)
+                            :response (proto->clj (.getResponse this) ignore)
+                            :payload (.getPayload this)
+                            :endorsement (.getEndorsement this))))
 
 ;;;
 (defn send-update-channel-using-envelope

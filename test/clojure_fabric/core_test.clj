@@ -219,6 +219,13 @@
           (= (inc (count chaincodes1))
              (count (query-installed-chaincodes user (get-random-node mychannel :peers))))))
 
+;; (def u1 (core/get-user "Org1MSP" "user1"))
+;; (binding [core/*channel* (get-in u1 [:channels "mychannel"] )]
+;;   (get-genesis-block))
+;; (let [user (get-user "Org1MSP" "admin")
+;;       mychannel (get-channel user "mychannel")]
+;;   (join-channel  mychannel p1 gb1))
+
 ;; (expect (let [user (get-user "Org2MSP" "admin")
 ;;               mychannel (get-channel user "mychannel")]
 ;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
