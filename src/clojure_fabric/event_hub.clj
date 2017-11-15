@@ -71,6 +71,8 @@
 ;;      - Golang: an example event listener client can be found here
 ;;
 
+(defonce default-sliding-buffer-size 32)
+
 (defrecord EventHub [peer user ch ;; ch - output ch
                      command-ch
                      block-event-chan ;; input ch
@@ -78,6 +80,7 @@
                      tx-id->chan-fn-map
                      chaincode-id->chan-fn-map
                      observer
+                     event-go-loop
 
                      ;; connected
                      ;; mtx
@@ -91,12 +94,12 @@
               (async/chan) ;; command ch
               ;; block event ch & handlers
               (async/chan (async/sliding-buffer default-sliding-buffer-size))
-              (atom {})
-              ;; tx-id->chan-fn-map
-              (atom {})
-              ;; chaincode-id->chan-fn-map
-              (atom {})
-              (atom nil)))
+              (atom {})  ;; block-event-handlers
+              (atom {})  ;; tx-id->chan-fn-map
+              (atom {})  ;; chaincode-id->chan-fn-map
+              (atom nil) ;; observer
+              (atom nil) ;; event-go-loop
+              ))
 
 (def ^:dynamic *event-hub* nil)
 
@@ -163,7 +166,6 @@
 ;;                      :rejection
 ;;                      :filtered-block})
 
-(defonce default-sliding-buffer-size 32)
 ;;(defonce command-ch (async/chan))
 ;; Block event - any block events
 ;;(defonce block-event-chan (async/sliding-buffer default-sliding-buffer-size))
@@ -178,7 +180,7 @@
   [fn]
   (->ChanFun (async/chan) fn))
 
-(defmacro with-ch-refresh-command! [[event-hub] & body]
+(defmacro with-refresh-event-go-loop! [[event-hub] & body]
   `(do ~@body
        (async/put! (deref (:command-ch ~event-hub)) :refresh)))
 
@@ -186,20 +188,20 @@
   ([fn-name fn]
    (register-block-event *event-hub* fn-name fn))
   ([event-hub fn-name fn]
-   (with-ch-refresh-command! [event-hub]
+   (with-refresh-event-go-loop! [event-hub]
      (swap! (:block-event-handlers event-hub) assoc fn-name fn))))
 
 (defn unregister-block-event
   ([fn-name]
    (unregister-block-event *event-hub* fn-name))
   ([event-hub fn-name]
-   (with-ch-refresh-command! [event-hub]
+   (with-refresh-event-go-loop! [event-hub]
      (swap! (:block-event-handlers event-hub) dissoc fn-name))))
 
 (defn- %unregister-event
   [event-hub id k]
    (let [ref-m (k event-hub)]
-    (with-ch-refresh-command! [event-hub]
+    (with-refresh-event-go-loop! [event-hub]
       (when-let [existing (get (deref ref-m) id)]
         (async/close! (:ch existing))
         (swap! ref-m dissoc id)))))
@@ -207,7 +209,7 @@
 (defn- %register-event
   [event-hub id fn k]
   (let [ref-m (k event-hub)]
-    (with-ch-refresh-command! [event-hub]
+    (with-refresh-event-go-loop! [event-hub]
       (when-let [existing (get (deref ref-m) id)]
         (async/close! (:ch existing)))
       (swap! ref-m assoc id (make-chan-fun fn)))))
@@ -237,15 +239,13 @@
    (%unregister-event event-hub chaincode-id :chaincode-id->chan-fn-map)))
 
 (defn get-all-event-chans
-  ([]
-   (get-all-event-chans *event-hub*))
-  ([event-hub]
-   (letfn [(%get-all-chans [k]
-             (map :ch (vals (deref (k event-hub)))))]
-     `[(:command-ch ~event-hub)
-       (:block-event-chan ~event-hub)
-       ~@(%get-all-chans :tx-id->chan-fn-map)
-       ~@(%get-all-chans :chaincode-id->chan-fn-map)])))
+  [event-hub]
+  (letfn [(%get-all-chans [k]
+            (map :ch (vals (deref (k event-hub)))))]
+    `[(:command-ch ~event-hub)
+      (:block-event-chan ~event-hub)
+      ~@(%get-all-chans :tx-id->chan-fn-map)
+      ~@(%get-all-chans :chaincode-id->chan-fn-map)]))
 
 ;; Block event is proto/Block
 ;; Chaincode event is proto/ChaincodeEvent
@@ -254,49 +254,50 @@
   [tx-id code]
   (->TxEvent tx-id code))
 
-(defonce event-go-loop
+(defn add-event-go-loop!
+  [event-hub]
   (async/go-loop []
-    (let [[v ch] (async/alts! (get-all-event-chans))]
-      (cond (and (= ch command-ch) (= v :refresh))
+    (let [[v ch] (async/alts! (get-all-event-chans event-hub))]
+      (cond (and (= (:command-ch event-hub) ch) (= v :refresh))
             :renew-get-all-event-chans
 
             (instance? Block v)
-            (doseq [f @block-event-handlers]
+            (doseq [[_ f] @(:block-event-handlers event-hub)]
               (utils/ignore-errors
                (f v)))
 
             (instance? TxEvent v)
             (utils/ignore-errors
-             ((:fn (get @tx-id->chan-fn-map (:tx-id v))) v))
+             ((:fn (get @(:tx-id->chan-fn-map event-hub) (:tx-id v))) v))
 
             (instance? ChaincodeEvent v)
             (utils/ignore-errors
-             ((:fn (get @chaincode-id->chan-fn-map (:chaincode-id v))) v)))
+             ((:fn (get @(:chaincode-id->chan-fn-map event-hub) (:chaincode-id v))) v)))
       (recur))))
 
 (defn- %id->ch
-  [id ref]
-  (-> (deref ref) (get id) (:ch)))
+  [event-hub id k]
+  (-> (deref (k event-hub)) (get id) (:ch)))
 
 (defn tx-id->chan
-  [tx-id]
-  (%id->ch tx-id tx-id->chan-fn-map))
+  [event-hub tx-id]
+  (%id->ch event-hub tx-id :tx-id->chan-fn-map))
 
 (defn chaincode-id->chan
-  [chaincode-id]
-  (%id->ch chaincode-id chaincode-id->chan-fn-map))
+  [event-hub chaincode-id]
+  (%id->ch event-hub chaincode-id :chaincode-id->chan-fn-map))
 
 (defn deliver-block-events-to-channels
-  [^Common$Block proto-block]
-  (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block-configuration))]
+  [event-hub ^Common$Block proto-block]
+  (let [clj-block (proto/proto->clj proto-block (proto/parse-trees :block-configuration))
+        tx-status-codes
+        (.toByteArray ^ByteString (nth (get-in clj-block [:metadata :metadata])
+                                       (block-metadata-index-map :transactions-filter)))
+        data-list (:data clj-block)]
+    (assert (= (count tx-status-codes) (count data-list)))
     ;; 1. Block Event on all channels
-    (async/put! block-event-chan clj-block)
-    (doseq [[data code] (map list
-                             (:data clj-block)
-                             (-> (:metadata clj-block)
-                                 (:metadata)
-                                 (nth (block-metadata-index-map :transactions-filter))
-                                 (.toByteArray)))]
+    (async/put! (:block-event-chan event-hub) clj-block)
+    (doseq [[data code] (map list data-list tx-status-codes)]
       (let [payload (:payload data)
             channel-header (get-in payload [:header :channel-header])
             tx-id (:tx-id channel-header)]
@@ -315,7 +316,7 @@
   (reify StreamObserver
     (onNext [this event]
       (case (.getEventCase ^EventsPackage$Event event)
-        EventsPackage$Event$EventCase/BLOCK (deliver-block-events-to-channels (.getBlock event))
+        EventsPackage$Event$EventCase/BLOCK (deliver-block-events-to-channels (.getBlock ^EventsPackage$Event event))
         EventsPackage$Event$EventCase/REGISTER nil ;; init
         ;; EventsPackage$Event$EventCase/CHAINCODE_EVENT ;; FIXME: not used??
         EventsPackage$Event$EventCase/UNREGISTER nil;; shutdown
@@ -370,7 +371,7 @@
   ([]
    (connect *event-hub*))
   ([event-hub]
-   (let [ch (:ch event-hub)
+   (let [{:keys [ch user peer]} event-hub
          ^StreamObserver observer (transaction-observer ch)
          ^ManagedChannel channel (proto/node->channel peer)
          req-observer (.chat (EventsGrpc/newStub channel) observer)
