@@ -71,6 +71,35 @@
 ;;      - Golang: an example event listener client can be found here
 ;;
 
+(defrecord EventHub [peer user ch ;; ch - output ch
+                     command-ch
+                     block-event-chan ;; input ch
+                     block-event-handlers
+                     tx-id->chan-fn-map
+                     chaincode-id->chan-fn-map
+                     observer
+
+                     ;; connected
+                     ;; mtx
+                     ;; grpc-client
+                     ;; interested-events
+                     ;; event-client-factory client
+                     ])
+
+(defn make-event-hub [user peer]
+  (->EventHub user peer (async/chan (async/sliding-buffer default-sliding-buffer-size))
+              (async/chan) ;; command ch
+              ;; block event ch & handlers
+              (async/chan (async/sliding-buffer default-sliding-buffer-size))
+              (atom {})
+              ;; tx-id->chan-fn-map
+              (atom {})
+              ;; chaincode-id->chan-fn-map
+              (atom {})
+              (atom nil)))
+
+(def ^:dynamic *event-hub* nil)
+
 (defonce block-metadata-index-map
   (zipmap [:signatures :last-config :transactions-filter :orderer]
           [Common$BlockMetadataIndex/SIGNATURES_VALUE Common$BlockMetadataIndex/LAST_CONFIG_VALUE
@@ -135,68 +164,88 @@
 ;;                      :filtered-block})
 
 (defonce default-sliding-buffer-size 32)
-(defonce command-ch (async/chan))
+;;(defonce command-ch (async/chan))
 ;; Block event - any block events
-(defonce block-event-chan (async/sliding-buffer default-sliding-buffer-size))
-(defonce block-event-handlers (atom {}))
+;;(defonce block-event-chan (async/sliding-buffer default-sliding-buffer-size))
+;;(defonce block-event-handlers (atom {}))
 ;; Transaction event - matching tx-id
-(defonce tx-id->chan-fn-map (atom {}))
+;;(defonce tx-id->chan-fn-map (atom {}))
 ;; Chaincode event - matching chaincode-id
-(defonce chaincode-id->chan-fn-map (atom {}))
+;;(defonce chaincode-id->chan-fn-map (atom {}))
 
 (defrecord ChanFun [ch fn])
 (defn make-chan-fun
   [fn]
   (->ChanFun (async/chan) fn))
 
+(defmacro with-ch-refresh-command! [[event-hub] & body]
+  `(do ~@body
+       (async/put! (deref (:command-ch ~event-hub)) :refresh)))
+
 (defn register-block-event
-  [fn-name fn]
-  (swap! block-event-handlers assoc fn-name fn)
-  (async/put! command-ch :refresh))
+  ([fn-name fn]
+   (register-block-event *event-hub* fn-name fn))
+  ([event-hub fn-name fn]
+   (with-ch-refresh-command! [event-hub]
+     (swap! (:block-event-handlers event-hub) assoc fn-name fn))))
 
 (defn unregister-block-event
-  [fn-name]
-  (swap! block-event-handlers dissoc fn-name)
-  (async/put! command-ch :refresh))
+  ([fn-name]
+   (unregister-block-event *event-hub* fn-name))
+  ([event-hub fn-name]
+   (with-ch-refresh-command! [event-hub]
+     (swap! (:block-event-handlers event-hub) dissoc fn-name))))
 
 (defn- %unregister-event
-  [id ref]
-  (when-let [existing (get (deref ref) id)]
-    (async/close! (:ch existing))
-    (swap! ref dissoc id))
-  (async/put! command-ch :refresh))
+  [event-hub id k]
+   (let [ref-m (k event-hub)]
+    (with-ch-refresh-command! [event-hub]
+      (when-let [existing (get (deref ref-m) id)]
+        (async/close! (:ch existing))
+        (swap! ref-m dissoc id)))))
 
 (defn- %register-event
-  [id fn ref]
-  (when-let [existing (get (deref ref) id)]
-    (async/close! (:ch existing)))
-  (swap! ref assoc id (make-chan-fun fn))
-  (async/put! command-ch :refresh))
+  [event-hub id fn k]
+  (let [ref-m (k event-hub)]
+    (with-ch-refresh-command! [event-hub]
+      (when-let [existing (get (deref ref-m) id)]
+        (async/close! (:ch existing)))
+      (swap! ref-m assoc id (make-chan-fun fn)))))
 
 (defn register-tx-event
-  [tx-id fn]
-  (%register-event tx-id fn tx-id->chan-fn-map))
+  ([tx-id fn]
+   (register-tx-event *event-hub* tx-id fn))
+  ([event-hub tx-id fn]
+   (%register-event event-hub tx-id fn :tx-id->chan-fn-map)))
 
 (defn unregister-tx-event
-  [tx-id]
-  (%unregister-event tx-id tx-id->chan-fn-map))
+  ([tx-id]
+   (unregister-tx-event *event-hub* tx-id))
+  ([event-hub tx-id]
+   (%unregister-event event-hub tx-id :tx-id->chan-fn-map)))
 
 (defn register-chaincode-event
-  [chaincode-id fn]
-  (%register-event chaincode-id fn chaincode-id->chan-fn-map))
+  ([chaincode-id fn]
+   (register-chaincode-event *event-hub* chaincode-id fn))
+  ([event-hub chaincode-id fn]
+   (%register-event event-hub chaincode-id fn :chaincode-id->chan-fn-map)))
 
 (defn unregister-chaincode-event
-  [chaincode-id]
-  (%unregister-event chaincode-id chaincode-id->chan-fn-map))
+  ([chaincode-id]
+   (unregister-chaincode-event *event-hub* chaincode-id))
+  ([event-hub chaincode-id]
+   (%unregister-event event-hub chaincode-id :chaincode-id->chan-fn-map)))
 
 (defn get-all-event-chans
-  []
-  (letfn [(%get-all-chans [ref]
-            (map :ch (vals (deref ref))))]
-    `[~command-ch
-      ~block-event-chan
-      ~@(%get-all-chans tx-id->chan-fn-map)
-      ~@(%get-all-chans chaincode-id->chan-fn-map)]))
+  ([]
+   (get-all-event-chans *event-hub*))
+  ([event-hub]
+   (letfn [(%get-all-chans [k]
+             (map :ch (vals (deref (k event-hub)))))]
+     `[(:command-ch ~event-hub)
+       (:block-event-chan ~event-hub)
+       ~@(%get-all-chans :tx-id->chan-fn-map)
+       ~@(%get-all-chans :chaincode-id->chan-fn-map)])))
 
 ;; Block event is proto/Block
 ;; Chaincode event is proto/ChaincodeEvent
@@ -277,6 +326,8 @@
     (onCompleted [this]
       (async/put! ch :done))))
 
+#_
+;;https://grpc.io/docs/tutorials/basic/java.html
 (defn make-event-hub
   [user peer]
   (let [ch (async/chan (async/sliding-buffer default-sliding-buffer-size))
@@ -315,39 +366,63 @@
                    :else (recur))))
         (finally (.onCompleted observer))))))
 
-
-(defrecord EventHub [peer-address peer-tls-certificate peer-tls-certificate-override
-                     tx-registrants
-                     connected
-                     mtx chaincode-registrants block-registrants  
-                     grpc-client
-                     interested-events
-                     event-client-factory client])
-
-(defn make-event-hub [m]
-  (map->EventHub m))
-
-(def ^:dynamic *event-hub* nil)
-
 (defn connect
   ([]
-   (connect event-hub))
+   (connect *event-hub*))
+  ([event-hub]
+   (let [ch (:ch event-hub)
+         ^StreamObserver observer (transaction-observer ch)
+         ^ManagedChannel channel (proto/node->channel peer)
+         req-observer (.chat (EventsGrpc/newStub channel) observer)
+         interest (-> (EventsPackage$Interest/newBuilder)
+                      (.setEventType EventsPackage$Event$EventCase/BLOCK)
+                      (.build))
+         register (-> (EventsPackage$Register/newBuilder)
+                      (.addEvents interest)
+                      (.build))
+         block-event (-> (EventsPackage$Event/newBuilder)
+                         (.setRegister register)
+                         (.setCreator (.toByteString ^Identities$SerializedIdentity
+                                                     (proto/clj->proto (proto/user->serialized-identity user))))
+                         (.build))]
+     (.onNext req-observer
+              (-> (EventsPackage$SignedEvent/newBuilder)
+                  (.setEventBytes (.toByteString block-event))
+                  (.setSignature (ByteString/copyFrom ^bytes (crypto/sign (.toByteArray block-event) (:private-key user) {:algorithm (:key-algorithm (:crypto-suite user))})))
+                  (.build)))
+     (swap! (:observer event-hub) req-observer))))
+
+
+(defn disconnect
+  ([]
+   (disconnect *event-hub*))
   ([event-hub]
    (when-not (:connected event-hub)
      (if-not (:peer-address event-hub)
        (throw (Exception. "Peer address is missing!"))
        ))))
 
+(defn get-peer-address
+  ([]
+   (get-peer-address *event-hub*))
+  ([event-hub]
+   (when-not (:connected event-hub)
+     (if-not (:peer-address event-hub)
+       (throw (Exception. "Peer address is missing!"))
+       ))))
 
-;; connect
-;; disconnect
-;; get-peer-address
-;; connected?
+(defn connected?
+  ([]
+   (connected? *event-hub*))
+  ([event-hub]
+   (when-not (:connected event-hub)
+     (if-not (:peer-address event-hub)
+       (throw (Exception. "Peer address is missing!"))
+       ))))
+
+;; Not required
+;; 
 ;; set-peer-address
-;; unregister-block-event
-;; unregister-chaincode-event
-;; unregister-tx-event
-
 ;; set-interests
 ;; add-chaincode-interest
 ;; remove-chaincode-interest
