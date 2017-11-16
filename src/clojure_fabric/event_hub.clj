@@ -21,6 +21,8 @@
   (:import io.grpc.stub.StreamObserver
            [clojure_fabric.proto Block ChaincodeEvent]
            [com.google.protobuf ByteString]
+           io.grpc.Status$Code
+           io.grpc.StatusRuntimeException
            io.grpc.ManagedChannel
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockMetadataIndex
@@ -79,9 +81,10 @@
                      block-event-handlers
                      tx-id->chan-fn-map
                      chaincode-id->chan-fn-map
-                     observer
                      event-go-loop
-
+                     start-time
+                     end-time
+                     managed-channel
                      ;; connected
                      ;; mtx
                      ;; grpc-client
@@ -91,14 +94,16 @@
 
 (defn make-event-hub [user peer]
   (->EventHub user peer (async/chan (async/sliding-buffer default-sliding-buffer-size))
-              (async/chan) ;; command ch
+              (atom nil) ;;(async/chan) ;; command ch
               ;; block event ch & handlers
-              (async/chan (async/sliding-buffer default-sliding-buffer-size))
+              (atom nil) ;; (async/chan (async/sliding-buffer default-sliding-buffer-size))
               (atom {})  ;; block-event-handlers
               (atom {})  ;; tx-id->chan-fn-map
               (atom {})  ;; chaincode-id->chan-fn-map
-              (atom nil) ;; observer
               (atom nil) ;; event-go-loop
+              (atom nil) ;; start-time
+              (atom nil) ;; end-time
+              (atom nil) ;; managed-channel
               ))
 
 (def ^:dynamic *event-hub* nil)
@@ -180,38 +185,36 @@
   [fn]
   (->ChanFun (async/chan) fn))
 
-(defmacro with-refresh-event-go-loop! [[event-hub] & body]
-  `(do ~@body
-       (async/put! (deref (:command-ch ~event-hub)) :refresh)))
+(defmacro with-issuing-event-go-loop-command! [[event-hub command] & body]
+  `(let [command-ch# (deref (:command-ch ~event-hub))]
+     ~@body
+     (when command-ch#
+       (async/put! command-ch# ~command))))
 
 (defn register-block-event
   ([fn-name fn]
    (register-block-event *event-hub* fn-name fn))
   ([event-hub fn-name fn]
-   (with-refresh-event-go-loop! [event-hub]
+   (with-issuing-event-go-loop-command! [event-hub :refresh]
      (swap! (:block-event-handlers event-hub) assoc fn-name fn))))
 
 (defn unregister-block-event
   ([fn-name]
    (unregister-block-event *event-hub* fn-name))
   ([event-hub fn-name]
-   (with-refresh-event-go-loop! [event-hub]
+   (with-issuing-event-go-loop-command! [event-hub :refresh]
      (swap! (:block-event-handlers event-hub) dissoc fn-name))))
 
 (defn- %unregister-event
   [event-hub id k]
-   (let [ref-m (k event-hub)]
-    (with-refresh-event-go-loop! [event-hub]
-      (when-let [existing (get (deref ref-m) id)]
-        (async/close! (:ch existing))
-        (swap! ref-m dissoc id)))))
+  (let [ref-m (k event-hub)]
+    (with-issuing-event-go-loop-command! [event-hub :refresh]
+      (swap! ref-m dissoc id))))
 
 (defn- %register-event
   [event-hub id fn k]
   (let [ref-m (k event-hub)]
-    (with-refresh-event-go-loop! [event-hub]
-      (when-let [existing (get (deref ref-m) id)]
-        (async/close! (:ch existing)))
+    (with-issuing-event-go-loop-command! [event-hub :refresh]
       (swap! ref-m assoc id (make-chan-fun fn)))))
 
 (defn register-tx-event
@@ -242,8 +245,8 @@
   [event-hub]
   (letfn [(%get-all-chans [k]
             (map :ch (vals (deref (k event-hub)))))]
-    `[(:command-ch ~event-hub)
-      (:block-event-chan ~event-hub)
+    `[~@(:command-ch ~event-hub)
+      ~@(:block-event-chan ~event-hub)
       ~@(%get-all-chans :tx-id->chan-fn-map)
       ~@(%get-all-chans :chaincode-id->chan-fn-map)]))
 
@@ -256,24 +259,39 @@
 
 (defn add-event-go-loop!
   [event-hub]
-  (async/go-loop []
-    (let [[v ch] (async/alts! (get-all-event-chans event-hub))]
-      (cond (and (= (:command-ch event-hub) ch) (= v :refresh))
-            :renew-get-all-event-chans
+  (swap! (:command-ch event-hub) (async/chan))
+  (swap! (:block-event-chan event-hub) (async/chan (async/sliding-buffer default-sliding-buffer-size)))
+  (swap! (:start-time event-hub) (System/currentTimeMillis))
+  (swap! (:event-go-loop event-hub)
+         (let [command-ch (:command-ch event-hub)]
+           (async/go-loop []
+             (let [[v ch] (async/alts! (get-all-event-chans event-hub))]
+               (cond (and (= command-ch ch) (= v :refresh))
+                     :renew-get-all-event-chans
 
-            (instance? Block v)
-            (doseq [[_ f] @(:block-event-handlers event-hub)]
-              (utils/ignore-errors
-               (f v)))
+                     (instance? Block v)
+                     (doseq [[_ f] @(:block-event-handlers event-hub)]
+                       (utils/ignore-errors
+                        (f v)))
 
-            (instance? TxEvent v)
-            (utils/ignore-errors
-             ((:fn (get @(:tx-id->chan-fn-map event-hub) (:tx-id v))) v))
+                     (instance? TxEvent v)
+                     (utils/ignore-errors
+                      ((:fn (get @(:tx-id->chan-fn-map event-hub) (:tx-id v))) v))
 
-            (instance? ChaincodeEvent v)
-            (utils/ignore-errors
-             ((:fn (get @(:chaincode-id->chan-fn-map event-hub) (:chaincode-id v))) v)))
-      (recur))))
+                     (instance? ChaincodeEvent v)
+                     (utils/ignore-errors
+                      ((:fn (get @(:chaincode-id->chan-fn-map event-hub) (:chaincode-id v))) v)))
+               (when-not (and (= command-ch ch) (= v :quit))
+                 (recur))))
+           ;; When out of the loop, clear ch, event-go-loop, etc
+           (.shutdownNow ^ManagedChannel (deref (:managed-channel event-hub)))
+           (async/close! (deref (:command-ch event-hub)))
+           (async/close! (deref (:block-event-chan event-hub)))
+           (swap! (:managed-channel event-hub) nil)
+           (swap! (:command-ch event-hub) nil)
+           (swap! (:block-event-chan event-hub) nil)
+           (swap! (:event-go-loop event-hub) nil)
+           (swap! (:end-time event-hub) (System/currentTimeMillis)))))
 
 (defn- %id->ch
   [event-hub id k]
@@ -296,83 +314,61 @@
         data-list (:data clj-block)]
     (assert (= (count tx-status-codes) (count data-list)))
     ;; 1. Block Event on all channels
-    (async/put! (:block-event-chan event-hub) clj-block)
+    (async/put! (deref (:block-event-chan event-hub)) clj-block)
     (doseq [[data code] (map list data-list tx-status-codes)]
       (let [payload (:payload data)
             channel-header (get-in payload [:header :channel-header])
             tx-id (:tx-id channel-header)]
         ;; 2. Transaction Event with tx-id
-        (when-let [ch (tx-id->chan tx-id)]
+        (when-let [ch (tx-id->chan event-hub tx-id)]
           (async/put! ch (make-TxEvent tx-id code)))
         ;; 3. Chaincode event
         (when (= (:type channel-header) (proto/header-types :endorser-transaction))
           (let [chaincode-event (get-in payload [:data :actions 0 :payload :action
                                                  :proposal-response-payload :extension :events])]
-            (when-let [ch (chaincode-id->chan (:chaincode-id chaincode-event))]
+            (when-let [ch (chaincode-id->chan event-hub (:chaincode-id chaincode-event))]
               (async/put! ch chaincode-event))))))))
 
 (defn transaction-observer
-  [ch]
+  [event-hub]
   (reify StreamObserver
     (onNext [this event]
-      (case (.getEventCase ^EventsPackage$Event event)
-        EventsPackage$Event$EventCase/BLOCK (deliver-block-events-to-channels (.getBlock ^EventsPackage$Event event))
-        EventsPackage$Event$EventCase/REGISTER nil ;; init
-        ;; EventsPackage$Event$EventCase/CHAINCODE_EVENT ;; FIXME: not used??
-        EventsPackage$Event$EventCase/UNREGISTER nil;; shutdown
+      (condp = (.getEventCase ^EventsPackage$Event event)
+
+        EventsPackage$Event$EventCase/REGISTER
+        (add-event-go-loop! event-hub)
+        
+        EventsPackage$Event$EventCase/BLOCK
+        (deliver-block-events-to-channels event-hub (.getBlock ^EventsPackage$Event event))
+        
+        EventsPackage$Event$EventCase/CHAINCODE_EVENT nil
+        EventsPackage$Event$EventCase/REJECTION nil
+
+        EventsPackage$Event$EventCase/UNREGISTER
+        (with-issuing-event-go-loop-command! [event-hub :quit])
+        
+        EventsPackage$Event$EventCase/FILTERED_BLOCK nil
         ))
     (onError [this err]
-      ;; FIXME call shutdownNow when Status$Code/INTERNAL or Status$Code/UNAVAILABLE
-      (async/put! ch err))
+      ;; FIXME:
+      ;; 1. log error
+      ;;      call shutdownNow when Status$Code/INTERNAL or 
+      (when (and (instance? StatusRuntimeException err)
+                 (->> (.getStatus ^StatusRuntimeException err)
+                      (.getCode)
+                      (contains? #{Status$Code/INTERNAL Status$Code/UNAVAILABLE})))
+        (with-issuing-event-go-loop-command! [event-hub :quit])))
     (onCompleted [this]
-      (async/put! ch :done))))
+      (with-issuing-event-go-loop-command! [event-hub :quit]))))
 
-#_
+
 ;;https://grpc.io/docs/tutorials/basic/java.html
-(defn make-event-hub
-  [user peer]
-  (let [ch (async/chan (async/sliding-buffer default-sliding-buffer-size))
-        ^StreamObserver observer (transaction-observer ch)
-        ^ManagedChannel channel (proto/node->channel peer)]
-    (.chat (EventsGrpc/newStub channel)
-           observer)
-    (let [interest (-> (EventsPackage$Interest/newBuilder)
-                       (.setEventType EventsPackage$Event$EventCase/BLOCK)
-                       (.build))
-          register (-> (EventsPackage$Register/newBuilder)
-                       (.addEvents interest)
-                       (.build))
-          block-event (-> (EventsPackage$Event/newBuilder)
-                          (.setRegister register)
-                          (.setCreator (.toByteString ^Identities$SerializedIdentity
-                                                      (proto/clj->proto (proto/user->serialized-identity user))))
-                          (.build))]
-      (.onNext observer
-               (-> (EventsPackage$SignedEvent/newBuilder)
-                   (.setEventBytes (.toByteString block-event))
-                   (.setSignature (ByteString/copyFrom ^bytes (crypto/sign (.toByteArray block-event) (:private-key user) {:algorithm (:key-algorithm (:crypto-suite user))})))
-                   (.build)))
-      (try
-        (async/go-loop []
-          (let [block (async/<! ch)]
-            (case (.getEventCase ^EventsPackage$Event event)
-              EventsPackage$Event$EventCase/BLOCK (async/put! ch event) ;; ch is like eventQueue
-              EventsPackage$Event$EventCase/REGISTER :FIXME ;; connected, connectedTime
-              )
-            (cond= (type v)
-                   
-                   (instance? Exception v) (when-not (.isShutdown channel)
-                                             (.shutdownNow channel))
-                   ;; FIXME: do something here!!
-                   :else (recur))))
-        (finally (.onCompleted observer))))))
-
 (defn connect
   ([]
    (connect *event-hub*))
   ([event-hub]
-   (let [{:keys [ch user peer]} event-hub
-         ^StreamObserver observer (transaction-observer ch)
+   (let [{:keys [user peer]} event-hub
+         ^StreamObserver observer (transaction-observer event-hub)
          ^ManagedChannel channel (proto/node->channel peer)
          req-observer (.chat (EventsGrpc/newStub channel) observer)
          interest (-> (EventsPackage$Interest/newBuilder)
@@ -386,12 +382,15 @@
                          (.setCreator (.toByteString ^Identities$SerializedIdentity
                                                      (proto/clj->proto (proto/user->serialized-identity user))))
                          (.build))]
+     ;; Save managed-channel to call shutdownNow later
+     (swap! (:managed-channel event-hub) channel)
      (.onNext req-observer
               (-> (EventsPackage$SignedEvent/newBuilder)
                   (.setEventBytes (.toByteString block-event))
-                  (.setSignature (ByteString/copyFrom ^bytes (crypto/sign (.toByteArray block-event) (:private-key user) {:algorithm (:key-algorithm (:crypto-suite user))})))
-                  (.build)))
-     (swap! (:observer event-hub) req-observer))))
+                  (.setSignature (ByteString/copyFrom ^bytes (crypto/sign (.toByteArray block-event)
+                                                                          (:private-key user)
+                                                                          {:algorithm (:key-algorithm (:crypto-suite user))})))
+                  (.build))))))
 
 
 (defn disconnect
