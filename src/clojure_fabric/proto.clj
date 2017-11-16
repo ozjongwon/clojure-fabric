@@ -939,9 +939,9 @@
   (letfn [(send-envelope-via-orderer-using-async [call-fn]
             (let [ch (async/chan 32)
                   callback (envelope-broadcast-observer ch)
-                  ^StreamObserver observer (call-fn (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
-                                                    callback)]
-              (.onNext observer ^Common$Envelope (clj->proto envelope))
+                  ^StreamObserver req-observer (call-fn (AtomicBroadcastGrpc/newStub ^ManagedChannel (node->channel orderer))
+                                                        callback)]
+              (.onNext req-observer ^Common$Envelope (clj->proto envelope))
               (try
                 (async/go-loop [result []]
                   (let [[v ch] (async/alts! [ch (async/timeout (:orderer-wait-time timeouts))])]
@@ -949,7 +949,7 @@
                           (nil? v) (throw (Exception. "Timeout to send Evelope using orderer"))
                           (instance? Exception v) (throw v)
                           :else (recur (conj result v)))))
-                (finally (.onCompleted observer)))))]
+                (finally (.onCompleted req-observer)))))]
     (async/<!!
      (send-envelope-via-orderer-using-async
       (case call-type
