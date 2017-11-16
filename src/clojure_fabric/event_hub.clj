@@ -245,8 +245,8 @@
   [event-hub]
   (letfn [(%get-all-chans [k]
             (map :ch (vals (deref (k event-hub)))))]
-    `[~@(:command-ch ~event-hub)
-      ~@(:block-event-chan ~event-hub)
+    `[~(deref (:command-ch event-hub))
+      ~(deref (:block-event-chan event-hub))
       ~@(%get-all-chans :tx-id->chan-fn-map)
       ~@(%get-all-chans :chaincode-id->chan-fn-map)]))
 
@@ -259,39 +259,41 @@
 
 (defn add-event-go-loop!
   [event-hub]
-  (swap! (:command-ch event-hub) (async/chan))
-  (swap! (:block-event-chan event-hub) (async/chan (async/sliding-buffer default-sliding-buffer-size)))
-  (swap! (:start-time event-hub) (System/currentTimeMillis))
-  (swap! (:event-go-loop event-hub)
-         (let [command-ch (:command-ch event-hub)]
-           (async/go-loop []
-             (let [[v ch] (async/alts! (get-all-event-chans event-hub))]
-               (cond (and (= command-ch ch) (= v :refresh))
-                     :renew-get-all-event-chans
+  (reset! (:command-ch event-hub) (async/chan))
+  (reset! (:block-event-chan event-hub) (async/chan (async/sliding-buffer default-sliding-buffer-size)))
+  (reset! (:start-time event-hub) (System/currentTimeMillis))
+  (reset! (:event-go-loop event-hub)
+          (let [command-ch (deref (:command-ch event-hub))]
+            (async/go-loop []
+              (let [[v ch] (async/alts! (get-all-event-chans event-hub))]
+                (cond (and (= command-ch ch) (= v :refresh))
+                      :renew-get-all-event-chans
 
-                     (instance? Block v)
-                     (doseq [[_ f] @(:block-event-handlers event-hub)]
-                       (utils/ignore-errors
-                        (f v)))
+                      (instance? Block v)
+                      (doseq [[_ f] @(:block-event-handlers event-hub)]
+                        (utils/ignore-errors
+                         (f v)))
 
-                     (instance? TxEvent v)
-                     (utils/ignore-errors
-                      ((:fn (get @(:tx-id->chan-fn-map event-hub) (:tx-id v))) v))
+                      (instance? TxEvent v)
+                      (utils/ignore-errors
+                       ((:fn (get @(:tx-id->chan-fn-map event-hub) (:tx-id v))) v))
 
-                     (instance? ChaincodeEvent v)
-                     (utils/ignore-errors
-                      ((:fn (get @(:chaincode-id->chan-fn-map event-hub) (:chaincode-id v))) v)))
-               (when-not (and (= command-ch ch) (= v :quit))
-                 (recur))))
-           ;; When out of the loop, clear ch, event-go-loop, etc
-           (.shutdownNow ^ManagedChannel (deref (:managed-channel event-hub)))
-           (async/close! (deref (:command-ch event-hub)))
-           (async/close! (deref (:block-event-chan event-hub)))
-           (swap! (:managed-channel event-hub) nil)
-           (swap! (:command-ch event-hub) nil)
-           (swap! (:block-event-chan event-hub) nil)
-           (swap! (:event-go-loop event-hub) nil)
-           (swap! (:end-time event-hub) (System/currentTimeMillis)))))
+                      (instance? ChaincodeEvent v)
+                      (utils/ignore-errors
+                       ((:fn (get @(:chaincode-id->chan-fn-map event-hub) (:chaincode-id v))) v)))
+                (if (and (= command-ch ch) (= v :quit))
+                  (do 
+                    ;; When out of the loop, clear ch, event-go-loop, etc
+                    (when-let [^ManagedChannel managed-channel (deref (:managed-channel event-hub))]
+                       (.shutdownNow  managed-channel))
+                    (async/close! (deref (:command-ch event-hub)))
+                    (async/close! (deref (:block-event-chan event-hub)))
+                    (reset! (:managed-channel event-hub) nil)
+                    (reset! (:command-ch event-hub) nil)
+                    (reset! (:block-event-chan event-hub) nil)
+                    (reset! (:event-go-loop event-hub) nil)
+                    (reset! (:end-time event-hub) (System/currentTimeMillis)))
+                  (recur)))))))
 
 (defn- %id->ch
   [event-hub id k]
@@ -383,7 +385,7 @@
                                                      (proto/clj->proto (proto/user->serialized-identity user))))
                          (.build))]
      ;; Save managed-channel to call shutdownNow later
-     (swap! (:managed-channel event-hub) channel)
+     (reset! (:managed-channel event-hub) channel)
      (.onNext req-observer
               (-> (EventsPackage$SignedEvent/newBuilder)
                   (.setEventBytes (.toByteString block-event))
@@ -402,9 +404,9 @@
   ([]
    (connected? *event-hub*))
   ([{:keys [end-time managed-channel event-go-loop] :as event-hub}]
-   (and (not (deref end-time))
-        (deref event-go-loop)
-        (deref managed-channel))))
+   (boolean (and (not (deref end-time))
+                 (deref event-go-loop)
+                 (deref managed-channel)))))
 
 ;; Not required
 ;; 

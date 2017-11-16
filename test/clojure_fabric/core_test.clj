@@ -5,7 +5,9 @@
             [clojure-fabric.core :refer :all]
             [clojure-fabric.channel :refer :all]
             [clojure-fabric.chaincode :refer :all]
+            [clojure-fabric.event-hub :refer :all]
             [clojure-fabric.crypto-suite :as crypto-suite]
+            [clojure.core.async :as async]
             ;;[expectations.clojure.test :refer [defexpect]] ;; available on 2.2.0
             [clojure-fabric.proto :as proto]
             [clojure-fabric.core :as core])
