@@ -392,33 +392,19 @@
                                                                           {:algorithm (:key-algorithm (:crypto-suite user))})))
                   (.build))))))
 
-
 (defn disconnect
   ([]
    (disconnect *event-hub*))
   ([event-hub]
-   (when-not (:connected event-hub)
-     (if-not (:peer-address event-hub)
-       (throw (Exception. "Peer address is missing!"))
-       ))))
-
-(defn get-peer-address
-  ([]
-   (get-peer-address *event-hub*))
-  ([event-hub]
-   (when-not (:connected event-hub)
-     (if-not (:peer-address event-hub)
-       (throw (Exception. "Peer address is missing!"))
-       ))))
+   (with-issuing-event-go-loop-command! [event-hub :quit])))
 
 (defn connected?
   ([]
    (connected? *event-hub*))
-  ([event-hub]
-   (when-not (:connected event-hub)
-     (if-not (:peer-address event-hub)
-       (throw (Exception. "Peer address is missing!"))
-       ))))
+  ([{:keys [end-time managed-channel event-go-loop] :as event-hub}]
+   (and (not (deref end-time))
+        (deref event-go-loop)
+        (deref managed-channel))))
 
 ;; Not required
 ;; 
@@ -428,4 +414,6 @@
 ;; remove-chaincode-interest
 ;; get-interested-events
 ;; receive (i/f - block or chaincode)
+;; get-peer-address
+
 
