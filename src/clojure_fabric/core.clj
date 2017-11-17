@@ -87,10 +87,10 @@
 ;; an endorser, committer and/or submitter
 ;; endorser is a committer
 ;; %roles ex : #{:endorser :submitter :committer}, #{}, etc
-(defrecord Peer [name url pem hostname-override?])
+(defrecord Peer [name url pem hostname-override? event-hub])
 
 (defn make-peer [m]
-  (map->Peer m))
+  (map->Peer (assoc m :event-hub (atom nil))))
 
 ;;;
 ;;; Orderer

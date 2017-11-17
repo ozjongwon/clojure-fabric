@@ -349,8 +349,7 @@
         EventsPackage$Event$EventCase/UNREGISTER
         (with-issuing-event-go-loop-command! [event-hub :quit])
         
-        EventsPackage$Event$EventCase/FILTERED_BLOCK nil
-        ))
+        EventsPackage$Event$EventCase/FILTERED_BLOCK nil))
     (onError [this err]
       ;; FIXME:
       ;; 1. log error
