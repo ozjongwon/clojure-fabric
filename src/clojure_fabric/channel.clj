@@ -341,6 +341,8 @@
 (defn get-genesis-block
   ([]
    (get-genesis-block core/*channel* (chaincode/get-random-node core/*channel* :orderers)))
+  ([channel]
+   (get-genesis-block channel (chaincode/get-random-node channel :orderers)))
   ([{:keys [user-key name] :as channel} orderer]
    (let [seek-start-stop (proto/make-seek-position :specified (proto/make-seek-specified :number 0)) ]
      (let [result (->> (proto/make-seek-info :start seek-start-stop :stop seek-start-stop :behavior :block-until-ready)
