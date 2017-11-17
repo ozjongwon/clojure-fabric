@@ -37,7 +37,8 @@
             [clojure-fabric.core :as core]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.proto :as proto]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [clojure-fabric.event-hub :as event-hub])
   (:import com.google.protobuf.ByteString
            [java.io ByteArrayOutputStream File FileInputStream]
            [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
@@ -49,57 +50,6 @@
   [user]
   (not (nil? (:ca-location user))))
 
-(defn new-user!
-  [{:keys [msp-id name]
-    :as args}]
-  ;; roles - client, auditor
-  ;; %roles - peer, validator
-  (swap! core/users assoc [msp-id name] (core/make-user args)))
-
-;;; new_chain
-;;;
-;; "Initializes a chain instance with the given name. This is really representing the \"Channel\"
-;;   (as explained above), and this call returns an empty object. To initialize the channel, a list of
-;;   participating endorsers and orderer peers must be configured first on the returned object.
-;;   Params:
-;;         name (str): The name of the chain, recommend using namespaces to avoid collision
-;;   Returns:
-;;         (Chain instance): The uninitialized chain instance."
-;;
-;;
-(defn new-channel!
-  ([channel-opts]
-   (new-channel! core/*user* channel-opts))
-  ([{msp-id :msp-id user-name :name} channel-opts]
-   (let [user-key [msp-id user-name]]
-     (swap! core/users assoc-in [user-key :channels (:name channel-opts)]
-            (core/make-channel (assoc channel-opts :user-key user-key))))))
-
-;;; get_chain
-(defn get-channel
-  "Get a chain instance from the state storage. This allows existing chain instances to be saved
-  for retrieval later and to be shared among instances of the application. Note that it's the 
-  application/SDK’s responsibility to record the chain information. If an application is not able to
-  look up the chain information from storage, it may call another API that queries one or more Peers
-  for that information.
-  Params:
-        name (str): The name of the chain
-  Returns:
-        (Chain instance or None): the chain instance for the name.
-  Error:  The state store has not been set
-        A chain does not exist under that name"
-  ;; Implementation Note:
-  ;;    Not a storage operation 
-  ([channel-name]
-   (get-channel core/*user* channel-name))
-  ([{:keys [channels]} channel-name]
-   (if-let [found (get channels channel-name)]
-     found
-     ;; Implementation Note
-     ;;       The spec says that Returns is chain Instance or None
-     ;;       How it can be None and also throw an exception?
-     (throw (Exception. "A channel does not exist under that name")))))
-
 (defmacro with-validating-peers
   [[user-or-channel target-peers] & body]
   `(let [unknown-peers# (clojure.set/difference (set ~target-peers)
@@ -109,29 +59,6 @@
      ~@body))
 
 (defonce system-channel-name "")
-
-;;; query_chain-info
-(defn query-channels
-    "This is a network call to the designated Peer(s) to discover the chain information.
-  The target Peer(s) must be part of the chain in question to be able to return the requested
-  information.
-  Params:
-        name (str): The name of the chain
-        peers (array of Peer instances): target Peers to query
-  Returns: 
-        (Chain instance or None): the chain instance for the name.
-  Error: 
-        The target Peer(s) does not know anything about the chain"
-  ([channel-name peers]
-   (query-channels core/*user* channel-name peers))
-  ([user channel-name target-peers]
-   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user channel-name)]
-     (with-validating-peers [channel target-peers]
-                             (chaincode/send-chaincode-request :query-channels
-                                                               system-channel-name
-                                                               target-peers
-                                                               user
-                                                               {})))))
 
 ;; (defonce ^:private client-state-store (atom {}))
 ;; ;;; set_state_store
@@ -175,27 +102,9 @@
 (defn new-crypto-suite!
   ([crypto-opts]
    (new-crypto-suite! core/*user* crypto-opts))
-  ([{:keys [msp-id name]} user crypto-opts]
+  ([{:keys [msp-id name]} crypto-opts]
    (swap! core/users assoc-in [[msp-id name] crypto-opts]
           (core/make-crypto-suite crypto-opts))))
-
-;; Params:
-;;   Suite (object): an instance of a crypto suite implementation"
-;;   
-;; Immutable
-
-;;; get_crypto_suite 
-(defn get-crypto-suite
-  "A convenience method for obtaining the CryptoSuite object in use for this client.
-  Params:
-        None
-  Returns:
-        (CryptoSuite instance): The CryptoSuite implementation object set within this Client, 
-        or null if it does not exist"
-  ([]
-   (get-crypto-suite core/*user*))
-  ([user]
-   (:crypto-suite user)))
 
 ;;; set_user_context
 ;; "Sets an instance of the User class as the security context of this client instance.
@@ -252,18 +161,6 @@
           (known-channel-node? c node plural-type-key) true
           :else (recur more-c))))
 
-(defn query-installed-chaincodes
-  ([peer]
-   (query-installed-chaincodes core/*user* peer))
-  ([user peer]
-   (if (known-user-node? user peer :peers)
-     (first (chaincode/send-chaincode-request :query-installed-chaincodes
-                                              system-channel-name
-                                              peer
-                                              user
-                                              {}))
-     (throw (Exception. "The target Peer does not know anything about the channel")))))
-
 ;;; get_name
 (defn get-name
   "Get member name. Required property for the instance objects.
@@ -300,56 +197,6 @@
   ([user]
    (:certificate user)))
 
-(defn create-or-update-channel
-  ([orderer envelope]
-   (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
-  ([user channel-id orderer config-update signatures]
-   (->> (proto/make-config-update-envelope :config-update config-update :signatures signatures)
-        (chaincode/make-envelope channel-id user :config-update)
-        (create-or-update-channel orderer))))
-
-(defn make-config-signature
-  [user config-update {:keys [header-version] :or {header-version 1}}]
-  (let [identity (proto/user->serialized-identity user)
-        nonce (chaincode/make-nonce)
-        signature-header (proto/make-signature-header :creator identity :nonce nonce)
-        signature-header-bytes (.toByteArray ^Common$SignatureHeader (proto/clj->proto signature-header))
-        signature-header-length (alength signature-header-bytes)
-        config-update-length (alength ^bytes config-update)
-        header+config-bytes (byte-array (+ signature-header-length config-update-length))]
-    (System/arraycopy signature-header-bytes 0 header+config-bytes 0 signature-header-length)
-    (System/arraycopy config-update 0 header+config-bytes signature-header-length config-update-length)
-    (->> (crypto-suite/sign header+config-bytes
-                            (:private-key user)
-                            {:algorithm (:key-algorithm (:crypto-suite user))})
-         (proto/make-config-signature :signature-header signature-header
-                                      :signature))))
-
-(defn create-or-update-channel-from-nodes
-  [user channel-id orderer nodes config-update]
-  ;; participants = orderers + peers
-  (create-or-update-channel user
-                            channel-id
-                            orderer
-                            config-update
-                            (mapv (fn [node]
-                                    (make-config-signature node config-update {}))
-                                  nodes)))
-
-(defonce max-tx-file-size 1024)
-(defn tx-file->config-update
-    [tx-filename]
-    (let [tx-file (io/as-file tx-filename)]
-      (assert (<= (.length tx-file) max-tx-file-size))
-      (let [envelope (->> (with-open [in (io/input-stream tx-file)
-                                      out (java.io.ByteArrayOutputStream.)]
-                            (io/copy in out)
-                            (Common$Envelope/parseFrom (.toByteArray out))))]
-        (-> (proto/proto->clj envelope
-                              (proto/parse-trees :block-config-update-envelope))
-            (get-in [:payload :data :config-update])
-            (proto/clj->proto)
-            (.toByteArray)))))
 
 ;;(def cu (tx-file->config-update "/home/jc/Work/clojure-fabric/resources/fixture/balance-transfer/artifacts/channel/mychannel.tx"))
 ;;
@@ -386,6 +233,26 @@
 ;;   ;; Not sure if this is required now (couldn't find any usage in Java code)
 ;;   )
 
+(defn make-config-signature
+  [user config-update {:keys [header-version] :or {header-version 1}}]
+  (let [identity (proto/user->serialized-identity user)
+        nonce (chaincode/make-nonce)
+        signature-header (proto/make-signature-header :creator identity :nonce nonce)
+        signature-header-bytes (.toByteArray ^Common$SignatureHeader (proto/clj->proto signature-header))
+        signature-header-length (alength signature-header-bytes)
+        config-update-length (alength ^bytes config-update)
+        header+config-bytes (byte-array (+ signature-header-length config-update-length))]
+    (System/arraycopy signature-header-bytes 0 header+config-bytes 0 signature-header-length)
+    (System/arraycopy config-update 0 header+config-bytes signature-header-length config-update-length)
+    (->> (crypto-suite/sign header+config-bytes
+                            (:private-key user)
+                            {:algorithm (:key-algorithm (:crypto-suite user))})
+         (proto/make-config-signature :signature-header signature-header
+                                      :signature))))
+
+;;;
+;;; Utility functions
+;;;
 (defonce default-tgz-size 500000)       ;500kb, from Java SDK
 
 (defonce type->file-extensions {:golang #{"go"} :java #{"java"} :node #{"js"}})
@@ -427,6 +294,90 @@
 ;; (make-tgz-package :golang "github.com/example_cc" "/home/jc/Work/clojure-fabric/resources/gocc")
 
 
+(defonce max-tx-file-size 1024)
+(defn tx-file->config-update
+  [tx-filename]
+  (let [tx-file (io/as-file tx-filename)]
+    (assert (<= (.length tx-file) max-tx-file-size))
+    (let [envelope (->> (with-open [in (io/input-stream tx-file)
+                                    out (java.io.ByteArrayOutputStream.)]
+                          (io/copy in out)
+                          (Common$Envelope/parseFrom (.toByteArray out))))]
+      (-> (proto/proto->clj envelope
+                            (proto/parse-trees :block-config-update-envelope))
+          (get-in [:payload :data :config-update])
+          ^Configtx$ConfigUpdate (proto/clj->proto)
+          (.toByteArray)))))
+;;;
+;;; Public API
+;;;
+
+(defn create-or-update-channel
+  ([orderer envelope]
+   (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
+  ([user channel-id orderer config-update signatures]
+   (->> (proto/make-config-update-envelope :config-update config-update :signatures signatures)
+        (chaincode/make-envelope channel-id user :config-update)
+        (create-or-update-channel orderer))))
+
+;; This is like create-channel
+(defn create-or-update-channel-from-nodes
+  [user channel-id orderer nodes config-update]
+  ;; participants = orderers + peers
+  (create-or-update-channel user
+                            channel-id
+                            orderer
+                            config-update
+                            (mapv (fn [node]
+                                    (make-config-signature node config-update {}))
+                                  nodes)))
+
+;; This is like create-user
+(defn new-user!
+  [{:keys [msp-id name]
+    :as args}]
+  ;; roles - client, auditor
+  ;; %roles - peer, validator
+  (swap! core/users assoc [msp-id name] (core/make-user args)))
+
+;;; get_chain
+(defn get-channel
+  "Get a chain instance from the state storage. This allows existing chain instances to be saved
+  for retrieval later and to be shared among instances of the application. Note that it's the 
+  application/SDK’s responsibility to record the chain information. If an application is not able to
+  look up the chain information from storage, it may call another API that queries one or more Peers
+  for that information.
+  Params:
+        name (str): The name of the chain
+  Returns:
+        (Chain instance or None): the chain instance for the name.
+  Error:  The state store has not been set
+        A chain does not exist under that name"
+  ;; Implementation Note:
+  ;;    Not a storage operation 
+  ([channel-name]
+   (get-channel core/*user* channel-name))
+  ([{:keys [channels]} channel-name]
+   (if-let [found (get channels channel-name)]
+     found
+     ;; Implementation Note
+     ;;       The spec says that Returns is chain Instance or None
+     ;;       How it can be None and also throw an exception?
+     (throw (Exception. "A channel does not exist under that name")))))
+
+;;; get_crypto_suite 
+(defn get-crypto-suite
+  "A convenience method for obtaining the CryptoSuite object in use for this client.
+  Params:
+        None
+  Returns:
+        (CryptoSuite instance): The CryptoSuite implementation object set within this Client, 
+        or null if it does not exist"
+  ([]
+   (get-crypto-suite core/*user*))
+  ([user]
+   (:crypto-suite user)))
+
 (defn install-chaincode
   ([name path version package-filename type target-peers]
    (install-chaincode core/*user* name path version package-filename target-peers))
@@ -447,6 +398,70 @@
                                          target-peers
                                          user
                                          {:args [deployment-spec]})))))
+
+;;; new_chain
+;;;
+;; "Initializes a chain instance with the given name. This is really representing the \"Channel\"
+;;   (as explained above), and this call returns an empty object. To initialize the channel, a list of
+;;   participating endorsers and orderer peers must be configured first on the returned object.
+;;   Params:
+;;         name (str): The name of the chain, recommend using namespaces to avoid collision
+;;   Returns:
+;;         (Chain instance): The uninitialized chain instance."
+;;
+;;
+(defn new-channel!
+  ([channel-opts]
+   (new-channel! core/*user* channel-opts))
+  ([{msp-id :msp-id user-name :name} channel-opts]
+   (let [user-key [msp-id user-name]]
+     (swap! core/users assoc-in [user-key :channels (:name channel-opts)]
+            (core/make-channel (assoc channel-opts :user-key user-key))))))
+
+(defn new-event-hub!
+  [user peer]
+  (if-let [existing-eh (deref (:event-hub peer))]
+    (throw (Exception. "An event-hub already exists!"))
+    (let [event-hub (event-hub/make-event-hub user peer)]
+      (reset! (:event-hub peer) event-hub)
+      event-hub)))
+
+
+;;; query_chain-info
+(defn query-channels
+    "This is a network call to the designated Peer(s) to discover the chain information.
+  The target Peer(s) must be part of the chain in question to be able to return the requested
+  information.
+  Params:
+        name (str): The name of the chain
+        peers (array of Peer instances): target Peers to query
+  Returns: 
+        (Chain instance or None): the chain instance for the name.
+  Error: 
+        The target Peer(s) does not know anything about the chain"
+  ([channel-name peers]
+   (query-channels core/*user* channel-name peers))
+  ([user channel-name target-peers]
+   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user channel-name)]
+     (with-validating-peers [channel target-peers]
+                             (chaincode/send-chaincode-request :query-channels
+                                                               system-channel-name
+                                                               target-peers
+                                                               user
+                                                               {})))))
+
+
+(defn query-installed-chaincodes
+  ([peer]
+   (query-installed-chaincodes core/*user* peer))
+  ([user peer]
+   (if (known-user-node? user peer :peers)
+     (first (chaincode/send-chaincode-request :query-installed-chaincodes
+                                              system-channel-name
+                                              peer
+                                              user
+                                              {}))
+     (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 
 ;; (def e1 (Common$Envelope/parseFrom buf))
