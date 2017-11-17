@@ -120,10 +120,6 @@
   ([peer]
    (:name peer)))
 
-(defn find-peer
-  [name nodes]
-  (first (filter #(= (:name %) name) nodes)))
-
 ;; set_name
 ;; Immutable in this implementation
 

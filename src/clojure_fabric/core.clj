@@ -92,6 +92,10 @@
 (defn make-peer [m]
   (map->Peer (assoc m :event-hub (atom nil))))
 
+(defn find-peer
+  [name user-or-channel]
+  (first (filter #(= (:name %) name) (get-nodes user-or-channel :peers))))
+
 ;;;
 ;;; Orderer
 ;;;

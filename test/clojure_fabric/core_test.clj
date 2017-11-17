@@ -135,7 +135,7 @@
   []
   (doseq [[_ {:keys [msp-id org-type domain-name users peers orderers] :as org}] org-defs]
     (doseq [user users]
-      (new-user! (merge org user (get-user-crypto-files org user) {:crypto-suite (make-crypto-suite {})})))))
+      (user/new-user! (merge org user (get-user-crypto-files org user) {:crypto-suite (make-crypto-suite {})})))))
 
 ;;; 2. Add a channel
 (defn populate-orderers
@@ -158,7 +158,7 @@
   []
   (doseq [[_ v] @users]
     (let [org-def (get org-defs (:msp-id v))]
-     (new-channel! v {:name "mychannel" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
+     (user/new-channel! v {:name "mychannel" :orderers (populate-orderers org-def) :peers (populate-peers org-def)}))))
 
 (defn clear-users!
   []
@@ -183,45 +183,45 @@
 
 (expect clojure_fabric.core.Channel
         (let [user (get-user "Org1MSP" "user1")]
-          (get-channel user "mychannel")))
+          (user/get-channel user "mychannel")))
 (expect clojure_fabric.core.Channel
         (let [user (get-user "Org2MSP" "user1")]
-          (get-channel user "mychannel")))
+          (user/get-channel user "mychannel")))
 
 (expect (let [user (get-user "Org1MSP" "user1")
-              mychannel (get-channel user "mychannel")]
+              mychannel (user/get-channel user "mychannel")]
           (core/get-nodes mychannel :peers)))
 
 ;; This must be available with Admin user
 (expect io.grpc.StatusRuntimeException
         (let [user (get-user "Org1MSP" "user1") ;; user == error!
-              mychannel (get-channel user "mychannel")]
-          (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
+              mychannel (user/get-channel user "mychannel")]
+          (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
 
 (expect true
         (let [user (get-user "Org1MSP" "admin")
-              mychannel (get-channel user "mychannel")
-              chaincodes1 (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
-          (install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
+              mychannel (user/get-channel user "mychannel")
+              chaincodes1 (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
+          (user/install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                              "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
                              :golang (core/get-nodes mychannel  :peers))
           (= (inc (count chaincodes1))
-             (count (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
+             (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
 
 (expect io.grpc.StatusRuntimeException
         (let [user (get-user "Org2MSP" "user1") ;; user == error!
-              mychannel (get-channel user "mychannel")]
-          (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
+              mychannel (user/get-channel user "mychannel")]
+          (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
 
 (expect true
         (let [user (get-user "Org2MSP" "admin")
-              mychannel (get-channel user "mychannel")
-              chaincodes1 (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
-          (install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
+              mychannel (user/get-channel user "mychannel")
+              chaincodes1 (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
+          (user/install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                              "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
                              :golang (core/get-nodes mychannel :peers))
           (= (inc (count chaincodes1))
-             (count (query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
+             (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
 
 (expect true
         ;; FIXME: how to remove the existing channel????
@@ -230,19 +230,20 @@
               org2-admin (core/get-user "Org2MSP" "admin")
               ;; orderer is shared between Org1MSP and Org2MSP
               orderer (first (core/get-nodes (core/get-user "Org1MSP" "user1") :orderers))
-              config-update (tx-file->config-update "resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")]
-          (create-or-update-channel-from-nodes org1-admin
+              config-update (user/tx-file->config-update "resources/fixture/balance-transfer/artifacts/channel/mychannel.tx")]
+          (user/create-or-update-channel-from-nodes org1-admin
                                                "mychannel"
                                                orderer
                                                [org1-admin org2-admin orderer-admin]
                                                config-update)))
 
 (expect true
-        (let [org1-user (get-user "Org1MSP" "user1")
+        (let [org1-admin (get-user "Org1MSP" "admin")
+              org1-user (get-user "Org1MSP" "user1")
               org2-user (get-user "Org2MSP" "user1")
-              genesis-block (channel/get-genesis-block (get-in org1-user [:channels "mychannel"]))
-              mychannel (user/get-channel org1-user "mychannel")
-              peers [(peer/find)]]
+              genesis-block (channel/get-genesis-block (get-in org1-admin [:channels "mychannel"]))
+              mychannel (user/get-channel org1-admin "mychannel")
+              peers [(core/find-peer "peer0" org1-user) (core/find-peer "peer0" org2-user)]]
           (channel/join-channel mychannel peers genesis-block)))
 
 
@@ -250,24 +251,24 @@
 ;; (binding [core/*channel* (get-in u1 [:channels "mychannel"] )]
 ;;   (get-genesis-block))
 ;; (let [user (get-user "Org1MSP" "admin")
-;;       mychannel (get-channel user "mychannel")]
+;;       mychannel (user/get-channel user "mychannel")]
 ;;   (join-channel  mychannel p1 gb1))
 
 ;; (expect (let [user (get-user "Org2MSP" "admin")
-;;               mychannel (get-channel user "mychannel")]
+;;               mychannel (user/get-channel user "mychannel")]
 ;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 ;; (expect (let [user (get-user "Org1MSP" "user1")
-;;               mychannel (get-channel user "mychannel")]
+;;               mychannel (user/get-channel user "mychannel")]
 ;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 ;; (expect (let [user (get-user "Org1MSP" "admin")
-;;               mychannel (get-channel user "mychannel")]
+;;               mychannel (user/get-channel user "mychannel")]
 ;;           (query-channels user "mychannel" (core/get-nodes mychannel :peers))))
 
 #_
 (expect (let [mychannel (-> (get-user "Org1MSP" "user1")
-                           (get-channel "mychannel"))]
+                           (user/get-channel "mychannel"))]
           (query-info mychannel)))
 ;;; 3. Add orderers and peers
 
