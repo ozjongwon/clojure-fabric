@@ -295,6 +295,11 @@
 
 
 (defonce max-tx-file-size 1024)
+(defn clj-config-update->proto-byte-array
+  [config-update]
+  (-> ^Configtx$ConfigUpdate (proto/clj->proto config-update)
+      (.toByteArray)))
+
 (defn tx-file->config-update
   [tx-filename]
   (let [tx-file (io/as-file tx-filename)]
@@ -305,9 +310,7 @@
                           (Common$Envelope/parseFrom (.toByteArray out))))]
       (-> (proto/proto->clj envelope
                             (proto/parse-trees :block-config-update-envelope))
-          (get-in [:payload :data :config-update])
-          ^Configtx$ConfigUpdate (proto/clj->proto)
-          (.toByteArray)))))
+          (get-in [:payload :data :config-update])))))
 ;;;
 ;;; Public API
 ;;;
