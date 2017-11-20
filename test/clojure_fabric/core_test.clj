@@ -226,7 +226,6 @@
              (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
 
 (expect true
-        ;; FIXME: how to remove the existing channel????
         (let [orderer-admin (core/get-user "Orderer" "admin")
               org1-admin (core/get-user "Org1MSP" "admin")
               org2-admin (core/get-user "Org2MSP" "admin")
@@ -244,22 +243,24 @@
                                                          channel-name
                                                          orderer
                                                          [org1-admin org2-admin orderer-admin]))
-
+          
           (user/new-channel! org1-admin {:name channel-name
                                          :orderers [orderer]
                                          :peers org1-peers})
-          
-          (let [org1-admin (core/get-user "Org1MSP" "admin")
-                genesis-block (channel/get-genesis-block (get-in org1-admin [:channels channel-name]))]
-            (channel/join-channel (user/get-channel org1-admin channel-name) org1-peers genesis-block))
 
           (user/new-channel! org2-admin {:name channel-name
                                          :orderers [orderer]
                                          :peers org2-peers})
           
-          (let [org2-admin (core/get-user "Org2MSP" "admin")
-                genesis-block (channel/get-genesis-block (get-in org2-admin [:channels channel-name]))]
-            (channel/join-channel (user/get-channel org2-admin channel-name) org2-peers genesis-block))))
+          (let [org1-admin (core/get-user "Org1MSP" "admin")
+                org2-admin (core/get-user "Org2MSP" "admin")
+                genesis-block (channel/get-genesis-block (get-in org1-admin [:channels channel-name]))]
+            (every? (fn [resp]
+                      (-> (.getResponse resp)
+                          (.getStatus)
+                          (= 200)))
+                    (concat (channel/join-channel (user/get-channel org1-admin channel-name) org1-peers genesis-block)
+                            (channel/join-channel (user/get-channel org2-admin channel-name) org2-peers genesis-block))))))
 #_
 (expect true
         (let [org1-admin (core/get-user "Org1MSP" "admin")
