@@ -236,7 +236,7 @@
   ([nodes-access-key]
    (core/get-nodes core/*channel* nodes-access-key))
   ([channel nodes-access-key]
-   (second (rand-nth (seq (nodes-access-key channel))))))
+   (rand-nth (nodes-access-key channel))))
 
 (defn target->nodes [target]
   (if (sequential? target)
