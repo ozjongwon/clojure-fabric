@@ -167,11 +167,11 @@
   ([]
    (query-blockchain-info core/*channel*))
   ([{:keys [user-key name] :as channel}]
-   (chaincode/send-chaincode-request :query-blockchain-info
-                                     name
-                                     channel
-                                     (apply core/get-user user-key)
-                                     {:args [name]})))
+   (chaincode/send-system-chaincode-request :query-blockchain-info
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name]})))
 
 ;;;query_block
 (defn query-block-by-number
@@ -183,11 +183,11 @@
   ([block-number]
    (query-block-by-number core/*channel* block-number))
   ([{:keys [user-key name] :as channel} block-number]
-   (chaincode/send-chaincode-request :query-block-by-number
-                                     name
-                                     channel
-                                     (apply core/get-user user-key)
-                                     {:args [name block-number]})))
+   (chaincode/send-system-chaincode-request :query-block-by-number
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name block-number]})))
 
 (defn query-block-by-hash
   "Queries the ledger for Block by block hash
@@ -198,13 +198,13 @@
   ([block-hash]
    (query-block-by-hash core/*channel* block-hash))
   ([{:keys [user-key name] :as channel} block-hash]
-   (chaincode/send-chaincode-request :query-block-by-hash
-                                     name
-                                     channel
-                                     (apply core/get-user user-key)
-                                     {:args [name (if (utils/bytes? block-hash)
-                                                    block-hash
-                                                    (Hex/decode ^String block-hash))]})))
+   (chaincode/send-system-chaincode-request :query-block-by-hash
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name (if (utils/bytes? block-hash)
+                                                           block-hash
+                                                           (Hex/decode ^String block-hash))]})))
 
 (defn query-block-by-tx-id
   "Queries the ledger for Transaction by number
@@ -215,11 +215,11 @@
   ([transaction-id]
    (query-block-by-tx-id core/*channel* transaction-id))
   ([{:keys [user-key name] :as channel} transaction-id]
-   (chaincode/send-chaincode-request :query-block-by-tx-id
-                                     name
-                                     channel
-                                     (apply core/get-user user-key)
-                                     {:args [name transaction-id]})))
+   (chaincode/send-system-chaincode-request :query-block-by-tx-id
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name transaction-id]})))
 ;;; query_transaction
 (defn query-transaction
   "Queries the ledger for Transaction by number
@@ -230,11 +230,11 @@
   ([transaction-id]
    (query-transaction core/*channel* transaction-id))
   ([{:keys [user-key name] :as channel} transaction-id]
-   (chaincode/send-chaincode-request :query-tx-by-id
-                                     name
-                                     channel
-                                     (apply core/get-user user-key)
-                                     {:args [name transaction-id]})))
+   (chaincode/send-system-chaincode-request :query-tx-by-id
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name transaction-id]})))
 
 ;;;create_deploy_proposal
 (defn create-deploy-proposal
@@ -361,11 +361,11 @@
   ([peers genesis-block]
    (join-channel core/*channel* peers genesis-block))
   ([{:keys [user-key name] :as channel} peers genesis-block]
-   (chaincode/send-chaincode-request :join-channel
-                                     user/system-channel-name
-                                     peers
-                                     (apply core/get-user user-key)
-                                     {:args [genesis-block]})))
+   (chaincode/send-system-chaincode-request :join-channel
+                                            user/system-channel-name
+                                            peers
+                                            (apply core/get-user user-key)
+                                            {:args [genesis-block]})))
 
 ;;;;;;;;;
 

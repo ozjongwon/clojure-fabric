@@ -396,11 +396,11 @@
            tgz-package (make-tgz-package type path package-filename)
            deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec
                                                                  :code-package tgz-package)]
-       (chaincode/send-chaincode-request :install-chaincode
-                                         system-channel-name
-                                         target-peers
-                                         user
-                                         {:args [deployment-spec]})))))
+       (chaincode/send-system-chaincode-request :install-chaincode
+                                                system-channel-name
+                                                target-peers
+                                                user
+                                                {:args [deployment-spec]})))))
 
 ;;; new_chain
 ;;;
@@ -445,11 +445,11 @@
   ([peers]
    (query-channels core/*user* peers))
   ([user target-peers]
-   (chaincode/send-chaincode-request :query-channels
-                                     system-channel-name
-                                     target-peers
-                                     user
-                                     {})))
+   (chaincode/send-system-chaincode-request :query-channels
+                                            system-channel-name
+                                            target-peers
+                                            user
+                                            {})))
 
 
 (defn query-installed-chaincodes
@@ -457,11 +457,11 @@
    (query-installed-chaincodes core/*user* peer))
   ([user peer]
    (if (known-user-node? user peer :peers)
-     (first (chaincode/send-chaincode-request :query-installed-chaincodes
-                                              system-channel-name
-                                              peer
-                                              user
-                                              {}))
+     (first (chaincode/send-system-chaincode-request :query-installed-chaincodes
+                                                     system-channel-name
+                                                     peer
+                                                     user
+                                                     {}))
      (throw (Exception. "The target Peer does not know anything about the channel")))))
 
 

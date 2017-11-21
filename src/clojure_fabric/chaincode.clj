@@ -246,7 +246,7 @@
       Orderer [target]
       Channel [(get-random-node target :peers)])))
 
-(defn send-chaincode-request
+(defn send-system-chaincode-request
   [chaincode-key channel-name target user {:keys [verify?]
                                            :or {verify? false}
                                            :as opts}]
