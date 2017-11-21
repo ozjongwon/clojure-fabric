@@ -186,6 +186,7 @@
 (expect clojure_fabric.core.Channel
         (let [user (core/get-user "Org1MSP" "user1")]
           (user/get-channel user "mychannel")))
+
 (expect clojure_fabric.core.Channel
         (let [user (core/get-user "Org2MSP" "user1")]
           (user/get-channel user "mychannel")))
@@ -260,6 +261,18 @@
                           (= 200)))
                     (concat (channel/join-channel (user/get-channel org1-admin channel-name) org1-peers genesis-block)
                             (channel/join-channel (user/get-channel org2-admin channel-name) org2-peers genesis-block))))))
+
+#_
+(expect true
+        (let [admin (core/get-user "Org2MSP" "admin")
+              peer (first (core/get-nodes admin :peers))
+              chan (get-in (user/query-channels admin peer) [0 0])
+              chaincodes1 (user/query-installed-chaincodes admin peer)]
+          (user/install-chaincode admin (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
+                                  "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
+                                  :golang [peer])
+          (= (inc (count chaincodes1))
+             (count (user/query-installed-chaincodes admin peer)))))
 #_
 (expect true
         (let [org1-admin (core/get-user "Org1MSP" "admin")
