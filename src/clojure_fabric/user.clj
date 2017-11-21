@@ -442,16 +442,14 @@
         (Chain instance or None): the chain instance for the name.
   Error: 
         The target Peer(s) does not know anything about the chain"
-  ([channel-name peers]
-   (query-channels core/*user* channel-name peers))
-  ([user channel-name target-peers]
-   (let [{:keys [crypto-suite user-context] :as channel} (get-channel user channel-name)]
-     (with-validating-peers [channel target-peers]
-                             (chaincode/send-chaincode-request :query-channels
-                                                               system-channel-name
-                                                               target-peers
-                                                               user
-                                                               {})))))
+  ([peers]
+   (query-channels core/*user* peers))
+  ([user target-peers]
+   (chaincode/send-chaincode-request :query-channels
+                                     system-channel-name
+                                     target-peers
+                                     user
+                                     {})))
 
 
 (defn query-installed-chaincodes
