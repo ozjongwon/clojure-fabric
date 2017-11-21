@@ -207,8 +207,8 @@
               mychannel (user/get-channel user "mychannel")
               chaincodes1 (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
           (user/install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
-                             "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
-                             :golang (core/get-nodes mychannel  :peers))
+                                  "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
+                                  :golang (core/get-nodes mychannel  :peers))
           (= (inc (count chaincodes1))
              (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
 

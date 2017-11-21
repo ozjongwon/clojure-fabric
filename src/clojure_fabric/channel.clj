@@ -346,8 +346,8 @@
   ([{:keys [user-key name] :as channel} orderer]
    (let [seek-start-stop (proto/make-seek-position :specified (proto/make-seek-specified :number 0)) ]
      (let [result (->> (proto/make-seek-info :start seek-start-stop :stop seek-start-stop :behavior :block-until-ready)
-                (chaincode/make-envelope name (apply core/get-user user-key) :deliver-seek-info)
-                (proto/broadcast-or-deliver-via-orderer :deliver orderer))]
+                       (chaincode/make-envelope name (apply core/get-user user-key) :deliver-seek-info)
+                       (proto/broadcast-or-deliver-via-orderer :deliver orderer))]
        ;; This returns two elements; the second is status response.
        (.getBlock ^Ab$DeliverResponse (first result))))))
 
