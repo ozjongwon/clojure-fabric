@@ -52,7 +52,6 @@
             [clojure.core.async :as async])
   (:import [clojure_fabric.core Channel Orderer Peer]
            com.google.protobuf.ByteString
-           org.bouncycastle.util.encoders.Hex
            [org.hyperledger.fabric.protos.common Common$Block Common$Payload Ledger$BlockchainInfo]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.peer ProposalPackage$SignedProposal ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response Query$ChaincodeQueryResponse Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
@@ -153,42 +152,10 @@
 ;;;
 ;;; User level functions
 ;;;
-(defn make-nonce
-  ([]
-   (make-nonce 24))
-  ([nonce-size]
-   (crypto-suite/random-bytes nonce-size)))
-
-(defn get-epoch
-  [& _]
-  ;; FIXME: currently always default-epoch, 0
-  0)
-
-(defn identity-nonce->tx-id
-  [#_SerializedIdentity identity ^bytes nonce {algorithm :hash-algorithm}]
-  (-> (.concat (ByteString/copyFrom nonce) (.toByteString ^Identities$SerializedIdentity (proto/clj->proto identity)))
-      (.toByteArray)
-      (crypto-suite/hash :algorithm algorithm)
-      (Hex/toHexString)))
-
-(defn make-header
-  [channel-name user {:keys [channel-header-type header-version
-                             extension]
-                      :or {header-version 1 channel-header-type :endorser-transaction}}]
-  (let [identity (proto/user->serialized-identity user)
-        nonce (make-nonce)]
-   (proto/make-header :channel-header
-                      (proto/make-channel-header :type channel-header-type
-                                                 :version header-version
-                                                 :channel-id channel-name
-                                                 :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
-                                                 :epoch (get-epoch channel-name)
-                                                 :extension extension)
-                      :signature-header (proto/make-signature-header :creator identity :nonce nonce))))
 
 (defn make-envelope
   [channel-name user channel-header-type payload-data]
-  (let [payload (proto/make-payload :header (make-header channel-name user {:channel-header-type channel-header-type})
+  (let [payload (proto/make-payload :header (proto/make-header-message channel-name user {:channel-header-type channel-header-type})
                                     :data payload-data)]
    (proto/make-envelope :payload payload 
                         :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
@@ -200,8 +167,8 @@
   (let [{:keys [chaincode-id header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)]
     (proto/make-proposal :header
-                         (make-header channel-name user
-                                      (assoc opts :extension header-extension))
+                         (proto/make-header-message channel-name user
+                                                    (assoc opts :extension header-extension))
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal

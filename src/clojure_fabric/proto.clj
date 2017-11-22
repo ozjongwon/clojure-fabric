@@ -18,6 +18,7 @@
 ;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
+            [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp ByteString$LiteralByteString]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
@@ -28,6 +29,7 @@
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.orderer Ab$SeekInfo Ab$SeekInfo$SeekBehavior Ab$SeekNewest Ab$SeekOldest Ab$SeekPosition Ab$SeekSpecified AtomicBroadcastGrpc AtomicBroadcastGrpc$AtomicBroadcastStub]
+           org.bouncycastle.util.encoders.Hex
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput
             Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal
             ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse
@@ -883,6 +885,43 @@
                                    :chaincode-input)
               (make-chaincode-invocation-spec :chaincode-spec))]
      (make-chaincode-proposal-payload :input chaincode-invocation-spec :transient-map transient-map))))
+
+;;;
+;;; Message building functions
+;;;
+(defn make-nonce
+  ([]
+   (make-nonce 24))
+  ([nonce-size]
+   (crypto-suite/random-bytes nonce-size)))
+
+(defn get-epoch
+  [& _]
+  ;; FIXME: currently always default-epoch, 0
+  0)
+
+(defn identity-nonce->tx-id
+  [identity ^bytes nonce {algorithm :hash-algorithm}]
+  (-> (ByteString/copyFrom nonce)
+      (.concat (.toByteString ^Identities$SerializedIdentity (clj->proto identity)))
+      (.toByteArray)
+      (crypto-suite/hash :algorithm algorithm)
+      (Hex/toHexString)))
+
+(defn make-header-message
+  [channel-name user {:keys [channel-header-type header-version
+                             extension]
+                      :or {header-version 1 channel-header-type :endorser-transaction}}]
+  (let [identity (user->serialized-identity user)
+        nonce (make-nonce)]
+    (make-header :channel-header
+                 (make-channel-header :type channel-header-type
+                                      :version header-version
+                                      :channel-id channel-name
+                                      :tx-id (identity-nonce->tx-id identity nonce (:crypto-suite user))
+                                      :epoch (get-epoch channel-name)
+                                      :extension extension)
+                 :signature-header (make-signature-header :creator identity :nonce nonce))))
 
 ;;;
 ;;; Async processing
