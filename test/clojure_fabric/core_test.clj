@@ -262,6 +262,15 @@
                     (concat (channel/join-channel (user/get-channel org1-admin channel-name) org1-peers genesis-block)
                             (channel/join-channel (user/get-channel org2-admin channel-name) org2-peers genesis-block))))))
 
+(expect (let [org1-admin (core/get-user "Org1MSP" "admin")]
+          (-> (channel/get-genesis-block (get-in org1-admin [:channels "mychannel"]))
+              (proto/proto->clj (proto/parse-trees :block-transaction))
+              (dissoc :metadata)))
+        (let [org1-admin (core/get-user "Org1MSP" "admin")
+              mychannel (user/get-channel org1-admin "mychannel")]
+          (-> (channel/query-block-by-number mychannel 0)
+              (first)
+              (dissoc :metadata))))
 #_
 (expect true
         (let [admin (core/get-user "Org2MSP" "admin")
