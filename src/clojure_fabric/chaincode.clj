@@ -152,15 +152,6 @@
 ;;;
 ;;; User level functions
 ;;;
-(defn make-envelope
-  [channel-name user channel-header-type payload-data]
-  (let [payload (proto/make-payload :header (proto/make-header-message channel-name user {:channel-header-type channel-header-type})
-                                    :data payload-data)]
-   (proto/make-envelope :payload payload 
-                        :signature (crypto-suite/sign (.toByteArray ^Common$Payload (proto/clj->proto payload))
-                                                      (:private-key user)
-                                                      {:algorithm (:key-algorithm (:crypto-suite user))}))))
-
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
   (let [{:keys [header-extension proposal-payload]}

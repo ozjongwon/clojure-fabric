@@ -320,7 +320,7 @@
    (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
   ([user channel-id orderer config-update signatures]
    (->> (proto/make-config-update-envelope :config-update config-update :signatures signatures)
-        (chaincode/make-envelope channel-id user :config-update)
+        (proto/make-envelope-message channel-id user :config-update)
         (create-or-update-channel orderer))))
 
 ;; This is like create-channel

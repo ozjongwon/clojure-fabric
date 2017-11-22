@@ -930,6 +930,15 @@
                                       (assoc opts :extension header-extension))
                  :payload proposal-payload))
 
+(defn make-envelope-message
+  [channel-name user channel-header-type payload-data]
+  (let [payload (make-payload :header (make-header-message channel-name user {:channel-header-type channel-header-type})
+                                    :data payload-data)]
+    (make-envelope :payload payload 
+                         :signature (crypto-suite/sign (.toByteArray ^Common$Payload (clj->proto payload))
+                                                       (:private-key user)
+                                                       {:algorithm (:key-algorithm (:crypto-suite user))}))))
+
 ;;;
 ;;; Async processing
 ;;;
