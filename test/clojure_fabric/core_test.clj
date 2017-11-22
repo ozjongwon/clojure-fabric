@@ -271,6 +271,19 @@
           (-> (channel/query-block-by-number mychannel 0)
               (first)
               (dissoc :metadata))))
+
+(expect (let [org1-admin (core/get-user "Org1MSP" "admin")
+              mychannel (user/get-channel org1-admin "mychannel")
+              block-hash (get-in (channel/query-blockchain-info mychannel) [0 :current-block-hash])]
+          (->> (.toByteArray block-hash) (channel/query-block-by-hash mychannel) (first)))
+        
+        (let [org1-admin (core/get-user "Org1MSP" "admin")
+              mychannel (user/get-channel org1-admin "mychannel")
+              block-hash (get-in (channel/query-blockchain-info mychannel) [0 :current-block-hash])
+              block-number (get-in (->> (.toByteArray block-hash) (channel/query-block-by-hash mychannel) (first))
+                                   [:header :number])]
+          (-> (channel/query-block-by-number mychannel block-number)
+              (first))))
 #_
 (expect true
         (let [admin (core/get-user "Org2MSP" "admin")
