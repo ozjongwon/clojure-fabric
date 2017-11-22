@@ -80,70 +80,66 @@
   ([k proposal-payload ->response]
    (assoc (system-chaincode-map k) :proposal-payload proposal-payload :->response ->response)))
 
-(defn make-chaincode-proposal-payload
+(defn make-system-chaincode-proposal-payload-message
   ([k fcn args]
-   (make-chaincode-proposal-payload k fcn args {}))
+   (make-system-chaincode-proposal-payload-message k fcn args {}))
   ([k fcn args transient-map]
-   (assert (vector? args))
-   (let [^Chaincode$ChaincodeInvocationSpec
-         chaincode-invocation-spec
-         (->> (proto/make-chaincode-input :args `[~fcn ~@args])
-              (proto/make-chaincode-spec :chaincode-id (get-in system-chaincode-map [k :chaincode-id])
-                                         :chaincode-input)
-              (proto/make-chaincode-invocation-spec :chaincode-spec))]
-     (proto/make-chaincode-proposal-payload :input chaincode-invocation-spec :transient-map transient-map))))
+   (proto/make-chaincode-proposal-payload-message (get-in system-chaincode-map [k :chaincode-id])
+                                                  fcn
+                                                  args
+                                                  transient-map)))
 
 (defonce system-chaincode-request-parts
   {:install-chaincode
    (make-system-chaincode-request-parts :lscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :lscc "install"))
    :query-installed-chaincodes
    (make-system-chaincode-request-parts :lscc
-                                        (make-chaincode-proposal-payload :lscc
+                                        (make-system-chaincode-proposal-payload-message :lscc
                                                                          "getinstalledchaincodes"
                                                                          [])
                                         #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %))
    :query-channels
    (make-system-chaincode-request-parts :cscc
-                                        (make-chaincode-proposal-payload :cscc
+                                        (make-system-chaincode-proposal-payload-message :cscc
                                                                          "GetChannels"
                                                                          [])
                                         #(Query$ChannelQueryResponse/parseFrom ^ByteString %))
 
    :query-blockchain-info
    (make-system-chaincode-request-parts :qscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :qscc "GetChainInfo")
                                         #(Ledger$BlockchainInfo/parseFrom ^ByteString %))
    
    :query-block-by-hash
    (make-system-chaincode-request-parts :qscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :qscc "GetBlockByHash")
                                         #(Common$Block/parseFrom ^ByteString %))
 
    :query-block-by-number
    (make-system-chaincode-request-parts :qscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :qscc "GetBlockByNumber")
                                         #(Common$Block/parseFrom ^ByteString %))
 
    :query-block-by-tx-id
    (make-system-chaincode-request-parts :qscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :qscc "GetBlockByTxID")
                                         #(Common$Block/parseFrom ^ByteString %))
    
    :query-tx-by-id
    (map->SystemChaincodeRequestParts
     (make-system-chaincode-request-parts :qscc
-                                         (partial #'make-chaincode-proposal-payload
+                                         (partial #'make-system-chaincode-proposal-payload-message
                                                   :qscc "GetTransactionByID")
                                          #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)))
    :join-channel
    (make-system-chaincode-request-parts :cscc
-                                        (partial #'make-chaincode-proposal-payload
+                                        (partial #'make-system-chaincode-proposal-payload-message
                                                  :cscc "JoinChain"))})
 
 (defn get-system-chaincode-request-parts

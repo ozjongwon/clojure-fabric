@@ -871,6 +871,19 @@
       (send-dupate-channel (.toByteArray config-update singers orderer))
       )))
 
+(defn make-chaincode-proposal-payload-message
+  ([chaincode-id fcn args]
+   (make-chaincode-proposal-payload-message chaincode-id fcn args {}))
+  ([chaincode-id fcn args transient-map]
+   (assert (vector? args))
+   (let [^Chaincode$ChaincodeInvocationSpec
+         chaincode-invocation-spec
+         (->> (make-chaincode-input :args `[~fcn ~@args])
+              (make-chaincode-spec :chaincode-id chaincode-id
+                                   :chaincode-input)
+              (make-chaincode-invocation-spec :chaincode-spec))]
+     (make-chaincode-proposal-payload :input chaincode-invocation-spec :transient-map transient-map))))
+
 ;;;
 ;;; Async processing
 ;;;
