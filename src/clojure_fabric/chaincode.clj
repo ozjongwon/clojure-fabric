@@ -201,8 +201,7 @@
         (get-system-chaincode-request-parts chaincode-key :args args)]
     (proto/make-proposal :header
                          (make-header channel-name user
-                                      (assoc opts
-                                             :extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)))
+                                      (assoc opts :extension header-extension))
                          :payload proposal-payload)))
 
 (defn make-chaincode-signed-proposal
