@@ -923,6 +923,13 @@
                                       :extension extension)
                  :signature-header (make-signature-header :creator identity :nonce nonce))))
 
+(defn make-chaincode-proposal-message
+  [channel-name user header-extension proposal-payload {:keys [args] :as opts}]
+  (make-proposal :header
+                 (make-header-message channel-name user
+                                      (assoc opts :extension header-extension))
+                 :payload proposal-payload))
+
 ;;;
 ;;; Async processing
 ;;;

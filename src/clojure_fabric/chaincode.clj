@@ -152,7 +152,6 @@
 ;;;
 ;;; User level functions
 ;;;
-
 (defn make-envelope
   [channel-name user channel-header-type payload-data]
   (let [payload (proto/make-payload :header (proto/make-header-message channel-name user {:channel-header-type channel-header-type})
@@ -164,12 +163,13 @@
 
 (defn make-chaincode-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
-  (let [{:keys [chaincode-id header-extension proposal-payload]}
+  (let [{:keys [header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)]
-    (proto/make-proposal :header
-                         (proto/make-header-message channel-name user
-                                                    (assoc opts :extension header-extension))
-                         :payload proposal-payload)))
+    (proto/make-chaincode-proposal-message channel-name
+                                           user
+                                           header-extension
+                                           proposal-payload
+                                           opts)))
 
 (defn make-chaincode-signed-proposal
   [chaincode-key channel-name user opts]
