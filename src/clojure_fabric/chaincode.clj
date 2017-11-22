@@ -246,6 +246,16 @@
       Orderer [target]
       Channel [(get-random-node target :peers)])))
 
+(defonce type->parse-tree-key
+  {Common$Block :block-transaction})
+
+(defn- proto->clj-using-parse-tree
+  [response]
+  (->> (type response)
+       (type->parse-tree-key)
+       (proto/parse-trees)
+       (proto/proto->clj response)))
+
 (defn send-system-chaincode-request
   [chaincode-key channel-name target user {:keys [verify?]
                                            :or {verify? false}
@@ -265,7 +275,7 @@
                           (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
                             (-> (.getPayload ^ProposalResponsePackage$Response response)
                                 (->response)
-                                (proto/proto->clj nil)))
+                                (proto->clj-using-parse-tree)))
                           raw-response)))))))))
 
 ;; Responses -

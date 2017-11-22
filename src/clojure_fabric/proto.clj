@@ -19,7 +19,7 @@
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
-  (:import [com.google.protobuf ByteString Timestamp]
+  (:import [com.google.protobuf ByteString Timestamp ByteString$LiteralByteString]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
            io.grpc.ManagedChannel
            io.grpc.stub.StreamObserver
@@ -412,6 +412,7 @@
   (map->BlockMetadata {:metadata metadata}))
 
 (defrecord Block [^BlockHeader header ^BlockData data ^BlockMetadata metadata])
+
 (defn make-block
   [& {:keys [header data metadata]}]
   (map->Block {:header header :data data :metadata metadata}))
@@ -584,26 +585,31 @@
    {:data
     {:data
      {:fn #(Common$Envelope/parseFrom ^ByteString %)
-      :use-parse-tree :block-transaction-envelope}}}
+      :use-parse-tree :block-transaction-envelope}}
+    :header
+    {:previous-hash {:fn #(.toByteArray ^ByteString %)}
+     :data-hash {:fn #(.toByteArray ^ByteString %)}}
+    :metadata
+    {:metadata {:fn #(.toByteArray ^ByteString %)}}}
 
    :block-transaction-envelope
    {:payload
     { ;;:fn #(Common$Payload/parseFrom ^ByteString %)
+     :header {:signature-header
+              {:creator {:id-bytes {:fn #(.toByteArray ^ByteString %)}}
+               :nonce {:fn #(.toByteArray ^ByteString %)}}}
      :data {:fn #(TransactionPackage$Transaction/parseFrom ^ByteString %)
             :actions
-            { ;;:header
+            {:header {:fn #(.toByteArray ^ByteString %)}
              :payload {:fn #(TransactionPackage$ChaincodeActionPayload/parseFrom ^ByteString %)
                        :chaincode-proposal-payload
                        {:fn #(ProposalPackage$ChaincodeProposalPayload/parseFrom ^ByteString %)
                         :input {:fn #(Chaincode$ChaincodeInvocationSpec/parseFrom ^ByteString %)}}
-                       
+
                        :action
-                       {:proposal-response-payload
-                        { ;;:fn #(ProposalResponsePackage$ProposalResponsePayload/parseFrom ^ByteString %)
-                         :extension {:fn #(ProposalPackage$ChaincodeAction/parseFrom ^ByteString %)
-                                     ;; NB: name is ':events' but in case of ChaincodeEvent, it is an event
-                                     :events {:fn #(ChaincodeEventPackage$ChaincodeEvent/parseFrom ^ByteString %)
-                                              }}}}}}}}}
+                       {:proposal-response-payload {:fn #(.toByteArray ^ByteString %)}
+                        :endorsements {:endorser {:fn #(.toByteArray ^ByteString %)}
+                                       :signature {:fn #(.toByteArray ^ByteString %)}}}}}}}}
    :block-config-update-envelope
    {:payload
     {;;:fn #(Common$Payload/parseFrom ^ByteString %)
@@ -613,9 +619,13 @@
 (defmacro maybe-applying-proto->clj-transform [[tx-map data-call]]
   `(let [data# ~data-call]
      (if-let [tx-fn# (:fn ~tx-map)]
-       (proto->clj (tx-fn# data#) (if-let [use-parse-tree# (:use-parse-tree ~tx-map)]
-                                    (parse-trees use-parse-tree#)
-                                    (dissoc ~tx-map :fn)))
+       (let [transformed-data# (tx-fn# data#)]
+         (if (utils/bytes? transformed-data#)
+           transformed-data#
+           (proto->clj transformed-data#
+                       (if-let [use-parse-tree# (:use-parse-tree ~tx-map)]
+                         (parse-trees use-parse-tree#)
+                         (dissoc ~tx-map :fn)))))
        data#)))
 
 (extend-protocol IProtoToClj
@@ -637,18 +647,23 @@
     (make-blockchain-info :height (.getHeight this)
                           :current-block-hash (.getCurrentBlockHash this) :previous-block-hash (.getPreviousBlockHash this)))
 
+  ByteString$LiteralByteString
+  (proto->clj [this {:keys [fn]}]
+    (fn this))
+  
   Common$BlockHeader
-  (proto->clj [this opts]
-    (make-block-header :number (.getNumber this) :previous-hash (.getPreviousHash this)
-                       :data-hash (.getDataHash this)))
+  (proto->clj [this {:keys [previous-hash data-hash]}]
+    (make-block-header :number          (.getNumber this)
+                       :previous-hash   (proto->clj (.getPreviousHash this) previous-hash)
+                       :data-hash       (proto->clj (.getDataHash this) data-hash)))
   
   Common$BlockData
   (proto->clj [this {:keys [data]}]
-    (make-block-data :data (map #(maybe-applying-proto->clj-transform [data %]) (.getDataList this))))
+    (make-block-data :data (mapv #(maybe-applying-proto->clj-transform [data %]) (.getDataList this))))
   
   Common$BlockMetadata
-  (proto->clj [this opts]
-    (make-block-metadata :metadata (.getMetadataList this)))
+  (proto->clj [this {:keys [metadata]}]
+    (make-block-metadata :metadata (mapv #(maybe-applying-proto->clj-transform [metadata %]) (.getMetadataList this))))
 
   Common$Block
   (proto->clj [this {:keys [header data metadata]}]
@@ -688,11 +703,12 @@
                            :chaincode-id (proto->clj (.getChaincodeId this) chaincode-id)))
   
   TransactionPackage$ChaincodeEndorsedAction
-  (proto->clj [this {:keys [proposal-response-payload]}]
+  (proto->clj [this {:keys [proposal-response-payload endorsements]}]
     (make-chaincode-endorsed-action :proposal-response-payload
                                     (maybe-applying-proto->clj-transform [proposal-response-payload
                                                                           (.getProposalResponsePayload this)])
-                                    :endorsements (.getEndorsementsList this)))
+                                    :endorsements (mapv #(proto->clj % endorsements)
+                                                        (.getEndorsementsList this))))
 
   Chaincode$ChaincodeInput
   (proto->clj [this ignore]
@@ -729,13 +745,13 @@
 
 
   TransactionPackage$TransactionAction
-  (proto->clj [this {:keys [payload]}]
-    (make-transaction-action :header (.getHeader this)
+  (proto->clj [this {:keys [payload header]}]
+    (make-transaction-action :header (proto->clj (.getHeader this) header)
                              :payload (maybe-applying-proto->clj-transform [payload (.getPayload this)])))
 
   TransactionPackage$Transaction
   (proto->clj [this {:keys [actions]}]
-    (make-transaction :actions (map #(proto->clj % actions) (.getActionsList this))))
+    (make-transaction :actions (mapv #(proto->clj % actions) (.getActionsList this))))
   
   TransactionPackage$ProcessedTransaction
   (proto->clj [this opts]
@@ -744,25 +760,31 @@
                                 :validation-code (.getValidationCode this)))
   ;; FIXME: fix all above proto->clj like this!
 
+  Timestamp
+  (proto->clj [this ignore]
+    (+ (* (.getSeconds this) 1000)
+       (quot (.getNanos this) 1000000)))
+  
   Common$ChannelHeader
   (proto->clj [this ignore]
     (let [extension (.getExtension this)]
      (make-channel-header :type (.getType this) :version (.getVersion this)
-                          :timestamp (.getTimestamp this) :channel-id (.getChannelId this)
+                          :timestamp (proto->clj (.getTimestamp this) nil)
+                          :channel-id (.getChannelId this)
                           :tx-id (.getTxId this) :epoch (.getEpoch this)
                           :extesion (when-not (.isEmpty extension)
                                       ;; FIXME: more specific type?
                                       extension))))
   Identities$SerializedIdentity
-  (proto->clj [this ignore]
+  (proto->clj [this {:keys [id-bytes]}]
     (make-serialized-identity :mspid (.getMspid this)
-                              :id-bytes (.getIdBytes this)))
+                              :id-bytes (proto->clj (.getIdBytes this) id-bytes)))
   Common$SignatureHeader
-  (proto->clj [this ignore]
+  (proto->clj [this {:keys [creator nonce]}]
     (make-signature-header :creator (-> (.getCreator this)
                                         (Identities$SerializedIdentity/parseFrom)
-                                        (proto->clj ignore))
-                           :nonce (.getNonce this)))
+                                        (proto->clj creator))
+                           :nonce (proto->clj (.getNonce this) nonce)))
   
   Common$Header
   (proto->clj [this {:keys [channel-header signature-header]}]
@@ -822,14 +844,14 @@
                                   (.toByteArray signature)))))
 
   ProposalResponsePackage$Endorsement
-  (proto->clj [this ignore]
-    (make-endorsement :endorser (.getEndorser this)
-                      :signature (.getSignature this)))
+  (proto->clj [this {:keys [endorser signature]}]
+    (make-endorsement :endorser (proto->clj (.getEndorser this) endorser)
+                      :signature (proto->clj (.getSignature this) signature)))
   
   ProposalResponsePackage$ProposalResponse
   (proto->clj [this ignore]
     (make-proposal-response :version (.getVersion this)
-                            :timestamp (.getTimestamp this)
+                            :timestamp (proto->clj (.getTimestamp this) nil)
                             :response (proto->clj (.getResponse this) ignore)
                             :payload (.getPayload this)
                             :endorsement (.getEndorsement this))))
