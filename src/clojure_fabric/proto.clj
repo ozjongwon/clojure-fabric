@@ -18,9 +18,11 @@
 ;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.utils :as utils]
+            [clojure-fabric.core :as core]
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure.core.async :as async])
   (:import [com.google.protobuf ByteString Timestamp ByteString$LiteralByteString]
+           [clojure_fabric.core Channel Orderer Peer]
            [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
            io.grpc.ManagedChannel
            io.grpc.stub.StreamObserver
@@ -944,6 +946,42 @@
     (make-signed-proposal :proposal-bytes  proposal
                           :signature signature)))
 
+(defn get-random-node
+  ([nodes-access-key]
+   (get-random-node core/*channel* nodes-access-key))
+  ([channel nodes-access-key]
+   (rand-nth (core/get-nodes channel nodes-access-key))))
+
+(defn target->nodes [target]
+  (if (sequential? target)
+    target
+    (condp instance? target
+      Peer [target]
+      Orderer [target]
+      Channel [(get-random-node target :peers)])))
+
+(defn verify-response
+  [^ProposalResponsePackage$ProposalResponse raw-response user]
+  (let [endorsement (.getEndorsement raw-response)
+        signature (.getSignature endorsement)
+        endorser (.getEndorser endorsement)
+        cert (Identities$SerializedIdentity/parseFrom endorser)
+        text (.concat (.getPayload raw-response) endorser)]
+    ;;(:crypto-suite user)
+    (crypto-suite/verify (-> cert .getIdBytes .toByteArray)
+                         (.toByteArray signature)
+                         (.toByteArray text)
+                         (:crypto-suite user))))
+
+(defonce type->parse-tree-key
+  {Common$Block :block-transaction})
+
+(defn- proto->clj-using-parse-tree
+  [response]
+  (->> (type response)
+       (type->parse-tree-key)
+       (parse-trees)
+       (proto->clj response)))
 
 ;;;
 ;;; Async processing
@@ -1009,6 +1047,24 @@
     (.processProposal (EndorserGrpc/newStub ^ManagedChannel (node->channel peer))
                       (clj->proto proposal)
                       callback)))
+
+(defn send-chaincode-request
+  [signed-proposal channel-name target user response-fn
+   {:keys [verify?] :or {verify? false} :as opts}]
+  ;; target==channel (get-random-node channel :peers)
+  (->> (target->nodes target)
+       (mapv #(send-chaincode-request-to-peer % signed-proposal))
+       (mapv #(let [[peer raw-response] (async/<!! %)]
+                (if (instance? Exception raw-response)
+                  raw-response
+                  (if (and verify? (not (verify-response raw-response user)))
+                    (Exception. "Verification failed!")
+                    (if response-fn
+                      (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
+                        (-> (.getPayload ^ProposalResponsePackage$Response response)
+                            (response-fn)
+                            (proto->clj-using-parse-tree)))
+                      raw-response)))))))
 
 (defn envelope-broadcast-observer
   [ch]

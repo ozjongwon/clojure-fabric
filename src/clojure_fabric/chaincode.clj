@@ -46,8 +46,7 @@
 ;; Implementation Note:
 ;;      Support only CSCC, QSCC, and LSCC (from Node.js)
 (ns clojure-fabric.chaincode
-  (:require [clojure-fabric.core :as core]
-            [clojure-fabric.crypto-suite :as crypto-suite]
+  (:require [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.proto :as proto]
             [clojure.core.async :as async])
   (:import [clojure_fabric.core Channel Orderer Peer]
@@ -163,64 +162,14 @@
                                                   proposal-payload
                                                   opts)))
 
-(defn verify-response
-  [^ProposalResponsePackage$ProposalResponse raw-response user]
-  (let [endorsement (.getEndorsement raw-response)
-        signature (.getSignature endorsement)
-        endorser (.getEndorser endorsement)
-        cert (Identities$SerializedIdentity/parseFrom endorser)
-        text (.concat (.getPayload raw-response) endorser)]
-    ;;(:crypto-suite user)
-    (crypto-suite/verify (-> cert .getIdBytes .toByteArray)
-                         (.toByteArray signature)
-                         (.toByteArray text)
-                         (:crypto-suite user))))
-
-(defn get-random-node
-  ([nodes-access-key]
-   (get-random-node core/*channel* nodes-access-key))
-  ([channel nodes-access-key]
-   (rand-nth (core/get-nodes channel nodes-access-key))))
-
-(defn target->nodes [target]
-  (if (sequential? target)
-    target
-    (condp instance? target
-      Peer [target]
-      Orderer [target]
-      Channel [(get-random-node target :peers)])))
-
-(defonce type->parse-tree-key
-  {Common$Block :block-transaction})
-
-(defn- proto->clj-using-parse-tree
-  [response]
-  (->> (type response)
-       (type->parse-tree-key)
-       (proto/parse-trees)
-       (proto/proto->clj response)))
-
 (defn send-system-chaincode-request
-  [chaincode-key channel-name target user {:keys [verify?]
-                                           :or {verify? false}
-                                           :as opts}]
-  ;; target==channel (get-random-node channel :peers)
-  (let [nodes (target->nodes target)]
-    (let [signed-proposal (make-chaincode-signed-proposal chaincode-key channel-name user opts)
-          ->response (get-in system-chaincode-request-parts [chaincode-key :->response])]
-      (->> nodes
-           (mapv #(proto/send-chaincode-request-to-peer % signed-proposal))
-           (mapv #(let [[peer raw-response] (async/<!! %)]
-                    (if (instance? Exception raw-response)
-                      raw-response
-                      (if (and verify? (not (verify-response raw-response user)))
-                        (Exception. "Verification failed!")
-                        (if ->response
-                          (let [response (.getResponse ^ProposalResponsePackage$ProposalResponse raw-response)]
-                            (-> (.getPayload ^ProposalResponsePackage$Response response)
-                                (->response)
-                                (proto->clj-using-parse-tree)))
-                          raw-response)))))))))
+  [chaincode-key channel-name target user opts]
+  (proto/send-chaincode-request (make-chaincode-signed-proposal chaincode-key channel-name user opts)
+                                channel-name
+                                target
+                                user
+                                (get-in system-chaincode-request-parts [chaincode-key :->response])
+                                opts))
 
 ;; Responses -
 ;;

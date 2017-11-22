@@ -200,32 +200,32 @@
 (expect io.grpc.StatusRuntimeException
         (let [user (core/get-user "Org1MSP" "user1") ;; user == error!
               mychannel (user/get-channel user "mychannel")]
-          (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
+          (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))))
 
 (expect true
         (let [user (core/get-user "Org1MSP" "admin")
               mychannel (user/get-channel user "mychannel")
-              chaincodes1 (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
+              chaincodes1 (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))]
           (user/install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                                   "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
                                   :golang (core/get-nodes mychannel  :peers))
           (= (inc (count chaincodes1))
-             (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
+             (count (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))))))
 
 (expect io.grpc.StatusRuntimeException
         (let [user (core/get-user "Org2MSP" "user1") ;; user == error!
               mychannel (user/get-channel user "mychannel")]
-          (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))
+          (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))))
 
 (expect true
         (let [user (core/get-user "Org2MSP" "admin")
               mychannel (user/get-channel user "mychannel")
-              chaincodes1 (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))]
+              chaincodes1 (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))]
           (user/install-chaincode user (str "test" (System/currentTimeMillis)) "github.com/example_cc" "v1"
                              "/home/jc/Work/clojure-fabric/resources/gocc/src/github.com"
                              :golang (core/get-nodes mychannel :peers))
           (= (inc (count chaincodes1))
-             (count (user/query-installed-chaincodes user (chaincode/get-random-node mychannel :peers))))))
+             (count (user/query-installed-chaincodes user (proto/get-random-node mychannel :peers))))))
 
 (expect true
         (let [orderer-admin (core/get-user "Orderer" "admin")
