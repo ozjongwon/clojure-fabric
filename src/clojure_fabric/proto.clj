@@ -923,21 +923,27 @@
                                       :extension extension)
                  :signature-header (make-signature-header :creator identity :nonce nonce))))
 
-(defn make-chaincode-proposal-message
-  [channel-name user header-extension proposal-payload {:keys [args] :as opts}]
-  (make-proposal :header
-                 (make-header-message channel-name user
-                                      (assoc opts :extension header-extension))
-                 :payload proposal-payload))
-
 (defn make-envelope-message
   [channel-name user channel-header-type payload-data]
   (let [payload (make-payload :header (make-header-message channel-name user {:channel-header-type channel-header-type})
-                                    :data payload-data)]
+                              :data payload-data)]
     (make-envelope :payload payload 
-                         :signature (crypto-suite/sign (.toByteArray ^Common$Payload (clj->proto payload))
-                                                       (:private-key user)
-                                                       {:algorithm (:key-algorithm (:crypto-suite user))}))))
+                   :signature (crypto-suite/sign (.toByteArray ^Common$Payload (clj->proto payload))
+                                                 (:private-key user)
+                                                 {:algorithm (:key-algorithm (:crypto-suite user))}))))
+
+(defn make-chaincode-signed-proposal-message
+  [channel-name user header-extension proposal-payload {:keys [args] :as opts}]
+  (let [proposal (make-proposal :header
+                                (make-header-message channel-name user
+                                                     (assoc opts :extension header-extension))
+                                :payload proposal-payload)
+        signature (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (clj->proto proposal))
+                                     (:private-key user)
+                                     {:algorithm (:key-algorithm (:crypto-suite user))})]
+    (make-signed-proposal :proposal-bytes  proposal
+                          :signature signature)))
+
 
 ;;;
 ;;; Async processing

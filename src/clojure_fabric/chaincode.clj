@@ -152,25 +152,16 @@
 ;;;
 ;;; User level functions
 ;;;
-(defn make-chaincode-proposal
+
+(defn make-chaincode-signed-proposal
   [chaincode-key channel-name user {:keys [args] :as opts}]
   (let [{:keys [header-extension proposal-payload]}
         (get-system-chaincode-request-parts chaincode-key :args args)]
-    (proto/make-chaincode-proposal-message channel-name
-                                           user
-                                           header-extension
-                                           proposal-payload
-                                           opts)))
-
-(defn make-chaincode-signed-proposal
-  [chaincode-key channel-name user opts]
-  (let [proposal (make-chaincode-proposal chaincode-key channel-name user opts)
-        signature (crypto-suite/sign (.toByteArray ^ProposalPackage$SignedProposal (proto/clj->proto proposal))
-                                     (:private-key user)
-                                     {:algorithm (:key-algorithm (:crypto-suite user))})]
-    (proto/make-signed-proposal :proposal-bytes  proposal
-                                :signature signature)))
-
+    (proto/make-chaincode-signed-proposal-message channel-name
+                                                  user
+                                                  header-extension
+                                                  proposal-payload
+                                                  opts)))
 
 (defn verify-response
   [^ProposalResponsePackage$ProposalResponse raw-response user]
