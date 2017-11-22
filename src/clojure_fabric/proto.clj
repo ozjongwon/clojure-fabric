@@ -17,31 +17,22 @@
 ;; Do not change.
 ;;
 (ns clojure-fabric.proto
-  (:require [clojure-fabric.utils :as utils]
-            [clojure-fabric.core :as core]
+  (:require [clojure-fabric.core :as core]
             [clojure-fabric.crypto-suite :as crypto-suite]
+            [clojure-fabric.utils :as utils]
             [clojure.core.async :as async])
-  (:import [com.google.protobuf ByteString Timestamp ByteString$LiteralByteString]
-           [clojure_fabric.core Channel Orderer Peer]
-           [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
+  (:import [clojure_fabric.core Channel Orderer Peer]
+           [com.google.protobuf ByteString ByteString$LiteralByteString Timestamp]
            io.grpc.ManagedChannel
+           [io.grpc.netty GrpcSslContexts NegotiationType NettyChannelBuilder]
            io.grpc.stub.StreamObserver
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
+           org.bouncycastle.util.encoders.Hex
            [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.orderer Ab$SeekInfo Ab$SeekInfo$SeekBehavior Ab$SeekNewest Ab$SeekOldest Ab$SeekPosition Ab$SeekSpecified AtomicBroadcastGrpc AtomicBroadcastGrpc$AtomicBroadcastStub]
-           org.bouncycastle.util.encoders.Hex
-           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput
-            Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type EndorserGrpc ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal
-            ProposalPackage$SignedProposal Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse
-            TransactionPackage$ProcessedTransaction TransactionPackage$ChaincodeActionPayload
-            ProposalResponsePackage$Response ProposalResponsePackage$ProposalResponsePayload
-            ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Endorsement
-            ProposalPackage$ChaincodeAction TransactionPackage$ChaincodeEndorsedAction
-            TransactionPackage$TransactionAction TransactionPackage$Transaction
-            ChaincodeEventPackage$ChaincodeEvent
-            ]))
+           [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type ChaincodeEventPackage$ChaincodeEvent EndorserGrpc ProposalPackage$ChaincodeAction ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal ProposalResponsePackage$Endorsement ProposalResponsePackage$ProposalResponse ProposalResponsePackage$ProposalResponsePayload ProposalResponsePackage$Response Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ChaincodeActionPayload TransactionPackage$ChaincodeEndorsedAction TransactionPackage$ProcessedTransaction TransactionPackage$Transaction TransactionPackage$TransactionAction]))
 
 ;;;
 ;;;

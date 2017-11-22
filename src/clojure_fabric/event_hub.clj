@@ -13,24 +13,17 @@
 ;; limitations under the License.
 
 (ns clojure-fabric.event-hub
-  (:require [clojure-fabric.proto :as proto]
-            [clojure-fabric.crypto-suite :as crypto]
+  (:require [clojure-fabric.crypto-suite :as crypto]
+            [clojure-fabric.proto :as proto]
             [clojure-fabric.utils :as utils]
-            [clojure.core.async :as async]
-            [clojure-fabric.core :as core])
-  (:import io.grpc.stub.StreamObserver
-           [clojure_fabric.proto Block ChaincodeEvent]
-           [com.google.protobuf ByteString]
-           io.grpc.Status$Code
-           io.grpc.StatusRuntimeException
-           io.grpc.ManagedChannel
+            [clojure.core.async :as async])
+  (:import [clojure_fabric.proto Block ChaincodeEvent]
+           com.google.protobuf.ByteString
+           [io.grpc ManagedChannel Status$Code StatusRuntimeException]
+           io.grpc.stub.StreamObserver
+           [org.hyperledger.fabric.protos.common Common$Block Common$BlockMetadataIndex]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.common Common$Block Common$BlockMetadataIndex
-            Common$Envelope]
-           [org.hyperledger.fabric.protos.peer EventsGrpc EventsPackage$Event
-            EventsPackage$Interest EventsPackage$Register EventsPackage$Event$EventCase
-            EventsPackage$SignedEvent TransactionPackage$TxValidationCode]))
-
+           [org.hyperledger.fabric.protos.peer EventsGrpc EventsPackage$Event EventsPackage$Event$EventCase EventsPackage$Interest EventsPackage$Register EventsPackage$SignedEvent TransactionPackage$TxValidationCode]))
 
 ;; From NodeJs SDK
 ;; 

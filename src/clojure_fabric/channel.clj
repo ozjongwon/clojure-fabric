@@ -28,11 +28,13 @@
 (ns clojure-fabric.channel
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.core :as core]
-            [clojure-fabric.user :as user]
             [clojure-fabric.proto :as proto]
+            [clojure-fabric.user :as user]
             [clojure-fabric.utils :as utils])
-  (:import org.bouncycastle.util.encoders.Hex
-           org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse))
+  (:import com.google.protobuf.ByteString
+           org.bouncycastle.util.encoders.Hex
+           org.hyperledger.fabric.protos.orderer.Ab$DeliverResponse
+           org.hyperledger.fabric.protos.peer.ProposalResponsePackage$ProposalResponse))
 
 ;;;
 ;;; Functions
@@ -220,6 +222,31 @@
                                             channel
                                             (apply core/get-user user-key)
                                             {:args [name transaction-id]})))
+
+(defn query-by-chaincode
+  ([chaincode-name user fcn args transient-map opts]
+   (query-by-chaincode core/*channel* chaincode-name user fcn args transient-map opts))
+  ([channel chaincode-name user fcn args transient-map opts]
+   (query-by-chaincode channel chaincode-name (core/get-nodes channel :peers) user fcn args
+                       transient-map opts))
+  ([{:keys [user-key name] :as channel} chaincode-name targets user fcn args transient-map opts]
+   (let [chaincode-id (proto/make-chaincode-id :name chaincode-name)
+         header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
+         proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
+                                                                         fcn
+                                                                         args
+                                                                         transient-map)]
+     (proto/send-chaincode-request (proto/make-chaincode-signed-proposal-message name
+                                                                                 user
+                                                                                 header-extension
+                                                                                 proposal-payload
+                                                                                 opts)
+                                   name    ;; channel name
+                                   targets ;; peers
+                                   user
+                                   #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
+                                   opts))))
+
 ;;; query_transaction
 (defn query-transaction
   "Queries the ledger for Transaction by number

@@ -22,11 +22,11 @@
   (:require [clojure-fabric.utils :as utils]
             [clojure.java.io :as io])
   (:import java.math.BigInteger
-           [java.security KeyPairGenerator MessageDigest PublicKey SecureRandom Security Signature]
+           [java.security KeyPairGenerator MessageDigest SecureRandom Security Signature]
            javax.crypto.Cipher
            javax.crypto.spec.SecretKeySpec
            javax.security.cert.X509Certificate
-           [org.bouncycastle.asn1 ASN1InputStream ASN1Integer DERSequence ASN1Sequence]
+           [org.bouncycastle.asn1 ASN1InputStream ASN1Integer ASN1Sequence DERSequence]
            org.bouncycastle.asn1.pkcs.PrivateKeyInfo
            org.bouncycastle.cert.X509CertificateHolder
            [org.bouncycastle.jcajce.provider.asymmetric.ec BCECPrivateKey BCECPublicKey]

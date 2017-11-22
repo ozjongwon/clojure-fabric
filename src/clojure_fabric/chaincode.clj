@@ -46,14 +46,10 @@
 ;; Implementation Note:
 ;;      Support only CSCC, QSCC, and LSCC (from Node.js)
 (ns clojure-fabric.chaincode
-  (:require [clojure-fabric.crypto-suite :as crypto-suite]
-            [clojure-fabric.proto :as proto]
-            [clojure.core.async :as async])
-  (:import [clojure_fabric.core Channel Orderer Peer]
-           com.google.protobuf.ByteString
-           [org.hyperledger.fabric.protos.common Common$Block Common$Payload Ledger$BlockchainInfo]
-           org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
-           [org.hyperledger.fabric.protos.peer ProposalPackage$SignedProposal ProposalResponsePackage$ProposalResponse ProposalResponsePackage$Response Query$ChaincodeQueryResponse Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
+  (:require [clojure-fabric.proto :as proto])
+  (:import com.google.protobuf.ByteString
+           [org.hyperledger.fabric.protos.common Common$Block Ledger$BlockchainInfo]
+           [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
 
 ;;;
 ;;; System Chaincode Definitions

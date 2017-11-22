@@ -36,15 +36,14 @@
   (:require [clojure-fabric.chaincode :as chaincode]
             [clojure-fabric.core :as core]
             [clojure-fabric.crypto-suite :as crypto-suite]
+            [clojure-fabric.event-hub :as event-hub]
             [clojure-fabric.proto :as proto]
-            [clojure.java.io :as io]
-            [clojure-fabric.event-hub :as event-hub])
-  (:import com.google.protobuf.ByteString
-           [java.io ByteArrayOutputStream File FileInputStream]
+            [clojure.java.io :as io])
+  (:import [java.io ByteArrayOutputStream File FileInputStream]
            [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
            org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
            org.apache.commons.io.IOUtils
-           [org.hyperledger.fabric.protos.common Common$Envelope Common$SignatureHeader Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope]))
+           [org.hyperledger.fabric.protos.common Common$Envelope Common$SignatureHeader Configtx$ConfigUpdate]))
 
 (defn ca-user?
   [user]
