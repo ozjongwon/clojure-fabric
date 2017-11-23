@@ -1032,19 +1032,19 @@
      ~@body
      ch#))
 
-(defn send-chaincode-request-to-peer
+(defn send-proposal-to-peer
   [peer proposal]
   (binding-grpc-waiting-auto-callback [peer callback]
     (.processProposal (EndorserGrpc/newStub ^ManagedChannel (node->channel peer))
                       (clj->proto proposal)
                       callback)))
 
-(defn send-chaincode-request
+(defn send-proposal
   [signed-proposal channel-name target user response-fn
    {:keys [verify?] :or {verify? false} :as opts}]
   ;; target==channel (get-random-node channel :peers)
   (->> (target->nodes target)
-       (mapv #(send-chaincode-request-to-peer % signed-proposal))
+       (mapv #(send-proposal-to-peer % signed-proposal))
        (mapv #(let [[peer raw-response] (async/<!! %)]
                 (if (instance? Exception raw-response)
                   raw-response

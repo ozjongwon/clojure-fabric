@@ -237,16 +237,16 @@
                                                                          fcn
                                                                          args
                                                                          transient-map)]
-     (proto/send-chaincode-request (proto/make-chaincode-signed-proposal-message name
-                                                                                 user
-                                                                                 header-extension
-                                                                                 proposal-payload
-                                                                                 opts)
-                                   name    ;; channel name
-                                   targets ;; peers
-                                   user
-                                   #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
-                                   opts))))
+     (proto/send-proposal (proto/make-chaincode-signed-proposal-message name
+                                                                        user
+                                                                        header-extension
+                                                                        proposal-payload
+                                                                        opts)
+                          name    ;; channel name
+                          targets ;; peers
+                          user
+                          #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
+                          opts))))
 
 ;;; query_transaction
 (defn query-transaction

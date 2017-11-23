@@ -27,7 +27,8 @@
 ;; and chaincode levels.
 
 (ns clojure-fabric.peer
-  (:require [clojure-fabric.core :as core]))
+  (:require [clojure-fabric.core :as core]
+            [clojure-fabric.proto :as proto]))
 
 ;;connectEventSource
 (defn connect-event-source
@@ -143,3 +144,7 @@
 
 ;;; set_enrollment_certificate
 ;;; Immutable
+
+(defn send-proposal
+  [peer proposal]
+  (proto/send-proposal-to-peer peer proposal))
