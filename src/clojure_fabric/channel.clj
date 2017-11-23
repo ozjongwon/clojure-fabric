@@ -225,14 +225,11 @@
                                             {:args [name transaction-id]})))
 
 (defn query-by-chaincode
-  ([chaincode-name user fcn args transient-map opts]
-   (query-by-chaincode core/*channel* chaincode-name user fcn args transient-map opts))
-  ([channel chaincode-name user fcn args transient-map opts]
-   (query-by-chaincode channel chaincode-name (core/get-nodes channel :peers) user fcn args
+  ([channel chaincode-id user fcn args transient-map opts]
+   (query-by-chaincode channel chaincode-id (core/get-nodes channel :peers) user fcn args
                        transient-map opts))
-  ([{:keys [user-key name] :as channel} chaincode-name targets user fcn args transient-map opts]
-   (let [chaincode-id (proto/make-chaincode-id :name chaincode-name)
-         header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
+  ([{:keys [user-key name] :as channel} chaincode-id targets user fcn args transient-map opts]
+   (let [header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
          proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
                                                                          fcn
                                                                          args
@@ -242,7 +239,6 @@
                                                                         header-extension
                                                                         proposal-payload
                                                                         opts)
-                          name    ;; channel name
                           targets ;; peers
                           user
                           #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
@@ -273,6 +269,28 @@
                                             channel
                                             (apply core/get-user user-key)
                                             {:args [name transaction-id]})))
+#_
+(defn- send-chaincode-proposal
+  ([channel
+    name path version                   ; for make-chaincode-id
+    fcn args decorations                ; for make-chaincode-input
+    type timeout                        ; for make-chaincode-spec
+    target-peers
+    endorsement                         ; ????????????????????????
+    ]
+   (let [chaincode-id (proto/make-chaincode-id :name name :version version :path path)
+         chaincode-input (proto/make-chaincode-input :args `[~fcn ~@args] :decorations decorations)
+         spec (proto/make-chaincode-spec :type type
+                                         :chaincode-id chaincode-id
+                                         :chaincode-input chaincode-input
+                                         :timeout timeout)
+         deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec)]
+     (chaincode/send-system-chaincode-request :install-chaincode
+                                              system-channel-name
+                                              target-peers
+                                              user
+                                              {:args [deployment-spec]}))))
+
 
 ;;;create_deploy_proposal
 (defn create-deploy-proposal
@@ -314,6 +332,54 @@
    ))
 
 
+(defn send-instantiate-proposal
+  ([channel chaincode-id user fcn args transient-map opts]
+   (query-by-chaincode channel chaincode-id (core/get-nodes channel :peers) user fcn args
+                       transient-map opts))
+  ([{:keys [user-key name] :as channel} chaincode-id targets user fcn args transient-map opts]
+   (let [header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
+         proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
+                                                                         fcn
+                                                                         args
+                                                                         transient-map)]
+     (proto/send-proposal (proto/make-chaincode-signed-proposal-message name
+                                                                        user
+                                                                        header-extension
+                                                                        proposal-payload
+                                                                        opts)
+                          targets ;; peers
+                          user
+                          #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
+                          opts))))
+
+;;;send_transaction
+(defn send-transaction
+  "Send a transaction to the chain’s orderer service (one or more orderer endpoints) for consensus
+  and committing to the ledger.
+  This call is asynchronous and the successful transaction commit is notified via a BLOCK or
+  CHAINCODE event. This method must provide a mechanism for applications to attach event listeners
+  to handle “transaction submitted”, “transaction complete” and “error” events.
+  
+  Note that under the cover there are two different kinds of communications with the fabric backend
+  that trigger different events to be emitted back to the application’s handlers:
+  - the grpc client with the orderer service uses a “regular” stateless HTTP connection
+        in a request/response fashion with the “broadcast” call. The method implementation should
+        emit “transaction submitted” when a successful acknowledgement is received in the response,
+        or “error” when an error is received
+  - The method implementation should also maintain a persistent connection with the Chain’s event
+        source Peer as part of the internal event hub mechanism in order to support the fabric events
+        “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause the method to emit “complete”
+        or “error” events to the application.
+  Params
+        transaction (Transaction): The transaction object constructed above
+  Returns
+        result (EventEmitter): an handle to allow the application to attach event handlers on “submitted”, “complete”, and “error”."
+  ([transaction]
+   (send-transaction core/*channel* transaction))
+  ([channel transaction]
+   ;;; TBD
+   ))
+
 ;;; send_transaction_proposal
 (defn send-transaction-proposal
   "Send  the created proposal to peer for endorsement.
@@ -346,33 +412,6 @@
    ;;; TBD
    ))
 
-;;;send_transaction
-(defn send-transaction
-  "Send a transaction to the chain’s orderer service (one or more orderer endpoints) for consensus
-  and committing to the ledger.
-  This call is asynchronous and the successful transaction commit is notified via a BLOCK or
-  CHAINCODE event. This method must provide a mechanism for applications to attach event listeners
-  to handle “transaction submitted”, “transaction complete” and “error” events.
-  
-  Note that under the cover there are two different kinds of communications with the fabric backend
-  that trigger different events to be emitted back to the application’s handlers:
-  - the grpc client with the orderer service uses a “regular” stateless HTTP connection
-        in a request/response fashion with the “broadcast” call. The method implementation should
-        emit “transaction submitted” when a successful acknowledgement is received in the response,
-        or “error” when an error is received
-  - The method implementation should also maintain a persistent connection with the Chain’s event
-        source Peer as part of the internal event hub mechanism in order to support the fabric events
-        “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause the method to emit “complete”
-        or “error” events to the application.
-  Params
-        transaction (Transaction): The transaction object constructed above
-  Returns
-        result (EventEmitter): an handle to allow the application to attach event handlers on “submitted”, “complete”, and “error”."
-  ([transaction]
-   (send-transaction core/*channel* transaction))
-  ([channel transaction]
-   ;;; TBD
-   ))
 ;;; 
 
 

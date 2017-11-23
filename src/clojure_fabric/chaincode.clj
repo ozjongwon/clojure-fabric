@@ -167,7 +167,6 @@
 (defn send-system-chaincode-request
   [chaincode-key channel-name target user opts]
   (proto/send-proposal (make-chaincode-signed-proposal chaincode-key channel-name user opts)
-                       channel-name
                        target
                        user
                        (get-in system-chaincode-request-parts [chaincode-key :->response])

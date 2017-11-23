@@ -1040,7 +1040,7 @@
                       callback)))
 
 (defn send-proposal
-  [signed-proposal channel-name target user response-fn
+  [signed-proposal target user response-fn
    {:keys [verify?] :or {verify? false} :as opts}]
   ;; target==channel (get-random-node channel :peers)
   (->> (target->nodes target)
