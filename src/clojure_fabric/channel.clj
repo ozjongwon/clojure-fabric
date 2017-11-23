@@ -248,6 +248,16 @@
                           #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
                           opts))))
 
+(defn query-instantiated-chaincodes
+  ([channel]
+   (query-instantiated-chaincodes channel (proto/get-random-node channel :peers)))
+  ([{:keys [user-key name] :as channel} target]
+   (first (chaincode/send-system-chaincode-request :query-instantiated-chaincodes
+                                                   name
+                                                   target
+                                                   (apply core/get-user user-key)
+                                                   {}))))
+
 ;;; query_transaction
 (defn query-transaction
   "Queries the ledger for Transaction by number

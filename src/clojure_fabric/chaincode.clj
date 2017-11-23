@@ -131,6 +131,12 @@
                                          (partial #'make-system-chaincode-proposal-payload-message
                                                   :qscc "GetTransactionByID")
                                          #(TransactionPackage$ProcessedTransaction/parseFrom ^ByteString %)))
+   :query-instantiated-chaincodes
+   (make-system-chaincode-request-parts :lscc
+                                        (make-system-chaincode-proposal-payload-message :lscc
+                                                                                        "getchaincodes"
+                                                                                        [])
+                                        #(Query$ChaincodeQueryResponse/parseFrom ^ByteString %))
    :join-channel
    (make-system-chaincode-request-parts :cscc
                                         (partial #'make-system-chaincode-proposal-payload-message
