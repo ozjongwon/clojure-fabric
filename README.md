@@ -4,12 +4,12 @@ This is my own reference implementation of [Fabric SDK Design Spec](https://docs
 ## Goals
 The major goals of this project are:
 - Make it simple.
-- Avoid conceptual duplication as well as coding level duplication.
+- Avoid conceptual and code level duplication.
 - Build layers of abstraction to control complexity.
 - Make easy to extend.
 - Build mechanisms rather than type in manually.
 - Make future proof.
-- Provide fast and scalable API 
+- Provide fast and scalable API.
 
 ## Test examples
 To understand its usage, see some test cases:
