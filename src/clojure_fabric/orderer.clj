@@ -15,10 +15,13 @@
 ;;
 ;; Orderer implementation of "Fabric SDK Design Spec"
 ;; 
-(ns clojure-fabric.orderer)
-
-(defn- broadcast-client
-  ([]))
+(ns clojure-fabric.orderer
+  (:require [clojure-fabric.proto :as proto]))
 
 (defn send-broadcast
-  ([]))
+  [orderer envelope]
+  (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
+
+(defn send-deliver
+  [orderer envelope]
+  (proto/broadcast-or-deliver-via-orderer :deliver orderer envelope))

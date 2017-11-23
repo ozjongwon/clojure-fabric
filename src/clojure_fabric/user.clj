@@ -38,6 +38,7 @@
             [clojure-fabric.crypto-suite :as crypto-suite]
             [clojure-fabric.event-hub :as event-hub]
             [clojure-fabric.proto :as proto]
+            [clojure-fabric.orderer :as orderer]
             [clojure.java.io :as io])
   (:import [java.io ByteArrayOutputStream File FileInputStream]
            [org.apache.commons.compress.archivers.tar TarArchiveEntry TarArchiveOutputStream]
@@ -316,6 +317,7 @@
 
 (defn create-or-update-channel
   ([orderer envelope]
+   (orderer/send-broadcast orderer envelope)
    (proto/broadcast-or-deliver-via-orderer :broadcast orderer envelope))
   ([user channel-id orderer config-update signatures]
    (->> (proto/make-config-update-envelope :config-update config-update :signatures signatures)

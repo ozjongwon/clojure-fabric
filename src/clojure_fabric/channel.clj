@@ -30,6 +30,7 @@
             [clojure-fabric.core :as core]
             [clojure-fabric.proto :as proto]
             [clojure-fabric.user :as user]
+            [clojure-fabric.orderer :as orderer]
             [clojure-fabric.utils :as utils])
   (:import com.google.protobuf.ByteString
            org.bouncycastle.util.encoders.Hex
@@ -374,7 +375,7 @@
    (let [seek-start-stop (proto/make-seek-position :specified (proto/make-seek-specified :number 0)) ]
      (let [result (->> (proto/make-seek-info :start seek-start-stop :stop seek-start-stop :behavior :block-until-ready)
                        (proto/make-envelope-message name (apply core/get-user user-key) :deliver-seek-info)
-                       (proto/broadcast-or-deliver-via-orderer :deliver orderer))]
+                       (orderer/send-deliver orderer))]
        ;; This returns two elements; the second is status response.
        (.getBlock ^Ab$DeliverResponse (first result))))))
 
