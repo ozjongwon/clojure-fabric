@@ -21,27 +21,71 @@ All major infrastructures were done - message building, message sending, event h
 - query-channels
 - query-installed-chaincodes
 
-#### To do
-None.
+#### Todo
+None
 
 ### Channel
 #### Done
 - get-genesis-block
 - join-channel
 - query-blockchain-info
+- query-block-by-number
+- query-block-by-hash
+- query-block-by-tx-id
+- query-by-chaincode
+- query-transaction
 
-### Initial idea - failed
-Generating Clojure files from Java SDK. Class inheritance has to be implemented manually in Clojure world.
-And it is not worth to pursue with limited time and efforts I can make.
-I realized the problem while I play with 'fabcar' example.
+#### Todo
+- query-instantiated-chaincodes
+- send-instantiate-proposal
+- send-transaction
+- send-transaction-proposal
+- send-upgrade-proposal
 
-### Alternative idea - failed
-I tried an alternative method, dynamically constructing things at runtime using reflection.
-After spending a couple of hours, I found the alternative way won't work either.
-Java implementation does not provide consistent constructors and marshalling/unmarshalling has to be done manually.
+### Crypto Suite
+#### Done
+- decrypt
+- derive-key
+- encrypt
+- generate-key
+- hash
+- import-key
+- sign
+- verify
 
-### Current implemetation idea
-Write a native Clojure SDK.
+#### Todo
+- get-key
+
+### Event Hub
+#### Done
+- connect
+- disconnect
+- connected?
+- register-block-event
+- register-chaincode-event
+- register-tx-event
+- unregister-block-event
+- unregister-chaincode-event
+- unregister-tx-event
+
+#### Todo
+None
+
+### Fabric CA Client
+Not implemented yet
+
+### Orderer
+#### Done
+- send-broadcast
+- send-deliver
+#### Todo
+None
+
+### Peer
+#### Done
+- send-proposal - This is a low level function. See send-proposal in proto.clj
+#### Todo
+None
 
 ## License
 Copyright &copy; 2017 Jong-won Choi. 
