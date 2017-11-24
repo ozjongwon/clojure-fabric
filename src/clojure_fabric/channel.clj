@@ -160,6 +160,24 @@
 ;;    ;; TBD
 ;;    ))
 
+;;; send_transaction_proposal
+(defn send-transaction-proposal
+  "Send  the created proposal to peer for endorsement.
+  Params
+        transaction_proposal (Transaction_Proposal): The transaction proposal data
+        chain: The target chain whose peers the proposal will be sent to
+        retry (Number): Times to retry when failure, by default to 0 (no retry)
+  Returns
+        (Transaction_Proposal_Response response): The response to send proposal request."
+  ([transaction-proposal retry]
+   (send-transaction-proposal core/*channel* transaction-proposal retry))
+  ([{:keys [user-key name] :as channel} transaction-proposal retry]
+   (proto/send-proposal transaction-proposal
+                        channel ;; = chain
+                        (apply core/get-user user-key)
+                        #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
+                        {})))
+
 ;;;query_info
 (defn query-blockchain-info
   "Queries for various useful information on the state of the Chain (height, known peers)
@@ -269,26 +287,26 @@
                                             channel
                                             (apply core/get-user user-key)
                                             {:args [name transaction-id]})))
-#_
+
 (defn- send-chaincode-proposal
-  ([channel
-    name path version                   ; for make-chaincode-id
+  ([{:keys [user-key name] :as channel}
+    chaincode-id-name path version                   ; for make-chaincode-id
     fcn args decorations                ; for make-chaincode-input
     type timeout                        ; for make-chaincode-spec
     target-peers
-    endorsement                         ; ????????????????????????
+    endorsement                         ; FIXME: Not being used
     ]
-   (let [chaincode-id (proto/make-chaincode-id :name name :version version :path path)
+   (let [chaincode-id (proto/make-chaincode-id :name chaincode-id-name :version version :path path)
          chaincode-input (proto/make-chaincode-input :args `[~fcn ~@args] :decorations decorations)
          spec (proto/make-chaincode-spec :type type
                                          :chaincode-id chaincode-id
                                          :chaincode-input chaincode-input
                                          :timeout timeout)
          deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec)]
-     (chaincode/send-system-chaincode-request :install-chaincode
-                                              system-channel-name
+     (chaincode/send-system-chaincode-request :init ;; ????
+                                              name
                                               target-peers
-                                              user
+                                              (apply core/get-user user-key)
                                               {:args [deployment-spec]}))))
 
 
@@ -331,26 +349,17 @@
      (get-transaction-context channel user-context crypto-suite))
    ))
 
-
+#_
 (defn send-instantiate-proposal
   ([channel chaincode-id user fcn args transient-map opts]
    (query-by-chaincode channel chaincode-id (core/get-nodes channel :peers) user fcn args
                        transient-map opts))
   ([{:keys [user-key name] :as channel} chaincode-id targets user fcn args transient-map opts]
-   (let [header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
-         proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
-                                                                         fcn
-                                                                         args
-                                                                         transient-map)]
-     (proto/send-proposal (proto/make-chaincode-signed-proposal-message name
-                                                                        user
-                                                                        header-extension
-                                                                        proposal-payload
-                                                                        opts)
-                          targets ;; peers
-                          user
-                          #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
-                          opts))))
+   (chaincode/send-system-chaincode-request :send-instantiate-proposal
+                                            name
+                                            channel
+                                            (apply core/get-user user-key)
+                                            {:args [name]})))
 
 ;;;send_transaction
 (defn send-transaction
@@ -378,24 +387,6 @@
    (send-transaction core/*channel* transaction))
   ([channel transaction]
    ;;; TBD
-   ))
-
-;;; send_transaction_proposal
-(defn send-transaction-proposal
-  "Send  the created proposal to peer for endorsement.
-  Params
-        transaction_proposal (Transaction_Proposal): The transaction proposal data
-        chain: The target chain whose peers the proposal will be sent to
-        retry (Number): Times to retry when failure, by default to 0 (no retry)
-  Returns
-        (Transaction_Proposal_Response response): The response to send proposal request."
-  ([transaction-proposal retry]
-   (send-transaction-proposal core/*channel* transaction-proposal retry))
-  ([channel transaction-proposal retry]
-   ;; 1. ensure the channel is initialized
-   ;; 2. set chaincode id and options
-   ;; 3. query-by-chaincode
-   
    ))
 
 

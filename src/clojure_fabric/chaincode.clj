@@ -29,7 +29,7 @@
 ;; interrogate the channel’s policies to determine if a new configuration block can be created.
 ;;
 ;; Endorsement System Chaincode
-;; Endorsement System Chaincode (ESCC) is a system chaincode that andles the endorsement policy
+;; Endorsement System Chaincode (ESCC) is a system chaincode that handles the endorsement policy
 ;; for specific pieces of chaincode deployed on a network, and defines the necessary parameters
 ;; (percentage or combination of signatures from endorsing peers) for a transaction proposal to
 ;; receive a successful proposal response (i.e. endorsement).  Deployments and invocations of
