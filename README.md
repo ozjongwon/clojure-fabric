@@ -98,7 +98,7 @@ All major infrastructures were done - message building, message sending, event h
 - query-installed-chaincodes
 
 #### Todo
-None
+Write test cases
 
 ### Channel
 #### Done
@@ -110,13 +110,13 @@ None
 - query-block-by-tx-id
 - query-by-chaincode
 - query-transaction
-
-#### Todo
 - query-instantiated-chaincodes
 - send-instantiate-proposal
-- send-transaction
 - send-transaction-proposal
+- send-transaction (Use proto/send-proposal or chaincode/send-system-chaincode-request)
 - send-upgrade-proposal
+#### Todo
+Write test cases
 
 ### Crypto Suite
 #### Done
@@ -131,6 +131,7 @@ None
 
 #### Todo
 - get-key
+Write test cases
 
 ### Event Hub
 #### Done
@@ -145,7 +146,7 @@ None
 - unregister-tx-event
 
 #### Todo
-None
+Write test cases
 
 ### Fabric CA Client
 Not implemented yet
@@ -155,13 +156,13 @@ Not implemented yet
 - send-broadcast
 - send-deliver
 #### Todo
-None
+Write test cases
 
 ### Peer
 #### Done
 - send-proposal - This is a low level function. See send-proposal in proto.clj
 #### Todo
-None
+Write test cases
 
 ## License
 Copyright &copy; 2017 Jong-won Choi. 
