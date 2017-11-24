@@ -247,30 +247,33 @@
    (query-by-chaincode channel chaincode-id (core/get-nodes channel :peers) user fcn args
                        transient-map opts))
   ([{:keys [user-key name] :as channel} chaincode-id targets user fcn args transient-map opts]
-   (let [header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
-         proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
-                                                                         fcn
-                                                                         args
-                                                                         transient-map)]
-     (proto/send-proposal (proto/make-chaincode-signed-proposal-message name
-                                                                        user
-                                                                        header-extension
-                                                                        proposal-payload
-                                                                        opts)
-                          targets ;; peers
-                          user
-                          #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
-                          opts))))
+   (user/with-validating-peers [channel targets]
+     (let [header-extension (proto/make-chaincode-header-extension :chaincode-id chaincode-id)
+           proposal-payload (proto/make-chaincode-proposal-payload-message chaincode-id
+                                                                           fcn
+                                                                           args
+                                                                           transient-map)]
+       (proto/send-proposal (proto/make-chaincode-signed-proposal-message name
+                                                                          user
+                                                                          header-extension
+                                                                          proposal-payload
+                                                                          opts)
+                            targets ;; peers
+                            user
+                            #(ProposalResponsePackage$ProposalResponse/parseFrom ^ByteString %)
+                            opts)))))
 
 (defn query-instantiated-chaincodes
   ([channel]
    (query-instantiated-chaincodes channel (proto/get-random-node channel :peers)))
   ([{:keys [user-key name] :as channel} target]
-   (first (chaincode/send-system-chaincode-request :query-instantiated-chaincodes
-                                                   name
-                                                   target
-                                                   (apply core/get-user user-key)
-                                                   {}))))
+   (let [targetv [target]]
+    (user/with-validating-peers [channel targetv]
+      (first (chaincode/send-system-chaincode-request :query-instantiated-chaincodes
+                                                      name
+                                                      targetv
+                                                      (apply core/get-user user-key)
+                                                      {}))))))
 
 ;;; query_transaction
 (defn query-transaction
@@ -290,24 +293,23 @@
 
 (defn- send-chaincode-proposal
   ([{:keys [user-key name] :as channel}
-    chaincode-id-name path version      ; for make-chaincode-id
-    fcn args decorations                ; for make-chaincode-input
-    type timeout                        ; for make-chaincode-spec
     target-peers
     endorsement                         ; FIXME: Not being used
+    ;; FIXME: transient map
+    command-key                         ; :instantiate or :upgrade
+    ;;;
+    & {:as chaincode-deployment-spec-args}
     ]
-   (let [chaincode-id (proto/make-chaincode-id :name chaincode-id-name :version version :path path)
-         chaincode-input (proto/make-chaincode-input :args `[~fcn ~@args] :decorations decorations)
-         spec (proto/make-chaincode-spec :type type
-                                         :chaincode-id chaincode-id
-                                         :chaincode-input chaincode-input
-                                         :timeout timeout)
-         deployment-spec (proto/make-chaincode-deployment-spec :chaincode-spec spec)]
-     (chaincode/send-system-chaincode-request :init ;; ????
-                                              name
-                                              target-peers
-                                              (apply core/get-user user-key)
-                                              {:args [deployment-spec]}))))
+   (user/with-validating-peers [channel target-peers]
+     (let [{:keys [name version type fcn args] :or {fcn "init"}} chaincode-deployment-spec-args
+           chaincode-id (proto/make-chaincode-id :name name :version version)
+           chaincode-input (proto/make-chaincode-input :args  `[~fcn ~@args])
+           deployment-spec (proto/make-chaincode-spec :type type :chaincode-id chaincode-id :chaincode-input chaincode-input)]
+       (chaincode/send-system-chaincode-request command-key
+                                                name
+                                                target-peers
+                                                (apply core/get-user user-key)
+                                                {:args [name deployment-spec endorsement]})))))
 
 
 ;;;create_deploy_proposal
@@ -349,17 +351,27 @@
      (get-transaction-context channel user-context crypto-suite))
    ))
 
-#_
 (defn send-instantiate-proposal
   ([channel chaincode-id user fcn args transient-map opts]
-   (query-by-chaincode channel chaincode-id (core/get-nodes channel :peers) user fcn args
-                       transient-map opts))
-  ([{:keys [user-key name] :as channel} chaincode-id targets user fcn args transient-map opts]
-   (chaincode/send-system-chaincode-request :send-instantiate-proposal
-                                            name
-                                            channel
-                                            (apply core/get-user user-key)
-                                            {:args [name]})))
+   (send-instantiate-proposal channel chaincode-id (core/get-nodes channel :peers) user fcn args
+                              transient-map opts))
+  ([channel chaincode-id targets user fcn args transient-map opts]
+   (send-chaincode-proposal channel
+                            targets
+                            :ENDORSEMENT
+                            :deploy
+                            opts)))
+
+(defn send-upgrade-proposal
+  ([channel chaincode-id user fcn args transient-map opts]
+   (send-upgrade-proposal channel chaincode-id (core/get-nodes channel :peers) user fcn args
+                          transient-map opts))
+  ([channel chaincode-id targets user fcn args transient-map opts]
+   (send-chaincode-proposal channel
+                            targets
+                            :ENDORSEMENT
+                            :upgrade
+                            opts)))
 
 ;;;send_transaction
 (defn send-transaction
@@ -429,11 +441,12 @@
   ([peers genesis-block]
    (join-channel core/*channel* peers genesis-block))
   ([{:keys [user-key name] :as channel} peers genesis-block]
-   (chaincode/send-system-chaincode-request :join-channel
-                                            user/system-channel-name
-                                            peers
-                                            (apply core/get-user user-key)
-                                            {:args [genesis-block]})))
+   (user/with-validating-peers [channel peers]
+    (chaincode/send-system-chaincode-request :join-channel
+                                             user/system-channel-name
+                                             peers
+                                             (apply core/get-user user-key)
+                                             {:args [genesis-block]}))))
 
 ;;;;;;;;;
 

@@ -141,7 +141,15 @@
    :join-channel
    (make-system-chaincode-request-parts :cscc
                                         (partial #'make-system-chaincode-proposal-payload-message
-                                                 :cscc "JoinChain"))})
+                                                 :cscc "JoinChain"))
+   :deploy
+   (make-system-chaincode-request-parts :lscc
+                                        (partial #'make-system-chaincode-proposal-payload-message
+                                                 :lscc "deploy"))
+   :upgrade
+   (make-system-chaincode-request-parts :lscc
+                                        (partial #'make-system-chaincode-proposal-payload-message
+                                                 :lscc "upgrade"))})
 
 (defn get-system-chaincode-request-parts
   [k & {:keys [args chaincode-id-version chaincode-id-path]}]
