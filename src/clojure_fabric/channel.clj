@@ -290,7 +290,7 @@
 
 (defn- send-chaincode-proposal
   ([{:keys [user-key name] :as channel}
-    chaincode-id-name path version                   ; for make-chaincode-id
+    chaincode-id-name path version      ; for make-chaincode-id
     fcn args decorations                ; for make-chaincode-input
     type timeout                        ; for make-chaincode-spec
     target-peers

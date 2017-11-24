@@ -46,7 +46,8 @@
 ;; Implementation Note:
 ;;      Support only CSCC, QSCC, and LSCC (from Node.js)
 (ns clojure-fabric.chaincode
-  (:require [clojure-fabric.proto :as proto])
+  (:require [clojure-fabric.proto :as proto]
+            [medley.core :as medley])
   (:import com.google.protobuf.ByteString
            [org.hyperledger.fabric.protos.common Common$Block Ledger$BlockchainInfo]
            [org.hyperledger.fabric.protos.peer Query$ChaincodeQueryResponse Query$ChannelQueryResponse TransactionPackage$ProcessedTransaction]))
@@ -143,12 +144,20 @@
                                                  :cscc "JoinChain"))})
 
 (defn get-system-chaincode-request-parts
-  [k & {:keys [args]}]
+  [k & {:keys [args chaincode-id-version chaincode-id-path]}]
   (let [{:keys [chaincode-id header-extension proposal-payload] :as parts}
         (system-chaincode-request-parts k)]
     (if (fn? proposal-payload)
       (assoc parts :proposal-payload (proposal-payload args))
-      parts)))
+      ;; Update for version or path information 
+      (if (or chaincode-id-version chaincode-id-path)
+        (let [new-chaincode-id (medley/assoc-some chaincode-id
+                                                  :version chaincode-id-version
+                                                  :path chaincode-id-path)
+              new-header-extension (medley/assoc-some header-extension
+                                                      :chaincode-id new-chaincode-id)]
+         (assoc parts :chaincode-id new-chaincode-id :header-extension new-header-extension))
+        parts))))
 
 ;;;
 ;;; User level functions
