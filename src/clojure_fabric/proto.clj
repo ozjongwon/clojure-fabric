@@ -29,7 +29,11 @@
            io.netty.handler.ssl.SslProvider
            io.netty.handler.ssl.util.InsecureTrustManagerFactory
            org.bouncycastle.util.encoders.Hex
-           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo Policies$Policy]
+           [org.hyperledger.fabric.protos.common Common$Block Common$BlockData Common$BlockHeader Common$BlockMetadata Common$ChannelHeader
+            Common$Envelope Common$Header Common$HeaderType Common$Payload Common$SignatureHeader Configtx$ConfigGroup Configtx$ConfigPolicy
+            Configtx$ConfigSignature Configtx$ConfigUpdate Configtx$ConfigUpdateEnvelope Configtx$ConfigValue Ledger$BlockchainInfo
+            Policies$Policy Policies$SignaturePolicyEnvelope Policies$SignaturePolicy Policies$SignaturePolicy$NOutOf
+            MspPrincipal$MSPPrincipal MspPrincipal$MSPPrincipal$Classification MspPrincipal$MSPRole MspPrincipal$MSPRole$MSPRoleType]
            org.hyperledger.fabric.protos.msp.Identities$SerializedIdentity
            [org.hyperledger.fabric.protos.orderer Ab$SeekInfo Ab$SeekInfo$SeekBehavior Ab$SeekNewest Ab$SeekOldest Ab$SeekPosition Ab$SeekSpecified AtomicBroadcastGrpc AtomicBroadcastGrpc$AtomicBroadcastStub]
            [org.hyperledger.fabric.protos.peer Chaincode$ChaincodeDeploymentSpec Chaincode$ChaincodeDeploymentSpec$ExecutionEnvironment Chaincode$ChaincodeID Chaincode$ChaincodeInput Chaincode$ChaincodeInvocationSpec Chaincode$ChaincodeSpec Chaincode$ChaincodeSpec$Type ChaincodeEventPackage$ChaincodeEvent EndorserGrpc ProposalPackage$ChaincodeAction ProposalPackage$ChaincodeHeaderExtension ProposalPackage$ChaincodeProposalPayload ProposalPackage$Proposal ProposalPackage$SignedProposal ProposalResponsePackage$Endorsement ProposalResponsePackage$ProposalResponse ProposalResponsePackage$ProposalResponsePayload ProposalResponsePackage$Response Query$ChaincodeInfo Query$ChaincodeQueryResponse Query$ChannelInfo Query$ChannelQueryResponse TransactionPackage$ChaincodeActionPayload TransactionPackage$ChaincodeEndorsedAction TransactionPackage$ProcessedTransaction TransactionPackage$Transaction TransactionPackage$TransactionAction]))
@@ -312,6 +316,74 @@
   [& {:keys [type value]}]
   (map->Policy {:type type :value value}))
 
+(defrecord NOutOf [^Long n rules]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Policies$SignaturePolicy$NOutOf/newBuilder)
+      n (.setN n)
+      rules  (.addAllRules (mapv #(clj->proto %) rules))
+      true (.build))))
+
+(defn make-n-out-of
+  [& {:keys [n rules]}]
+  (map->NOutOf {:n n :rules rules}))
+
+(defrecord SignaturePolicy [^Long signed-by ^NOutOf n-out-of]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Policies$SignaturePolicy/newBuilder)
+      signed-by (.setSignedBy signed-by)
+      n-out-of  (.setNOutOf ^Policies$SignaturePolicy$NOutOf (clj->proto n-out-of))
+      true (.build))))
+
+(defn make-signature-policy
+  [& {:keys [signed-by n-out-of]}]
+  (map->SignaturePolicy {:signed-by signed-by :n-out-of n-out-of}))
+
+(defonce msp-role-type-map {:member MspPrincipal$MSPRole$MSPRoleType/MEMBER
+                            :admin MspPrincipal$MSPRole$MSPRoleType/ADMIN})
+
+(defrecord MSPRole [^String msp-identifier role]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (MspPrincipal$MSPRole/newBuilder)
+      msp-identifier (.setMspIdentifier msp-identifier)
+      role (.setRole (msp-role-type-map role))
+      true (.build))))
+
+(defn make-msp-role
+  [& {:keys [msp-identifier role]}]
+  (map->MSPRole {:msp-identifier msp-identifier :role role}))
+
+(defonce classification-map {:role MspPrincipal$MSPPrincipal$Classification/ROLE
+                             :organization-unit MspPrincipal$MSPPrincipal$Classification/ORGANIZATION_UNIT
+                             :identity MspPrincipal$MSPPrincipal$Classification/IDENTITY})
+
+(defrecord MSPPrincipal [principal-classification ^bytes principal]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (MspPrincipal$MSPPrincipal/newBuilder)
+      principal-classification (.setPrincipalClassification (classification-map principal-classification))
+      principal (.setPrincipal principal)
+      true (.build))))
+
+(defn make-msp-principal
+  [& {:keys [principal-classification principal]}]
+  (map->MSPPrincipal {:principal-classification principal-classification :principal principal}))
+
+(defrecord SignaturePolicyEnvelope [^Long version ^SignaturePolicy rule identities]
+  ICljToProto
+  (clj->proto [this]
+    (cond-> (Policies$SignaturePolicyEnvelope/newBuilder)
+      version   (.setVersion version)
+      rule      (.setRule ^Policies$SignaturePolicy (clj->proto rule))
+      identities (.addAllIdentities (mapv #(clj->proto %) identities))
+      true (.build))))
+
+(defn make-signature-policy-envelope
+  [& {:keys [version rule identities]}]
+  (map->SignaturePolicyEnvelope {:version version :rule rule :identities identities}))
+
 (defrecord ConfigPolicy [^Long version ^Policies$Policy policy ^String mod-policy]
   ICljToProto
   (clj->proto [this]
@@ -361,11 +433,10 @@
 (defrecord ConfigUpdateEnvelope [^bytes config-update signatures]
   ICljToProto
   (clj->proto [this]
-    (let [config-update-envelope (doto (Configtx$ConfigUpdateEnvelope/newBuilder)
-                                   (.setConfigUpdate (ByteString/copyFrom config-update)))]
-      (doseq [s signatures]
-        (.addSignatures config-update-envelope ^Configtx$ConfigSignature (clj->proto s)))
-      (.build config-update-envelope))))
+    (cond-> (Configtx$ConfigUpdateEnvelope/newBuilder)
+      config-update (.setConfigUpdate (ByteString/copyFrom config-update))
+      signatures (.addAllSignatures (mapv #(clj->proto %) signatures))
+      true (.build))))
 
 (defn make-config-update-envelope
   [& {:keys [config-update signatures]}]
