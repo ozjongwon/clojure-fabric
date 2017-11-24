@@ -359,12 +359,12 @@
                              :organization-unit MspPrincipal$MSPPrincipal$Classification/ORGANIZATION_UNIT
                              :identity MspPrincipal$MSPPrincipal$Classification/IDENTITY})
 
-(defrecord MSPPrincipal [principal-classification ^bytes principal]
+(defrecord MSPPrincipal [principal-classification ^MSPRole principal]
   ICljToProto
   (clj->proto [this]
     (cond-> (MspPrincipal$MSPPrincipal/newBuilder)
       principal-classification (.setPrincipalClassification (classification-map principal-classification))
-      principal (.setPrincipal principal)
+      principal (.setPrincipal (.toByteString ^MspPrincipal$MSPRole (clj->proto principal)))
       true (.build))))
 
 (defn make-msp-principal
