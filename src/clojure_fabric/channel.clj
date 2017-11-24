@@ -292,14 +292,8 @@
                                             {:args [name transaction-id]})))
 
 (defn- send-chaincode-proposal
-  ([{:keys [user-key name] :as channel}
-    target-peers
-    endorsement                         ; FIXME: Not being used
-    ;; FIXME: transient map
-    command-key                         ; :instantiate or :upgrade
-    ;;;
-    & {:as chaincode-deployment-spec-args}
-    ]
+  ([{:keys [user-key name] :as channel} target-peers signature-policy-envelope command-key ; :instantiate or :upgrade
+    & {:as chaincode-deployment-spec-args}]
    (user/with-validating-peers [channel target-peers]
      (let [{:keys [name version type fcn args] :or {fcn "init"}} chaincode-deployment-spec-args
            chaincode-id (proto/make-chaincode-id :name name :version version)
@@ -309,7 +303,7 @@
                                                 name
                                                 target-peers
                                                 (apply core/get-user user-key)
-                                                {:args [name deployment-spec endorsement]})))))
+                                                {:args [name deployment-spec signature-policy-envelope]})))))
 
 
 ;;;create_deploy_proposal
@@ -352,26 +346,16 @@
    ))
 
 (defn send-instantiate-proposal
-  ([channel chaincode-id user fcn args transient-map opts]
-   (send-instantiate-proposal channel chaincode-id (core/get-nodes channel :peers) user fcn args
-                              transient-map opts))
-  ([channel chaincode-id targets user fcn args transient-map opts]
-   (send-chaincode-proposal channel
-                            targets
-                            :ENDORSEMENT
-                            :deploy
-                            opts)))
+  ([channel signature-policy-envelope opts]
+   (send-instantiate-proposal channel (core/get-nodes channel :peers) signature-policy-envelope opts))
+  ([channel targets signature-policy-envelope opts]
+   (send-chaincode-proposal channel targets signature-policy-envelope :deploy opts)))
 
 (defn send-upgrade-proposal
-  ([channel chaincode-id user fcn args transient-map opts]
-   (send-upgrade-proposal channel chaincode-id (core/get-nodes channel :peers) user fcn args
-                          transient-map opts))
-  ([channel chaincode-id targets user fcn args transient-map opts]
-   (send-chaincode-proposal channel
-                            targets
-                            :ENDORSEMENT
-                            :upgrade
-                            opts)))
+  ([channel signature-policy-envelope opts]
+   (send-upgrade-proposal channel (core/get-nodes channel :peers) signature-policy-envelope opts))
+  ([channel targets signature-policy-envelope opts]
+   (send-chaincode-proposal channel targets signature-policy-envelope :upgrade opts)))
 
 ;;;send_transaction
 (defn send-transaction
