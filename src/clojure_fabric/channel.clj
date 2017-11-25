@@ -307,23 +307,10 @@
 
 
 ;;;create_deploy_proposal
-(defn create-deploy-proposal
-  "Create  a proposal for transaction. This involves assembling the proposal with the data
-  (chaincodeID, chaincode invocation spec, etc.) and signing it using the private key corresponding
-  to the ECert to sign.
-  Params
-        chaincode_path (string): path to the chaincode to deploy
-        chaincode_name (string): a custom name to identify the chaincode on the chain
-        fcn (string): name of the chaincode function to call after deploy to initiate the state
-        args (string[]): arguments for calling the init function designated by “fcn”
-        sign (Bool): Whether to sign the transaction, default to True
-  Returns
-        (Proposal): The created Proposal instance or None."
-  ([chaincod-path chaincode-name fcn args sign]
-   (create-deploy-proposal core/*channel* chaincod-path chaincode-name fcn args sign))
-  ([channel chaincod-path chaincode-name fcn args sign]
-   ;;; TBD
-   ))
+;;;
+;;; Use proto/make-chaincode-header-extension, proto/make-chaincode-proposal-payload-message,
+;;; and proto/make-chaincode-signed-proposal-message.
+;;; See query-by-chaincode
 
 ;;;create_transaction_proposal
 (defn create-transaction-proposal
@@ -358,46 +345,20 @@
    (send-chaincode-proposal channel targets signature-policy-envelope :upgrade opts)))
 
 ;;;send_transaction
-(defn send-transaction
-  "Send a transaction to the chain’s orderer service (one or more orderer endpoints) for consensus
-  and committing to the ledger.
-  This call is asynchronous and the successful transaction commit is notified via a BLOCK or
-  CHAINCODE event. This method must provide a mechanism for applications to attach event listeners
-  to handle “transaction submitted”, “transaction complete” and “error” events.
-  
-  Note that under the cover there are two different kinds of communications with the fabric backend
-  that trigger different events to be emitted back to the application’s handlers:
-  - the grpc client with the orderer service uses a “regular” stateless HTTP connection
-        in a request/response fashion with the “broadcast” call. The method implementation should
-        emit “transaction submitted” when a successful acknowledgement is received in the response,
-        or “error” when an error is received
-  - The method implementation should also maintain a persistent connection with the Chain’s event
-        source Peer as part of the internal event hub mechanism in order to support the fabric events
-        “BLOCK”, “CHAINCODE” and “TRANSACTION”. These events should cause the method to emit “complete”
-        or “error” events to the application.
-  Params
-        transaction (Transaction): The transaction object constructed above
-  Returns
-        result (EventEmitter): an handle to allow the application to attach event handlers on “submitted”, “complete”, and “error”."
-  ([transaction]
-   (send-transaction core/*channel* transaction))
-  ([channel transaction]
-   ;;; TBD
-   ))
-
+;;;(Use proto/send-proposal or chaincode/send-system-chaincode-request)
 
 ;;; create_transaction
-(defn create-transaction
-  "Create a transaction with proposal response, following the endorsement policy.
-  Params
-        proposal_responses ([Transaction_Proposal_Response]): The array of proposal responses received in the proposal call.
-  Returns
-        (Transaction instance): The created transaction object instance."
-  ([proposal-responses]
-   (create-transaction core/*channel* proposal-responses))
-  ([channel proposal-responses]
-   ;;; TBD
-   ))
+;; (defn create-transaction
+;;   "Create a transaction with proposal response, following the endorsement policy.
+;;   Params
+;;         proposal_responses ([Transaction_Proposal_Response]): The array of proposal responses received in the proposal call.
+;;   Returns
+;;         (Transaction instance): The created transaction object instance."
+;;   ([proposal-responses]
+;;    (create-transaction core/*channel* proposal-responses))
+;;   ([channel proposal-responses]
+;;    ;;; TBD
+;;    ))
 
 ;;; 
 
