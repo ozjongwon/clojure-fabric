@@ -12,10 +12,6 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
-;;
-;; This is generated code (and some decoration changes).
-;; Do not change.
-;;
 (ns clojure-fabric.proto
   (:require [clojure-fabric.core :as core]
             [clojure-fabric.crypto-suite :as crypto-suite]
